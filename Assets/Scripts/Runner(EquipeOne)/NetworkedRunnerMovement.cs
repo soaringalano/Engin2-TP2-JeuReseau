@@ -16,6 +16,11 @@ public class NetworkedRunnerMovement : NetworkBehaviour
     public float MaxSidewaysVelocity { get; private set; }
     [field: SerializeField]
     public float MaxBackwardVelocity { get; private set; }
+    [field: SerializeField]
+    public float JumpIntensity { get; private set; } = 100.0f;
+
+    [SerializeField]
+    private CharacterFloorTrigger m_floorTrigger;
 
     private Vector2 CurrentRelativeVelocity { get; set; }
     public Vector2 CurrentDirectionalInputs { get; private set; }
@@ -24,6 +29,8 @@ public class NetworkedRunnerMovement : NetworkBehaviour
     private GameObject m_character;
     [SerializeField]
     private Animator m_animator;
+    private bool m_isjump = false;
+
     private void Start()
     {
         if (isLocalPlayer)
@@ -35,17 +42,21 @@ public class NetworkedRunnerMovement : NetworkBehaviour
 
     void Update()
     {
+        VerifiIfCanJump();
         if (!isLocalPlayer)
         {
             return;
-        }
+        } 
     }
 
     private void FixedUpdate()
     {
-        SetDirectionalInputs();
-        Set2dRelativeVelocity(); 
-        OnFixedUpdateTest(); // TODO changer le nom / ordre
+        if (m_floorTrigger.IsOnFloor == true)
+        {
+            SetDirectionalInputs();
+            Set2dRelativeVelocity();
+            OnFixedUpdateTest(); // TODO changer le nom / ordre
+        }
     }
 
     private void Set2dRelativeVelocity()
@@ -101,6 +112,21 @@ public class NetworkedRunnerMovement : NetworkBehaviour
         }
     }
 
+    private void VerifiIfCanJump()
+    {
+        //Debug.Log("enter jump not jumping");
+        if (m_floorTrigger.IsOnFloor == true)
+        {
+            m_isjump = false;
+            //Debug.Log("On floor");
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                //Debug.Log("enter jump press space");
+                RB.AddForce(Vector3.up * JumpIntensity, ForceMode.Acceleration);
+                m_isjump = true;
+            }
+        }
+    }
     public void OnFixedUpdateTest()
     {
         FixedUpdateRotateWithCamera();

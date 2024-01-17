@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 4225971495769380323}
   - component: {fileID: 8429778900157575230}
   - component: {fileID: 4151922605991649473}
-  m_Layer: 0
-  m_Name: rewe
+  m_Layer: 9
+  m_Name: Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 5116141238228868441}
   - component: {fileID: 6081910206153493505}
   - component: {fileID: 8943386659442305425}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: mainChar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,6 +146,7 @@ Transform:
   - {fileID: 2997417422441446876}
   - {fileID: 8349082872106418281}
   - {fileID: 5956364537524926184}
+  - {fileID: 5984541779639268304}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8609708719817169436
@@ -177,6 +178,8 @@ MonoBehaviour:
   <MaxForwardVelocity>k__BackingField: 6
   <MaxSidewaysVelocity>k__BackingField: 4
   <MaxBackwardVelocity>k__BackingField: 3
+  <JumpIntensity>k__BackingField: 750
+  m_floorTrigger: {fileID: 8022819743941577029}
   m_character: {fileID: 1292141603276078456}
   m_animator: {fileID: 0}
 --- !u!23 &8508925141977247018
@@ -330,7 +333,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8349082872106418281}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: lookAt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -362,7 +365,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2997417422441446876}
   - component: {fileID: 3068638769374993713}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: MainCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -377,8 +380,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4506441014084626255}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.22625929, y: 0.007791795, z: -0.001809963, w: 0.9740343}
-  m_LocalPosition: {x: 0.5, y: 2, z: -3.5}
+  m_LocalRotation: {x: 0.22625929, y: 0.0077917934, z: -0.0018099626, w: 0.9740343}
+  m_LocalPosition: {x: 0.5, y: 1.9999999, z: -3.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -436,7 +439,7 @@ GameObject:
   - component: {fileID: 8385665065139689178}
   - component: {fileID: 6473953962893773845}
   - component: {fileID: 2359592610911116593}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -519,3 +522,70 @@ MonoBehaviour:
   m_YawDamping: 0
   m_RollDamping: 0
   m_AngularDamping: 0
+--- !u!1 &9192106992775213549
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5984541779639268304}
+  - component: {fileID: 9146005604836981450}
+  - component: {fileID: 8022819743941577029}
+  m_Layer: 10
+  m_Name: FloorTriger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5984541779639268304
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9192106992775213549}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.278, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6780199216035652817}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &9146005604836981450
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9192106992775213549}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8022819743941577029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9192106992775213549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0175e24c3815d174fa4e5d89bcf0577a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <IsOnFloor>k__BackingField: 0
