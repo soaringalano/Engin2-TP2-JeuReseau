@@ -60,6 +60,8 @@ MonoBehaviour:
   <MaxForwardVelocity>k__BackingField: 6
   <MaxSidewaysVelocity>k__BackingField: 4
   <MaxBackwardVelocity>k__BackingField: 3
+  <JumpIntensity>k__BackingField: 100
+  m_floorTrigger: {fileID: 0}
   m_character: {fileID: 1292141603276078456}
   m_animator: {fileID: 6385439707437339536}
 --- !u!114 &8943386659442305425
