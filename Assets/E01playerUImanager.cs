@@ -21,6 +21,10 @@ public class E01playerUImanager : MonoBehaviour
         {
             slider.value--;
         }
+        else
+        {
+            Debug.Log("here goes the code for when the Player dies");
+        }
     }
 
 }
