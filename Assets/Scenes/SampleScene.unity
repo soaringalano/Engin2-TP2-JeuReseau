@@ -135,25 +135,53 @@ PrefabInstance:
       propertyPath: m_Name
       value: mainChar
       objectReference: {fileID: 0}
+    - target: {fileID: 1292141603276078456, guid: bb3d563d3f7e26d43877290f5e50330d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2236709772417231606, guid: bb3d563d3f7e26d43877290f5e50330d, type: 3}
-      propertyPath: m_animator
+      propertyPath: <RB>k__BackingField
       value: 
-      objectReference: {fileID: 1613720955}
+      objectReference: {fileID: 1472789579}
+    - target: {fileID: 2997417422441446876, guid: bb3d563d3f7e26d43877290f5e50330d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2997417422441446876, guid: bb3d563d3f7e26d43877290f5e50330d, type: 3}
       propertyPath: m_LocalPosition.y
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2997417422441446876, guid: bb3d563d3f7e26d43877290f5e50330d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2997417422441446876, guid: bb3d563d3f7e26d43877290f5e50330d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99554884
+      objectReference: {fileID: 0}
+    - target: {fileID: 2997417422441446876, guid: bb3d563d3f7e26d43877290f5e50330d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.09243013
+      value: 0.092430174
       objectReference: {fileID: 0}
     - target: {fileID: 2997417422441446876, guid: bb3d563d3f7e26d43877290f5e50330d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.0183403
+      value: 0.018340334
       objectReference: {fileID: 0}
     - target: {fileID: 2997417422441446876, guid: bb3d563d3f7e26d43877290f5e50330d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0017027757
+      value: -0.0017027797
+      objectReference: {fileID: 0}
+    - target: {fileID: 2997417422441446876, guid: bb3d563d3f7e26d43877290f5e50330d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 10.609
+      objectReference: {fileID: 0}
+    - target: {fileID: 2997417422441446876, guid: bb3d563d3f7e26d43877290f5e50330d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6385439707444765058, guid: bb3d563d3f7e26d43877290f5e50330d, type: 3}
+      propertyPath: m_Name
+      value: Runner-Mesh
       objectReference: {fileID: 0}
     - target: {fileID: 6780199216035652817, guid: bb3d563d3f7e26d43877290f5e50330d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -161,7 +189,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6780199216035652817, guid: bb3d563d3f7e26d43877290f5e50330d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.89
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 6780199216035652817, guid: bb3d563d3f7e26d43877290f5e50330d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -384,8 +412,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.09243013, y: 0.0183403, z: -0.0017027757, w: 0.99554884}
-  m_LocalPosition: {x: 0.5, y: 3.8899999, z: -3.5}
+  m_LocalRotation: {x: 0.092430174, y: 0.018340334, z: -0.0017027797, w: 0.99554884}
+  m_LocalPosition: {x: 0.5, y: 3.9, z: -3.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -531,9 +559,9 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &1613720955 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 6385439707437339536, guid: bb3d563d3f7e26d43877290f5e50330d, type: 3}
+--- !u!54 &1472789579 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 2106698068075709067, guid: bb3d563d3f7e26d43877290f5e50330d, type: 3}
   m_PrefabInstance: {fileID: 282393682}
   m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
