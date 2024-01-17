@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -277,7 +277,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 40
+  field of view: 60
   orthographic: 0
   orthographic size: 10
   m_Depth: -1
@@ -303,8 +303,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.05823698, y: 0.17350185, z: -0.010278376, w: 0.9830565}
-  m_LocalPosition: {x: -0.65, y: 3.28, z: -3}
+  m_LocalRotation: {x: 0.22625929, y: 0.007791795, z: -0.001809963, w: 0.9740343}
+  m_LocalPosition: {x: 0.5, y: 3.632, z: -3.085}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -468,11 +468,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6780199216035652817, guid: e4b3550f34b484260984e1597188d2ca, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.78
+      value: 1.632
       objectReference: {fileID: 0}
     - target: {fileID: 6780199216035652817, guid: e4b3550f34b484260984e1597188d2ca, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.415
       objectReference: {fileID: 0}
     - target: {fileID: 6780199216035652817, guid: e4b3550f34b484260984e1597188d2ca, type: 3}
       propertyPath: m_LocalRotation.w
@@ -501,6 +501,10 @@ PrefabInstance:
     - target: {fileID: 6780199216035652817, guid: e4b3550f34b484260984e1597188d2ca, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8943386659442305425, guid: e4b3550f34b484260984e1597188d2ca, type: 3}
+      propertyPath: sceneId
+      value: 2879655607
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -1,0 +1,145 @@
+using Mirror;
+using UnityEngine;
+
+public class NetworkedRunnerMovement : NetworkBehaviour
+{
+    public Camera Camera { get; private set; }
+    [field: SerializeField]
+    public Rigidbody RB { get; private set; }
+    [field: SerializeField]
+    public float AccelerationValue { get; private set; }
+    [field: SerializeField]
+    public float DecelerationValue { get; private set; } = 0.3f;
+    [field: SerializeField]
+    public float MaxForwardVelocity { get; private set; }
+    [field: SerializeField]
+    public float MaxSidewaysVelocity { get; private set; }
+    [field: SerializeField]
+    public float MaxBackwardVelocity { get; private set; }
+
+    private Vector2 CurrentRelativeVelocity { get; set; }
+    public Vector2 CurrentDirectionalInputs { get; private set; }
+
+    [SerializeField]
+    private GameObject m_character;
+    [SerializeField]
+    private Animator m_animator;
+    private void Start()
+    {
+        if (isLocalPlayer)
+        {
+            Camera.gameObject.SetActive(true);
+        }
+        Camera = Camera.main;
+    }
+
+    void Update()
+    {
+        if (!isLocalPlayer)
+        {
+            return;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        SetDirectionalInputs();
+        Set2dRelativeVelocity(); 
+        OnFixedUpdateTest(); // TODO changer le nom / ordre
+    }
+
+    private void Set2dRelativeVelocity()
+    {
+        Vector3 relativeVelocity = RB.transform.InverseTransformDirection(RB.velocity);
+
+        CurrentRelativeVelocity = new Vector2(relativeVelocity.x, relativeVelocity.z);
+    }
+
+    public float GetCurrentMaxSpeed()
+    {
+
+        if (Mathf.Approximately(CurrentDirectionalInputs.magnitude, 0))
+        {
+            return MaxForwardVelocity;
+        }
+
+        var normalizedInputs = CurrentDirectionalInputs.normalized;
+
+        var currentMaxVelocity = Mathf.Pow(normalizedInputs.x, 2) * MaxSidewaysVelocity;
+
+        if (normalizedInputs.y > 0)
+        {
+            currentMaxVelocity += Mathf.Pow(normalizedInputs.y, 2) * MaxForwardVelocity;
+        }
+        else
+        {
+            currentMaxVelocity += Mathf.Pow(normalizedInputs.y, 2) * MaxBackwardVelocity;
+        }
+
+        return currentMaxVelocity;
+    }
+
+    public void SetDirectionalInputs()
+    {
+        CurrentDirectionalInputs = Vector2.zero;
+
+        if (Input.GetKey(KeyCode.W))
+        {
+            CurrentDirectionalInputs += Vector2.up;
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            CurrentDirectionalInputs += Vector2.down;
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            CurrentDirectionalInputs += Vector2.left;
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            CurrentDirectionalInputs += Vector2.right;
+        }
+    }
+
+    public void OnFixedUpdateTest()
+    {
+        FixedUpdateRotateWithCamera();
+
+        if (CurrentDirectionalInputs == Vector2.zero)
+        {
+            FixedUpdateQuickDeceleration();
+            return;
+        }
+
+        ApplyMovementsOnFloorFU(CurrentDirectionalInputs);
+    }
+
+    private void ApplyMovementsOnFloorFU(Vector2 inputVector2)
+    {
+        var vectorOnFloor = Vector3.ProjectOnPlane(Camera.transform.forward * inputVector2.y, Vector3.up);
+        vectorOnFloor += Vector3.ProjectOnPlane(Camera.transform.right * inputVector2.x, Vector3.up);
+        vectorOnFloor.Normalize();
+
+        RB.AddForce(vectorOnFloor * AccelerationValue, ForceMode.Acceleration);
+
+        var currentMaxSpeed = GetCurrentMaxSpeed();
+
+        if (RB.velocity.magnitude > currentMaxSpeed)
+        {
+            RB.velocity = RB.velocity.normalized;
+            RB.velocity *= currentMaxSpeed;
+        }
+    }
+
+    private void FixedUpdateQuickDeceleration()
+    {
+        var oppositeDirectionForceToApply = -RB.velocity * DecelerationValue * Time.fixedDeltaTime;
+        RB.AddForce(oppositeDirectionForceToApply, ForceMode.Acceleration);
+    }
+
+    private void FixedUpdateRotateWithCamera()
+    {
+        var forwardCamOnFloor = Vector3.ProjectOnPlane(Camera.transform.forward, Vector3.up);
+        RB.transform.LookAt(forwardCamOnFloor + RB.transform.position);
+    }
+}
