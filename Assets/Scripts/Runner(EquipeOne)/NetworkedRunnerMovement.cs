@@ -139,7 +139,8 @@ public class NetworkedRunnerMovement : NetworkBehaviour
     }
     public void OnFixedUpdateTest()
     {
-        FixedUpdateRotateWithCamera();
+
+        //FixedUpdateRotateWithCamera(); TODO: vérifier le méthode
 
         if (CurrentDirectionalInputs == Vector2.zero)
         {
