@@ -32,7 +32,7 @@ public class NetworkedRunnerMovement : NetworkBehaviour
     private Animator m_animator;
     private bool m_isjump = false;
 
-    private void Start()
+    private void Awake()
     {
         if (isLocalPlayer)
         {
