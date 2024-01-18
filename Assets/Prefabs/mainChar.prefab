@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1986357944558114695}
   - component: {fileID: 5740697933434463717}
   - component: {fileID: 4725077006714088026}
+  - component: {fileID: 5682009046349038203}
   m_Layer: 9
   m_Name: mainChar
   m_TagString: Untagged
@@ -168,6 +169,40 @@ MonoBehaviour:
   positionSensitivity: 0.01
   rotationSensitivity: 0.01
   scaleSensitivity: 0.01
+--- !u!114 &5682009046349038203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1292141603276078456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a553cb17010b2403e8523b558bffbc14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  target: {fileID: 6780199216035652817}
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 0
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 1
+  coordinateSpace: 0
+  sendIntervalMultiplier: 1
+  timelineOffset: 0
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+  onlySyncOnChange: 1
+  compressRotation: 1
+  bufferResetMultiplier: 3
+  positionSensitivity: 0.01
+  rotationSensitivity: 0.01
+  scaleSensitivity: 0.01
 --- !u!1 &1416061206977050125
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,7 +259,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4506441014084626255}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.09243011, y: 0.0183403, z: -0.0017027754, w: 0.99554884}
+  m_LocalRotation: {x: 0.09243013, y: 0.0183403, z: -0.0017027757, w: 0.99554884}
   m_LocalPosition: {x: 0.5, y: 2.9999998, z: -3.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
