@@ -1,5 +1,4 @@
 using Mirror;
-using System;
 using UnityEngine;
 
 public class NetworkedRunnerMovement : NetworkBehaviour
@@ -23,7 +22,6 @@ public class NetworkedRunnerMovement : NetworkBehaviour
     [SerializeField]
     private CharacterFloorTrigger m_floorTrigger;
 
-    private Vector2 CurrentRelativeVelocity { get; set; }
     public Vector2 CurrentDirectionalInputs { get; private set; }
 
     [SerializeField]
@@ -55,31 +53,20 @@ public class NetworkedRunnerMovement : NetworkBehaviour
         if (m_floorTrigger.IsOnFloor == true)
         {
             SetDirectionalInputs();
-            Set2dRelativeVelocity();
             UpdateMovementsToAnimator();
-            OnFixedUpdateTest(); // TODO changer le nom / ordre
+            ApplyMovementsOnFloorFU(CurrentDirectionalInputs);
         }
-    }
-
-    private void Set2dRelativeVelocity()
-    {
-        Vector3 relativeVelocity = RB.transform.InverseTransformDirection(RB.velocity);
-
-        CurrentRelativeVelocity = new Vector2(relativeVelocity.x, relativeVelocity.z);
     }
 
     public float GetCurrentMaxSpeed()
     {
+        var normalizedInputs = CurrentDirectionalInputs.normalized;
+        var currentMaxVelocity = Mathf.Pow(normalizedInputs.x, 2) * MaxSidewaysVelocity;
 
         if (Mathf.Approximately(CurrentDirectionalInputs.magnitude, 0))
         {
             return MaxForwardVelocity;
         }
-
-        var normalizedInputs = CurrentDirectionalInputs.normalized;
-
-        var currentMaxVelocity = Mathf.Pow(normalizedInputs.x, 2) * MaxSidewaysVelocity;
-
         if (normalizedInputs.y > 0)
         {
             currentMaxVelocity += Mathf.Pow(normalizedInputs.y, 2) * MaxForwardVelocity;
@@ -137,46 +124,19 @@ public class NetworkedRunnerMovement : NetworkBehaviour
             }
         }
     }
-    public void OnFixedUpdateTest()
-    {
-
-        //FixedUpdateRotateWithCamera(); TODO: vérifier le méthode
-
-        if (CurrentDirectionalInputs == Vector2.zero)
-        {
-            FixedUpdateQuickDeceleration();
-            return;
-        }
-
-        ApplyMovementsOnFloorFU(CurrentDirectionalInputs);
-    }
 
     private void ApplyMovementsOnFloorFU(Vector2 inputVector2)
     {
         var vectorOnFloor = Vector3.ProjectOnPlane(Camera.transform.forward * inputVector2.y, Vector3.up);
         vectorOnFloor += Vector3.ProjectOnPlane(Camera.transform.right * inputVector2.x, Vector3.up);
         vectorOnFloor.Normalize();
-
-        RB.AddForce(vectorOnFloor * AccelerationValue, ForceMode.Acceleration);
-
         var currentMaxSpeed = GetCurrentMaxSpeed();
 
+        RB.AddForce(vectorOnFloor * AccelerationValue, ForceMode.Acceleration);
         if (RB.velocity.magnitude > currentMaxSpeed)
         {
             RB.velocity = RB.velocity.normalized;
             RB.velocity *= currentMaxSpeed;
         }
-    }
-
-    private void FixedUpdateQuickDeceleration()
-    {
-        var oppositeDirectionForceToApply = -RB.velocity * DecelerationValue * Time.fixedDeltaTime;
-        RB.AddForce(oppositeDirectionForceToApply, ForceMode.Acceleration);
-    }
-
-    private void FixedUpdateRotateWithCamera()
-    {
-        var forwardCamOnFloor = Vector3.ProjectOnPlane(Camera.transform.forward, Vector3.up);
-        RB.transform.LookAt(forwardCamOnFloor + RB.transform.position);
     }
 }
