@@ -1,4 +1,5 @@
 using Mirror;
+using System;
 using UnityEngine;
 
 public class NetworkedRunnerMovement : NetworkBehaviour
@@ -55,6 +56,7 @@ public class NetworkedRunnerMovement : NetworkBehaviour
         {
             SetDirectionalInputs();
             Set2dRelativeVelocity();
+            UpdateMovementsToAnimator();
             OnFixedUpdateTest(); // TODO changer le nom / ordre
         }
     }
@@ -112,6 +114,13 @@ public class NetworkedRunnerMovement : NetworkBehaviour
         }
     }
 
+    private void UpdateMovementsToAnimator()
+    {
+        // Set the animator values
+        m_animator.SetFloat("MoveX", CurrentDirectionalInputs.x);
+        m_animator.SetFloat("MoveY", CurrentDirectionalInputs.y);
+    }
+
     private void VerifiIfCanJump()
     {
         //Debug.Log("enter jump not jumping");
@@ -123,13 +132,15 @@ public class NetworkedRunnerMovement : NetworkBehaviour
             {
                 //Debug.Log("enter jump press space");
                 RB.AddForce(Vector3.up * JumpIntensity, ForceMode.Acceleration);
+                m_animator.SetTrigger("Jump");
                 m_isjump = true;
             }
         }
     }
     public void OnFixedUpdateTest()
     {
-        FixedUpdateRotateWithCamera();
+
+        //FixedUpdateRotateWithCamera(); TODO: vérifier le méthode
 
         if (CurrentDirectionalInputs == Vector2.zero)
         {
