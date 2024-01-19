@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,7 +22,7 @@ public class Abilities : MonoBehaviour
 
     private void Update()
     {
-        AbilitiesCooldown();
+        AbilitiesClick();
     }
 
     public void OnUseButton()
@@ -31,10 +32,10 @@ public class Abilities : MonoBehaviour
             return;
         }
         m_buttonclick = true;
-        AbilitiesCooldown();
+        AbilitiesClick();
     }
 
-    private void AbilitiesCooldown()
+    private void AbilitiesClick()
     {
         if (m_buttonclick == true)
         {
