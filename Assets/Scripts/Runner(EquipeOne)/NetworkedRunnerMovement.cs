@@ -29,7 +29,7 @@ public class NetworkedRunnerMovement : NetworkBehaviour
     [SerializeField]
     private bool m_isJumping = false;
 
-    private void Start()
+    private void Awake()
     {
         if (isLocalPlayer)
         {
