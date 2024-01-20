@@ -7,9 +7,9 @@ public class NetworkedRunnerMovement : NetworkBehaviour
     [field: SerializeField]
     private Rigidbody RB { get; set; }
     [field: SerializeField]
-    private float AccelerationValue { get;  set; }
+    private float AccelerationValue { get; set; }
     [field: SerializeField]
-    private float MaxForwardVelocity { get;  set; }
+    private float MaxForwardVelocity { get; set; }
     [field: SerializeField]
     private float MaxSidewaysVelocity { get; set; }
     [field: SerializeField]
@@ -26,7 +26,8 @@ public class NetworkedRunnerMovement : NetworkBehaviour
     private GameObject m_character;
     [SerializeField]
     private Animator m_animator;
-    private bool m_isjump = false;
+    [SerializeField]
+    private bool m_isJumping = false;
 
     private void Start()
     {
@@ -43,7 +44,7 @@ public class NetworkedRunnerMovement : NetworkBehaviour
         if (!isLocalPlayer)
         {
             return;
-        }   
+        }
     }
 
     private void FixedUpdate()
@@ -110,12 +111,21 @@ public class NetworkedRunnerMovement : NetworkBehaviour
     {
         if (m_floorTrigger.IsOnFloor == true)
         {
-            m_isjump = false;
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 RB.AddForce(Vector3.up * JumpIntensity, ForceMode.Acceleration);
                 m_animator.SetTrigger("Jump");
-                m_isjump = true;
+                m_isJumping = true;
+            }
+        }
+
+        if (m_floorTrigger.IsOnFloor == false && m_isJumping == true)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                RB.AddForce(Vector3.up * JumpIntensity, ForceMode.Acceleration);
+                m_animator.SetTrigger("Jump");
+                m_isJumping = false;
             }
         }
     }
