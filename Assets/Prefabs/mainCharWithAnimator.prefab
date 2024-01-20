@@ -57,7 +57,6 @@ MonoBehaviour:
   syncInterval: 0
   <RB>k__BackingField: {fileID: 1986357944558114695}
   <AccelerationValue>k__BackingField: 25
-  <DecelerationValue>k__BackingField: 200
   <MaxForwardVelocity>k__BackingField: 6
   <MaxSidewaysVelocity>k__BackingField: 4
   <MaxBackwardVelocity>k__BackingField: 3
