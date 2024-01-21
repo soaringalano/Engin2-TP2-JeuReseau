@@ -66,6 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0175e24c3815d174fa4e5d89bcf0577a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_animator: {fileID: 6385439707437339536}
   <IsOnFloor>k__BackingField: 0
 --- !u!1 &1292141603276078456
 GameObject:
@@ -473,6 +474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0175e24c3815d174fa4e5d89bcf0577a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_animator: {fileID: 6385439707437339536}
   <IsOnFloor>k__BackingField: 0
 --- !u!1001 &860800078625367821
 PrefabInstance:

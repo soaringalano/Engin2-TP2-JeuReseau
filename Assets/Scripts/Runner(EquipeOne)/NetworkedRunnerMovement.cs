@@ -124,7 +124,7 @@ public class NetworkedRunnerMovement : NetworkBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 RB.AddForce(Vector3.up * JumpIntensity, ForceMode.Acceleration);
-                m_animator.SetTrigger("DoubleJump"); Debug.Log("DoubleJump");
+                m_animator.SetTrigger("DoubleJump");
                 m_isJumping = false;
             }
         }
