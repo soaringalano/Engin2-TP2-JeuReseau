@@ -680,7 +680,7 @@ ModelImporter:
     second: RPG-Character-Mesh
   - first:
       74: 7400000
-    second: Unarmed-Stunned
+    second: Runner-Stunned
   - first:
       95: 9500000
     second: //RootNode
@@ -729,7 +729,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Unarmed-Stunned
+      name: Runner-Stunned
       takeName: Take 001
       internalID: 7400000
       firstFrame: 0

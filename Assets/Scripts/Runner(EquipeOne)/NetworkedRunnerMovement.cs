@@ -1,4 +1,5 @@
 using Mirror;
+using System;
 using UnityEngine;
 
 public class NetworkedRunnerMovement : NetworkBehaviour
@@ -21,6 +22,8 @@ public class NetworkedRunnerMovement : NetworkBehaviour
     private CharacterFloorTrigger m_floorTrigger;
 
     private Vector2 CurrentDirectionalInputs { get; set; }
+    private float AnimatorRunningValue { get; set; } = 0.5f; // Has to stay between 0.5 and 1
+    private float AccelerationRunningValue { get; set; } = 10.0f;
 
     [SerializeField]
     private GameObject m_character;
@@ -52,6 +55,7 @@ public class NetworkedRunnerMovement : NetworkBehaviour
         if (m_floorTrigger.IsOnFloor == true)
         {
             SetDirectionalInputs();
+            SetRunningInput();
             UpdateMovementsToAnimator();
             ApplyMovementsOnFloorFU(CurrentDirectionalInputs);
         }
@@ -100,11 +104,25 @@ public class NetworkedRunnerMovement : NetworkBehaviour
         }
     }
 
+    private void SetRunningInput()
+    {
+        if (Input.GetKey(KeyCode.LeftShift)) 
+        {
+            AnimatorRunningValue = 1.0f;
+            AccelerationRunningValue = 10.0f;
+        }
+        else
+        {
+            AnimatorRunningValue = 0.5f;
+            AccelerationRunningValue = 1.0f;
+        }
+    }
+
     private void UpdateMovementsToAnimator()
     {
         // Set the animator values
-        m_animator.SetFloat("MoveX", CurrentDirectionalInputs.x);
-        m_animator.SetFloat("MoveY", CurrentDirectionalInputs.y);
+        m_animator.SetFloat("MoveX", CurrentDirectionalInputs.x * AnimatorRunningValue);
+        m_animator.SetFloat("MoveY", CurrentDirectionalInputs.y * AnimatorRunningValue);
     }
 
     private void VerifiIfCanJump()
@@ -136,8 +154,8 @@ public class NetworkedRunnerMovement : NetworkBehaviour
         vectorOnFloor += Vector3.ProjectOnPlane(Camera.transform.right * inputVector2.x, Vector3.up);
         vectorOnFloor.Normalize();
         var currentMaxSpeed = GetCurrentMaxSpeed();
-
-        RB.AddForce(vectorOnFloor * AccelerationValue, ForceMode.Acceleration);
+        
+        RB.AddForce(vectorOnFloor * (AccelerationValue * AccelerationRunningValue), ForceMode.Acceleration);
         if (RB.velocity.magnitude > currentMaxSpeed)
         {
             RB.velocity = RB.velocity.normalized;

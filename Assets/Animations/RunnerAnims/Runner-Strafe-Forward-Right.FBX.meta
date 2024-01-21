@@ -698,7 +698,7 @@ ModelImporter:
     second: RPG-Character-Mesh
   - first:
       74: 7400000
-    second: Unarmed-Strafe-Forward-Right
+    second: Runner-Strafe-Forward-Right
   - first:
       95: 9500000
     second: //RootNode
@@ -744,7 +744,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Unarmed-Strafe-Forward-Right
+      name: Runner-Strafe-Forward-Right
       takeName: Take 001
       internalID: 7400000
       firstFrame: 0
@@ -767,14 +767,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0
-        functionName: FootL
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {fileID: 101100000, guid: 3e4e408fdcc93ee468a1275b69104d63, type: 2}
