@@ -16,6 +16,8 @@ public class NetworkedRunnerMovement : NetworkBehaviour
     private float MaxBackwardVelocity { get; set; }
     [field: SerializeField]
     private float JumpIntensity { get; set; } = 100.0f;
+    [field: SerializeField]
+    private float MeshRotationLerpSpeed { get; set; } = 4.0f;
 
     [SerializeField]
     private CharacterFloorTrigger m_floorTrigger;
@@ -128,6 +130,21 @@ public class NetworkedRunnerMovement : NetworkBehaviour
                 m_isJumping = false;
             }
         }
+    }
+
+    private void RotatePlayerMesh()
+    {
+        if (CurrentDirectionalInputs == Vector2.zero)
+        {
+            return;
+        }
+
+        var vectorOnFloor = Vector3.ProjectOnPlane(Camera.transform.forward * CurrentDirectionalInputs.y, Vector3.up);
+        vectorOnFloor += Vector3.ProjectOnPlane(Camera.transform.right * CurrentDirectionalInputs.x, Vector3.up);
+        vectorOnFloor.Normalize();
+        Quaternion meshRotation = Quaternion.LookRotation(vectorOnFloor, Vector3.up);
+
+        RB.rotation = Quaternion.Slerp(RB.rotation, meshRotation, MeshRotationLerpSpeed * Time.deltaTime);
     }
 
     private void ApplyMovementsOnFloorFU(Vector2 inputVector2)
