@@ -55,7 +55,8 @@ public class NetworkedRunnerMovement : NetworkBehaviour
         {
             SetDirectionalInputs();
             UpdateMovementsToAnimator();
-            ApplyMovementsOnFloorFU(CurrentDirectionalInputs);
+            RotatePlayerMesh();
+            ApplyMovementsOnFloorFU();
         }
     }
 
@@ -147,10 +148,10 @@ public class NetworkedRunnerMovement : NetworkBehaviour
         RB.rotation = Quaternion.Slerp(RB.rotation, meshRotation, MeshRotationLerpSpeed * Time.deltaTime);
     }
 
-    private void ApplyMovementsOnFloorFU(Vector2 inputVector2)
+    private void ApplyMovementsOnFloorFU()
     {
-        var vectorOnFloor = Vector3.ProjectOnPlane(Camera.transform.forward * inputVector2.y, Vector3.up);
-        vectorOnFloor += Vector3.ProjectOnPlane(Camera.transform.right * inputVector2.x, Vector3.up);
+        var vectorOnFloor = Vector3.ProjectOnPlane(Camera.transform.forward * CurrentDirectionalInputs.y, Vector3.up);
+        vectorOnFloor += Vector3.ProjectOnPlane(Camera.transform.right * CurrentDirectionalInputs.x, Vector3.up);
         vectorOnFloor.Normalize();
         var currentMaxSpeed = GetCurrentMaxSpeed();
 
