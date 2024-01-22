@@ -1,9 +1,12 @@
 ﻿using Mirror;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
-public class ViewController : MonoBehaviour //NetworkBehaviour
+public class NetworkViewController : NetworkBehaviour
 {
 
     [field:SerializeField]
@@ -38,32 +41,39 @@ public class ViewController : MonoBehaviour //NetworkBehaviour
     private Vector2 m_zoomClampValues = new Vector2(2.0f, 15.0f);
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        //gameObject.SetActive(isLocalPlayer);
+        gameObject.SetActive(isLocalPlayer);
+        if(m_objectToLookAt is null)
+        {
+            List<GameObject> gos = GameObjectHelper.s_instance.GetGameObjectsByLayerIdAndObjectName(7, "Plane");
+            if(gos != null)
+            {
+                m_objectToLookAt = gos[0].transform;
+            }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*if (!isLocalPlayer)
+        if (!isLocalPlayer)
         {
             return;
-        }*/
+        }
     }
 
     void FixedUpdate()
     {
-        /*if(!isLocalPlayer)
-        { 
+        if (!isLocalPlayer)
+        {
             return;
-        }*/
+        }
         SetDirectionalInputs();
         FixedUpdateRotate();
         FixedUpdateCameraLerp();
         OnFixedUpdateTest();
     }
-
 
     /**
      * called in FixedApplyMovements
@@ -118,7 +128,7 @@ public class ViewController : MonoBehaviour //NetworkBehaviour
             CurrentDirectionalInputs += Vector2.right;
         }
 
-        Debug.Log("Directional input:" + CurrentDirectionalInputs);
+        //Debug.Log("Directional input:" + CurrentDirectionalInputs);
     }
 
     /**
@@ -150,7 +160,7 @@ public class ViewController : MonoBehaviour //NetworkBehaviour
 
         RB.AddForce(vectorOnFloor * AccelerationValue, ForceMode.Acceleration);
 
-        var currentMaxSpeed = GetCurrentMaxSpeed();
+        //var currentMaxSpeed = GetCurrentMaxSpeed();
         // Debug.Log("current max speed is :" + currentMaxSpeed);
 
         //if (RB.velocity.magnitude > currentMaxSpeed)
@@ -176,7 +186,7 @@ public class ViewController : MonoBehaviour //NetworkBehaviour
      */
     private void FixedUpdateRotate()
     {
-        float currentAngleX = Input.GetAxis("Mouse X") * m_rotationSpeed;
+        float currentAngleX = -1 * Input.GetAxis("Mouse X") * m_rotationSpeed;
         transform.RotateAround(transform.position, m_objectToLookAt.up, currentAngleX);
     }
 
