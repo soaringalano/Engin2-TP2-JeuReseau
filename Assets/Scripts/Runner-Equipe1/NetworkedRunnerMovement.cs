@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class NetworkedRunnerMovement : NetworkBehaviour
 {
+    [field: SerializeField]
     private Camera Camera { get; set; }
     [field: SerializeField]
     private Rigidbody RB { get; set; }
@@ -37,20 +38,25 @@ public class NetworkedRunnerMovement : NetworkBehaviour
         {
             Camera.gameObject.SetActive(true);
         }
-        Camera = Camera.main;
+        //Camera = Camera.main;
     }
 
     void Update()
     {
-        VerifiIfCanJump(); // a changer de place surment
         if (!isLocalPlayer)
         {
             return;
         }
+        VerifiIfCanJump(); // a changer de place surment
     }
 
     private void FixedUpdate()
     {
+        if (!isLocalPlayer)
+        {
+            return;
+        }
+
         if (m_floorTrigger.IsOnFloor == true)
         {
             SetDirectionalInputs();
