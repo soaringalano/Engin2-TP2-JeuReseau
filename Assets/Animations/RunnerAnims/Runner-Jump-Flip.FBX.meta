@@ -686,7 +686,7 @@ ModelImporter:
     second: RPG-Character-Mesh
   - first:
       74: 7400000
-    second: Unarmed-Jump-Flip
+    second: Runner-Jump-Flip
   - first:
       74: 7400002
     second: Unarmed-Land
@@ -735,7 +735,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Unarmed-Jump-Flip
+      name: Runner-Jump-Flip
       takeName: Take 001
       internalID: 7400000
       firstFrame: 0

@@ -686,7 +686,7 @@ ModelImporter:
     second: RPG-Character-Mesh
   - first:
       74: 7400000
-    second: Unarmed-Run-Left
+    second: Runner-Run-Left
   - first:
       95: 9500000
     second: //RootNode
@@ -732,7 +732,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Unarmed-Run-Left
+      name: Runner-Run-Left
       takeName: Take 001
       internalID: 7400000
       firstFrame: 0
