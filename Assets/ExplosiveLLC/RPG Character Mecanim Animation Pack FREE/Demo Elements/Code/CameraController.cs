@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 namespace RPGCharacterAnims
 {
 	/// <summary>
-	/// Basic m_camera Controller with Follow, Rotate, and Zoom functionality.
+	/// Basic Camera Controller with Follow, Rotate, and Zoom functionality.
 	/// Can be used with either Legacy Input or Input System inputs.
 	/// </summary>
 	public class CameraController:MonoBehaviour
@@ -37,7 +37,7 @@ namespace RPGCharacterAnims
 			// Try to find Player if not set in Inspector.
 			if (cameraTarget == null) { cameraTarget = GameObject.FindWithTag("Player"); }
 
-			if (!cameraTarget) { Debug.LogError("No target selected for m_camera."); }
+			if (!cameraTarget) { Debug.LogError("No target selected for Camera."); }
 			else { SetStartPosition(); }
 		}
 
