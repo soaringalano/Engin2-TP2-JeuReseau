@@ -135,6 +135,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NetWorkManager
       objectReference: {fileID: 0}
+    - target: {fileID: 5894941100919622093, guid: a59df4c3ace404b22a79bceab780e5a3, type: 3}
+      propertyPath: playerPrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6128714945894096576, guid: a59df4c3ace404b22a79bceab780e5a3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 437.79584
