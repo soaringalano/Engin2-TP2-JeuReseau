@@ -179,7 +179,7 @@ namespace RPGCharacterAnims
         private Vector3 _jumpInput;
 
         /// <summary>
-        /// Camera relative input in the XZ plane. This is calculated when SetMoveInput is called.
+        /// m_camera relative input in the XZ plane. This is calculated when SetMoveInput is called.
         /// </summary>
         public Vector3 cameraRelativeInput => _cameraRelativeInput;
         private Vector3 _cameraRelativeInput;
