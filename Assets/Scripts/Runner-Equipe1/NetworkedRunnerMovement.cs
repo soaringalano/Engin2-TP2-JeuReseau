@@ -30,6 +30,8 @@ public class NetworkedRunnerMovement : NetworkBehaviour
     private Animator m_animator;
     [SerializeField]
     private bool m_isJumping = false;
+    [SerializeField]
+    Camera m_testCam;
 
     private void Start()
     {
@@ -37,7 +39,7 @@ public class NetworkedRunnerMovement : NetworkBehaviour
         {
             Camera m_cam = gameObject.AddComponent<Camera>();
             var m_cameraPos = GameObject.Find("CameraPosition");
-            Camera m_testCam = Instantiate(m_cam, m_cameraPos.transform.position, m_cameraPos.transform.rotation);
+            m_testCam = Instantiate(m_cam, m_cameraPos.transform.position, m_cameraPos.transform.rotation);
         }
     }
 
@@ -144,8 +146,8 @@ public class NetworkedRunnerMovement : NetworkBehaviour
             return;
         }
 
-        var vectorOnFloor = Vector3.ProjectOnPlane(Camera.transform.forward * CurrentDirectionalInputs.y, Vector3.up);
-        vectorOnFloor += Vector3.ProjectOnPlane(Camera.transform.right * CurrentDirectionalInputs.x, Vector3.up);
+        var vectorOnFloor = Vector3.ProjectOnPlane(m_testCam.transform.forward * CurrentDirectionalInputs.y, Vector3.up);
+        vectorOnFloor += Vector3.ProjectOnPlane(m_testCam.transform.right * CurrentDirectionalInputs.x, Vector3.up);
         vectorOnFloor.Normalize();
         Quaternion meshRotation = Quaternion.LookRotation(vectorOnFloor, Vector3.up);
 
@@ -154,8 +156,8 @@ public class NetworkedRunnerMovement : NetworkBehaviour
 
     private void ApplyMovementsOnFloorFU()
     {
-        var vectorOnFloor = Vector3.ProjectOnPlane(Camera.transform.forward * CurrentDirectionalInputs.y, Vector3.up);
-        vectorOnFloor += Vector3.ProjectOnPlane(Camera.transform.right * CurrentDirectionalInputs.x, Vector3.up);
+        var vectorOnFloor = Vector3.ProjectOnPlane(m_testCam.transform.forward * CurrentDirectionalInputs.y, Vector3.up);
+        vectorOnFloor += Vector3.ProjectOnPlane(m_testCam.transform.right * CurrentDirectionalInputs.x, Vector3.up);
         vectorOnFloor.Normalize();
         var currentMaxSpeed = GetCurrentMaxSpeed();
 
