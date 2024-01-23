@@ -44,15 +44,15 @@ public class NetworkViewController : NetworkBehaviour
     void Awake()
     {
         gameObject.SetActive(isLocalPlayer);
-        if(m_objectToLookAt is null)
+        if(m_objectToLookAt == null)
         {
-            List<GameObject> gos = GameObjectHelper.s_instance.GetGameObjectsByLayerIdAndObjectName(7, "Plane");
+            List<GameObject> gos = GameObjectHelper.GetInstance().GetGameObjectsByLayerIdAndObjectName(7, "Plane");
             if (gos != null)
             {
                 m_objectToLookAt = gos[0].transform;
                 return;
             }
-            gos = GameObjectHelper.s_instance.GetGameObjectsByLayerIdAndObjectName(7, "Terrain");
+            gos = GameObjectHelper.GetInstance().GetGameObjectsByLayerIdAndObjectName(7, "Terrain");
             if (gos != null)
             {
                 m_objectToLookAt = gos[0].transform;
