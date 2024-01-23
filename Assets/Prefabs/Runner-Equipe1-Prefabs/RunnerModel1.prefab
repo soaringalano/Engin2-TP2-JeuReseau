@@ -522,6 +522,10 @@ PrefabInstance:
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 5017534650379737865}
+    - target: {fileID: 7342118222181592958, guid: 8e916bcfd1d093c43bc89eae36e288a6, type: 3}
+      propertyPath: _assetId
+      value: 2399787870
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
