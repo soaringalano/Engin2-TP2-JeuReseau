@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+ * Deprecated
+ */
 public class ViewController : MonoBehaviour //NetworkBehaviour
 {
 
@@ -89,7 +92,7 @@ public class ViewController : MonoBehaviour //NetworkBehaviour
             currentMaxVelocity += Mathf.Pow(normalizedInputs.y, 2) * MaxBackwardVelocity;
         }
 
-        Debug.Log("Current max speed :" + currentMaxVelocity);
+        //Debug.Log("Current max speed :" + currentMaxVelocity);
 
         return currentMaxVelocity;
     }
@@ -142,16 +145,16 @@ public class ViewController : MonoBehaviour //NetworkBehaviour
     {
         /*var vectorOnFloor = Vector3.ProjectOnPlane(-camera.transform.up * inputVector2.y, Vector3.up);
         vectorOnFloor += Vector3.ProjectOnPlane(-camera.transform.right * inputVector2.x, Vector3.up);*/
-        Debug.Log("god view camera is moving");
-        Debug.Log("input vector is :" + inputVector2);
-        var vectorOnFloor = -(camera.transform.up * inputVector2.y + camera.transform.right * inputVector2.x);
+        //Debug.Log("god view camera is moving");
+        //Debug.Log("input vector is :" + inputVector2);
+        var vectorOnFloor = (camera.transform.up * inputVector2.y + camera.transform.right * inputVector2.x);
         vectorOnFloor.Normalize();
-        Debug.Log("Normalized input is : " + vectorOnFloor);
+        //Debug.Log("Normalized input is : " + vectorOnFloor);
 
         RB.AddForce(vectorOnFloor * AccelerationValue, ForceMode.Acceleration);
 
         var currentMaxSpeed = GetCurrentMaxSpeed();
-        Debug.Log("current max speed is :" + currentMaxSpeed);
+        // Debug.Log("current max speed is :" + currentMaxSpeed);
 
         //if (RB.velocity.magnitude > currentMaxSpeed)
         //{
@@ -166,7 +169,7 @@ public class ViewController : MonoBehaviour //NetworkBehaviour
      */
     private void FixedUpdateQuickDeceleration()
     {
-        Debug.Log("god view camera is decelerating quickly");
+        //Debug.Log("god view camera is decelerating quickly");
         var oppositeDirectionForceToApply = -RB.velocity * DecelerationValue * Time.fixedDeltaTime;
         RB.AddForce(oppositeDirectionForceToApply, ForceMode.Acceleration);
     }

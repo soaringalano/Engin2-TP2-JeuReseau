@@ -17,6 +17,8 @@ public class NetworkedRunnerMovement : NetworkBehaviour
     private float MaxBackwardVelocity { get; set; }
     [field: SerializeField]
     private float JumpIntensity { get; set; } = 100.0f;
+    [field: SerializeField]
+    private float MeshRotationLerpSpeed { get; set; } = 4.0f;
 
     [SerializeField]
     private CharacterFloorTrigger m_floorTrigger;
@@ -57,7 +59,8 @@ public class NetworkedRunnerMovement : NetworkBehaviour
             SetDirectionalInputs();
             SetRunningInput();
             UpdateMovementsToAnimator();
-            ApplyMovementsOnFloorFU(CurrentDirectionalInputs);
+            RotatePlayerMesh();
+            ApplyMovementsOnFloorFU();
         }
     }
 
@@ -148,10 +151,25 @@ public class NetworkedRunnerMovement : NetworkBehaviour
         }
     }
 
-    private void ApplyMovementsOnFloorFU(Vector2 inputVector2)
+    private void RotatePlayerMesh()
     {
-        var vectorOnFloor = Vector3.ProjectOnPlane(Camera.transform.forward * inputVector2.y, Vector3.up);
-        vectorOnFloor += Vector3.ProjectOnPlane(Camera.transform.right * inputVector2.x, Vector3.up);
+        if (CurrentDirectionalInputs == Vector2.zero)
+        {
+            return;
+        }
+
+        var vectorOnFloor = Vector3.ProjectOnPlane(Camera.transform.forward * CurrentDirectionalInputs.y, Vector3.up);
+        vectorOnFloor += Vector3.ProjectOnPlane(Camera.transform.right * CurrentDirectionalInputs.x, Vector3.up);
+        vectorOnFloor.Normalize();
+        Quaternion meshRotation = Quaternion.LookRotation(vectorOnFloor, Vector3.up);
+
+        RB.rotation = Quaternion.Slerp(RB.rotation, meshRotation, MeshRotationLerpSpeed * Time.deltaTime);
+    }
+
+    private void ApplyMovementsOnFloorFU()
+    {
+        var vectorOnFloor = Vector3.ProjectOnPlane(Camera.transform.forward * CurrentDirectionalInputs.y, Vector3.up);
+        vectorOnFloor += Vector3.ProjectOnPlane(Camera.transform.right * CurrentDirectionalInputs.x, Vector3.up);
         vectorOnFloor.Normalize();
         var currentMaxSpeed = GetCurrentMaxSpeed();
         

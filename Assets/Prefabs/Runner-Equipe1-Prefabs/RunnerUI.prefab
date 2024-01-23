@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7871685778902342334}
   - component: {fileID: 907414830935692297}
   m_Layer: 5
-  m_Name: E01UI
+  m_Name: RunnerUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
