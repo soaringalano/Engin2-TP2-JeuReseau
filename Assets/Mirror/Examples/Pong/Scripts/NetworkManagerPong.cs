@@ -1,3 +1,4 @@
+﻿using System.Linq;
 using UnityEngine;
 
 /*
@@ -21,6 +22,16 @@ namespace Mirror.Examples.Pong
         {
             // add player at correct spawn position
             Transform start = numPlayers == 0 ? leftRacketSpawn : rightRacketSpawn;
+
+            /**
+             * added by Mao
+             */
+            GameObject playerPrefab = null;
+            if (selectedPrefabIndex < playerPrefabs.Count())
+            {
+                playerPrefab = playerPrefabs[selectedPrefabIndex];
+            }
+
             GameObject player = Instantiate(playerPrefab, start.position, start.rotation);
             NetworkServer.AddPlayerForConnection(conn, player);
 

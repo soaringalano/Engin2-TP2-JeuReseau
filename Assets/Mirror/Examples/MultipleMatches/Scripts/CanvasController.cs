@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -497,7 +497,16 @@ namespace Mirror.Examples.MultipleMatch
                 {
                     playerConn.Send(new ClientMatchMessage { clientMatchOperation = ClientMatchOperation.Started });
 
-                    GameObject player = Instantiate(NetworkManager.singleton.playerPrefab);
+                    /**
+                     * added by Mao
+                     */
+                    GameObject playerPrefab = null;
+                    if (NetworkManager.singleton.selectedPrefabIndex < NetworkManager.singleton.playerPrefabs.Count())
+                    {
+                        playerPrefab = NetworkManager.singleton.playerPrefabs[NetworkManager.singleton.selectedPrefabIndex];
+                    }
+
+                    GameObject player = Instantiate(playerPrefab);
                     player.GetComponent<NetworkMatch>().matchId = matchId;
                     NetworkServer.AddPlayerForConnection(playerConn, player);
 
