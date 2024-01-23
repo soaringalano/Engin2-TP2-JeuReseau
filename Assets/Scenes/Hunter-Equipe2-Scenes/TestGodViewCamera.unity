@@ -437,6 +437,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2326089804381357493, guid: 2dad97f27c1e49e429ae15abee0493db, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2326089804381357493, guid: 2dad97f27c1e49e429ae15abee0493db, type: 3}
       propertyPath: <m_rotationSpeed>k__BackingField
       value: 1
       objectReference: {fileID: 0}
@@ -525,17 +529,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2650495935285443054, guid: a434e92238db1dd4ba7e645588222ff1, type: 3}
+      propertyPath: onlineScene
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2650495935285443054, guid: a434e92238db1dd4ba7e645588222ff1, type: 3}
+      propertyPath: offlineScene
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3204049178357999079, guid: a434e92238db1dd4ba7e645588222ff1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 468.13663
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3204049178357999079, guid: a434e92238db1dd4ba7e645588222ff1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 322.58255
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3204049178357999079, guid: a434e92238db1dd4ba7e645588222ff1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.75135285
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3204049178357999079, guid: a434e92238db1dd4ba7e645588222ff1, type: 3}
       propertyPath: m_LocalRotation.w

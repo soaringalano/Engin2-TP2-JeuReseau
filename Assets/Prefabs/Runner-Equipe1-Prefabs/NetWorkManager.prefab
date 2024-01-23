@@ -53,8 +53,8 @@ MonoBehaviour:
   sendRate: 60
   autoStartServerBuild: 0
   autoConnectClientBuild: 0
-  offlineScene: Assets/Scenes/MergeRunner.unity
-  onlineScene: Assets/Scenes/MergeRunner.unity
+  offlineScene: 
+  onlineScene: 
   transport: {fileID: 7894855451613100376}
   networkAddress: localhost
   maxConnections: 100

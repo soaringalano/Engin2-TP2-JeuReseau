@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -135,6 +135,15 @@ namespace Mirror
             GameObject gamePlayer = OnRoomServerCreateGamePlayer(conn, roomPlayer);
             if (gamePlayer == null)
             {
+
+                /**
+                 * added by Mao
+                 */
+                GameObject playerPrefab = null;
+                if (selectedPrefabIndex < playerPrefabs.Count())
+                {
+                    playerPrefab = playerPrefabs[selectedPrefabIndex];
+                }
                 // get start position from base class
                 Transform startPos = GetStartPosition();
                 gamePlayer = startPos != null
@@ -432,6 +441,15 @@ namespace Mirror
                 Debug.LogError("NetworkRoomManager no RoomPlayer prefab is registered. Please add a RoomPlayer prefab.");
             else
                 NetworkClient.RegisterPrefab(roomPlayerPrefab.gameObject);
+
+            /**
+             * added by Mao
+             */
+            GameObject playerPrefab = null;
+            if (selectedPrefabIndex < playerPrefabs.Count())
+            {
+                playerPrefab = playerPrefabs[selectedPrefabIndex];
+            }
 
             if (playerPrefab == null)
                 Debug.LogError("NetworkRoomManager no GamePlayer prefab is registered. Please add a GamePlayer prefab.");
