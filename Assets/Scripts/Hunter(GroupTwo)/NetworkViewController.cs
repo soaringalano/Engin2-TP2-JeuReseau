@@ -47,7 +47,13 @@ public class NetworkViewController : NetworkBehaviour
         if(m_objectToLookAt is null)
         {
             List<GameObject> gos = GameObjectHelper.s_instance.GetGameObjectsByLayerIdAndObjectName(7, "Plane");
-            if(gos != null)
+            if (gos != null)
+            {
+                m_objectToLookAt = gos[0].transform;
+                return;
+            }
+            gos = GameObjectHelper.s_instance.GetGameObjectsByLayerIdAndObjectName(7, "Terrain");
+            if (gos != null)
             {
                 m_objectToLookAt = gos[0].transform;
             }
@@ -154,7 +160,7 @@ public class NetworkViewController : NetworkBehaviour
         vectorOnFloor += Vector3.ProjectOnPlane(-camera.transform.right * inputVector2.x, Vector3.up);*/
         //Debug.Log("god view camera is moving");
         //Debug.Log("input vector is :" + inputVector2);
-        var vectorOnFloor = -(camera.transform.up * inputVector2.y + camera.transform.right * inputVector2.x);
+        var vectorOnFloor = (camera.transform.up * inputVector2.y + camera.transform.right * inputVector2.x);
         vectorOnFloor.Normalize();
         //Debug.Log("Normalized input is : " + vectorOnFloor);
 

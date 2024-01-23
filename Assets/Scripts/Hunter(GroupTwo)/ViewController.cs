@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+ * Deprecated
+ */
 public class ViewController : MonoBehaviour //NetworkBehaviour
 {
 
@@ -144,7 +147,7 @@ public class ViewController : MonoBehaviour //NetworkBehaviour
         vectorOnFloor += Vector3.ProjectOnPlane(-camera.transform.right * inputVector2.x, Vector3.up);*/
         //Debug.Log("god view camera is moving");
         //Debug.Log("input vector is :" + inputVector2);
-        var vectorOnFloor = -(camera.transform.up * inputVector2.y + camera.transform.right * inputVector2.x);
+        var vectorOnFloor = (camera.transform.up * inputVector2.y + camera.transform.right * inputVector2.x);
         vectorOnFloor.Normalize();
         //Debug.Log("Normalized input is : " + vectorOnFloor);
 
