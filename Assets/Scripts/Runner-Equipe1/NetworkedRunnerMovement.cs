@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class NetworkedRunnerMovement : NetworkBehaviour
 {
-    // private Camera Camera { get; set; }
-    [field: SerializeField]
-    public Camera CinemachineVirtualCamera { get; private set; }
-
-    [SerializeField]
-    private CinemachineVirtualCamera m_camera;
-
     [field: SerializeField]
     private Rigidbody RB { get; set; }
     [field: SerializeField]
@@ -38,31 +31,36 @@ public class NetworkedRunnerMovement : NetworkBehaviour
     [SerializeField]
     private bool m_isJumping = false;
 
-    private void Awake()
+    private void Start()
     {
         if (isLocalPlayer)
         {
-            m_camera.gameObject.SetActive(true);
+            Camera m_cam = gameObject.AddComponent<Camera>();
+            var m_cameraPos = GameObject.Find("CameraPosition");
+            Camera m_testCam = Instantiate(m_cam, m_cameraPos.transform.position, m_cameraPos.transform.rotation);
         }
-        CinemachineVirtualCamera = Camera.main;
     }
 
     void Update()
-    {
-        VerifiIfCanJump(); // a changer de place surment
+    {   
         if (!isLocalPlayer)
         {
             return;
         }
+        VerifiIfCanJump(); // a changer de place surment
     }
 
     private void FixedUpdate()
     {
+        if (!isLocalPlayer)
+        {
+            return;
+        }
         if (m_floorTrigger.IsOnFloor == true)
         {
             SetDirectionalInputs();
             UpdateMovementsToAnimator();
-            RotatePlayerMesh();
+            //RotatePlayerMesh();
             ApplyMovementsOnFloorFU();
         }
     }
@@ -84,7 +82,6 @@ public class NetworkedRunnerMovement : NetworkBehaviour
         {
             currentMaxVelocity += Mathf.Pow(normalizedInputs.y, 2) * MaxBackwardVelocity;
         }
-
         return currentMaxVelocity;
     }
 
@@ -147,8 +144,8 @@ public class NetworkedRunnerMovement : NetworkBehaviour
             return;
         }
 
-        var vectorOnFloor = Vector3.ProjectOnPlane(m_camera.transform.forward * CurrentDirectionalInputs.y, Vector3.up);
-        vectorOnFloor += Vector3.ProjectOnPlane(m_camera.transform.right * CurrentDirectionalInputs.x, Vector3.up);
+        var vectorOnFloor = Vector3.ProjectOnPlane(Camera.transform.forward * CurrentDirectionalInputs.y, Vector3.up);
+        vectorOnFloor += Vector3.ProjectOnPlane(Camera.transform.right * CurrentDirectionalInputs.x, Vector3.up);
         vectorOnFloor.Normalize();
         Quaternion meshRotation = Quaternion.LookRotation(vectorOnFloor, Vector3.up);
 
@@ -157,8 +154,8 @@ public class NetworkedRunnerMovement : NetworkBehaviour
 
     private void ApplyMovementsOnFloorFU()
     {
-        var vectorOnFloor = Vector3.ProjectOnPlane(m_camera.transform.forward * CurrentDirectionalInputs.y, Vector3.up);
-        vectorOnFloor += Vector3.ProjectOnPlane(m_camera.transform.right * CurrentDirectionalInputs.x, Vector3.up);
+        var vectorOnFloor = Vector3.ProjectOnPlane(Camera.transform.forward * CurrentDirectionalInputs.y, Vector3.up);
+        vectorOnFloor += Vector3.ProjectOnPlane(Camera.transform.right * CurrentDirectionalInputs.x, Vector3.up);
         vectorOnFloor.Normalize();
         var currentMaxSpeed = GetCurrentMaxSpeed();
 
