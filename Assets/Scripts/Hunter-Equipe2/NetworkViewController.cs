@@ -43,16 +43,20 @@ public class NetworkViewController : NetworkBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        gameObject.SetActive(isLocalPlayer);
-        if(m_objectToLookAt is null)
+        if(isLocalPlayer)
         {
-            List<GameObject> gos = GameObjectHelper.s_instance.GetGameObjectsByLayerIdAndObjectName(7, "Plane");
+            gameObject.SetActive(true);
+        }
+        
+        if(m_objectToLookAt == null)
+        {
+            List<GameObject> gos = GameObjectHelper.GetInstance().GetGameObjectsByLayerIdAndObjectName(7, "Plane");
             if (gos != null)
             {
                 m_objectToLookAt = gos[0].transform;
                 return;
             }
-            gos = GameObjectHelper.s_instance.GetGameObjectsByLayerIdAndObjectName(7, "Terrain");
+            gos = GameObjectHelper.GetInstance().GetGameObjectsByLayerIdAndObjectName(7, "Terrain");
             if (gos != null)
             {
                 m_objectToLookAt = gos[0].transform;
@@ -192,8 +196,11 @@ public class NetworkViewController : NetworkBehaviour
      */
     private void FixedUpdateRotate()
     {
-        float currentAngleX = -1 * Input.GetAxis("Mouse X") * m_rotationSpeed;
-        transform.RotateAround(transform.position, m_objectToLookAt.up, currentAngleX);
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            float currentAngleX = -1 * Input.GetAxis("Mouse X") * m_rotationSpeed;
+            transform.RotateAround(transform.position, m_objectToLookAt.up, currentAngleX);
+        }
     }
 
     /**
