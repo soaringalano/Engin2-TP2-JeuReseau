@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class NetworkedRunnerMovement : NetworkBehaviour
 {
+
+    [field: SerializeField]
+    private InstantiateCamera Camera { get; set; }
+
     [field: SerializeField]
     private Rigidbody RB { get; set; }
     [field: SerializeField]
@@ -23,28 +27,25 @@ public class NetworkedRunnerMovement : NetworkBehaviour
     private CharacterFloorTrigger m_floorTrigger;
 
     private Vector2 CurrentDirectionalInputs { get; set; }
-    
+
     [SerializeField]
     private GameObject m_character;
     [SerializeField]
     private Animator m_animator;
     [SerializeField]
     private bool m_isJumping = false;
-    [SerializeField]
-    Camera m_testCam;
+
 
     private void Start()
     {
-        if (isLocalPlayer)
+        if (!isLocalPlayer)
         {
-            Camera m_cam = gameObject.AddComponent<Camera>();
-            var m_cameraPos = GameObject.Find("CameraPosition");
-            m_testCam = Instantiate(m_cam, m_cameraPos.transform.position, m_cameraPos.transform.rotation);
+            return;
         }
     }
 
     void Update()
-    {   
+    {
         if (!isLocalPlayer)
         {
             return;
@@ -146,8 +147,8 @@ public class NetworkedRunnerMovement : NetworkBehaviour
             return;
         }
 
-        var vectorOnFloor = Vector3.ProjectOnPlane(m_testCam.transform.forward * CurrentDirectionalInputs.y, Vector3.up);
-        vectorOnFloor += Vector3.ProjectOnPlane(m_testCam.transform.right * CurrentDirectionalInputs.x, Vector3.up);
+        var vectorOnFloor = Vector3.ProjectOnPlane(Camera.transform.forward * CurrentDirectionalInputs.y, Vector3.up);
+        vectorOnFloor += Vector3.ProjectOnPlane(Camera.transform.right * CurrentDirectionalInputs.x, Vector3.up);
         vectorOnFloor.Normalize();
         Quaternion meshRotation = Quaternion.LookRotation(vectorOnFloor, Vector3.up);
 
@@ -156,8 +157,8 @@ public class NetworkedRunnerMovement : NetworkBehaviour
 
     private void ApplyMovementsOnFloorFU()
     {
-        var vectorOnFloor = Vector3.ProjectOnPlane(m_testCam.transform.forward * CurrentDirectionalInputs.y, Vector3.up);
-        vectorOnFloor += Vector3.ProjectOnPlane(m_testCam.transform.right * CurrentDirectionalInputs.x, Vector3.up);
+        var vectorOnFloor = Vector3.ProjectOnPlane(Camera.transform.forward * CurrentDirectionalInputs.y, Vector3.up);
+        vectorOnFloor += Vector3.ProjectOnPlane(Camera.transform.right * CurrentDirectionalInputs.x, Vector3.up);
         vectorOnFloor.Normalize();
         var currentMaxSpeed = GetCurrentMaxSpeed();
 
