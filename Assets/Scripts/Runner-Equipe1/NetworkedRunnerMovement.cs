@@ -58,27 +58,21 @@ public class NetworkedRunnerMovement : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        //if (!isLocalPlayer)
-        //{
-        //    return;
-        //}
-
-        if (m_floorTrigger.IsOnFloor == true)
+        if (!isLocalPlayer)
         {
-            if (isLocalPlayer)
-            {
-                SetDirectionalInputs();
-                SetRunningInput();
-            }
-
-            UpdateMovementsToAnimator();
-            RotatePlayerMesh();
-            
-            if (isLocalPlayer)
-            {
-                ApplyMovementsOnFloorFU();
-            }
+            return;
         }
+
+        if (m_floorTrigger.IsOnFloor == false)
+        {
+            return;
+        }
+
+        SetDirectionalInputs();
+        SetRunningInput();
+        UpdateMovementsToAnimator();
+        RotatePlayerMesh();
+        ApplyMovementsOnFloorFU();
     }
 
     private float GetCurrentMaxSpeed()
