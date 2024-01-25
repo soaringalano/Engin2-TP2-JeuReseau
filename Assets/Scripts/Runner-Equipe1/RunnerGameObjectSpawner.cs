@@ -16,6 +16,12 @@ public class RunnerGameObjectSpawner : NetworkBehaviour
     void Start()
     {
         InstanciateGameObjects();
+
+        if (!isLocalPlayer)
+        {
+            return;
+        }
+
         SetCameraInNetworkedRunnerMovement();
         SetTheCameraFollow();
         SetTheCameraLookAt();
@@ -67,7 +73,13 @@ public class RunnerGameObjectSpawner : NetworkBehaviour
 
     private void InstanciateGameObjects()
     {
-        m_runnerCamAssetsGameObject = Instantiate(RunnerCameraAssetsPrefab, transform);
         m_runnerGameObject = Instantiate(RunnerPrefab, transform);
+
+        if (!isLocalPlayer)
+        {
+            return;
+        }
+
+        m_runnerCamAssetsGameObject = Instantiate(RunnerCameraAssetsPrefab, transform);
     }
 }

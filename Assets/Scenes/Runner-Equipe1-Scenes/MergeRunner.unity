@@ -389,6 +389,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RunnerNetworkManager
       objectReference: {fileID: 0}
+    - target: {fileID: 904459759236256043, guid: 48a81436e92b4204d982bf674063cecd, type: 3}
+      propertyPath: playerPrefab
+      value: 
+      objectReference: {fileID: 56868658535408414, guid: 60532d26173e88e45aa64aab28837bf0, type: 3}
     - target: {fileID: 9105430863356000169, guid: 48a81436e92b4204d982bf674063cecd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.0793933
