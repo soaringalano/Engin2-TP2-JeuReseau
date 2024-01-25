@@ -1,8 +1,7 @@
 using Mirror;
+using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-
 
 public class NetworkMineExplotion : NetworkBehaviour
 {
@@ -14,20 +13,30 @@ public class NetworkMineExplotion : NetworkBehaviour
     protected ETeamSide m_teamSide = ETeamSide.Count;
     [SerializeField]
     protected List<ETeamSide> m_affectedSide = new List<ETeamSide>();
+    [SerializeField]
+    private float m_deleteTimer = 1.6f;
 
     private void OnTriggerEnter(Collider other)
     {
         var otherHitBox = other.GetComponent<NetworkMineExplotion>();
-        if (otherHitBox == null )
+        if (otherHitBox == null)
         {
-            return; 
+            return;
         }
 
         if (CanInteract(otherHitBox))
         {
             Debug.Log(gameObject.name + " got hit by: " + otherHitBox);
-           m_explotionSystem.SetActive(true);
-        }       
+            m_explotionSystem.SetActive(true);
+            StartCoroutine(DeleteMine());
+        }
+    }
+
+    IEnumerator DeleteMine()
+    {
+        yield return new WaitForSeconds(m_deleteTimer);
+        Debug.Log("mine destroy");
+        Destroy(this.gameObject);
     }
 
     protected bool CanInteract(NetworkMineExplotion other)
