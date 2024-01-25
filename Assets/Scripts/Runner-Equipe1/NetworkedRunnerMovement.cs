@@ -58,16 +58,6 @@ public class NetworkedRunnerMovement : NetworkBehaviour
 
     private void FixedUpdate()
     {
-
-        //if (m_floorTrigger.IsOnFloor)
-        //{
-        //    SetDirectionalInputs();
-        //    SetRunningInput();
-        //    UpdateMovementsToAnimator();
-        //    RotatePlayerMesh();
-        //    ApplyMovementsOnFloorFU();
-        //}
-
         if (!isLocalPlayer)
         {
             return;
