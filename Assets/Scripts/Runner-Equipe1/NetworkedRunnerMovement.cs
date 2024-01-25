@@ -1,10 +1,9 @@
 using Mirror;
-using System;
 using UnityEngine;
 
 public class NetworkedRunnerMovement : NetworkBehaviour
 {
-    private Camera Camera { get; set; }
+    public Camera Camera { get; set; }
     [field: SerializeField]
     private Rigidbody RB { get; set; }
     [field: SerializeField]
@@ -36,24 +35,34 @@ public class NetworkedRunnerMovement : NetworkBehaviour
 
     private void Awake()
     {
-        if (isLocalPlayer)
-        {
-            Camera.gameObject.SetActive(true);
-        }
-        Camera = Camera.main;
+        //if (isLocalPlayer)
+        //{
+            //CameraSpawner = transform.GetChild(0).gameObject;
+            //if (CameraSpawner == null) { Debug.LogError("CameraSpawner not found!"); }
+            //RunnerCamPrefab = Instantiate(RunnerCamPrefab, CameraSpawner);
+            //Camera.gameObject.SetActive(true);
+        //}
+
+        //Camera = Camera.main;
     }
 
     void Update()
     {
-        VerifiIfCanJump(); // a changer de place surment
         if (!isLocalPlayer)
         {
             return;
         }
+
+        VerifiIfCanJump(); // a changer de place surment
     }
 
     private void FixedUpdate()
     {
+        if (!isLocalPlayer)
+        {
+            return;
+        }
+
         if (m_floorTrigger.IsOnFloor == true)
         {
             SetDirectionalInputs();
@@ -168,7 +177,13 @@ public class NetworkedRunnerMovement : NetworkBehaviour
 
     private void ApplyMovementsOnFloorFU()
     {
+        Vector3 camforward = Camera.transform.forward;
+
         var vectorOnFloor = Vector3.ProjectOnPlane(Camera.transform.forward * CurrentDirectionalInputs.y, Vector3.up);
+
+        Vector3 camRight = Camera.transform.right;
+        float currDirInX = CurrentDirectionalInputs.x;
+
         vectorOnFloor += Vector3.ProjectOnPlane(Camera.transform.right * CurrentDirectionalInputs.x, Vector3.up);
         vectorOnFloor.Normalize();
         var currentMaxSpeed = GetCurrentMaxSpeed();
