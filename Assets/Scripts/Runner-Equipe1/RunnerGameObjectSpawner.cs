@@ -7,57 +7,70 @@ public class RunnerGameObjectSpawner : NetworkBehaviour
     [field: SerializeField]
     private GameObject RunnerCameraAssetsPrefab { get; set; }
     [field: SerializeField]
-    private GameObject RunnerPrefab { get; set; }
-
+    //private GameObject RunnerPrefab { get; set; }
+    NetworkedRunnerMovement m_networkedRunnerMovement;
     private GameObject m_runnerGameObject;
     private GameObject m_runnerCamAssetsGameObject;
     private CinemachineVirtualCamera m_virtualCamera;
 
     void Start()
     {
-        InstanciateGameObjects();
-
         if (!isLocalPlayer)
         {
             return;
         }
 
+        InstanciateCamAssets();
+        GetRunnerGameObject();
+        GetNetworkedRunnerMovement();
         SetCameraInNetworkedRunnerMovement();
         SetTheCameraFollow();
         SetTheCameraLookAt();
     }
-
-    private void SetCameraInNetworkedRunnerMovement()
+    private void InstanciateCamAssets()
     {
-        Camera cam = m_runnerCamAssetsGameObject.GetComponentInChildren<Camera>();
-        if (cam == null)
+        //m_runnerGameObject = Instantiate(RunnerPrefab, transform);
+
+        //if (!isLocalPlayer)
+        //{
+        //    return;
+        //}
+
+        m_runnerCamAssetsGameObject = Instantiate(RunnerCameraAssetsPrefab, transform);
+    }
+
+    private void GetRunnerGameObject()
+    {
+        m_runnerGameObject = transform.GetComponentInChildren<Rigidbody>().gameObject;
+        if (m_runnerGameObject == null)
         {
-            Debug.LogError("Camera Not found!");
+            Debug.LogError("Runner GameObject Not found!");
             return;
         }
+    }
 
-        NetworkedRunnerMovement NwRunnerMov = m_runnerGameObject.GetComponent<NetworkedRunnerMovement>();
-        if (NwRunnerMov == null)
+    private void GetNetworkedRunnerMovement()
+    {
+        m_networkedRunnerMovement = GetComponent<NetworkedRunnerMovement>();
+        if (m_networkedRunnerMovement == null)
         {
             Debug.LogError("NetworkedRunnerMovement Not found!");
             return;
         }
-
-        NwRunnerMov.Camera = cam;
     }
 
-    private void SetTheCameraLookAt()
+    private void SetCameraInNetworkedRunnerMovement()
     {
-        Transform lookAt = m_runnerCamAssetsGameObject.transform.GetChild(0);
-        if (lookAt == null)
-        {
-            Debug.LogError("LookAt Not found!");
-            return;
-        }
+        //Camera cam = m_runnerCamAssetsGameObject.GetComponentInChildren<Camera>();
+        //if (cam == null)
+        //{
+        //    Debug.LogError("Camera Not found!");
+        //    return;
+        //}
 
-        m_virtualCamera.m_LookAt = lookAt;
+        //m_networkedRunnerMovement.Camera = cam;
+        m_networkedRunnerMovement.Camera = Camera.main;
     }
-
     private void SetTheCameraFollow()
     {
         CinemachineVirtualCamera virtualCam = m_runnerCamAssetsGameObject.GetComponentInChildren<CinemachineVirtualCamera>();
@@ -68,18 +81,24 @@ public class RunnerGameObjectSpawner : NetworkBehaviour
         }
 
         m_virtualCamera = virtualCam;
-        m_virtualCamera.m_Follow = m_runnerGameObject.transform;
+        Transform runnerTransform = m_runnerGameObject.transform;
+        m_virtualCamera.m_Follow = runnerTransform;
     }
 
-    private void InstanciateGameObjects()
+    private void SetTheCameraLookAt()
     {
-        m_runnerGameObject = Instantiate(RunnerPrefab, transform);
-
-        if (!isLocalPlayer)
+        Transform lookAt = m_runnerGameObject.transform.GetChild(0);
+        if (lookAt == null)
         {
+            Debug.LogError("LookAt Not found!");
             return;
         }
 
-        m_runnerCamAssetsGameObject = Instantiate(RunnerCameraAssetsPrefab, transform);
+        if (lookAt.name != "LookAt")
+        {
+            Debug.LogError("Make sure that the GameObject LookAt is the first child of in this prefab hierarchy!");
+        }
+
+        m_virtualCamera.m_LookAt = lookAt;
     }
 }

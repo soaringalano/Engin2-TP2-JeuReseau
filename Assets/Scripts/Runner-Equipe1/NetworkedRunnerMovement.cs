@@ -43,15 +43,15 @@ public class NetworkedRunnerMovement : NetworkBehaviour
             //Camera.gameObject.SetActive(true);
         //}
 
-        Camera = Camera.main;
+        //Camera = Camera.main;
     }
 
     void Update()
     {
-        //if (!isLocalPlayer)
-        //{
-        //    return;
-        //}
+        if (!isLocalPlayer)
+        {
+            return;
+        }
 
         VerifiIfCanJump(); // a changer de place surment
     }
@@ -65,11 +65,19 @@ public class NetworkedRunnerMovement : NetworkBehaviour
 
         if (m_floorTrigger.IsOnFloor == true)
         {
-            SetDirectionalInputs();
-            SetRunningInput();
+            if (isLocalPlayer)
+            {
+                SetDirectionalInputs();
+                SetRunningInput();
+            }
+
             UpdateMovementsToAnimator();
             RotatePlayerMesh();
-            ApplyMovementsOnFloorFU();
+            
+            if (isLocalPlayer)
+            {
+                ApplyMovementsOnFloorFU();
+            }
         }
     }
 
