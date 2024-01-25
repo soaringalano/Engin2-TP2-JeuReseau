@@ -6,9 +6,8 @@ public class RunnerGameObjectSpawner : NetworkBehaviour
 {
     [field: SerializeField]
     private GameObject RunnerCameraAssetsPrefab { get; set; }
-    [field: SerializeField]
-    //private GameObject RunnerPrefab { get; set; }
-    NetworkedRunnerMovement m_networkedRunnerMovement;
+
+    private NetworkedRunnerMovement m_networkedRunnerMovement;
     private GameObject m_runnerGameObject;
     private GameObject m_runnerCamAssetsGameObject;
     private CinemachineVirtualCamera m_virtualCamera;
@@ -29,13 +28,6 @@ public class RunnerGameObjectSpawner : NetworkBehaviour
     }
     private void InstanciateCamAssets()
     {
-        //m_runnerGameObject = Instantiate(RunnerPrefab, transform);
-
-        //if (!isLocalPlayer)
-        //{
-        //    return;
-        //}
-
         m_runnerCamAssetsGameObject = Instantiate(RunnerCameraAssetsPrefab, transform);
     }
 
@@ -61,14 +53,6 @@ public class RunnerGameObjectSpawner : NetworkBehaviour
 
     private void SetCameraInNetworkedRunnerMovement()
     {
-        //Camera cam = m_runnerCamAssetsGameObject.GetComponentInChildren<Camera>();
-        //if (cam == null)
-        //{
-        //    Debug.LogError("Camera Not found!");
-        //    return;
-        //}
-
-        //m_networkedRunnerMovement.Camera = cam;
         m_networkedRunnerMovement.Camera = Camera.main;
     }
     private void SetTheCameraFollow()

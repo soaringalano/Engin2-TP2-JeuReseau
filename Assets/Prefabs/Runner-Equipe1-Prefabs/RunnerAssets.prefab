@@ -80,7 +80,6 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   <RunnerCameraAssetsPrefab>k__BackingField: {fileID: 2502197940380891415, guid: 104ad32be306cd44ca8550552d96fe85, type: 3}
-  m_networkedRunnerMovement: {fileID: 0}
 --- !u!114 &8403922479734184492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,7 +95,7 @@ MonoBehaviour:
   syncDirection: 1
   syncMode: 0
   syncInterval: 0
-  clientAuthority: 0
+  clientAuthority: 1
   animator: {fileID: 5512822503541690273}
 --- !u!114 &3444429685286514963
 MonoBehaviour:
@@ -246,7 +245,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2236709772417231606, guid: 6e362fd5e02eaf94b88994f131bf07a3, type: 3}
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2242867578947220015, guid: 6e362fd5e02eaf94b88994f131bf07a3, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e362fd5e02eaf94b88994f131bf07a3, type: 3}
