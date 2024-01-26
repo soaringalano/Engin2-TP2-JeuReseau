@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 4955299921843428613}
   - component: {fileID: 8656783980202905974}
   - component: {fileID: 8608485733777326196}
-  - component: {fileID: 2813115787476670097}
   - component: {fileID: 3179125084276444865}
-  m_Layer: 0
+  - component: {fileID: 9091623843833613748}
+  m_Layer: 11
   m_Name: LookAt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 24373835584756242}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.61620015, y: -1.03, z: -2.2888536}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -85,27 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &2813115787476670097
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 24373835584756242}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &3179125084276444865
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -131,8 +110,29 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 4
   m_CollisionDetection: 0
+--- !u!135 &9091623843833613748
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 24373835584756242}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6565551724579044330
 GameObject:
   m_ObjectHideFlags: 0
@@ -201,6 +201,8 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  <OfflineCamera>k__BackingField: {fileID: 0}
+  <OfflineVirtualCamera>k__BackingField: {fileID: 0}
   <m_objectToLookAt>k__BackingField: {fileID: 4955299921843428613}
   <m_rotationSpeed>k__BackingField: 1
   <m_desiredDistance>k__BackingField: 10
@@ -212,6 +214,8 @@ MonoBehaviour:
   <MaxBackwardVelocity>k__BackingField: 15
   <CurrentDirectionalInputs>k__BackingField: {x: 0, y: 0}
   m_zoomClampValues: {x: 2, y: 15}
+  m_speed: 100
+  m_torque: 50
   m_hunterTransform: {fileID: 4955299921843428613}
 --- !u!114 &5316366228604886112
 MonoBehaviour:

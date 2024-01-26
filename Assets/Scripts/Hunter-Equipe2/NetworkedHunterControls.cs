@@ -1,4 +1,5 @@
-﻿using Mirror;
+﻿using Cinemachine;
+using Mirror;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -7,8 +8,11 @@ public class NetworkedHunterControls : NetworkBehaviour
 {
 
     public Camera Camera { get; set; }
+    public CinemachineVirtualCamera VirtualCamera { get; set; }
     [field:SerializeField]
     private Camera OfflineCamera { get; set; }
+    [field: SerializeField]
+    private CinemachineVirtualCamera OfflineVirtualCamera { get; set; }
     [field:SerializeField]
     public Transform m_objectToLookAt { get; set; }
 
@@ -39,13 +43,17 @@ public class NetworkedHunterControls : NetworkBehaviour
     private Vector2 m_zoomClampValues = new Vector2(2.0f, 15.0f);
 
     [SerializeField]
-    private float m_speed = 10.0f;
+    private float m_speed = 100.0f;
 
     [SerializeField]
-    private float m_torque = 20.0f;
+    private float m_torque = 50.0f;
 
-    public Rigidbody RB { get; private set; }
-    public Transform m_hunterTransform;
+    private Rigidbody RB { get; set; }
+    private Transform m_hunterTransform;
+    private CinemachinePOV m_cinemachinePOV;
+    private float m_cinemachinePOVMaxSpeedHorizontal;
+    private float m_cinemachinePOVMaxSpeedVertical;
+
 
     // Start is called before the first frame update
     void Awake()
@@ -92,7 +100,24 @@ public class NetworkedHunterControls : NetworkBehaviour
             Debug.LogWarning("No networked camera found! Using offline camera.");
             Camera = OfflineCamera;
         }
+
+        // Offline mode has not GameObjectSpawner to fill in the VirtualCamera
+        if (VirtualCamera == null)
+        {
+            Debug.LogWarning("No networked VirtualCamera found! Using offline VirtualCamera.");
+            VirtualCamera = OfflineVirtualCamera;
+        }
+
+        m_cinemachinePOV = VirtualCamera.GetCinemachineComponent<CinemachinePOV>();
+        if (m_cinemachinePOV != null)
+        {
+            Debug.Log("CinemachinePOV found!");
+            m_cinemachinePOVMaxSpeedHorizontal = m_cinemachinePOV.m_HorizontalAxis.m_MaxSpeed;
+            m_cinemachinePOVMaxSpeedVertical = m_cinemachinePOV.m_VerticalAxis.m_MaxSpeed;
+        }
+        else Debug.LogError("CinemachinePOV not found!");
     }
+
 
     void FixedUpdate()
     {
@@ -167,22 +192,37 @@ public class NetworkedHunterControls : NetworkBehaviour
 
         if (Input.GetKey(KeyCode.W))
         {
+            //VirtualCamera.gameObject.SetActive(true);
+            EnableMouseTracking();
             direction += Camera.transform.TransformDirection(1, 0, 0);
         }
         if (Input.GetKey(KeyCode.A))
         {
+            //VirtualCamera.gameObject.SetActive(true);
+            EnableMouseTracking();
             direction += Camera.transform.TransformDirection(0, 0, 1);
         }
         if (Input.GetKey(KeyCode.S))
         {
+            //VirtualCamera.gameObject.SetActive(true);
+            EnableMouseTracking();
             direction += Camera.transform.TransformDirection(-1, 0, 0);
         }
         if (Input.GetKey(KeyCode.D))
         {
+            //VirtualCamera.gameObject.SetActive(true);
+            EnableMouseTracking();
             direction += Camera.transform.TransformDirection(0, 0, -1);
+        }
+        else if (Input.GetKey(KeyCode.Space))
+        {
+            EnableMouseTracking();
         }
         else if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D))
         {
+            //VirtualCamera.gameObject.SetActive(false);
+            
+            DisableMouseTracking();
             direction = Vector3.zero;
             RB.velocity = Vector3.zero;
             RB.angularVelocity = Vector3.zero;
@@ -248,6 +288,24 @@ public class NetworkedHunterControls : NetworkBehaviour
         m_desiredDistance = Mathf.Clamp(m_desiredDistance, m_zoomClampValues.x, m_zoomClampValues.y);
         var desiredPosition = m_objectToLookAt.transform.position - (transform.forward * m_desiredDistance);
         m_hunterTransform.position = Vector3.Lerp(transform.position, desiredPosition, m_lerpSpeed);
+    }
+
+    private void DisableMouseTracking()
+    {
+        if (m_cinemachinePOV == null) Debug.LogError("CinemachinePOV not set correctly!");
+
+        Cursor.visible = true;
+        m_cinemachinePOV.m_HorizontalAxis.m_MaxSpeed = 0;
+        m_cinemachinePOV.m_VerticalAxis.m_MaxSpeed = 0;
+    }
+
+    private void EnableMouseTracking()
+    {
+        if (m_cinemachinePOV == null) Debug.LogError("CinemachinePOV not set correctly!");
+
+        Cursor.visible = false;
+        m_cinemachinePOV.m_HorizontalAxis.m_MaxSpeed = m_cinemachinePOVMaxSpeedHorizontal;
+        m_cinemachinePOV.m_VerticalAxis.m_MaxSpeed = m_cinemachinePOVMaxSpeedVertical;
     }
 
     private float GetIsShiftPressed()
