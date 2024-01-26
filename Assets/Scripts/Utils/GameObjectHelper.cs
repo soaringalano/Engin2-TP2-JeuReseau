@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameObjectHelper
 {
@@ -34,16 +35,25 @@ public class GameObjectHelper
         return gameObjects.Count == 0 ? null: gameObjects;
     }
 
-     public static List<GameObject> FindAllGameObjectsInScene()
-     {
-         List<GameObject> objectsInScene = new List<GameObject>();
- 
-         foreach (GameObject go in Resources.FindObjectsOfTypeAll(typeof(GameObject)) as GameObject[])
-         {
-             if (!EditorUtility.IsPersistent(go.transform.root.gameObject) && !(go.hideFlags == HideFlags.NotEditable || go.hideFlags == HideFlags.HideAndDontSave))
-                 objectsInScene.Add(go);
-         }
+    public static List<GameObject> FindAllGameObjectsInScene()
+    {
+        List<GameObject> objectsInScene = new List<GameObject>();
+        /*foreach (GameObject go in Resources.FindObjectsOfTypeAll(typeof(GameObject)) as GameObject[])
+        {
+           if (!EditorUtility.IsPersistent(go.transform.root.gameObject) && !(go.hideFlags == HideFlags.NotEditable || go.hideFlags == HideFlags.HideAndDontSave))
+               objectsInScene.Add(go);
+        }*/
+        List<GameObject> rootObjects = new List<GameObject>();
+        Scene scene = SceneManager.GetActiveScene();
+        scene.GetRootGameObjects(rootObjects);
+
+        // iterate root objects and do something
+        for (int i = 0; i < rootObjects.Count; ++i)
+        {
+            GameObject gameObject = rootObjects[i];
+            objectsInScene.Add(gameObject);
+        }
         return objectsInScene;
-     }
+    }
 
 }
