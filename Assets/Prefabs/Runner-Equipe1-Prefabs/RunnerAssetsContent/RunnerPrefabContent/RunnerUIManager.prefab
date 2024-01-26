@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1569299855358546055}
   - component: {fileID: 3270658909810310160}
   m_Layer: 0
-  m_Name: E01RunnerUIManager
+  m_Name: RunnerUIManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

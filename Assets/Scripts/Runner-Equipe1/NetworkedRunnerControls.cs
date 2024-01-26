@@ -1,10 +1,9 @@
 using Mirror;
-using System;
 using UnityEngine;
 
-public class NetworkedRunnerMovement : NetworkBehaviour
+public class NetworkedRunnerControls : NetworkBehaviour
 {
-    private Camera Camera { get; set; }
+    public Camera Camera { get; set; }
     [field: SerializeField]
     private Rigidbody RB { get; set; }
     [field: SerializeField]
@@ -34,34 +33,34 @@ public class NetworkedRunnerMovement : NetworkBehaviour
     [SerializeField]
     private bool m_isJumping = false;
 
-    private void Awake()
-    {
-        if (isLocalPlayer)
-        {
-            Camera.gameObject.SetActive(true);
-        }
-        Camera = Camera.main;
-    }
 
     void Update()
     {
-        VerifiIfCanJump(); // a changer de place surment
         if (!isLocalPlayer)
         {
             return;
         }
+
+        VerifiIfCanJump();
     }
 
     private void FixedUpdate()
     {
-        if (m_floorTrigger.IsOnFloor == true)
+        if (!isLocalPlayer)
         {
-            SetDirectionalInputs();
-            SetRunningInput();
-            UpdateMovementsToAnimator();
-            RotatePlayerMesh();
-            ApplyMovementsOnFloorFU();
+            return;
         }
+
+        if (m_floorTrigger.IsOnFloor == false)
+        {
+            return;
+        }
+
+        SetDirectionalInputs();
+        SetRunningInput();
+        UpdateMovementsToAnimator();
+        RotatePlayerMesh();
+        ApplyMovementsOnFloorFU();
     }
 
     private float GetCurrentMaxSpeed()
@@ -169,6 +168,7 @@ public class NetworkedRunnerMovement : NetworkBehaviour
     private void ApplyMovementsOnFloorFU()
     {
         var vectorOnFloor = Vector3.ProjectOnPlane(Camera.transform.forward * CurrentDirectionalInputs.y, Vector3.up);
+
         vectorOnFloor += Vector3.ProjectOnPlane(Camera.transform.right * CurrentDirectionalInputs.x, Vector3.up);
         vectorOnFloor.Normalize();
         var currentMaxSpeed = GetCurrentMaxSpeed();
