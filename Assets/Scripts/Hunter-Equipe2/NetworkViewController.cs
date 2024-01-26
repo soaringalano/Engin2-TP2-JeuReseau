@@ -9,8 +9,8 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 public class NetworkViewController : NetworkBehaviour
 {
 
-    [field:SerializeField]
-    private Transform m_objectToLookAt { get; set; }
+    //[field:SerializeField]
+    //private Transform m_objectToLookAt { get; set; }
 
     [field:SerializeField]
     private float m_rotationSpeed { get; set; }
@@ -48,20 +48,20 @@ public class NetworkViewController : NetworkBehaviour
             gameObject.SetActive(true);
         }
         
-        if(m_objectToLookAt == null)
-        {
-            List<GameObject> gos = GameObjectHelper.GetInstance().GetGameObjectsByLayerIdAndObjectName(7, "Plane");
-            if (gos != null)
-            {
-                m_objectToLookAt = gos[0].transform;
-                return;
-            }
-            gos = GameObjectHelper.GetInstance().GetGameObjectsByLayerIdAndObjectName(7, "Terrain");
-            if (gos != null)
-            {
-                m_objectToLookAt = gos[0].transform;
-            }
-        }
+        //if(m_objectToLookAt == null)
+        //{
+        //    List<GameObject> gos = GameObjectHelper.GetInstance().GetGameObjectsByLayerIdAndObjectName(7, "Plane");
+        //    if (gos != null)
+        //    {
+        //        m_objectToLookAt = gos[0].transform;
+        //        return;
+        //    }
+        //    gos = GameObjectHelper.GetInstance().GetGameObjectsByLayerIdAndObjectName(7, "Terrain");
+        //    if (gos != null)
+        //    {
+        //        m_objectToLookAt = gos[0].transform;
+        //    }
+        //}
     }
 
     // Update is called once per frame
@@ -199,7 +199,7 @@ public class NetworkViewController : NetworkBehaviour
         if (Input.GetKey(KeyCode.LeftShift))
         {
             float currentAngleX = -1 * Input.GetAxis("Mouse X") * m_rotationSpeed;
-            transform.RotateAround(transform.position, m_objectToLookAt.up, currentAngleX);
+           // transform.RotateAround(transform.position, m_objectToLookAt.up, currentAngleX);
         }
     }
 
@@ -210,8 +210,8 @@ public class NetworkViewController : NetworkBehaviour
     {
         m_desiredDistance -= Input.mouseScrollDelta.y;
         m_desiredDistance = Mathf.Clamp(m_desiredDistance, m_zoomClampValues.x, m_zoomClampValues.y);
-        var desiredPosition = m_objectToLookAt.transform.position - (transform.forward * m_desiredDistance);
-        transform.position = Vector3.Lerp(transform.position, desiredPosition, m_lerpSpeed);
+        //var desiredPosition = m_objectToLookAt.transform.position - (transform.forward * m_desiredDistance);
+        //transform.position = Vector3.Lerp(transform.position, desiredPosition, m_lerpSpeed);
     }
 
 }
