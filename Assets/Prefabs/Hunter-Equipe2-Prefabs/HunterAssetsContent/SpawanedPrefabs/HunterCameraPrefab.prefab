@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1975894440388156949}
   - component: {fileID: 2539477189952865779}
   - component: {fileID: 7726996393119306947}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -27,13 +27,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 142943989539712066}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.26039994, y: -0.050525367, z: 0.013646983, w: 0.96408135}
-  m_LocalPosition: {x: 1.0304799, y: 6.2446203, z: -9.804364}
+  m_LocalRotation: {x: 0.38268346, y: -0, z: -0, w: 0.9238795}
+  m_LocalPosition: {x: 0, y: 8.5680895, z: -8.068088}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7776807225468109704}
-  m_LocalEulerAnglesHint: {x: 23.756, y: 0, z: -0.002}
+  m_LocalEulerAnglesHint: {x: 30.26, y: -6, z: 0}
 --- !u!20 &1975894440388156949
 Camera:
   m_ObjectHideFlags: 0
@@ -172,7 +172,7 @@ GameObject:
   - component: {fileID: 5559069363820038004}
   - component: {fileID: 6443964058646456509}
   - component: {fileID: 1586985498375996660}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229,12 +229,12 @@ MonoBehaviour:
   m_ScreenX: 0.5
   m_ScreenY: 0.5
   m_CameraDistance: 11.41
-  m_DeadZoneWidth: 0.144
-  m_DeadZoneHeight: 0.163
+  m_DeadZoneWidth: 0
+  m_DeadZoneHeight: 0
   m_DeadZoneDepth: 0
   m_UnlimitedSoftZone: 0
-  m_SoftZoneWidth: 0.819
-  m_SoftZoneHeight: 0.819
+  m_SoftZoneWidth: 0.073
+  m_SoftZoneHeight: 0.101
   m_BiasX: 0.005
   m_BiasY: -0.042
   m_CenterOnActivate: 1
@@ -263,7 +263,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_RecenterTarget: 1
   m_VerticalAxis:
-    Value: 30.23
+    Value: 45
     m_SpeedMode: 0
     m_MaxSpeed: 300
     m_AccelTime: 0.1
@@ -287,7 +287,7 @@ MonoBehaviour:
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_HorizontalAxis:
-    Value: -6
+    Value: 0
     m_SpeedMode: 0
     m_MaxSpeed: 300
     m_AccelTime: 0.1
@@ -322,7 +322,7 @@ GameObject:
   - component: {fileID: 4057889122660479149}
   - component: {fileID: 4849766224782487456}
   - component: {fileID: 1373962063437155808}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Virtual Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -337,8 +337,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7727293730829122236}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.26039994, y: -0.050525367, z: 0.013646983, w: 0.96408135}
-  m_LocalPosition: {x: 1.0304799, y: 6.2446203, z: -9.804364}
+  m_LocalRotation: {x: 0.38268346, y: -0, z: -0, w: 0.9238795}
+  m_LocalPosition: {x: 0, y: 8.5680895, z: -8.068088}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -398,7 +398,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CollideAgainst:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 257
   m_IgnoreTag: 
   m_TransparentLayers:
     serializedVersion: 2

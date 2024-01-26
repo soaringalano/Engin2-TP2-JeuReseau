@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 7915778052652452375}
   - component: {fileID: 6517735357651221832}
   - component: {fileID: 4816669088721222458}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: HunterWallLimit4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,7 +242,7 @@ GameObject:
   - component: {fileID: 1222932673339869697}
   - component: {fileID: 1054615309735271527}
   - component: {fileID: 760628618473958560}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: HunterWallLimit1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -344,7 +344,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5144732482799216098}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HunterLimitWalls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -382,7 +382,7 @@ GameObject:
   - component: {fileID: 3205299338645196300}
   - component: {fileID: 5472837510773145849}
   - component: {fileID: 5732176866000876078}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: HunterWallLimit2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -487,7 +487,7 @@ GameObject:
   - component: {fileID: 8620081168406989108}
   - component: {fileID: 7855566759856548504}
   - component: {fileID: 305958846795752745}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: HunterWallLimit3
   m_TagString: Untagged
   m_Icon: {fileID: 0}

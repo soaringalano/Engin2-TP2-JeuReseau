@@ -14,9 +14,9 @@ TagManager:
   - 
   - RunnerFloor
   - HunterFloor
-  - 
-  - RunnerFloorCollider
-  - HunterFloorCollider
+  - HunterWall
+  - RunnerCollider
+  - HunterCollider
   - 
   - 
   - 

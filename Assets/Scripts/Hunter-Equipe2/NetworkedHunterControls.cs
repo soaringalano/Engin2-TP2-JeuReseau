@@ -1,5 +1,6 @@
 ﻿using Cinemachine;
 using Mirror;
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -9,10 +10,14 @@ public class NetworkedHunterControls : NetworkBehaviour
 
     public Camera Camera { get; set; }
     public CinemachineVirtualCamera VirtualCamera { get; set; }
+
+    /*#### Do not use in code, it replaces the active Camera variables in Start() ###*/ 
     [field:SerializeField]
     private Camera OfflineCamera { get; set; }
     [field: SerializeField]
     private CinemachineVirtualCamera OfflineVirtualCamera { get; set; }
+    /* ############################################################################### */
+
     [field:SerializeField]
     public Transform m_objectToLookAt { get; set; }
 
@@ -42,42 +47,29 @@ public class NetworkedHunterControls : NetworkBehaviour
     [SerializeField]
     private Vector2 m_zoomClampValues = new Vector2(2.0f, 15.0f);
 
+    [Header("LookAt controls Settings")]
     [SerializeField]
-    private float m_speed = 100.0f;
-
+    private float m_lookAtMinMovingSpeed = 20.0f;
     [SerializeField]
-    private float m_torque = 50.0f;
+    private float m_lookAtMaxMovingSpeed = 100.0f;
+    private bool m_isLookAtSetToStop = false;
+    public float m_lookAtDecelerationRate = 0.2f;
 
     private Rigidbody RB { get; set; }
     private Transform m_hunterTransform;
     private CinemachinePOV m_cinemachinePOV;
+    private CinemachineFramingTransposer m_framingTransposer;
     private float m_cinemachinePOVMaxSpeedHorizontal;
     private float m_cinemachinePOVMaxSpeedVertical;
 
-
-    // Start is called before the first frame update
-    void Awake()
-    {
-        //if (!isLocalPlayer)
-        //{
-        //    return;
-        //}
-
-        if (m_objectToLookAt is null)
-        {
-            List<GameObject> gos = GameObjectHelper.s_instance.GetGameObjectsByLayerIdAndObjectName(7, "Plane");
-            if (gos != null)
-            {
-                m_objectToLookAt = gos[0].transform;
-                return;
-            }
-            gos = GameObjectHelper.s_instance.GetGameObjectsByLayerIdAndObjectName(7, "Terrain");
-            if (gos != null)
-            {
-                m_objectToLookAt = gos[0].transform;
-            }
-        }
-    }
+    [Header("Scrolling Settings")]
+    private float m_scrollSpeed = 200.0f;
+    private float m_minCamDist = 15.0f;
+    private float m_maxCamDist = 60.0f;
+    private float m_minCamFOV = 1.0f;
+    private float m_maxCamFOV = 90.0f;
+    private float m_scrollSmoothDampTime = 0.01f;
+    private float m_FOVmoothDampTime = 0.4f;
 
     private void Start()
     {
@@ -114,6 +106,7 @@ public class NetworkedHunterControls : NetworkBehaviour
             Debug.Log("CinemachinePOV found!");
             m_cinemachinePOVMaxSpeedHorizontal = m_cinemachinePOV.m_HorizontalAxis.m_MaxSpeed;
             m_cinemachinePOVMaxSpeedVertical = m_cinemachinePOV.m_VerticalAxis.m_MaxSpeed;
+            m_framingTransposer = VirtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
         }
         else Debug.LogError("CinemachinePOV not found!");
     }
@@ -127,110 +120,84 @@ public class NetworkedHunterControls : NetworkBehaviour
         //}
 
         SetDirectionalInputs();
-        //FixedUpdateRotate();
-        //FixedUpdateCameraLerp();
-        //OnFixedUpdateTest();
     }
 
-    /**
-     * called in FixedApplyMovements
-     */
-    public float GetCurrentMaxSpeed()
+    private void LateUpdate()
     {
+        //if (!isLocalPlayer)
+        //{
+        //    return;
+        //}
 
-        if (Mathf.Approximately(CurrentDirectionalInputs.magnitude, 0))
-        {
-            return MaxForwardVelocity;
-        }
-
-        var normalizedInputs = CurrentDirectionalInputs.normalized;
-
-        var currentMaxVelocity = Mathf.Pow(normalizedInputs.x, 2) * MaxSidewaysVelocity;
-
-        if (normalizedInputs.y > 0)
-        {
-            currentMaxVelocity += Mathf.Pow(normalizedInputs.y, 2) * MaxForwardVelocity;
-        }
-        else
-        {
-            currentMaxVelocity += Mathf.Pow(normalizedInputs.y, 2) * MaxBackwardVelocity;
-        }
-
-        return currentMaxVelocity;
+        UpdateCameraScroll();
+        UpdateFOV();
+        StopLookAtRBVelocity();
     }
 
-    /**
-     * called in fixed update method
-     */
+    private void UpdateFOV()
+    {
+        float distancePercent = m_framingTransposer.m_CameraDistance / m_maxCamDist;
+
+        float newFOV = Mathf.Lerp(m_maxCamFOV, m_minCamFOV, distancePercent * m_FOVmoothDampTime);
+        VirtualCamera.m_Lens.FieldOfView = newFOV;
+    }
+
+    private void UpdateCameraScroll()
+    {
+        float scrollDelta = Input.mouseScrollDelta.y;
+
+        if (Mathf.Approximately(scrollDelta, 0f))
+        {
+            return;
+        }
+
+        float lerpedScrolDist = Mathf.Lerp(m_framingTransposer.m_CameraDistance, m_framingTransposer.m_CameraDistance - (scrollDelta * m_scrollSpeed), m_scrollSmoothDampTime);
+        m_framingTransposer.m_CameraDistance = Mathf.Clamp(lerpedScrolDist, m_minCamDist, m_maxCamDist);
+    }
+
     public void SetDirectionalInputs()
     {
-        //CurrentDirectionalInputs = Vector2.zero;
-
-        //if (Input.GetKey(KeyCode.W))
-        //{
-        //    CurrentDirectionalInputs += Vector2.up;
-        //}
-        //if (Input.GetKey(KeyCode.S))
-        //{
-        //    CurrentDirectionalInputs += Vector2.down;
-        //}
-        //if (Input.GetKey(KeyCode.A))
-        //{
-        //    CurrentDirectionalInputs += Vector2.left;
-        //}
-        //if (Input.GetKey(KeyCode.D))
-        //{
-        //    CurrentDirectionalInputs += Vector2.right;
-        //}
-
-        //Debug.Log("Directional input:" + CurrentDirectionalInputs);
-
-        // Source : Maxime Flageole and Alexandre Pipon
-        //m_lerpElapsedTime += Time.fixedDeltaTime;
 
         Vector3 direction = new Vector3();
 
         if (Input.GetKey(KeyCode.W))
         {
-            //VirtualCamera.gameObject.SetActive(true);
-            //DisableMouseTracking();
             EnableMouseTracking();
             direction += Camera.transform.TransformDirection(1, 0, 0);
+            m_isLookAtSetToStop = false;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            //VirtualCamera.gameObject.SetActive(true);
-            //DisableMouseTracking();
             EnableMouseTracking();
             direction += Camera.transform.TransformDirection(0, 0, 1);
+            m_isLookAtSetToStop = false;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            //VirtualCamera.gameObject.SetActive(true);
-            //DisableMouseTracking();
             EnableMouseTracking();
             direction += Camera.transform.TransformDirection(-1, 0, 0);
+            m_isLookAtSetToStop = false;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            //VirtualCamera.gameObject.SetActive(true);
-            //DisableMouseTracking();
             EnableMouseTracking();
             direction += Camera.transform.TransformDirection(0, 0, -1);
+            m_isLookAtSetToStop = false;
         }
-        else if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyUp(KeyCode.LeftShift) || (Input.GetKeyUp(KeyCode.LeftShift) && GetIsAnyDirectionPressed()))
+        {
+            m_isLookAtSetToStop = true;
+        }
+        else if (GetIsNoDirectionPressed() && Input.GetKey(KeyCode.Space))
         {
             DisableMouseTracking();
-            //EnableMouseTracking();
+            m_isLookAtSetToStop = true;
         }
-        else if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D))
+        else if (GetIsNoDirectionPressed() && !Input.GetKey(KeyCode.Space))
         {
-            //VirtualCamera.gameObject.SetActive(false);
             EnableMouseTracking();
-            //DisableMouseTracking();
             direction = Vector3.zero;
-            RB.velocity = Vector3.zero;
-            RB.angularVelocity = Vector3.zero;
+            m_isLookAtSetToStop = true;
         }
 
         if (direction.magnitude <= 0)
@@ -238,61 +205,7 @@ public class NetworkedHunterControls : NetworkBehaviour
             return;
         }
 
-        RB.AddTorque(GetIsShiftPressed() * m_speed * m_torque * Time.fixedDeltaTime * direction, ForceMode.Force);
-    }
-
-    /**
-     * called in fixed update method
-     */
-    public void OnFixedUpdateTest()
-    {
-        if (CurrentDirectionalInputs == Vector2.zero)
-        {
-            FixedUpdateQuickDeceleration();
-            return;
-        }
-
-        FixedApplyMovements(CurrentDirectionalInputs);
-    }
-
-    /**
-     * called in OnFixedUpdateTest
-     */
-    private void FixedApplyMovements(Vector2 inputVector2)
-    {
-        var vectorOnFloor = (Camera.transform.up * inputVector2.y + Camera.transform.right * inputVector2.x);
-        vectorOnFloor.Normalize();
-
-        RB.AddForce(vectorOnFloor * AccelerationValue, ForceMode.Acceleration);
-    }
-
-    /**
-     * called in OnFixedUpdateTest
-     */
-    private void FixedUpdateQuickDeceleration()
-    {
-        var oppositeDirectionForceToApply = -RB.velocity * DecelerationValue * Time.fixedDeltaTime;
-        RB.AddForce(oppositeDirectionForceToApply, ForceMode.Acceleration);
-    }
-
-    /**
-     * called in fixed update method
-     */
-    private void FixedUpdateRotate()
-    {
-        float currentAngleX = -1 * Input.GetAxis("Mouse X") * m_rotationSpeed;
-        m_hunterTransform.RotateAround(transform.position, m_objectToLookAt.up, currentAngleX);
-    }
-
-    /**
-     * called in fixed update method
-     */
-    private void FixedUpdateCameraLerp()
-    {
-        m_desiredDistance -= Input.mouseScrollDelta.y;
-        m_desiredDistance = Mathf.Clamp(m_desiredDistance, m_zoomClampValues.x, m_zoomClampValues.y);
-        var desiredPosition = m_objectToLookAt.transform.position - (transform.forward * m_desiredDistance);
-        m_hunterTransform.position = Vector3.Lerp(transform.position, desiredPosition, m_lerpSpeed);
+        RB.AddTorque(GetIsShiftPressed() * m_lookAtMinMovingSpeed * Time.fixedDeltaTime * direction, ForceMode.Force);
     }
 
     private void DisableMouseTracking()
@@ -317,8 +230,26 @@ public class NetworkedHunterControls : NetworkBehaviour
     {
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            return 10000f;
+            return m_lookAtMaxMovingSpeed;
         }
-        return 1f;
+
+        return m_lookAtMinMovingSpeed;
+    }
+
+    private bool GetIsNoDirectionPressed()
+    {
+        return (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D));
+    }
+
+    private bool GetIsAnyDirectionPressed()
+    {
+        return (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D));
+    }
+
+    private void StopLookAtRBVelocity()
+    {
+        if (m_isLookAtSetToStop == false) return;
+
+        RB.velocity = Vector3.Lerp(RB.velocity, Vector3.zero, m_lookAtDecelerationRate);
     }
 }

@@ -215,8 +215,12 @@ MonoBehaviour:
   <CurrentDirectionalInputs>k__BackingField: {x: 0, y: 0}
   m_zoomClampValues: {x: 2, y: 15}
   m_speed: 100
-  m_torque: 50
-  m_hunterTransform: {fileID: 4955299921843428613}
+  m_scrollSpeed: 2
+  m_minCamDist: 15
+  m_maxCamDist: 50
+  m_minCamFOV: 30
+  m_maxCamFOV: 80
+  m_scrollSmoothDampTime: 0.7
 --- !u!114 &5316366228604886112
 MonoBehaviour:
   m_ObjectHideFlags: 0
