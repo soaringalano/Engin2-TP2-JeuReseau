@@ -149,7 +149,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1878081219383919669, guid: a434e92238db1dd4ba7e645588222ff1, type: 3}
       propertyPath: playerPrefabs.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1878081219383919669, guid: a434e92238db1dd4ba7e645588222ff1, type: 3}
       propertyPath: playerPrefabs.Array.data[0]

@@ -1,7 +1,7 @@
 using Mirror;
 using UnityEngine;
 
-public class NetworkedRunnerMovement : NetworkBehaviour
+public class NetworkedRunnerControls : NetworkBehaviour
 {
     public Camera Camera { get; set; }
     [field: SerializeField]

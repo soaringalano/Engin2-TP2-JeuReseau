@@ -1,14 +1,11 @@
 ﻿using Mirror;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
-public class NetworkViewController : NetworkBehaviour
+public class NetworkedHunterControls : NetworkBehaviour
 {
 
+    public Camera Camera { get; set; }
     [field:SerializeField]
     private Transform m_objectToLookAt { get; set; }
 
@@ -21,8 +18,6 @@ public class NetworkViewController : NetworkBehaviour
     [SerializeField]
     private float m_lerpSpeed = 0.05f;
 
-    [field: SerializeField]
-    public Rigidbody RB { get; private set; }
     [field: SerializeField]
     public float AccelerationValue { get; private set; }
     [field: SerializeField]
@@ -40,11 +35,18 @@ public class NetworkViewController : NetworkBehaviour
     [SerializeField]
     private Vector2 m_zoomClampValues = new Vector2(2.0f, 15.0f);
 
+    public Rigidbody RB { get; private set; }
+    public Transform m_hunterTransform;
+
     // Start is called before the first frame update
     void Awake()
     {
-        gameObject.SetActive(isLocalPlayer);
-        if(m_objectToLookAt is null)
+        if (!isLocalPlayer)
+        {
+            return;
+        }
+
+        if (m_objectToLookAt is null)
         {
             List<GameObject> gos = GameObjectHelper.s_instance.GetGameObjectsByLayerIdAndObjectName(7, "Plane");
             if (gos != null)
@@ -60,13 +62,18 @@ public class NetworkViewController : NetworkBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
         if (!isLocalPlayer)
         {
             return;
         }
+
+        RB = GetComponentInChildren<Rigidbody>();
+        if (RB == null) Debug.LogError("Hunter RigidBody not found!");
+
+        m_hunterTransform = RB.transform;
+        if (m_hunterTransform == null) Debug.LogError("Hunter Transform not found!");
     }
 
     void FixedUpdate()
@@ -75,6 +82,7 @@ public class NetworkViewController : NetworkBehaviour
         {
             return;
         }
+
         SetDirectionalInputs();
         FixedUpdateRotate();
         FixedUpdateCameraLerp();
@@ -104,8 +112,6 @@ public class NetworkViewController : NetworkBehaviour
         {
             currentMaxVelocity += Mathf.Pow(normalizedInputs.y, 2) * MaxBackwardVelocity;
         }
-
-        //Debug.Log("Current max speed :" + currentMaxVelocity);
 
         return currentMaxVelocity;
     }
@@ -148,33 +154,18 @@ public class NetworkViewController : NetworkBehaviour
             return;
         }
 
-        FixedApplyMovements(CurrentDirectionalInputs, gameObject.GetComponent<Camera>());
+        FixedApplyMovements(CurrentDirectionalInputs);
     }
 
     /**
      * called in OnFixedUpdateTest
      */
-    private void FixedApplyMovements(Vector2 inputVector2, Camera camera)
+    private void FixedApplyMovements(Vector2 inputVector2)
     {
-        /*var vectorOnFloor = Vector3.ProjectOnPlane(-camera.transform.up * inputVector2.y, Vector3.up);
-        vectorOnFloor += Vector3.ProjectOnPlane(-camera.transform.right * inputVector2.x, Vector3.up);*/
-        //Debug.Log("god view camera is moving");
-        //Debug.Log("input vector is :" + inputVector2);
-        var vectorOnFloor = (camera.transform.up * inputVector2.y + camera.transform.right * inputVector2.x);
+        var vectorOnFloor = (Camera.transform.up * inputVector2.y + Camera.transform.right * inputVector2.x);
         vectorOnFloor.Normalize();
-        //Debug.Log("Normalized input is : " + vectorOnFloor);
 
         RB.AddForce(vectorOnFloor * AccelerationValue, ForceMode.Acceleration);
-
-        //var currentMaxSpeed = GetCurrentMaxSpeed();
-        // Debug.Log("current max speed is :" + currentMaxSpeed);
-
-        //if (RB.velocity.magnitude > currentMaxSpeed)
-        //{
-            //RB.velocity = RB.velocity.normalized * currentMaxSpeed;
-            //RB.velocity *= currentMaxSpeed;
-            //Debug.Log("RB Velocity:" + RB.velocity);
-        //}
     }
 
     /**
@@ -182,7 +173,6 @@ public class NetworkViewController : NetworkBehaviour
      */
     private void FixedUpdateQuickDeceleration()
     {
-        //Debug.Log("god view camera is decelerating quickly");
         var oppositeDirectionForceToApply = -RB.velocity * DecelerationValue * Time.fixedDeltaTime;
         RB.AddForce(oppositeDirectionForceToApply, ForceMode.Acceleration);
     }
@@ -193,7 +183,7 @@ public class NetworkViewController : NetworkBehaviour
     private void FixedUpdateRotate()
     {
         float currentAngleX = -1 * Input.GetAxis("Mouse X") * m_rotationSpeed;
-        transform.RotateAround(transform.position, m_objectToLookAt.up, currentAngleX);
+        m_hunterTransform.RotateAround(transform.position, m_objectToLookAt.up, currentAngleX);
     }
 
     /**
@@ -204,7 +194,7 @@ public class NetworkViewController : NetworkBehaviour
         m_desiredDistance -= Input.mouseScrollDelta.y;
         m_desiredDistance = Mathf.Clamp(m_desiredDistance, m_zoomClampValues.x, m_zoomClampValues.y);
         var desiredPosition = m_objectToLookAt.transform.position - (transform.forward * m_desiredDistance);
-        transform.position = Vector3.Lerp(transform.position, desiredPosition, m_lerpSpeed);
+        m_hunterTransform.position = Vector3.Lerp(transform.position, desiredPosition, m_lerpSpeed);
     }
 
 }

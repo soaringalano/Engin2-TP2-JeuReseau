@@ -1,13 +1,12 @@
 using Cinemachine;
 using UnityEngine;
-using Mirror;
 
-public class RunnerGameObjectSpawner : NetworkBehaviour
+public class RunnerGameObjectSpawner : GameObjectSpawner
 {
     [field: SerializeField]
     private GameObject RunnerCameraAssetsPrefab { get; set; }
 
-    private NetworkedRunnerMovement m_networkedRunnerMovement;
+    private NetworkedRunnerControls m_networkedRunnerMovement;
     private GameObject m_runnerGameObject;
     private GameObject m_runnerCamAssetsGameObject;
     private CinemachineVirtualCamera m_virtualCamera;
@@ -19,19 +18,20 @@ public class RunnerGameObjectSpawner : NetworkBehaviour
             return;
         }
 
-        InstanciateCamAssets();
-        GetRunnerGameObject();
-        GetNetworkedRunnerMovement();
-        SetCameraInNetworkedRunnerMovement();
+        InstanciateAssets();
+        GetPlayerGameObject();
+        GetNetworkedPlayerControls();
+        SetCameraInNetworkedPlayerControls();
         SetTheCameraFollow();
         SetTheCameraLookAt();
     }
-    private void InstanciateCamAssets()
+
+    protected override void InstanciateAssets()
     {
         m_runnerCamAssetsGameObject = Instantiate(RunnerCameraAssetsPrefab, transform);
     }
 
-    private void GetRunnerGameObject()
+    protected override void GetPlayerGameObject()
     {
         m_runnerGameObject = transform.GetComponentInChildren<Rigidbody>().gameObject;
         if (m_runnerGameObject == null)
@@ -41,9 +41,9 @@ public class RunnerGameObjectSpawner : NetworkBehaviour
         }
     }
 
-    private void GetNetworkedRunnerMovement()
+    protected override void GetNetworkedPlayerControls()
     {
-        m_networkedRunnerMovement = GetComponent<NetworkedRunnerMovement>();
+        m_networkedRunnerMovement = GetComponent<NetworkedRunnerControls>();
         if (m_networkedRunnerMovement == null)
         {
             Debug.LogError("NetworkedRunnerMovement Not found!");
@@ -51,11 +51,12 @@ public class RunnerGameObjectSpawner : NetworkBehaviour
         }
     }
 
-    private void SetCameraInNetworkedRunnerMovement()
+    protected override void SetCameraInNetworkedPlayerControls()
     {
         m_networkedRunnerMovement.Camera = Camera.main;
     }
-    private void SetTheCameraFollow()
+
+    protected override void SetTheCameraFollow()
     {
         CinemachineVirtualCamera virtualCam = m_runnerCamAssetsGameObject.GetComponentInChildren<CinemachineVirtualCamera>();
         if (virtualCam == null)
@@ -69,7 +70,7 @@ public class RunnerGameObjectSpawner : NetworkBehaviour
         m_virtualCamera.m_Follow = runnerTransform;
     }
 
-    private void SetTheCameraLookAt()
+    protected override void SetTheCameraLookAt()
     {
         Transform lookAt = m_runnerGameObject.transform.GetChild(0);
         if (lookAt == null)
