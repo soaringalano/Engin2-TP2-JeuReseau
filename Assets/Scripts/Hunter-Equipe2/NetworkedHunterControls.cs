@@ -193,36 +193,41 @@ public class NetworkedHunterControls : NetworkBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             //VirtualCamera.gameObject.SetActive(true);
+            //DisableMouseTracking();
             EnableMouseTracking();
             direction += Camera.transform.TransformDirection(1, 0, 0);
         }
         if (Input.GetKey(KeyCode.A))
         {
             //VirtualCamera.gameObject.SetActive(true);
+            //DisableMouseTracking();
             EnableMouseTracking();
             direction += Camera.transform.TransformDirection(0, 0, 1);
         }
         if (Input.GetKey(KeyCode.S))
         {
             //VirtualCamera.gameObject.SetActive(true);
+            //DisableMouseTracking();
             EnableMouseTracking();
             direction += Camera.transform.TransformDirection(-1, 0, 0);
         }
         if (Input.GetKey(KeyCode.D))
         {
             //VirtualCamera.gameObject.SetActive(true);
+            //DisableMouseTracking();
             EnableMouseTracking();
             direction += Camera.transform.TransformDirection(0, 0, -1);
         }
         else if (Input.GetKey(KeyCode.Space))
         {
-            EnableMouseTracking();
+            DisableMouseTracking();
+            //EnableMouseTracking();
         }
         else if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D))
         {
             //VirtualCamera.gameObject.SetActive(false);
-            
-            DisableMouseTracking();
+            EnableMouseTracking();
+            //DisableMouseTracking();
             direction = Vector3.zero;
             RB.velocity = Vector3.zero;
             RB.angularVelocity = Vector3.zero;
