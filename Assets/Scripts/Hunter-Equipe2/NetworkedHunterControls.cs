@@ -1,5 +1,6 @@
 ﻿using Mirror;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class NetworkedHunterControls : NetworkBehaviour
@@ -7,7 +8,9 @@ public class NetworkedHunterControls : NetworkBehaviour
 
     public Camera Camera { get; set; }
     [field:SerializeField]
-    private Transform m_objectToLookAt { get; set; }
+    private Camera OfflineCamera { get; set; }
+    [field:SerializeField]
+    public Transform m_objectToLookAt { get; set; }
 
     [field:SerializeField]
     private float m_rotationSpeed { get; set; }
@@ -35,16 +38,22 @@ public class NetworkedHunterControls : NetworkBehaviour
     [SerializeField]
     private Vector2 m_zoomClampValues = new Vector2(2.0f, 15.0f);
 
+    [SerializeField]
+    private float m_speed = 10.0f;
+
+    [SerializeField]
+    private float m_torque = 20.0f;
+
     public Rigidbody RB { get; private set; }
     public Transform m_hunterTransform;
 
     // Start is called before the first frame update
     void Awake()
     {
-        if (!isLocalPlayer)
-        {
-            return;
-        }
+        //if (!isLocalPlayer)
+        //{
+        //    return;
+        //}
 
         if (m_objectToLookAt is null)
         {
@@ -64,29 +73,38 @@ public class NetworkedHunterControls : NetworkBehaviour
 
     private void Start()
     {
-        if (!isLocalPlayer)
-        {
-            return;
-        }
+        //if (!isLocalPlayer)
+        //{
+        //    return;
+        //}
 
         RB = GetComponentInChildren<Rigidbody>();
-        if (RB == null) Debug.LogError("Hunter RigidBody not found!");
+        if (RB != null) Debug.Log("Hunter RigidBody found!");
+        else Debug.LogError("Hunter RigidBody not found!");
 
         m_hunterTransform = RB.transform;
-        if (m_hunterTransform == null) Debug.LogError("Hunter Transform not found!");
+        if (m_hunterTransform != null) Debug.Log("Hunter Transform found!");
+        else Debug.LogError("Hunter Transform not found!");
+
+        // Offline mode has not GameObjectSpawner to fill in the Camera
+        if (Camera == null)
+        {
+            Debug.LogWarning("No networked camera found! Using offline camera.");
+            Camera = OfflineCamera;
+        }
     }
 
     void FixedUpdate()
     {
-        if (!isLocalPlayer)
-        {
-            return;
-        }
+        //if (!isLocalPlayer)
+        //{
+        //    return;
+        //}
 
         SetDirectionalInputs();
-        FixedUpdateRotate();
-        FixedUpdateCameraLerp();
-        OnFixedUpdateTest();
+        //FixedUpdateRotate();
+        //FixedUpdateCameraLerp();
+        //OnFixedUpdateTest();
     }
 
     /**
@@ -121,26 +139,61 @@ public class NetworkedHunterControls : NetworkBehaviour
      */
     public void SetDirectionalInputs()
     {
-        CurrentDirectionalInputs = Vector2.zero;
+        //CurrentDirectionalInputs = Vector2.zero;
+
+        //if (Input.GetKey(KeyCode.W))
+        //{
+        //    CurrentDirectionalInputs += Vector2.up;
+        //}
+        //if (Input.GetKey(KeyCode.S))
+        //{
+        //    CurrentDirectionalInputs += Vector2.down;
+        //}
+        //if (Input.GetKey(KeyCode.A))
+        //{
+        //    CurrentDirectionalInputs += Vector2.left;
+        //}
+        //if (Input.GetKey(KeyCode.D))
+        //{
+        //    CurrentDirectionalInputs += Vector2.right;
+        //}
+
+        //Debug.Log("Directional input:" + CurrentDirectionalInputs);
+
+        // Source : Maxime Flageole and Alexandre Pipon
+        //m_lerpElapsedTime += Time.fixedDeltaTime;
+
+        Vector3 direction = new Vector3();
 
         if (Input.GetKey(KeyCode.W))
         {
-            CurrentDirectionalInputs += Vector2.up;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            CurrentDirectionalInputs += Vector2.down;
+            direction += Camera.transform.TransformDirection(1, 0, 0);
         }
         if (Input.GetKey(KeyCode.A))
         {
-            CurrentDirectionalInputs += Vector2.left;
+            direction += Camera.transform.TransformDirection(0, 0, 1);
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            direction += Camera.transform.TransformDirection(-1, 0, 0);
         }
         if (Input.GetKey(KeyCode.D))
         {
-            CurrentDirectionalInputs += Vector2.right;
+            direction += Camera.transform.TransformDirection(0, 0, -1);
+        }
+        else if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D))
+        {
+            direction = Vector3.zero;
+            RB.velocity = Vector3.zero;
+            RB.angularVelocity = Vector3.zero;
         }
 
-        //Debug.Log("Directional input:" + CurrentDirectionalInputs);
+        if (direction.magnitude <= 0)
+        {
+            return;
+        }
+
+        RB.AddTorque(GetIsShiftPressed() * m_speed * m_torque * Time.fixedDeltaTime * direction, ForceMode.Force);
     }
 
     /**
@@ -197,4 +250,12 @@ public class NetworkedHunterControls : NetworkBehaviour
         m_hunterTransform.position = Vector3.Lerp(transform.position, desiredPosition, m_lerpSpeed);
     }
 
+    private float GetIsShiftPressed()
+    {
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            return 10000f;
+        }
+        return 1f;
+    }
 }
