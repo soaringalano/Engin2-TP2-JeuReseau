@@ -195,9 +195,45 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7711116410909891767}
     - target: {fileID: 7389630161411274484, guid: a8e6d2bdb3499d44fa322002f4bdd2ed, type: 3}
+      propertyPath: m_rotationSpeed
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 7389630161411274484, guid: a8e6d2bdb3499d44fa322002f4bdd2ed, type: 3}
+      propertyPath: m_lookAtMaxTorque
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 7389630161411274484, guid: a8e6d2bdb3499d44fa322002f4bdd2ed, type: 3}
+      propertyPath: m_lookAtMinTorque
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7389630161411274484, guid: a8e6d2bdb3499d44fa322002f4bdd2ed, type: 3}
+      propertyPath: m_maxRotationAngle
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7389630161411274484, guid: a8e6d2bdb3499d44fa322002f4bdd2ed, type: 3}
+      propertyPath: m_lookAtMinVelocity
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7389630161411274484, guid: a8e6d2bdb3499d44fa322002f4bdd2ed, type: 3}
+      propertyPath: m_lookAtMaxMovingSpeed
+      value: 100000
+      objectReference: {fileID: 0}
+    - target: {fileID: 7389630161411274484, guid: a8e6d2bdb3499d44fa322002f4bdd2ed, type: 3}
+      propertyPath: m_lookAtMinMovingSpeed
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 7389630161411274484, guid: a8e6d2bdb3499d44fa322002f4bdd2ed, type: 3}
+      propertyPath: m_lookAtDecelerationRate
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7389630161411274484, guid: a8e6d2bdb3499d44fa322002f4bdd2ed, type: 3}
       propertyPath: <OfflineCamera>k__BackingField
       value: 
       objectReference: {fileID: 1017979916}
+    - target: {fileID: 7389630161411274484, guid: a8e6d2bdb3499d44fa322002f4bdd2ed, type: 3}
+      propertyPath: m_camDistLookAtSpeedMultiplier
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 7389630161411274484, guid: a8e6d2bdb3499d44fa322002f4bdd2ed, type: 3}
       propertyPath: <OfflineVirtualCamera>k__BackingField
       value: 

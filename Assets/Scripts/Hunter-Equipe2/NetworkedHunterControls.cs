@@ -11,12 +11,13 @@ public class NetworkedHunterControls : NetworkBehaviour
     public Camera Camera { get; set; }
     public CinemachineVirtualCamera VirtualCamera { get; set; }
 
-    /*#### Do not use in code, it replaces the active Camera variables in Start() ###*/ 
+    /* ################# Do not use in code, it replaces the active Camera variables in Start() ############### */ 
     [field:SerializeField]
     private Camera OfflineCamera { get; set; }
     [field: SerializeField]
     private CinemachineVirtualCamera OfflineVirtualCamera { get; set; }
-    /* ############################################################################### */
+    /* ######################################################################################################## */
+
     private Rigidbody RB { get; set; }
     private Transform m_hunterTransform;
     private CinemachinePOV m_cinemachinePOV;
@@ -29,12 +30,18 @@ public class NetworkedHunterControls : NetworkBehaviour
 
     [Header("LookAt controls Settings")]
     [SerializeField]
-    private float m_lookAtMinMovingSpeed = 20.0f;
-    private float m_LookAtMCurrentaxSpeed = 0f;
+    private float m_lookAtMinTorque = 100.0f;
     [SerializeField]
-    private float m_lookAtMaxMovingSpeed = 100.0f;
+    private float m_lookAtMaxTorque = 500.0f;
+    [SerializeField]
+    private float m_lookAtMinVelocity = 10.0f;
+    [SerializeField]
+    private float m_lookAtMaxVelocity = 20.0f;
+    private float m_LookAtCurrentMaxVelocity = 0f;
     private bool m_isLookAtSetToStop = false;
     public float m_lookAtDecelerationRate = 0.2f;
+    [SerializeField]
+    public float m_camDistLookAtSpeedMultiplier = 0.1f;
 
 
     [Header("Scrolling Settings")]
@@ -62,7 +69,7 @@ public class NetworkedHunterControls : NetworkBehaviour
         //{
         //    return;
         //}
-        m_LookAtMCurrentaxSpeed = m_lookAtMinMovingSpeed;
+        m_LookAtCurrentMaxVelocity = m_lookAtMinTorque;
         RB = GetComponentInChildren<Rigidbody>();
         if (RB != null) Debug.Log("Hunter RigidBody found!");
         else Debug.LogError("Hunter RigidBody not found!");
@@ -270,12 +277,11 @@ public class NetworkedHunterControls : NetworkBehaviour
             return;
         }
 
-        Vector3 nextVelocity = RB.velocity;
-        Debug.Log(nextVelocity);
-        //nextVelocity = Vector3.ClampMagnitude(nextVelocity, m_LookAtMCurrentaxSpeed);
-        //RB.velocity = nextVelocity;
+        Debug.Log("Curr vel: " + RB.velocity.magnitude + " m_LookAtCurrentMaxVelocity: " + m_LookAtCurrentMaxVelocity);
+        if (RB.velocity.magnitude > m_LookAtCurrentMaxVelocity) return;
 
-        RB.AddTorque(GetIsShiftPressedSpeed() * Time.fixedDeltaTime * direction, ForceMode.Force);
+        Debug.Log("GetCameraDistanceSpeed(): " + GetCameraDistanceSpeed());
+        RB.AddTorque(GetIsShiftPressedSpeed() * GetCameraDistanceSpeed() * Time.fixedDeltaTime * direction, ForceMode.Force);
     }
 
     private void DisableMouseTracking()
@@ -300,12 +306,17 @@ public class NetworkedHunterControls : NetworkBehaviour
     {
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            m_LookAtMCurrentaxSpeed = m_lookAtMaxMovingSpeed;
-            return m_lookAtMaxMovingSpeed;
+            m_LookAtCurrentMaxVelocity = m_lookAtMaxVelocity;
+            return m_lookAtMaxTorque;
         }
 
-        m_LookAtMCurrentaxSpeed = m_lookAtMinMovingSpeed;
-        return m_lookAtMinMovingSpeed;
+        m_LookAtCurrentMaxVelocity = m_lookAtMinVelocity;
+        return m_lookAtMinTorque;
+    }
+
+    private float GetCameraDistanceSpeed()
+    {
+        return m_framingTransposer.m_CameraDistance * m_camDistLookAtSpeedMultiplier;
     }
 
     private bool GetIsNoDirectionPressed()
