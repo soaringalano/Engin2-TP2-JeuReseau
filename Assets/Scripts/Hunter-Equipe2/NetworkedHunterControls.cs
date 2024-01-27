@@ -54,10 +54,10 @@ public class NetworkedHunterControls : NetworkBehaviour
 
     private void Start()
     {
-        //if (!isLocalPlayer)
-        //{
-        //    return;
-        //}
+        if (!isLocalPlayer)
+        {
+            return;
+        }
 
         m_LookAtCurrentMaxVelocity = m_lookAtMinTorque;
         RB = GetComponentInChildren<Rigidbody>();
@@ -95,10 +95,10 @@ public class NetworkedHunterControls : NetworkBehaviour
 
     private void Update()
     {
-        //if (!isLocalPlayer)
-        //{
-        //    return;
-        //}
+        if (!isLocalPlayer)
+        {
+            return;
+        }
 
         if (Input.GetKeyUp(KeyCode.LeftShift) || (Input.GetKeyUp(KeyCode.LeftShift) && GetIsAnyDirectionPressed()))
         {
@@ -118,18 +118,16 @@ public class NetworkedHunterControls : NetworkBehaviour
         else if (GetIsNoDirectionPressed() && !Input.GetKey(KeyCode.Space))
         {
             EnableMouseTracking();
-            //direction = Vector3.zero;
             m_isLookAtSetToStop = true;
         }
-
     }
 
     void FixedUpdate()
     {
-        //if (!isLocalPlayer)
-        //{
-        //    return;
-        //}
+        if (!isLocalPlayer)
+        {
+            return;
+        }
 
         if (m_isRotating)
         {
@@ -142,10 +140,10 @@ public class NetworkedHunterControls : NetworkBehaviour
 
     private void LateUpdate()
     {
-        //if (!isLocalPlayer)
-        //{
-        //    return;
-        //}
+        if (!isLocalPlayer)
+        {
+            return;
+        }
 
         LateUpdateCameraScroll();
         LateUpdateFOV();
