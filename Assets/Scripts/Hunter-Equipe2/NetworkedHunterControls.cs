@@ -8,8 +8,8 @@ public class NetworkedHunterControls : NetworkBehaviour
     public Camera Camera { get; set; }
     public CinemachineVirtualCamera VirtualCamera { get; set; }
 
-    /* ################# Do not use in code, it replaces the active Camera variables in Start() ############### */ 
-    [field:SerializeField] private Camera OfflineCamera { get; set; }
+    /* ################# Do not use in code, it replaces the active Camera variables in Start() ############### */
+    [field: SerializeField] private Camera OfflineCamera { get; set; }
     [field: SerializeField] private CinemachineVirtualCamera OfflineVirtualCamera { get; set; }
     /* ######################################################################################################## */
 
@@ -20,7 +20,7 @@ public class NetworkedHunterControls : NetworkBehaviour
     private float m_cinemachinePOVMaxSpeedHorizontal;
     private float m_cinemachinePOVMaxSpeedVertical;
 
-    [field:SerializeField] public Transform m_objectToLookAt { get; set; }
+    [field: SerializeField] public Transform m_objectToLookAt { get; set; }
 
     [Header("LookAt controls Settings")]
     [SerializeField] private float m_lookAtMinTorque = 100.0f;
@@ -102,7 +102,7 @@ public class NetworkedHunterControls : NetworkBehaviour
         {
             return;
         }
-        
+
         if (!isLocalPlayer)
         {
             return;

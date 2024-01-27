@@ -1,16 +1,15 @@
 using Cinemachine;
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class HunterGameObjectSpawner : GameObjectSpawner
 {
     [field: SerializeField] private GameObject HunterCameraAssetsPrefab { get; set; }
-    [field: SerializeField] private GameObject HunterAssetsPrefab { get; set; }
+    [field: SerializeField] private GameObject HunterUIPrefab { get; set; }
 
     private NetworkedHunterControls m_networkedHunterMovement;
     private GameObject m_hunterCamAssetsGameObject;
+    //private GameObject m_hunterUIAssetsGameObject;
     private Transform m_hunterTransform;
     //private GameObject m_hunterGameObject;
     private CinemachineVirtualCamera m_virtualCamera;
@@ -53,6 +52,8 @@ public class HunterGameObjectSpawner : GameObjectSpawner
     {
         Debug.Log("Instanciate Hunter Assets.");
         m_hunterCamAssetsGameObject = Instantiate(HunterCameraAssetsPrefab, transform);
+        //m_hunterUIAssetsGameObject = Instantiate(HunterUIPrefab, transform);
+        Instantiate(HunterUIPrefab, transform);
     }
 
     protected override void GetNetworkedPlayerControls()
