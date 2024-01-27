@@ -20,33 +20,6 @@ public class NetworkedHunterControls : NetworkBehaviour
 
     [field:SerializeField]
     public Transform m_objectToLookAt { get; set; }
-
-    [field:SerializeField]
-    private float m_rotationSpeed { get; set; }
-
-    [field: SerializeField]
-    private float m_desiredDistance { get; set; } = 10.0f;
-
-    [SerializeField]
-    private float m_lerpSpeed = 0.05f;
-
-    [field: SerializeField]
-    public float AccelerationValue { get; private set; }
-    [field: SerializeField]
-    public float DecelerationValue { get; private set; } = 0.3f;
-    [field: SerializeField]
-    public float MaxForwardVelocity { get; private set; }
-    [field: SerializeField]
-    public float MaxSidewaysVelocity { get; private set; }
-    [field: SerializeField]
-    public float MaxBackwardVelocity { get; private set; }
-
-    [field: SerializeField]
-    public Vector2 CurrentDirectionalInputs { get; private set; }
-
-    [SerializeField]
-    private Vector2 m_zoomClampValues = new Vector2(2.0f, 15.0f);
-
     [Header("LookAt controls Settings")]
     [SerializeField]
     private float m_lookAtMinMovingSpeed = 20.0f;
@@ -70,6 +43,15 @@ public class NetworkedHunterControls : NetworkBehaviour
     private float m_maxCamFOV = 90.0f;
     private float m_scrollSmoothDampTime = 0.01f;
     private float m_FOVmoothDampTime = 0.4f;
+
+    [Header("Rotating PLatform Settings")]
+    [SerializeField] GameObject m_terrainPlane;
+    [SerializeField] private float m_rotationSpeed;
+    [SerializeField] private float m_maxRotationAngle = 15f;
+    private bool m_isRotating = false;
+    private Vector3 m_previousMousePosition;
+    private float m_currentRotationX = 0f;
+    private float m_currentRotationZ = 0f;
 
     private void Start()
     {
@@ -111,7 +93,6 @@ public class NetworkedHunterControls : NetworkBehaviour
         else Debug.LogError("CinemachinePOV not found!");
     }
 
-
     void FixedUpdate()
     {
         //if (!isLocalPlayer)
@@ -119,7 +100,13 @@ public class NetworkedHunterControls : NetworkBehaviour
         //    return;
         //}
 
-        SetDirectionalInputs();
+        if (m_isRotating)
+        {
+            FixedUpdateRotatingPlatform();
+            return;
+        }
+
+        FixedUpdateDirectionalInputs();
     }
 
     private void LateUpdate()
@@ -129,12 +116,12 @@ public class NetworkedHunterControls : NetworkBehaviour
         //    return;
         //}
 
-        UpdateCameraScroll();
-        UpdateFOV();
-        StopLookAtRBVelocity();
+        LateUpdateCameraScroll();
+        LateUpdateFOV();
+        LateUpdateStopLookAtRBVelocity();
     }
 
-    private void UpdateFOV()
+    private void LateUpdateFOV()
     {
         float distancePercent = m_framingTransposer.m_CameraDistance / m_maxCamDist;
 
@@ -142,20 +129,47 @@ public class NetworkedHunterControls : NetworkBehaviour
         VirtualCamera.m_Lens.FieldOfView = newFOV;
     }
 
-    private void UpdateCameraScroll()
+    private void LateUpdateCameraScroll()
     {
         float scrollDelta = Input.mouseScrollDelta.y;
 
-        if (Mathf.Approximately(scrollDelta, 0f))
-        {
-            return;
-        }
+        if (Mathf.Approximately(scrollDelta, 0f)) return;
 
         float lerpedScrolDist = Mathf.Lerp(m_framingTransposer.m_CameraDistance, m_framingTransposer.m_CameraDistance - (scrollDelta * m_scrollSpeed), m_scrollSmoothDampTime);
         m_framingTransposer.m_CameraDistance = Mathf.Clamp(lerpedScrolDist, m_minCamDist, m_maxCamDist);
     }
 
-    public void SetDirectionalInputs()
+    private void FixedUpdateRotatingPlatform()
+    {
+        if (Input.GetMouseButtonUp(1))
+        {
+            EnableMouseTracking();
+            m_isRotating = false;
+            return;
+        }
+
+        Vector3 mouseDelta = Input.mousePosition - m_previousMousePosition;
+
+        float angleZ = mouseDelta.x * m_rotationSpeed;
+        float angleX = mouseDelta.y * m_rotationSpeed;
+
+        m_currentRotationX += angleX;
+        m_currentRotationZ += angleZ;
+
+
+        m_currentRotationX = Mathf.Clamp(m_currentRotationX, -m_maxRotationAngle, m_maxRotationAngle);
+        m_currentRotationZ = Mathf.Clamp(m_currentRotationZ, -m_maxRotationAngle, m_maxRotationAngle);
+
+        // Calculate delta rotation to apply
+        float deltaRotationX = m_currentRotationX - m_terrainPlane.transform.rotation.eulerAngles.x;
+        float deltaRotationZ = m_currentRotationZ - m_terrainPlane.transform.rotation.eulerAngles.z;
+
+        // Apply rotation
+        m_terrainPlane.transform.Rotate(Vector3.right, deltaRotationX, Space.World);
+        m_terrainPlane.transform.Rotate(Vector3.forward, deltaRotationZ, Space.World);
+    }
+
+    public void FixedUpdateDirectionalInputs()
     {
 
         Vector3 direction = new Vector3();
@@ -184,6 +198,17 @@ public class NetworkedHunterControls : NetworkBehaviour
             direction += Camera.transform.TransformDirection(0, 0, -1);
             m_isLookAtSetToStop = false;
         }
+        if (Input.GetMouseButtonDown(1))
+        {
+            DisableMouseTracking();
+            m_isRotating = true;
+            m_previousMousePosition = Input.mousePosition;
+        }
+        if (Input.GetMouseButtonUp(1))
+        {
+            EnableMouseTracking();
+            m_isRotating = false;
+        }
         if (Input.GetKeyUp(KeyCode.LeftShift) || (Input.GetKeyUp(KeyCode.LeftShift) && GetIsAnyDirectionPressed()))
         {
             m_isLookAtSetToStop = true;
@@ -192,6 +217,12 @@ public class NetworkedHunterControls : NetworkBehaviour
         {
             DisableMouseTracking();
             m_isLookAtSetToStop = true;
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                m_isRotating = true;
+                m_previousMousePosition = Input.mousePosition;
+            }
         }
         else if (GetIsNoDirectionPressed() && !Input.GetKey(KeyCode.Space))
         {
@@ -207,6 +238,8 @@ public class NetworkedHunterControls : NetworkBehaviour
 
         RB.AddTorque(GetIsShiftPressed() * m_lookAtMinMovingSpeed * Time.fixedDeltaTime * direction, ForceMode.Force);
     }
+
+
 
     private void DisableMouseTracking()
     {
@@ -246,7 +279,7 @@ public class NetworkedHunterControls : NetworkBehaviour
         return (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D));
     }
 
-    private void StopLookAtRBVelocity()
+    private void LateUpdateStopLookAtRBVelocity()
     {
         if (m_isLookAtSetToStop == false) return;
 
