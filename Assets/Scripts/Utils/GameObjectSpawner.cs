@@ -8,9 +8,13 @@ public abstract class GameObjectSpawner : NetworkBehaviour
 
     protected virtual void GetPlayerGameObject()
     {
+    }    
+    
+    protected virtual void GetNetworkedPlayerControls()
+    {
     }
 
-    protected virtual void GetNetworkedPlayerControls()
+    protected virtual void SetAssetGameObject()
     {
     }
 

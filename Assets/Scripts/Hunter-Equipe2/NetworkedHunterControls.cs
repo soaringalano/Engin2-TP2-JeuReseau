@@ -1,8 +1,5 @@
 ﻿using Cinemachine;
 using Mirror;
-using System;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class NetworkedHunterControls : NetworkBehaviour
@@ -12,10 +9,8 @@ public class NetworkedHunterControls : NetworkBehaviour
     public CinemachineVirtualCamera VirtualCamera { get; set; }
 
     /* ################# Do not use in code, it replaces the active Camera variables in Start() ############### */ 
-    [field:SerializeField]
-    private Camera OfflineCamera { get; set; }
-    [field: SerializeField]
-    private CinemachineVirtualCamera OfflineVirtualCamera { get; set; }
+    [field:SerializeField] private Camera OfflineCamera { get; set; }
+    [field: SerializeField] private CinemachineVirtualCamera OfflineVirtualCamera { get; set; }
     /* ######################################################################################################## */
 
     private Rigidbody RB { get; set; }
@@ -25,23 +20,17 @@ public class NetworkedHunterControls : NetworkBehaviour
     private float m_cinemachinePOVMaxSpeedHorizontal;
     private float m_cinemachinePOVMaxSpeedVertical;
 
-    [field:SerializeField]
-    public Transform m_objectToLookAt { get; set; }
+    [field:SerializeField] public Transform m_objectToLookAt { get; set; }
 
     [Header("LookAt controls Settings")]
-    [SerializeField]
-    private float m_lookAtMinTorque = 100.0f;
-    [SerializeField]
-    private float m_lookAtMaxTorque = 500.0f;
-    [SerializeField]
-    private float m_lookAtMinVelocity = 10.0f;
-    [SerializeField]
-    private float m_lookAtMaxVelocity = 20.0f;
+    [SerializeField] private float m_lookAtMinTorque = 100.0f;
+    [SerializeField] private float m_lookAtMaxTorque = 500.0f;
+    [SerializeField] private float m_lookAtMinVelocity = 10.0f;
+    [SerializeField] private float m_lookAtMaxVelocity = 20.0f;
     private float m_LookAtCurrentMaxVelocity = 0f;
     private bool m_isLookAtSetToStop = false;
-    public float m_lookAtDecelerationRate = 0.2f;
-    [SerializeField]
-    public float m_camDistLookAtSpeedMultiplier = 0.1f;
+    private float m_lookAtDecelerationRate = 0.2f;
+    private float m_camDistLookAtSpeedMultiplier = 0.1f;
 
 
     [Header("Scrolling Settings")]
@@ -54,7 +43,7 @@ public class NetworkedHunterControls : NetworkBehaviour
     private float m_FOVmoothDampTime = 0.4f;
 
     [Header("Rotating PLatform Settings")]
-    [SerializeField] GameObject m_terrainPlane;
+    [SerializeField] public GameObject m_terrainPlane;
     [SerializeField] private float m_rotationSpeed = 0f;
     [SerializeField] private float m_maxRotationAngle = 15f;
     private bool m_isRotating = false;
