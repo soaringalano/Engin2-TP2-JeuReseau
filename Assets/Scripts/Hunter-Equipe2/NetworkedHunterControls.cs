@@ -17,23 +17,25 @@ public class NetworkedHunterControls : NetworkBehaviour
     [field: SerializeField]
     private CinemachineVirtualCamera OfflineVirtualCamera { get; set; }
     /* ############################################################################### */
-
-    [field:SerializeField]
-    public Transform m_objectToLookAt { get; set; }
-    [Header("LookAt controls Settings")]
-    [SerializeField]
-    private float m_lookAtMinMovingSpeed = 20.0f;
-    [SerializeField]
-    private float m_lookAtMaxMovingSpeed = 100.0f;
-    private bool m_isLookAtSetToStop = false;
-    public float m_lookAtDecelerationRate = 0.2f;
-
     private Rigidbody RB { get; set; }
     private Transform m_hunterTransform;
     private CinemachinePOV m_cinemachinePOV;
     private CinemachineFramingTransposer m_framingTransposer;
     private float m_cinemachinePOVMaxSpeedHorizontal;
     private float m_cinemachinePOVMaxSpeedVertical;
+
+    [field:SerializeField]
+    public Transform m_objectToLookAt { get; set; }
+
+    [Header("LookAt controls Settings")]
+    [SerializeField]
+    private float m_lookAtMinMovingSpeed = 20.0f;
+    private float m_LookAtMCurrentaxSpeed = 0f;
+    [SerializeField]
+    private float m_lookAtMaxMovingSpeed = 100.0f;
+    private bool m_isLookAtSetToStop = false;
+    public float m_lookAtDecelerationRate = 0.2f;
+
 
     [Header("Scrolling Settings")]
     private float m_scrollSpeed = 200.0f;
@@ -46,12 +48,13 @@ public class NetworkedHunterControls : NetworkBehaviour
 
     [Header("Rotating PLatform Settings")]
     [SerializeField] GameObject m_terrainPlane;
-    [SerializeField] private float m_rotationSpeed;
+    [SerializeField] private float m_rotationSpeed = 0f;
     [SerializeField] private float m_maxRotationAngle = 15f;
     private bool m_isRotating = false;
     private Vector3 m_previousMousePosition;
     private float m_currentRotationX = 0f;
     private float m_currentRotationZ = 0f;
+    
 
     private void Start()
     {
@@ -59,7 +62,7 @@ public class NetworkedHunterControls : NetworkBehaviour
         //{
         //    return;
         //}
-
+        m_LookAtMCurrentaxSpeed = m_lookAtMinMovingSpeed;
         RB = GetComponentInChildren<Rigidbody>();
         if (RB != null) Debug.Log("Hunter RigidBody found!");
         else Debug.LogError("Hunter RigidBody not found!");
@@ -91,6 +94,37 @@ public class NetworkedHunterControls : NetworkBehaviour
             m_framingTransposer = VirtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
         }
         else Debug.LogError("CinemachinePOV not found!");
+    }
+
+    private void Update()
+    {
+        //if (!isLocalPlayer)
+        //{
+        //    return;
+        //}
+
+        if (Input.GetKeyUp(KeyCode.LeftShift) || (Input.GetKeyUp(KeyCode.LeftShift) && GetIsAnyDirectionPressed()))
+        {
+            m_isLookAtSetToStop = true;
+        }
+        else if (GetIsNoDirectionPressed() && Input.GetKey(KeyCode.Space))
+        {
+            DisableMouseTracking();
+            m_isLookAtSetToStop = true;
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                m_isRotating = true;
+                m_previousMousePosition = Input.mousePosition;
+            }
+        }
+        else if (GetIsNoDirectionPressed() && !Input.GetKey(KeyCode.Space))
+        {
+            EnableMouseTracking();
+            //direction = Vector3.zero;
+            m_isLookAtSetToStop = true;
+        }
+
     }
 
     void FixedUpdate()
@@ -209,37 +243,40 @@ public class NetworkedHunterControls : NetworkBehaviour
             EnableMouseTracking();
             m_isRotating = false;
         }
-        if (Input.GetKeyUp(KeyCode.LeftShift) || (Input.GetKeyUp(KeyCode.LeftShift) && GetIsAnyDirectionPressed()))
-        {
-            m_isLookAtSetToStop = true;
-        }
-        else if (GetIsNoDirectionPressed() && Input.GetKey(KeyCode.Space))
-        {
-            DisableMouseTracking();
-            m_isLookAtSetToStop = true;
+        //if (Input.GetKeyUp(KeyCode.LeftShift) || (Input.GetKeyUp(KeyCode.LeftShift) && GetIsAnyDirectionPressed()))
+        //{
+        //    m_isLookAtSetToStop = true;
+        //}
+        //else if (GetIsNoDirectionPressed() && Input.GetKey(KeyCode.Space))
+        //{
+        //    DisableMouseTracking();
+        //    m_isLookAtSetToStop = true;
 
-            if (Input.GetMouseButtonDown(1))
-            {
-                m_isRotating = true;
-                m_previousMousePosition = Input.mousePosition;
-            }
-        }
-        else if (GetIsNoDirectionPressed() && !Input.GetKey(KeyCode.Space))
-        {
-            EnableMouseTracking();
-            direction = Vector3.zero;
-            m_isLookAtSetToStop = true;
-        }
+        //    if (Input.GetMouseButtonDown(1))
+        //    {
+        //        m_isRotating = true;
+        //        m_previousMousePosition = Input.mousePosition;
+        //    }
+        //}
+        //else if (GetIsNoDirectionPressed() && !Input.GetKey(KeyCode.Space))
+        //{
+        //    EnableMouseTracking();
+        //    direction = Vector3.zero;
+        //    m_isLookAtSetToStop = true;
+        //}
 
         if (direction.magnitude <= 0)
         {
             return;
         }
 
-        RB.AddTorque(GetIsShiftPressed() * m_lookAtMinMovingSpeed * Time.fixedDeltaTime * direction, ForceMode.Force);
+        Vector3 nextVelocity = RB.velocity;
+        Debug.Log(nextVelocity);
+        //nextVelocity = Vector3.ClampMagnitude(nextVelocity, m_LookAtMCurrentaxSpeed);
+        //RB.velocity = nextVelocity;
+
+        RB.AddTorque(GetIsShiftPressedSpeed() * Time.fixedDeltaTime * direction, ForceMode.Force);
     }
-
-
 
     private void DisableMouseTracking()
     {
@@ -259,13 +296,15 @@ public class NetworkedHunterControls : NetworkBehaviour
         m_cinemachinePOV.m_VerticalAxis.m_MaxSpeed = m_cinemachinePOVMaxSpeedVertical;
     }
 
-    private float GetIsShiftPressed()
+    private float GetIsShiftPressedSpeed()
     {
         if (Input.GetKey(KeyCode.LeftShift))
         {
+            m_LookAtMCurrentaxSpeed = m_lookAtMaxMovingSpeed;
             return m_lookAtMaxMovingSpeed;
         }
 
+        m_LookAtMCurrentaxSpeed = m_lookAtMinMovingSpeed;
         return m_lookAtMinMovingSpeed;
     }
 
