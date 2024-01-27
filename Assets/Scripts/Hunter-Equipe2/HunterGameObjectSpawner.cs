@@ -6,12 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class HunterGameObjectSpawner : GameObjectSpawner
 {
-    [field: SerializeField]
-    private GameObject HunterCameraAssetsPrefab { get; set; }
+    [field: SerializeField] private GameObject HunterCameraAssetsPrefab { get; set; }
+    [field: SerializeField] private GameObject HunterAssetsPrefab { get; set; }
 
     private NetworkedHunterControls m_networkedHunterMovement;
     private GameObject m_hunterCamAssetsGameObject;
     private Transform m_hunterTransform;
+    //private GameObject m_hunterGameObject;
     private CinemachineVirtualCamera m_virtualCamera;
 
 
@@ -23,12 +24,14 @@ public class HunterGameObjectSpawner : GameObjectSpawner
         }
 
         GetPlayerGameObject();
+        //InstanciatePlayer();
         InstanciateAssets();
         GetNetworkedPlayerControls();
         SetAssetGameObject();
         SetCameraInNetworkedPlayerControls();
         SetTheCameraFollow();
         SetTheCameraLookAt();
+        InitializeSpawnedAssets();
     }
 
     protected override void GetPlayerGameObject()
@@ -40,6 +43,11 @@ public class HunterGameObjectSpawner : GameObjectSpawner
             return;
         }
     }
+
+    //protected override void InstanciatePlayer()
+    //{
+    //    m_hunterGameObject = Instantiate(HunterCameraAssetsPrefab, transform);
+    //}
 
     protected override void InstanciateAssets()
     {
@@ -56,7 +64,6 @@ public class HunterGameObjectSpawner : GameObjectSpawner
             Debug.LogError("NetworkedRunnerMovement Not found!");
         }
     }
-
 
     protected override void SetAssetGameObject()
     {
@@ -148,13 +155,25 @@ public class HunterGameObjectSpawner : GameObjectSpawner
             return;
         }
 
+        //if (m_hunterGameObject == null)
+        //{
+        //    Debug.LogError("HunterTransform not added to exposed variable!");
+        //    return;
+        //}
+
+        //Transform lookAt = m_hunterGameObject.transform.GetChild(0);
         Transform lookAt = m_hunterTransform;
 
         if (lookAt.name != "LookAt")
         {
-            Debug.LogError("Make sure that the GameObject LookAt is the first child of in this prefab hierarchy!");
+            Debug.LogError("Make sure that the GameObject LookAt is the first child of in this prefab hierarchy! The current GameObject is: " + lookAt.name);
         }
 
         m_virtualCamera.m_LookAt = lookAt;
+    }
+
+    protected override void InitializeSpawnedAssets()
+    {
+        m_networkedHunterMovement.Initialize();
     }
 }

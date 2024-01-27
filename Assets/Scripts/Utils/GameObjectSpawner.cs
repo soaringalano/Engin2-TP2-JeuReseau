@@ -2,6 +2,10 @@ using Mirror;
 
 public abstract class GameObjectSpawner : NetworkBehaviour
 {
+    protected virtual void InstanciatePlayer()
+    {
+    }
+
     protected virtual void InstanciateAssets()
     {
     }
@@ -27,6 +31,10 @@ public abstract class GameObjectSpawner : NetworkBehaviour
     }
 
     protected virtual void SetTheCameraLookAt()
+    {
+    }
+
+    protected virtual void InitializeSpawnedAssets()
     {
     }
 }

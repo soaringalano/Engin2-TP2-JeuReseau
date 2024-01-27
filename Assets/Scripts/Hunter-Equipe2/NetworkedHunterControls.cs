@@ -50,9 +50,10 @@ public class NetworkedHunterControls : NetworkBehaviour
     private Vector3 m_previousMousePosition;
     private float m_currentRotationX = 0f;
     private float m_currentRotationZ = 0f;
-    
 
-    private void Start()
+    private bool m_isInitialized = false;
+
+    public void Initialize()
     {
         if (!isLocalPlayer)
         {
@@ -91,10 +92,17 @@ public class NetworkedHunterControls : NetworkBehaviour
             m_framingTransposer = VirtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
         }
         else Debug.LogError("CinemachinePOV not found!");
+
+        m_isInitialized = true;
     }
 
     private void Update()
     {
+        if (!m_isInitialized)
+        {
+            return;
+        }
+        
         if (!isLocalPlayer)
         {
             return;
@@ -124,6 +132,11 @@ public class NetworkedHunterControls : NetworkBehaviour
 
     void FixedUpdate()
     {
+        if (!m_isInitialized)
+        {
+            return;
+        }
+
         if (!isLocalPlayer)
         {
             return;
@@ -140,6 +153,11 @@ public class NetworkedHunterControls : NetworkBehaviour
 
     private void LateUpdate()
     {
+        if (!m_isInitialized)
+        {
+            return;
+        }
+
         if (!isLocalPlayer)
         {
             return;
@@ -245,10 +263,8 @@ public class NetworkedHunterControls : NetworkBehaviour
             return;
         }
 
-        Debug.Log("Curr vel: " + RB.velocity.magnitude + " m_LookAtCurrentMaxVelocity: " + m_LookAtCurrentMaxVelocity);
         if (RB.velocity.magnitude > m_LookAtCurrentMaxVelocity) return;
 
-        Debug.Log("GetCameraDistanceSpeed(): " + GetCameraDistanceSpeed());
         RB.AddTorque(GetIsShiftPressedSpeed() * GetCameraDistanceSpeed() * Time.fixedDeltaTime * direction, ForceMode.Force);
     }
 
