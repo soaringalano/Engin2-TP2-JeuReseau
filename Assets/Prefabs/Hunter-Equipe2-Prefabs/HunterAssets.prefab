@@ -204,12 +204,15 @@ MonoBehaviour:
   <OfflineCamera>k__BackingField: {fileID: 0}
   <OfflineVirtualCamera>k__BackingField: {fileID: 0}
   <m_objectToLookAt>k__BackingField: {fileID: 4955299921843428613}
-  m_lookAtMinMovingSpeed: 20
-  m_lookAtMaxMovingSpeed: 100
-  m_lookAtDecelerationRate: 0.2
+  m_lookAtMinTorque: 100
+  m_lookAtMaxTorque: 500
+  m_lookAtMinVelocity: 10
+  m_lookAtMaxVelocity: 20
+  m_lookAtDecelerationRate: 0.5
+  m_camDistLookAtSpeedMultiplier: 0.1
   m_terrainPlane: {fileID: 0}
-  m_rotationSpeed: 0
-  m_maxRotationAngle: 15
+  m_rotationSpeed: 0.01
+  m_maxRotationAngle: 6
 --- !u!114 &5316366228604886112
 MonoBehaviour:
   m_ObjectHideFlags: 0
