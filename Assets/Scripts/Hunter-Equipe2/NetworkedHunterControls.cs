@@ -69,6 +69,7 @@ public class NetworkedHunterControls : NetworkBehaviour
         //{
         //    return;
         //}
+
         m_LookAtCurrentMaxVelocity = m_lookAtMinTorque;
         RB = GetComponentInChildren<Rigidbody>();
         if (RB != null) Debug.Log("Hunter RigidBody found!");
@@ -250,27 +251,7 @@ public class NetworkedHunterControls : NetworkBehaviour
             EnableMouseTracking();
             m_isRotating = false;
         }
-        //if (Input.GetKeyUp(KeyCode.LeftShift) || (Input.GetKeyUp(KeyCode.LeftShift) && GetIsAnyDirectionPressed()))
-        //{
-        //    m_isLookAtSetToStop = true;
-        //}
-        //else if (GetIsNoDirectionPressed() && Input.GetKey(KeyCode.Space))
-        //{
-        //    DisableMouseTracking();
-        //    m_isLookAtSetToStop = true;
 
-        //    if (Input.GetMouseButtonDown(1))
-        //    {
-        //        m_isRotating = true;
-        //        m_previousMousePosition = Input.mousePosition;
-        //    }
-        //}
-        //else if (GetIsNoDirectionPressed() && !Input.GetKey(KeyCode.Space))
-        //{
-        //    EnableMouseTracking();
-        //    direction = Vector3.zero;
-        //    m_isLookAtSetToStop = true;
-        //}
 
         if (direction.magnitude <= 0)
         {
