@@ -83,8 +83,8 @@ MonoBehaviour:
   sendRate: 60
   autoStartServerBuild: 0
   autoConnectClientBuild: 0
-  offlineScene: Assets/Scenes/Gameplay-TwoTeams-Scenes/OnlineBothTeamsTest.unity
-  onlineScene: Assets/Scenes/Gameplay-TwoTeams-Scenes/OnlineBothTeamsTest.unity
+  offlineScene: Assets/Scenes/MergeHunterAndRunner.unity
+  onlineScene: Assets/Scenes/MergeHunterAndRunner.unity
   transport: {fileID: 694612720239118424}
   networkAddress: localhost
   maxConnections: 100
@@ -92,12 +92,12 @@ MonoBehaviour:
   disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
   playerPrefabs:
-  - {fileID: 6565551724579044330, guid: a8e6d2bdb3499d44fa322002f4bdd2ed, type: 3}
+  - {fileID: 6375949729559261390, guid: 2dad97f27c1e49e429ae15abee0493db, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs:
-  - {fileID: 6952917354324845399, guid: 2405b750a86c4474e9dcc8970d521635, type: 3}
-  - {fileID: 387287356582270471, guid: f6551024bfcf388488d659696348f4da, type: 3}
+  - {fileID: 1542843610171636795, guid: ca6879b15c1c84ca881e56e4f4f6b3a5, type: 3}
+  - {fileID: 7907876455901787764, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
   exceptionsDisconnect: 1
   snapshotSettings:
     bufferTimeMultiplier: 2
