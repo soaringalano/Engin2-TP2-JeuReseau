@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6749037258961928793}
   - component: {fileID: 35361631189941954}
+  - component: {fileID: 3902327712907556311}
   - component: {fileID: 5917867825768695012}
   - component: {fileID: 8403922479734184492}
   - component: {fileID: 7307366001008025359}
@@ -64,6 +65,21 @@ MonoBehaviour:
   m_character: {fileID: 428478306684100937}
   m_animator: {fileID: 5512822503541690273}
   m_isJumping: 0
+--- !u!114 &3902327712907556311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56868658535408414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b86fc60a2c0d8e4498b513c5fd9368e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_animator: {fileID: 5512822503541690273}
+  m_duration: 3
+  m_test: 0
 --- !u!114 &5917867825768695012
 MonoBehaviour:
   m_ObjectHideFlags: 0
