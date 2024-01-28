@@ -373,7 +373,7 @@ GameObject:
   - component: {fileID: 90775033217172612}
   - component: {fileID: 8682265693038643933}
   - component: {fileID: 4434516658001257526}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -982,7 +982,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3933350884033483610}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: PowerUpsUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
