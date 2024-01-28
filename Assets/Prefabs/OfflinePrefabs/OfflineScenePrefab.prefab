@@ -1165,14 +1165,14 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39b6aab56d99deb4cb855aeb453a2764, type: 3}
---- !u!1 &3533926119485450752 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4193525953425328788, guid: 39b6aab56d99deb4cb855aeb453a2764, type: 3}
-  m_PrefabInstance: {fileID: 808786150170550420}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6893190534559238509 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6093628625521142265, guid: 39b6aab56d99deb4cb855aeb453a2764, type: 3}
+  m_PrefabInstance: {fileID: 808786150170550420}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8530018711679791431 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9032484057542300115, guid: 39b6aab56d99deb4cb855aeb453a2764, type: 3}
   m_PrefabInstance: {fileID: 808786150170550420}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4874113604954314381
@@ -1606,7 +1606,7 @@ PrefabInstance:
     - target: {fileID: 6875204520235563986, guid: 1cde1daea4b7b0841a076486e7ed44ea, type: 3}
       propertyPath: m_terrainPlane
       value: 
-      objectReference: {fileID: 3533926119485450752}
+      objectReference: {fileID: 8530018711679791431}
     - target: {fileID: 6875204520235563986, guid: 1cde1daea4b7b0841a076486e7ed44ea, type: 3}
       propertyPath: <OfflineCamera>k__BackingField
       value: 
