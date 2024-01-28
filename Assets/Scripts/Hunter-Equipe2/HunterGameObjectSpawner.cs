@@ -9,9 +9,7 @@ public class HunterGameObjectSpawner : GameObjectSpawner
 
     private NetworkedHunterControls m_networkedHunterMovement;
     private GameObject m_hunterCamAssetsGameObject;
-    //private GameObject m_hunterUIAssetsGameObject;
     private Transform m_hunterTransform;
-    //private GameObject m_hunterGameObject;
     private CinemachineVirtualCamera m_virtualCamera;
 
 
@@ -23,7 +21,6 @@ public class HunterGameObjectSpawner : GameObjectSpawner
         }
 
         GetPlayerGameObject();
-        //InstanciatePlayer();
         InstanciateAssets();
         GetNetworkedPlayerControls();
         SetAssetGameObject();
@@ -43,16 +40,10 @@ public class HunterGameObjectSpawner : GameObjectSpawner
         }
     }
 
-    //protected override void InstanciatePlayer()
-    //{
-    //    m_hunterGameObject = Instantiate(HunterCameraAssetsPrefab, transform);
-    //}
-
     protected override void InstanciateAssets()
     {
         Debug.Log("Instanciate Hunter Assets.");
         m_hunterCamAssetsGameObject = Instantiate(HunterCameraAssetsPrefab, transform);
-        //m_hunterUIAssetsGameObject = Instantiate(HunterUIPrefab, transform);
         Instantiate(HunterUIPrefab, transform);
     }
 
@@ -156,13 +147,6 @@ public class HunterGameObjectSpawner : GameObjectSpawner
             return;
         }
 
-        //if (m_hunterGameObject == null)
-        //{
-        //    Debug.LogError("HunterTransform not added to exposed variable!");
-        //    return;
-        //}
-
-        //Transform lookAt = m_hunterGameObject.transform.GetChild(0);
         Transform lookAt = m_hunterTransform;
 
         if (lookAt.name != "LookAt")
