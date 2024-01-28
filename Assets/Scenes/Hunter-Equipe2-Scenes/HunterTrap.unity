@@ -550,10 +550,6 @@ PrefabInstance:
       propertyPath: sceneId
       value: 504831721
       objectReference: {fileID: 0}
-    - target: {fileID: 7712656358411356866, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
-      propertyPath: m_deleteTimer
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 7907876455901787764, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
       propertyPath: m_Name
       value: MinePrefab

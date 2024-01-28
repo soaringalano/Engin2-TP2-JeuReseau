@@ -223,7 +223,7 @@ MonoBehaviour:
   m_canBeAffected: 1
   m_teamSide: 1
   m_affectedSide: 00000000
-  m_deleteTimer: 10
+  m_deleteTimer: 1
 --- !u!135 &1628203880132420311
 SphereCollider:
   m_ObjectHideFlags: 0
