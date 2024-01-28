@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5850235590848764526}
   - component: {fileID: 2383464959391419046}
   m_Layer: 0
-  m_Name: HunterPrefabNoNetwork
+  m_Name: DEPRECATEDHunterPrefabNoNetwork
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
