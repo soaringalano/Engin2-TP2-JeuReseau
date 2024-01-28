@@ -12,12 +12,12 @@ TagManager:
   - Water
   - UI
   - 
-  - Floor
-  - 
-  - MainCharacter
-  - FloorCollider
-  - 
-  - 
+  - RunnerFloor
+  - HunterFloor
+  - HunterWall
+  - RunnerCollider
+  - HunterCollider
+  - HunterCameraCollider
   - 
   - 
   - 

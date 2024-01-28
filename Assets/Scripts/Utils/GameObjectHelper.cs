@@ -1,18 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
-public class GameObjectHelper : MonoBehaviour
+public class GameObjectHelper
 {
 
-    public static GameObjectHelper s_instance;
+    private static GameObjectHelper s_instance;
 
-    void Awake()
+    public static GameObjectHelper GetInstance()
     {
 
-        if (s_instance != null)
-            Destroy(this);
-        s_instance = this;
+        if (s_instance == null)
+            s_instance = new GameObjectHelper();
+        return s_instance;
 
     }
 
@@ -20,10 +21,11 @@ public class GameObjectHelper : MonoBehaviour
     {
 
         List<GameObject> gameObjects = new List<GameObject> ();
+        List<GameObject> allGO = FindAllGameObjectsInScene();
 
-        foreach (GameObject gameObject in gameObjects)
+        foreach (GameObject gameObject in allGO)
         {
-            if(gameObject.layer == layer && gameObject.name == name)
+            if (gameObject.layer == layer && gameObject.name == name)
             {
                 gameObjects.Add(gameObject);
             }
@@ -31,5 +33,17 @@ public class GameObjectHelper : MonoBehaviour
 
         return gameObjects.Count == 0 ? null: gameObjects;
     }
+
+     public static List<GameObject> FindAllGameObjectsInScene()
+     {
+         List<GameObject> objectsInScene = new List<GameObject>();
+ 
+         foreach (GameObject go in Resources.FindObjectsOfTypeAll(typeof(GameObject)) as GameObject[])
+         {
+             if (!EditorUtility.IsPersistent(go.transform.root.gameObject) && !(go.hideFlags == HideFlags.NotEditable || go.hideFlags == HideFlags.HideAndDontSave))
+                 objectsInScene.Add(go);
+         }
+        return objectsInScene;
+     }
 
 }

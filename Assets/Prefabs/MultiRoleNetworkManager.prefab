@@ -83,20 +83,21 @@ MonoBehaviour:
   sendRate: 60
   autoStartServerBuild: 0
   autoConnectClientBuild: 0
-  offlineScene: 
-  onlineScene: 
-  transport: {fileID: 0}
+  offlineScene: Assets/Scenes/Gameplay-TwoTeams-Scenes/OnlineBothTeamsTest.unity
+  onlineScene: Assets/Scenes/Gameplay-TwoTeams-Scenes/OnlineBothTeamsTest.unity
+  transport: {fileID: 694612720239118424}
   networkAddress: localhost
   maxConnections: 100
   disconnectInactiveConnections: 0
   disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
   playerPrefabs:
-  - {fileID: 1292141603276078456, guid: d144f46f23600fd499c6e0f8729deeea, type: 3}
-  - {fileID: 6375949729559261390, guid: 2dad97f27c1e49e429ae15abee0493db, type: 3}
+  - {fileID: 6565551724579044330, guid: a8e6d2bdb3499d44fa322002f4bdd2ed, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
-  spawnPrefabs: []
+  spawnPrefabs:
+  - {fileID: 6952917354324845399, guid: 2405b750a86c4474e9dcc8970d521635, type: 3}
+  - {fileID: 387287356582270471, guid: f6551024bfcf388488d659696348f4da, type: 3}
   exceptionsDisconnect: 1
   snapshotSettings:
     bufferTimeMultiplier: 2
