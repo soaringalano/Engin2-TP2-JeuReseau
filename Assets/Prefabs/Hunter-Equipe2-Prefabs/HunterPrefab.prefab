@@ -232,13 +232,8 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3860673871818778488, guid: 0f254b6e0a9a0cc44bedc029e5c2e282, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5470306070647527568}
+      addedObject: {fileID: 5946635446312059159}
   m_SourcePrefab: {fileID: 100100000, guid: 0f254b6e0a9a0cc44bedc029e5c2e282, type: 3}
---- !u!224 &2584053313990929254 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8203236606463869679, guid: 0f254b6e0a9a0cc44bedc029e5c2e282, type: 3}
-  m_PrefabInstance: {fileID: 5912002517618338185}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7250152449872493267 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3933350884033483610, guid: 0f254b6e0a9a0cc44bedc029e5c2e282, type: 3}
@@ -249,7 +244,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3860673871818778488, guid: 0f254b6e0a9a0cc44bedc029e5c2e282, type: 3}
   m_PrefabInstance: {fileID: 5912002517618338185}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5470306070647527568
+--- !u!114 &5946635446312059159
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -261,9 +256,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1acbacfc13934ae79e23cb75ee61e8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dragTransform: {fileID: 2584053313990929254}
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   cubePrefab: {fileID: 7907876455901787764, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
   TopDownCam: {fileID: 5850235590848764526}
   raycastLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 2048
