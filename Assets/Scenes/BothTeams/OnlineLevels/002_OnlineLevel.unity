@@ -317,6 +317,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RoleSelctionUI
       objectReference: {fileID: 0}
+    - target: {fileID: 2127200135481770984, guid: cb90bbb042a363b498263efcaa763be2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -489,6 +493,10 @@ PrefabInstance:
       propertyPath: sceneId
       value: 1112759149
       objectReference: {fileID: 0}
+    - target: {fileID: 1570163697025100608, guid: f2adc831588dedf46a3fa3984bfd1b5b, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1892816934737847583, guid: f2adc831588dedf46a3fa3984bfd1b5b, type: 3}
       propertyPath: m_Name
       value: Environment
@@ -586,7 +594,7 @@ MonoBehaviour:
   disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
   playerPrefabs:
-  - {fileID: 56868658535408414, guid: 60532d26173e88e45aa64aab28837bf0, type: 3}
+  - {fileID: 56868658535408414, guid: 7f3cb201d41aff0478af94d28ba82119, type: 3}
   autoCreatePlayer: 0
   playerSpawnMethod: 0
   spawnPrefabs:
