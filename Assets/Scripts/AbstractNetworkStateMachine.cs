@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using Mirror;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbstractStateMachine<T> : MonoBehaviour where T : IState
+public class AbstractNetworkStateMachine<T> : NetworkBehaviour where T : IState
 {
     protected T m_currentState;
     protected List<T> m_possibleStates;
@@ -24,7 +25,7 @@ public class AbstractStateMachine<T> : MonoBehaviour where T : IState
 
     protected virtual void Update()
     {
-        //Debug.Log("Current state:" +  m_currentState.GetType());
+        Debug.Log("Current state:" +  m_currentState.GetType());
         m_currentState.OnUpdate();
         TryStateTransition();
     }
