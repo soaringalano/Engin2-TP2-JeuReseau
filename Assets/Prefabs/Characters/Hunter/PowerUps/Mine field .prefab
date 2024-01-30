@@ -44,6 +44,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8656199527888948643}
     m_Modifications:
+    - target: {fileID: 325440922601815825, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
+      propertyPath: _assetId
+      value: 3032741611
+      objectReference: {fileID: 0}
     - target: {fileID: 7907876455901787764, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
       propertyPath: m_Name
       value: MinePrefab (3)
@@ -106,6 +110,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8656199527888948643}
     m_Modifications:
+    - target: {fileID: 325440922601815825, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
+      propertyPath: _assetId
+      value: 3032741611
+      objectReference: {fileID: 0}
     - target: {fileID: 7907876455901787764, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
       propertyPath: m_Name
       value: MinePrefab (4)
@@ -168,6 +176,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8656199527888948643}
     m_Modifications:
+    - target: {fileID: 325440922601815825, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
+      propertyPath: _assetId
+      value: 3032741611
+      objectReference: {fileID: 0}
     - target: {fileID: 7907876455901787764, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
       propertyPath: m_Name
       value: MinePrefab
@@ -230,6 +242,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8656199527888948643}
     m_Modifications:
+    - target: {fileID: 325440922601815825, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
+      propertyPath: _assetId
+      value: 3032741611
+      objectReference: {fileID: 0}
     - target: {fileID: 7907876455901787764, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
       propertyPath: m_Name
       value: MinePrefab (1)
@@ -292,6 +308,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8656199527888948643}
     m_Modifications:
+    - target: {fileID: 325440922601815825, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
+      propertyPath: _assetId
+      value: 3032741611
+      objectReference: {fileID: 0}
     - target: {fileID: 7907876455901787764, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
       propertyPath: m_Name
       value: MinePrefab (2)
