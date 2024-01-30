@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 994230536966273459}
   - component: {fileID: 3561468938752097010}
   - component: {fileID: 3493818072732928859}
-  - component: {fileID: 6948601067476394392}
   m_Layer: 10
   m_Name: FloorTrigger
   m_TagString: Untagged
@@ -69,24 +68,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_animator: {fileID: 6385439707437339536}
   <IsOnFloor>k__BackingField: 0
---- !u!114 &6948601067476394392
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1093322200259154693}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0209c985b5f49149bd72f08a32e82e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
-  m_canBeAffected: 0
-  m_teamSide: 0
-  m_affectedSide: 01000000
 --- !u!1 &1292141603276078456
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,8 +409,7 @@ PrefabInstance:
       value: -127.69
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: -9071311137175874204, guid: 93ab7702cfd201a4dbf500415596065c, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93ab7702cfd201a4dbf500415596065c, type: 3}
