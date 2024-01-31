@@ -1,14 +1,17 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Scripts/Runner/FSMRunnerGameObjectSpawner.cs.meta
 <<<<<<<< HEAD:Assets/Scripts/Hunter/NetworkMineExplotion.cs.meta
 guid: c0209c985b5f49149bd72f08a32e82e0
 ========
 guid: 551db99d2fd09aa4b899bcaefafd79c2
 >>>>>>>> main:Assets/Scripts/Runner/FSMRunnerGameObjectSpawner.cs.meta
+=======
+guid: 771db755bfc5d4a2183d681166810838
+>>>>>>> parent of 00baab0 (Merge issues correction, adding a runner collider layer to the runner rigidbudy so that he does not goes through floor, adding DEPRECATED scenes and files):Assets/Scripts/Hunter/DEPRACATEDRotateTerrain.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - <RunnerCameraPrefab>k__BackingField: {fileID: 2502197940380891415, guid: 104ad32be306cd44ca8550552d96fe85, type: 3}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 162873117221055203}
   - component: {fileID: 4033974187267234008}
   m_Layer: 7
-  m_Name: DEPRECATEDTerrain
+  m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6749037258961928793}
-  - component: {fileID: 4739689086644031698}
   - component: {fileID: 35361631189941954}
+  - component: {fileID: 5917867825768695012}
   - component: {fileID: 8403922479734184492}
   - component: {fileID: 7307366001008025359}
   - component: {fileID: 6481846493386945722}
@@ -38,22 +38,6 @@ Transform:
   - {fileID: 5333601221199804640}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4739689086644031698
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 56868658535408414}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 202be7bff131eb64cabb668a6e0f752c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
-  <RunnerCameraAssetsPrefab>k__BackingField: {fileID: 2502197940380891415, guid: 104ad32be306cd44ca8550552d96fe85, type: 3}
 --- !u!114 &35361631189941954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,6 +64,22 @@ MonoBehaviour:
   m_character: {fileID: 428478306684100937}
   m_animator: {fileID: 5512822503541690273}
   m_isJumping: 0
+--- !u!114 &5917867825768695012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56868658535408414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 551db99d2fd09aa4b899bcaefafd79c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  <RunnerCameraAssetsPrefab>k__BackingField: {fileID: 2502197940380891415, guid: 104ad32be306cd44ca8550552d96fe85, type: 3}
 --- !u!114 &8403922479734184492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,7 +179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clientStarted: 0
   sceneId: 0
-  _assetId: 1267556840
+  _assetId: 3011911530
   serverOnly: 0
   visible: 0
   hasSpawned: 0
@@ -197,7 +197,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1292141603276078456, guid: 6e362fd5e02eaf94b88994f131bf07a3, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1671847897752458670, guid: 6e362fd5e02eaf94b88994f131bf07a3, type: 3}
       propertyPath: m_AnchorMax.x
