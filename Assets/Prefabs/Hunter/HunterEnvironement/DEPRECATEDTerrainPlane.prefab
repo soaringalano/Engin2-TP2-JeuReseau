@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 617468565413465481}
   - component: {fileID: 3887499415674056775}
   m_Layer: 0
-  m_Name: TerrainPlane
+  m_Name: DEPRECATEDTerrainPlane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

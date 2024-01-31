@@ -75,7 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8aab4c8111b7c411b9b92cf3dbc5bd4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedPrefabIndex: 0
+  selectedPrefabIndex: 1
   dontDestroyOnLoad: 1
   runInBackground: 1
   headlessStartMode: 1
@@ -83,8 +83,8 @@ MonoBehaviour:
   sendRate: 60
   autoStartServerBuild: 0
   autoConnectClientBuild: 0
-  offlineScene: Assets/Scenes/MergeHunterAndRunner.unity
-  onlineScene: Assets/Scenes/MergeHunterAndRunner.unity
+  offlineScene: 
+  onlineScene: 
   transport: {fileID: 694612720239118424}
   networkAddress: localhost
   maxConnections: 100
@@ -92,12 +92,14 @@ MonoBehaviour:
   disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
   playerPrefabs:
-  - {fileID: 6375949729559261390, guid: 2dad97f27c1e49e429ae15abee0493db, type: 3}
+  - {fileID: 6565551724579044330, guid: a8e6d2bdb3499d44fa322002f4bdd2ed, type: 3}
+  - {fileID: 56868658535408414, guid: 7f3cb201d41aff0478af94d28ba82119, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs:
-  - {fileID: 1542843610171636795, guid: ca6879b15c1c84ca881e56e4f4f6b3a5, type: 3}
   - {fileID: 7907876455901787764, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
+  - {fileID: 6952917354324845399, guid: 2405b750a86c4474e9dcc8970d521635, type: 3}
+  - {fileID: 387287356582270471, guid: f6551024bfcf388488d659696348f4da, type: 3}
   exceptionsDisconnect: 1
   snapshotSettings:
     bufferTimeMultiplier: 2
