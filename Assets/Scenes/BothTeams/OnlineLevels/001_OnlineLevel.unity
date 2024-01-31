@@ -131,30 +131,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1878081219383919669, guid: 7dca7207b1e79cf4980c6b9a1f08f069, type: 3}
-      propertyPath: onlineScene
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1878081219383919669, guid: 7dca7207b1e79cf4980c6b9a1f08f069, type: 3}
-      propertyPath: offlineScene
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1878081219383919669, guid: 7dca7207b1e79cf4980c6b9a1f08f069, type: 3}
-      propertyPath: selectedPrefabIndex
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1878081219383919669, guid: 7dca7207b1e79cf4980c6b9a1f08f069, type: 3}
-      propertyPath: playerPrefabs.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1878081219383919669, guid: 7dca7207b1e79cf4980c6b9a1f08f069, type: 3}
-      propertyPath: playerPrefabs.Array.data[0]
-      value: 
-      objectReference: {fileID: 56868658535408414, guid: 60532d26173e88e45aa64aab28837bf0, type: 3}
-    - target: {fileID: 1878081219383919669, guid: 7dca7207b1e79cf4980c6b9a1f08f069, type: 3}
-      propertyPath: playerPrefabs.Array.data[1]
-      value: 
-      objectReference: {fileID: 6565551724579044330, guid: a8e6d2bdb3499d44fa322002f4bdd2ed, type: 3}
     - target: {fileID: 3204049178357999079, guid: 7dca7207b1e79cf4980c6b9a1f08f069, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
