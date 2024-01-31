@@ -526,7 +526,7 @@ MonoBehaviour:
   m_explotionSystem: {fileID: 0}
   m_canBeAffected: 0
   m_teamSide: 0
-  m_affectedSide: 
+  m_affectedSide: 01000000
   m_deleteTimer: 1.6
 --- !u!114 &2621183255143896938 stripped
 MonoBehaviour:
