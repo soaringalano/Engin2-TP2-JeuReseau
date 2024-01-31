@@ -16,6 +16,19 @@ namespace Mirror
     [HelpURL("https://mirror-networking.gitbook.io/docs/components/network-manager")]
     public class NetworkManager : MonoBehaviour
     {
+        public struct CreateCharacterMessage : NetworkMessage
+        {
+            public Role role;
+            public string name;
+        }
+
+        public enum Role
+        {
+            Runner,
+            Hunter,
+            Count
+        }
+
         [SerializeField] public int selectedPrefabIndex;
 
         /// <summary>Enable to keep NetworkManager alive when changing scenes.</summary>
@@ -722,6 +735,32 @@ namespace Mirror
                 Application.targetFrameRate = sendRate;
                 // Debug.Log($"Server Tick Rate set to {Application.targetFrameRate} Hz.");
             }
+
+            NetworkServer.RegisterHandler<CreateCharacterMessage>(OnCreateCharacter);
+        }
+
+        void OnCreateCharacter(NetworkConnectionToClient conn, CreateCharacterMessage message)
+        {
+            GameObject playerPrefab = null;
+            if (selectedPrefabIndex < playerPrefabs.Count())
+            {
+                playerPrefab = playerPrefabs[selectedPrefabIndex];
+            }
+
+            // playerPrefab is the one assigned in the inspector in Network
+            // Manager but you can use different prefabs per race for example
+            GameObject gameobject = Instantiate(playerPrefab);
+
+            // Apply data from the message however appropriate for your game
+            // Typically
+            // Player would be a component you write with syncvars or properties
+            RunhuntPlayer player = gameobject.GetComponent<RunhuntPlayer>();
+            if (player == null) Debug.LogError("Player component not found on the instantiated gameobject.");
+
+            player.m_role = message.role.ToString();
+
+            // call this to use this gameobject as the primary controller
+            NetworkServer.AddPlayerForConnection(conn, gameobject);
         }
 
         bool InitializeSingleton()
@@ -1442,6 +1481,15 @@ namespace Mirror
                 if (autoCreatePlayer)
                     NetworkClient.AddPlayer();
             }
+
+            // you can send the message here, or wherever else you want
+            CreateCharacterMessage characterMessage = new CreateCharacterMessage
+            {
+                role = Role.Runner,
+                name = "Joe Gaba Gaba",
+            };
+
+            NetworkClient.Send(characterMessage);
         }
 
         /// <summary>Called on clients when disconnected from a server.</summary>
