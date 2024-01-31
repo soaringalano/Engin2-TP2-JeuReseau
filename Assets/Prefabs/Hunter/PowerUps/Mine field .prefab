@@ -44,12 +44,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8656199527888948643}
     m_Modifications:
+<<<<<<< HEAD:Assets/Prefabs/Hunter/PowerUps/Mine field .prefab
 <<<<<<< HEAD:Assets/Prefabs/Hunter/PowerUps/Mine field.prefab
 <<<<<<< HEAD:Assets/Prefabs/Hunter/PowerUps/Mine field .prefab
     - target: {fileID: 2167231411537607349, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
 =======
-    - target: {fileID: 325440922601815825, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
+=======
 >>>>>>> main:Assets/Prefabs/Hunter/PowerUps/Mine field.prefab
+    - target: {fileID: 325440922601815825, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
+      propertyPath: _assetId
+      value: 3032741611
+      objectReference: {fileID: 0}
+    - target: {fileID: 2167231411537607349, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
       propertyPath: _assetId
       value: 3032741611
       objectReference: {fileID: 0}
@@ -117,12 +123,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8656199527888948643}
     m_Modifications:
+<<<<<<< HEAD:Assets/Prefabs/Hunter/PowerUps/Mine field .prefab
 <<<<<<< HEAD:Assets/Prefabs/Hunter/PowerUps/Mine field.prefab
 <<<<<<< HEAD:Assets/Prefabs/Hunter/PowerUps/Mine field .prefab
     - target: {fileID: 2167231411537607349, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
 =======
-    - target: {fileID: 325440922601815825, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
+=======
 >>>>>>> main:Assets/Prefabs/Hunter/PowerUps/Mine field.prefab
+    - target: {fileID: 325440922601815825, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
+      propertyPath: _assetId
+      value: 3032741611
+      objectReference: {fileID: 0}
+    - target: {fileID: 2167231411537607349, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
       propertyPath: _assetId
       value: 3032741611
       objectReference: {fileID: 0}
@@ -190,12 +202,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8656199527888948643}
     m_Modifications:
+<<<<<<< HEAD:Assets/Prefabs/Hunter/PowerUps/Mine field .prefab
 <<<<<<< HEAD:Assets/Prefabs/Hunter/PowerUps/Mine field.prefab
 <<<<<<< HEAD:Assets/Prefabs/Hunter/PowerUps/Mine field .prefab
     - target: {fileID: 2167231411537607349, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
 =======
-    - target: {fileID: 325440922601815825, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
+=======
 >>>>>>> main:Assets/Prefabs/Hunter/PowerUps/Mine field.prefab
+    - target: {fileID: 325440922601815825, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
+      propertyPath: _assetId
+      value: 3032741611
+      objectReference: {fileID: 0}
+    - target: {fileID: 2167231411537607349, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
       propertyPath: _assetId
       value: 3032741611
       objectReference: {fileID: 0}
@@ -263,12 +281,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8656199527888948643}
     m_Modifications:
+<<<<<<< HEAD:Assets/Prefabs/Hunter/PowerUps/Mine field .prefab
 <<<<<<< HEAD:Assets/Prefabs/Hunter/PowerUps/Mine field.prefab
 <<<<<<< HEAD:Assets/Prefabs/Hunter/PowerUps/Mine field .prefab
     - target: {fileID: 2167231411537607349, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
 =======
-    - target: {fileID: 325440922601815825, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
+=======
 >>>>>>> main:Assets/Prefabs/Hunter/PowerUps/Mine field.prefab
+    - target: {fileID: 325440922601815825, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
+      propertyPath: _assetId
+      value: 3032741611
+      objectReference: {fileID: 0}
+    - target: {fileID: 2167231411537607349, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
       propertyPath: _assetId
       value: 3032741611
       objectReference: {fileID: 0}
@@ -336,12 +360,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8656199527888948643}
     m_Modifications:
+<<<<<<< HEAD:Assets/Prefabs/Hunter/PowerUps/Mine field .prefab
 <<<<<<< HEAD:Assets/Prefabs/Hunter/PowerUps/Mine field.prefab
 <<<<<<< HEAD:Assets/Prefabs/Hunter/PowerUps/Mine field .prefab
     - target: {fileID: 2167231411537607349, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
 =======
-    - target: {fileID: 325440922601815825, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
+=======
 >>>>>>> main:Assets/Prefabs/Hunter/PowerUps/Mine field.prefab
+    - target: {fileID: 325440922601815825, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
+      propertyPath: _assetId
+      value: 3032741611
+      objectReference: {fileID: 0}
+    - target: {fileID: 2167231411537607349, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
       propertyPath: _assetId
       value: 3032741611
       objectReference: {fileID: 0}
