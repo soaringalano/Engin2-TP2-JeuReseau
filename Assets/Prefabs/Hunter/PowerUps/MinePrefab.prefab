@@ -219,10 +219,10 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  m_explotionSystem: {fileID: 0}
-  m_canBeAffected: 0
-  m_teamSide: 2
-  m_affectedSide: 
+  m_explotionSystem: {fileID: 5933859157304006163}
+  m_canBeAffected: 1
+  m_teamSide: 1
+  m_affectedSide: 00000000
   m_deleteTimer: 1.6
 --- !u!135 &1628203880132420311
 SphereCollider:
@@ -430,5 +430,10 @@ PrefabInstance:
 --- !u!4 &819644315213437756 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3944176031114342172, guid: 299c53080870c714599666d0d8e3d220, type: 3}
+  m_PrefabInstance: {fileID: 4459532427414025248}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5933859157304006163 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8050813716453974579, guid: 299c53080870c714599666d0d8e3d220, type: 3}
   m_PrefabInstance: {fileID: 4459532427414025248}
   m_PrefabAsset: {fileID: 0}
