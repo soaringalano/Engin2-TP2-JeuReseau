@@ -39,9 +39,9 @@ public class FreeState : RunnerState
 
     public override void OnFixedUpdate()
     {
-        base.OnFixedUpdate();
         m_stateMachine.UpdateMovementsToAnimator();
         m_stateMachine.ApplyMovementsOnFloorFU();
+        m_stateMachine.FixedRegainStamina();
     }
 
 

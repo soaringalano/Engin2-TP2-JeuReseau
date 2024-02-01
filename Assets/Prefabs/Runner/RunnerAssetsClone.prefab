@@ -74,7 +74,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 56868658535408414}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 551db99d2fd09aa4b899bcaefafd79c2, type: 3}
+  m_Script: {fileID: 11500000, guid: 3ef681aa28100794f83cfb752890dac8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncDirection: 0
@@ -207,6 +207,14 @@ MonoBehaviour:
   <JumpIntensity>k__BackingField: 400
   <MeshRotationLerpSpeed>k__BackingField: 4
   <m_floorTrigger>k__BackingField: {fileID: 2621183255143896938}
+  <StaminaBarSliderPrefab>k__BackingField: {fileID: 0}
+  <MaxStamina>k__BackingField: 100
+  <CurrentStamina>k__BackingField: 100
+  StaminaRegainSpeed: 10
+  StaminaLoseSpeedInRun: 10
+  StaminaLoseSpeedInWalk: 0
+  StaminaLoseSpeedInJump: 10
+  StaminaLoseSpeedInDoubleJump: 5
   m_character: {fileID: 428478306684100937}
   m_animator: {fileID: 5512822503541690273}
 --- !u!1001 &1449272112376962097
@@ -219,7 +227,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 994230536966273459, guid: 6e362fd5e02eaf94b88994f131bf07a3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.473
+      value: 0.48
       objectReference: {fileID: 0}
     - target: {fileID: 1292141603276078456, guid: 6e362fd5e02eaf94b88994f131bf07a3, type: 3}
       propertyPath: m_Name
@@ -230,12 +238,36 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1671847897752458670, guid: 6e362fd5e02eaf94b88994f131bf07a3, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1671847897752458670, guid: 6e362fd5e02eaf94b88994f131bf07a3, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1671847897752458670, guid: 6e362fd5e02eaf94b88994f131bf07a3, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1671847897752458670, guid: 6e362fd5e02eaf94b88994f131bf07a3, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1671847897752458670, guid: 6e362fd5e02eaf94b88994f131bf07a3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.000030517578
+      objectReference: {fileID: 0}
+    - target: {fileID: 1671847897752458670, guid: 6e362fd5e02eaf94b88994f131bf07a3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.000011444092
+      objectReference: {fileID: 0}
+    - target: {fileID: 3493818072732928859, guid: 6e362fd5e02eaf94b88994f131bf07a3, type: 3}
+      propertyPath: <IsOnFloor>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3561468938752097010, guid: 6e362fd5e02eaf94b88994f131bf07a3, type: 3}
+      propertyPath: m_Radius
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6780199216035652817, guid: 6e362fd5e02eaf94b88994f131bf07a3, type: 3}
       propertyPath: m_LocalPosition.x

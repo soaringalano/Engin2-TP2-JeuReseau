@@ -19,6 +19,17 @@ public class RunnerControllerStateMachine : AbstractNetworkStateMachine<RunnerSt
     [field: SerializeField] private float JumpIntensity { get; set; } = 100.0f;
     [field: SerializeField] private float MeshRotationLerpSpeed { get; set; } = 4.0f;
     [field: SerializeField] public CharacterFloorTrigger m_floorTrigger { get; private set; }
+    [field: SerializeField] public GameObject StaminaBarSliderPrefab { private get; set; }
+    private Transform m_staminaBarTransform;
+    [field: SerializeField] public float MaxStamina { get; set; } = 100;
+    [field: SerializeField] public float CurrentStamina { get; private set; }
+    [field: SerializeField] public float StaminaRegainSpeed = 10f;
+    [field: SerializeField] public float StaminaLoseSpeedInRun = 10f;
+    [field: SerializeField] public float StaminaLoseSpeedInWalk = 0f;
+    [field: SerializeField] public float StaminaLoseSpeedInJump = 10f;
+    [field: SerializeField] public float StaminaLoseSpeedInDoubleJump = 5f;
+    private Vector3 m_currentStaminaBarScale = Vector3.one;
+
 
     private Vector2 CurrentDirectionalInputs { get; set; }
     private float AnimatorRunningValue { get; set; } = 0.5f; // Has to stay between 0.5 and 1
@@ -38,9 +49,18 @@ public class RunnerControllerStateMachine : AbstractNetworkStateMachine<RunnerSt
         m_possibleStates.Add(new RunState());
     }
 
+    protected override void Awake()
+    {
+        base.Awake();
+    }
+
     protected override void Start()
     {
-
+        m_staminaBarTransform = GameObject.Find("StaminaBar_Slider").transform;
+        if(m_staminaBarTransform != null)
+        {
+            Debug.Log("Stamina Bar Slider found!");
+        }
         foreach (RunnerState state in m_possibleStates)
         {
             state.OnStart(this);
@@ -61,26 +81,7 @@ public class RunnerControllerStateMachine : AbstractNetworkStateMachine<RunnerSt
 
     protected override void FixedUpdate()
     {
-        /*if (!isLocalPlayer)
-        {
-            return;
-        }
-
-        if (m_floorTrigger.IsOnFloor == false)
-        {
-            return;
-        }
-
-        SetDirectionalInputs();
-        SetRunningInput();
-        UpdateMovementsToAnimator();
-        RotatePlayerMesh();
-        ApplyMovementsOnFloorFU();*/
         if (!isLocalPlayer)
-        {
-            return;
-        }
-        if (m_floorTrigger.IsOnFloor == false)
         {
             return;
         }
@@ -170,6 +171,11 @@ public class RunnerControllerStateMachine : AbstractNetworkStateMachine<RunnerSt
         m_isJumping = false;
     }
 
+    public void Land()
+    {
+        m_isJumping = false;
+    }
+
     public void RotatePlayerMesh()
     {
         if (CurrentDirectionalInputs == Vector2.zero)
@@ -200,5 +206,64 @@ public class RunnerControllerStateMachine : AbstractNetworkStateMachine<RunnerSt
             RB.velocity *= currentMaxSpeed;
         }
     }
+
+    public void FixedRegainStamina()
+    {
+        // if current state is FreeState and velocity is > 0, then cannot regain stamina
+        if(CurrentStamina == MaxStamina || RB.velocity.magnitude > 0)
+        {
+            Debug.Log("Stamina is full or player is in action, cannot regain stamina");
+            return;
+        }
+        // value to regain
+        float val = StaminaRegainSpeed * Time.fixedDeltaTime;
+        CurrentStamina += val;
+        //clamp to max value
+        if(CurrentStamina > MaxStamina)
+        {
+            CurrentStamina = MaxStamina;
+        }
+        float rate = val / MaxStamina;
+        Vector3 diff = new Vector3(rate, 0);
+        m_staminaBarTransform.localScale += new Vector3(rate, 0);
+        Debug.Log("Stamina is regaining by " + val);
+    }
+
+    public void FixedLoseStamina(float speed)
+    {
+        if (CurrentStamina == 0)
+        {
+            Debug.Log("Stamina is 0, player must rest to regain stamina");
+            return;
+        }
+        float val = speed * Time.fixedDeltaTime;
+        CurrentStamina -= val;
+        if (CurrentStamina < 0)
+        {
+            CurrentStamina = 0;
+        }
+        float rate = val / MaxStamina;
+        Vector3 diff = new Vector3(rate, 0);
+        m_staminaBarTransform.localScale -= diff;
+        //m_staminaBarTransform.localPosition -= diff;
+        Debug.Log("Stamina is losing by " + val);
+    }
+
+    public bool MustRest(float speed)
+    {
+        if(CurrentStamina < speed)
+        {
+            Debug.Log("Current stamina does not support player's action, player must rest to regain stamina");
+            return true;
+        }
+        return false;
+    }
+
+/*    public void UpdateStaminaBarStatus()
+    {
+        float rate = CurrentStamina / MaxStamina;
+        m_currentStaminaBarScale.x = rate;
+        m_staminaBarTransform = m_currentStaminaBarScale;
+    }*/
 
 }
