@@ -209,13 +209,16 @@ public class RunnerControllerStateMachine : AbstractNetworkStateMachine<RunnerSt
 
     public void FixedRegainStamina()
     {
+        // if current state is FreeState and velocity is > 0, then cannot regain stamina
         if(CurrentStamina == MaxStamina || RB.velocity.magnitude > 0)
         {
             Debug.Log("Stamina is full or player is in action, cannot regain stamina");
             return;
         }
+        // value to regain
         float val = StaminaRegainSpeed * Time.fixedDeltaTime;
         CurrentStamina += val;
+        //clamp to max value
         if(CurrentStamina > MaxStamina)
         {
             CurrentStamina = MaxStamina;
@@ -223,7 +226,6 @@ public class RunnerControllerStateMachine : AbstractNetworkStateMachine<RunnerSt
         float rate = val / MaxStamina;
         Vector3 diff = new Vector3(rate, 0);
         m_staminaBarTransform.localScale += new Vector3(rate, 0);
-        //m_staminaBarTransform.localPosition += diff;
         Debug.Log("Stamina is regaining by " + val);
     }
 
