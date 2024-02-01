@@ -41,27 +41,13 @@ public class FSMRunnerGameObjectSpawner : GameObjectSpawner
         }
     }
 
-    /*protected override void GetNetworkedPlayerControls()
-    {
-        m_networkedRunnerMovement = GetComponent<NetworkedRunnerControls>();
-        if (m_networkedRunnerMovement == null)
-        {
-            Debug.LogError("NetworkedRunnerMovement Not found!");
-            return;
-        }
-    }
-
-    protected override void SetCameraInNetworkedPlayerControls()
-    {
-        m_networkedRunnerMovement.Camera = Camera.main;
-    }*/
 
     /**
      * replace by FSM
      */
     protected override void GetNetworkedPlayerControls()
     {
-        m_networkedRunnerMovement = GetComponent<RunnerControllerStateMachine>();// NetworkedRunnerControls>();
+        m_networkedRunnerMovement = GetComponent<RunnerControllerStateMachine>();
         if (m_networkedRunnerMovement == null)
         {
             Debug.LogError("NetworkedRunnerMovement Not found!");
