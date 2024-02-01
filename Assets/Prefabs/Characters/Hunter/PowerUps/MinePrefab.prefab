@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5515112444281791545}
   - component: {fileID: 4161202081958650050}
   - component: {fileID: 2100783041084057082}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 3033957591187022655}
   - component: {fileID: 596677840044542620}
   - component: {fileID: 8149152992007703294}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cylinder (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 31703503350994657}
   - component: {fileID: 1628203880132420311}
   - component: {fileID: 2167231411537607349}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MinePrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -219,10 +219,10 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  m_explotionSystem: {fileID: 0}
-  m_canBeAffected: 0
-  m_teamSide: 2
-  m_affectedSide: 
+  m_explotionSystem: {fileID: 5933859157304006163}
+  m_canBeAffected: 1
+  m_teamSide: 1
+  m_affectedSide: 00000000
   m_deleteTimer: 1.6
 --- !u!135 &1628203880132420311
 SphereCollider:
@@ -274,7 +274,7 @@ GameObject:
   - component: {fileID: 2894687326965940568}
   - component: {fileID: 71542906457613722}
   - component: {fileID: 157784686185327305}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cylinder (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -354,6 +354,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3033957591187022655}
     m_Modifications:
+    - target: {fileID: 2332340336964166220, guid: 299c53080870c714599666d0d8e3d220, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2630031995341630676, guid: 299c53080870c714599666d0d8e3d220, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 3944176031114342172, guid: 299c53080870c714599666d0d8e3d220, type: 3}
       propertyPath: m_LocalScale.x
       value: 10
@@ -406,6 +414,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4380052275618478726, guid: 299c53080870c714599666d0d8e3d220, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 7053377654850496575, guid: 299c53080870c714599666d0d8e3d220, type: 3}
       propertyPath: m_Pitch
       value: 1
@@ -419,6 +431,10 @@ PrefabInstance:
       value: ExplosionSystem
       objectReference: {fileID: 0}
     - target: {fileID: 8050813716453974579, guid: 299c53080870c714599666d0d8e3d220, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050813716453974579, guid: 299c53080870c714599666d0d8e3d220, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -430,5 +446,10 @@ PrefabInstance:
 --- !u!4 &819644315213437756 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3944176031114342172, guid: 299c53080870c714599666d0d8e3d220, type: 3}
+  m_PrefabInstance: {fileID: 4459532427414025248}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5933859157304006163 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8050813716453974579, guid: 299c53080870c714599666d0d8e3d220, type: 3}
   m_PrefabInstance: {fileID: 4459532427414025248}
   m_PrefabAsset: {fileID: 0}

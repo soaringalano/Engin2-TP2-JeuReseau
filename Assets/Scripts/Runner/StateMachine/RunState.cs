@@ -7,6 +7,10 @@ public class RunState : RunnerState
 
     public override bool CanEnter(IState currentState)
     {
+        if (m_stateMachine.MustRest(m_stateMachine.StaminaLoseSpeedInRun))
+        {
+            return false;
+        }
         if (Input.GetKey(KeyCode.LeftShift))
         {
             return true;
@@ -16,7 +20,11 @@ public class RunState : RunnerState
 
     public override bool CanExit()
     {
-        if(Input.GetKeyUp(KeyCode.LeftShift))
+        if (m_stateMachine.MustRest(m_stateMachine.StaminaLoseSpeedInRun))
+        {
+            return true;
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Space))
         {
             return true;
         }
@@ -47,9 +55,10 @@ public class RunState : RunnerState
 
     public override void OnFixedUpdate()
     {
-        base.OnFixedUpdate();
+        m_stateMachine.FixedLoseStamina(m_stateMachine.StaminaLoseSpeedInRun);
         m_stateMachine.UpdateMovementsToAnimator();
         m_stateMachine.ApplyMovementsOnFloorFU();
+        
     }
 
 }

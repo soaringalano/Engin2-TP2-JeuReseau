@@ -199,6 +199,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: E01UI
       objectReference: {fileID: 0}
+    - target: {fileID: 1290795224471698282, guid: 4ce1637b9cc49457297c0854f1dc720e, type: 3}
+      propertyPath: m_Name
+      value: StaminaBorder
+      objectReference: {fileID: 0}
     - target: {fileID: 1667816372785294718, guid: 4ce1637b9cc49457297c0854f1dc720e, type: 3}
       propertyPath: m_Value
       value: 10
@@ -218,6 +222,14 @@ PrefabInstance:
     - target: {fileID: 2072137219213308579, guid: 4ce1637b9cc49457297c0854f1dc720e, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4834104229885516566, guid: 4ce1637b9cc49457297c0854f1dc720e, type: 3}
+      propertyPath: m_Name
+      value: StaminaBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 6005802045754766799, guid: 4ce1637b9cc49457297c0854f1dc720e, type: 3}
+      propertyPath: m_Name
+      value: StaminaBar_Slider
       objectReference: {fileID: 0}
     - target: {fileID: 6434085383339305657, guid: 4ce1637b9cc49457297c0854f1dc720e, type: 3}
       propertyPath: m_Pivot.x
