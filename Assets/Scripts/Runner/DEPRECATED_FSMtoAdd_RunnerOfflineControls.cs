@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-public class OfflineRunnerControls : MonoBehaviour
+public class RunnerOfflineControls : MonoBehaviour
 {
     [field: SerializeField]
     public Camera Camera { get; set; }
@@ -21,7 +21,7 @@ public class OfflineRunnerControls : MonoBehaviour
     private float MeshRotationLerpSpeed { get; set; } = 4.0f;
 
     [SerializeField]
-    private CharacterFloorTrigger m_floorTrigger;
+    private RunnerFloorTrigger m_floorTrigger;
 
     private Vector2 CurrentDirectionalInputs { get; set; }
     private float AnimatorRunningValue { get; set; } = 0.5f; // Has to stay between 0.5 and 1

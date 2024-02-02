@@ -7,7 +7,7 @@ public class HunterGameObjectSpawner : GameObjectSpawner
     [field: SerializeField] private GameObject HunterCameraAssetsPrefab { get; set; }
     [field: SerializeField] private GameObject HunterUIPrefab { get; set; }
 
-    private NetworkedHunterControls m_networkedHunterMovement;
+    private HunterOnlineControls m_networkedHunterMovement;
     private GameObject m_hunterCamAssetsGameObject;
     private Transform m_hunterTransform;
     private CinemachineVirtualCamera m_virtualCamera;
@@ -50,7 +50,7 @@ public class HunterGameObjectSpawner : GameObjectSpawner
     protected override void GetNetworkedPlayerControls()
     {
         Debug.Log("Get NetworkedHunterControls.");
-        m_networkedHunterMovement = GetComponent<NetworkedHunterControls>();
+        m_networkedHunterMovement = GetComponent<HunterOnlineControls>();
         if (m_networkedHunterMovement == null)
         {
             Debug.LogError("NetworkedRunnerMovement Not found!");

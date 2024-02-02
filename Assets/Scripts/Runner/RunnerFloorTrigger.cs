@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class CharacterFloorTrigger : MonoBehaviour
+public class RunnerFloorTrigger : MonoBehaviour
 {
     [SerializeField]
     private Animator m_animator;
@@ -9,14 +9,14 @@ public class CharacterFloorTrigger : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        Debug.Log("=============runner just stay collision===============");
+        //Debug.Log("=============runner just stay collision===============");
         IsOnFloor = true;
         m_animator.SetBool("IsTouchingGround", true);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("=============runner just exit collision===============");
+        //Debug.Log("=============runner just exit collision===============");
         IsOnFloor = false;
         m_animator.SetBool("IsTouchingGround", false);
     }
