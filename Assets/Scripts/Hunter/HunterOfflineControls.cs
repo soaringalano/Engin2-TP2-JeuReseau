@@ -1,7 +1,7 @@
 ﻿using Cinemachine;
 using UnityEngine;
 
-public class OfflineHunterControls : MonoBehaviour
+public class HunterOfflineControls : MonoBehaviour
 {
 
     public Camera Camera { get; set; }

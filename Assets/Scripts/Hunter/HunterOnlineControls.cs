@@ -2,7 +2,7 @@
 using Mirror;
 using UnityEngine;
 
-public class NetworkedHunterControls : NetworkBehaviour
+public class HunterOnlineControls : NetworkBehaviour
 {
 
     public Camera Camera { get; set; }

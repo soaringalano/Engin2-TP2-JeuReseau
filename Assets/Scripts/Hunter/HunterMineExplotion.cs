@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NetworkMineExplotion : NetworkBehaviour
+public class HunterMineExplotion : NetworkBehaviour
 {
     [SerializeField]
     private GameObject m_explotionSystem;
@@ -18,7 +18,7 @@ public class NetworkMineExplotion : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        var otherHitBox = other.GetComponent<NetworkMineExplotion>();
+        var otherHitBox = other.GetComponent<HunterMineExplotion>();
         if (otherHitBox == null)
         {
             return;
@@ -39,7 +39,7 @@ public class NetworkMineExplotion : NetworkBehaviour
         Destroy(this.gameObject);
     }
 
-    protected bool CanInteract(NetworkMineExplotion other)
+    protected bool CanInteract(HunterMineExplotion other)
     {
         return (m_canBeAffected &&
             m_affectedSide.Contains(other.m_teamSide));

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Abilities : MonoBehaviour
+public class HunterAbilities : MonoBehaviour
 {
     [SerializeField]
     private Image m_filler;

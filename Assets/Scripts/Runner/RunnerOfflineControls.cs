@@ -1,8 +1,9 @@
-using Mirror;
+
 using UnityEngine;
 
-public class NetworkedRunnerControls : NetworkBehaviour
+public class RunnerOfflineControls : MonoBehaviour
 {
+    [field: SerializeField]
     public Camera Camera { get; set; }
     [field: SerializeField]
     private Rigidbody RB { get; set; }
@@ -20,7 +21,7 @@ public class NetworkedRunnerControls : NetworkBehaviour
     private float MeshRotationLerpSpeed { get; set; } = 4.0f;
 
     [SerializeField]
-    private CharacterFloorTrigger m_floorTrigger;
+    private RunnerFloorTrigger m_floorTrigger;
 
     private Vector2 CurrentDirectionalInputs { get; set; }
     private float AnimatorRunningValue { get; set; } = 0.5f; // Has to stay between 0.5 and 1
@@ -36,20 +37,11 @@ public class NetworkedRunnerControls : NetworkBehaviour
 
     void Update()
     {
-        if (!isLocalPlayer)
-        {
-            return;
-        }
-
         VerifiIfCanJump();
     }
 
     private void FixedUpdate()
     {
-        if (!isLocalPlayer)
-        {
-            return;
-        }
 
         if (m_floorTrigger.IsOnFloor == false)
         {
