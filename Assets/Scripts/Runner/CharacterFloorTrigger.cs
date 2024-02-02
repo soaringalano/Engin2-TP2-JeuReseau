@@ -9,14 +9,14 @@ public class CharacterFloorTrigger : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        Debug.Log("=============runner just stay collision===============");
+        //Debug.Log("==========Now character is on floor");
         IsOnFloor = true;
         m_animator.SetBool("IsTouchingGround", true);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("=============runner just exit collision===============");
+        //Debug.Log("==========Now character is in air");
         IsOnFloor = false;
         m_animator.SetBool("IsTouchingGround", false);
     }

@@ -1,12 +1,14 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class GameEventOnPlayerRoleSelected : GameEventSubject
 {
-    private List<GameEventObserver> observers = new List<GameEventObserver>();
+    private List<GameEventObserver> m_observers = new List<GameEventObserver>();
 
-    override public void Notify()
+    public void OnPlayerRoleSelected()
     {
-        foreach (var observer in observers)
+        Debug.Log("OnPlayerRoleSelected()");
+        foreach (var observer in m_observers)
         {
             observer.OnPlayerRoleSelected();
         }
@@ -14,11 +16,12 @@ public class GameEventOnPlayerRoleSelected : GameEventSubject
 
     override public void AddObserver(GameEventObserver observer)
     {
-        observers.Add(observer);
+        Debug.Log("AddObserver");
+        m_observers.Add(observer);
     }
 
     override public void RemoveObserver(GameEventObserver observer)
     {
-        observers.Remove(observer);
+        m_observers.Remove(observer);
     }
 }

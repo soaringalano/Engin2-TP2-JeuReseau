@@ -3,7 +3,9 @@ guid: 39694a1de5802074ea74325b44e35178
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - <HunterCameraAssetsPrefab>k__BackingField: {fileID: 1571365358454482429, guid: b7a78d0423e138047942608afb3b0491, type: 3}
+  - <HunterUIPrefab>k__BackingField: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

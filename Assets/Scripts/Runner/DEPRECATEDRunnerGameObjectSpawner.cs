@@ -1,5 +1,6 @@
 ﻿using Cinemachine;
 using UnityEngine;
+using Mirror;
 
 public class RunnerGameObjectSpawner : GameObjectSpawner
 {
@@ -13,10 +14,13 @@ public class RunnerGameObjectSpawner : GameObjectSpawner
 
     void Start()
     {
-        if (!isLocalPlayer)
+        Debug.Log("RunnerGameObjectSpawner Start()");
+        //if (!isLocalPlayer)
+        if(!isOwned)
         {
             return;
         }
+        Debug.Log("RunnerGameObjectSpawner Start() isLocalPlayer");
 
         InstanciateAssets();
         GetPlayerGameObject();

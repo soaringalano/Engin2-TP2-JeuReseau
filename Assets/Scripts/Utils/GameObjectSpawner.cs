@@ -1,40 +1,43 @@
 using Mirror;
 
-public abstract class GameObjectSpawner : NetworkBehaviour
+namespace Mirror
 {
-    protected virtual void InstanciatePlayer()
+    public abstract class GameObjectSpawner : NetworkBehaviour
     {
-    }
+        protected virtual void InstanciatePlayer()
+        {
+        }
 
-    protected virtual void InstanciateAssets()
-    {
-    }
+        protected virtual void InstanciateAssets()
+        {
+        }
 
-    protected virtual void GetPlayerGameObject()
-    {
-    }    
-    
-    protected virtual void GetNetworkedPlayerControls()
-    {
-    }
+        protected virtual void GetPlayerGameObject()
+        {
+        }
 
-    protected virtual void SetAssetGameObject()
-    {
-    }
+        protected virtual void GetNetworkedPlayerControls()
+        {
+        }
 
-    protected virtual void SetCameraInNetworkedPlayerControls()
-    {
-    }
+        protected virtual void SetAssetGameObject()
+        {
+        }
 
-    protected virtual void SetTheCameraFollow()
-    {
-    }
+        protected virtual void SetCameraInNetworkedPlayerControls()
+        {
+        }
 
-    protected virtual void SetTheCameraLookAt()
-    {
-    }
+        protected virtual void SetTheCameraFollow()
+        {
+        }
 
-    protected virtual void InitializeSpawnedAssets()
-    {
+        protected virtual void SetTheCameraLookAt()
+        {
+        }
+
+        protected virtual void InitializeSpawnedAssets()
+        {
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Source : https://mirror-networking.gitbook.io/docs/manual/guides/gameobjects/custom-character-spawning
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,6 +9,19 @@ using UnityEngine.Serialization;
 
 namespace Mirror
 {
+    public struct CreateRunhuntCharacterMessage : NetworkMessage
+    {
+        public Role role;
+        public string name;
+    }
+
+    public enum Role
+    {
+        Runner,
+        Hunter,
+        Count
+    }
+
     public enum PlayerSpawnMethod { Random, RoundRobin }
     public enum NetworkManagerMode { Offline, ServerOnly, ClientOnly, Host }
     public enum HeadlessStartOptions { DoNothing, AutoStartServer, AutoStartClient }
@@ -16,18 +31,7 @@ namespace Mirror
     [HelpURL("https://mirror-networking.gitbook.io/docs/components/network-manager")]
     public class NetworkManager : MonoBehaviour
     {
-        public struct CreateCharacterMessage : NetworkMessage
-        {
-            public Role role;
-            public string name;
-        }
-
-        public enum Role
-        {
-            Runner,
-            Hunter,
-            Count
-        }
+        public RunhuntPlayer RunHuntPlayer { get; private set; }
 
         [SerializeField] public int selectedPrefabIndex;
 
@@ -736,10 +740,11 @@ namespace Mirror
                 // Debug.Log($"Server Tick Rate set to {Application.targetFrameRate} Hz.");
             }
 
-            NetworkServer.RegisterHandler<CreateCharacterMessage>(OnCreateCharacter);
+            NetworkServer.RegisterHandler<CreateRunhuntCharacterMessage>(OnCreateCharacter);
         }
 
-        void OnCreateCharacter(NetworkConnectionToClient conn, CreateCharacterMessage message)
+        // Source: https://mirror-networking.gitbook.io/docs/manual/guides/gameobjects/custom-character-spawning
+        void OnCreateCharacter(NetworkConnectionToClient conn, CreateRunhuntCharacterMessage message)
         {
             GameObject playerPrefab = null;
             if (selectedPrefabIndex < playerPrefabs.Count())
@@ -754,10 +759,8 @@ namespace Mirror
             // Apply data from the message however appropriate for your game
             // Typically
             // Player would be a component you write with syncvars or properties
-            RunhuntPlayer player = gameobject.GetComponent<RunhuntPlayer>();
-            if (player == null) Debug.LogError("Player component not found on the instantiated gameobject.");
-
-            player.m_role = message.role.ToString();
+            RunHuntPlayer = gameobject.GetComponent<RunhuntPlayer>();
+            if (RunHuntPlayer == null) Debug.LogError("Player component not found on the instantiated gameobject.");
 
             // call this to use this gameobject as the primary controller
             NetworkServer.AddPlayerForConnection(conn, gameobject);
@@ -1483,7 +1486,7 @@ namespace Mirror
             }
 
             // you can send the message here, or wherever else you want
-            CreateCharacterMessage characterMessage = new CreateCharacterMessage
+            CreateRunhuntCharacterMessage characterMessage = new CreateRunhuntCharacterMessage
             {
                 role = Role.Runner,
                 name = "Joe Gaba Gaba",
@@ -1549,7 +1552,10 @@ namespace Mirror
         public virtual void OnStartHost() { }
 
         /// <summary>This is invoked when a server is started - including when a host is started.</summary>
-        public virtual void OnStartServer() { }
+        public virtual void OnStartServer() 
+        {
+            //NetworkServer.RegisterHandler<CreateRunhuntCharacterMessage>(OnCreateCharacter);
+        }
 
         /// <summary>This is invoked when the client is started.</summary>
         public virtual void OnStartClient() { }
