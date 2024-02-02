@@ -1,4 +1,5 @@
 ﻿using Cinemachine;
+using Mirror;
 using UnityEngine;
 
 public class FSMRunnerGameObjectSpawner : GameObjectSpawner
