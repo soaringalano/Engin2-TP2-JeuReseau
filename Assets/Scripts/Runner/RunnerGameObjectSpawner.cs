@@ -2,7 +2,7 @@
 using Mirror;
 using UnityEngine;
 
-public class FSMRunnerGameObjectSpawner : GameObjectSpawner
+public class RunnerGameObjectSpawner : GameObjectSpawner
 {
     [field: SerializeField]
     private GameObject RunnerCameraAssetsPrefab { get; set; }
