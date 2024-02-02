@@ -4,7 +4,20 @@ using UnityEngine.SceneManagement;
 
 namespace Mirror
 {
+<<<<<<< HEAD
     public class HunterGameObjectSpawner : GameObjectSpawner
+=======
+    [field: SerializeField] private GameObject HunterCameraAssetsPrefab { get; set; }
+    [field: SerializeField] private GameObject HunterUIPrefab { get; set; }
+
+    private HunterOnlineControls m_networkedHunterMovement;
+    private GameObject m_hunterCamAssetsGameObject;
+    private Transform m_hunterTransform;
+    private CinemachineVirtualCamera m_virtualCamera;
+
+
+    void Start()
+>>>>>>> main
     {
         [field: SerializeField] private GameObject HunterCameraAssetsPrefab { get; set; }
         [field: SerializeField] private GameObject HunterUIPrefab { get; set; }
@@ -34,12 +47,50 @@ namespace Mirror
 
         protected override void GetPlayerGameObject()
         {
+<<<<<<< HEAD
             m_hunterTransform = transform.GetComponentInChildren<Rigidbody>().transform;
             if (m_hunterTransform == null || m_hunterTransform.name != "LookAt")
             {
                 Debug.LogError("Hunter GameObject Not found! Or is not named LookAt!");
                 return;
             }
+=======
+            Debug.LogError("Hunter GameObject Not found! Or is not named LookAt!");
+            return;
+        }
+    }
+
+    protected override void InstanciateAssets()
+    {
+        Debug.Log("Instanciate Hunter Assets.");
+        m_hunterCamAssetsGameObject = Instantiate(HunterCameraAssetsPrefab, transform);
+        Instantiate(HunterUIPrefab, transform);
+    }
+
+    protected override void GetNetworkedPlayerControls()
+    {
+        Debug.Log("Get NetworkedHunterControls.");
+        m_networkedHunterMovement = GetComponent<HunterOnlineControls>();
+        if (m_networkedHunterMovement == null)
+        {
+            Debug.LogError("NetworkedRunnerMovement Not found!");
+        }
+    }
+
+    protected override void SetAssetGameObject()
+    {
+        // Source : https://discussions.unity.com/t/find-gameobjects-in-specific-scene-only/163901
+        Scene scene = gameObject.scene;
+        GameObject[] gameObjects = scene.GetRootGameObjects();
+        Transform environmentTransform = null;
+
+        foreach (GameObject _gameObject in gameObjects)
+        {
+            if (_gameObject.name != "Environment") continue;
+
+            environmentTransform = _gameObject.transform;
+            break;
+>>>>>>> main
         }
 
         protected override void InstanciateAssets()

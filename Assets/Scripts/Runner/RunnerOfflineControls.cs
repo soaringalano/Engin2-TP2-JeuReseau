@@ -1,8 +1,9 @@
-using Mirror;
+
 using UnityEngine;
 
-public class RunnerOnlineControls : NetworkBehaviour
+public class RunnerOfflineControls : MonoBehaviour
 {
+    [field: SerializeField]
     public Camera Camera { get; set; }
     [field: SerializeField]
     private Rigidbody RB { get; set; }
@@ -36,20 +37,11 @@ public class RunnerOnlineControls : NetworkBehaviour
 
     void Update()
     {
-        if (!isLocalPlayer)
-        {
-            return;
-        }
-
         VerifiIfCanJump();
     }
 
     private void FixedUpdate()
     {
-        if (!isLocalPlayer)
-        {
-            return;
-        }
 
         if (m_floorTrigger.IsOnFloor == false)
         {

@@ -7,7 +7,7 @@ public class RunnerGameObjectSpawner : GameObjectSpawner
     [field: SerializeField]
     private GameObject RunnerCameraAssetsPrefab { get; set; }
 
-    private NetworkedRunnerControls m_networkedRunnerMovement;
+    private RunnerOnlineControls m_networkedRunnerMovement;
     private GameObject m_runnerGameObject;
     private GameObject m_runnerCamAssetsGameObject;
     private CinemachineVirtualCamera m_virtualCamera;
@@ -47,7 +47,7 @@ public class RunnerGameObjectSpawner : GameObjectSpawner
 
     protected override void GetNetworkedPlayerControls()
     {
-        m_networkedRunnerMovement = GetComponent<NetworkedRunnerControls>();
+        m_networkedRunnerMovement = GetComponent<RunnerOnlineControls>();
         if (m_networkedRunnerMovement == null)
         {
             Debug.LogError("NetworkedRunnerMovement Not found!");
