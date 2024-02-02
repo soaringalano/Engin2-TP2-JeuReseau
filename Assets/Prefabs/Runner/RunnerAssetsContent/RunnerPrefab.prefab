@@ -1,73 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1093322200259154693
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 994230536966273459}
-  - component: {fileID: 3561468938752097010}
-  - component: {fileID: 3493818072732928859}
-  m_Layer: 10
-  m_Name: FloorTrigger
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &994230536966273459
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1093322200259154693}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.268, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6780199216035652817}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &3561468938752097010
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1093322200259154693}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3493818072732928859
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1093322200259154693}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0175e24c3815d174fa4e5d89bcf0577a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_animator: {fileID: 6385439707437339536}
-  <IsOnFloor>k__BackingField: 0
 --- !u!1 &1292141603276078456
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,7 +129,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 935698055685431762, guid: 4ce1637b9cc49457297c0854f1dc720e, type: 3}
       propertyPath: m_Name
-      value: E01UI
+      value: RunnerUI
       objectReference: {fileID: 0}
     - target: {fileID: 1290795224471698282, guid: 4ce1637b9cc49457297c0854f1dc720e, type: 3}
       propertyPath: m_Name
@@ -332,6 +264,72 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6434085383339305657, guid: 4ce1637b9cc49457297c0854f1dc720e, type: 3}
   m_PrefabInstance: {fileID: 860800078625367821}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &934945473675059037
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6780199216035652817}
+    m_Modifications:
+    - target: {fileID: 87152324085720814, guid: df59cc66bb5482343824bb7d4dff7a4e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 87152324085720814, guid: df59cc66bb5482343824bb7d4dff7a4e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.268
+      objectReference: {fileID: 0}
+    - target: {fileID: 87152324085720814, guid: df59cc66bb5482343824bb7d4dff7a4e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 87152324085720814, guid: df59cc66bb5482343824bb7d4dff7a4e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 87152324085720814, guid: df59cc66bb5482343824bb7d4dff7a4e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 87152324085720814, guid: df59cc66bb5482343824bb7d4dff7a4e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 87152324085720814, guid: df59cc66bb5482343824bb7d4dff7a4e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 87152324085720814, guid: df59cc66bb5482343824bb7d4dff7a4e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 87152324085720814, guid: df59cc66bb5482343824bb7d4dff7a4e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 87152324085720814, guid: df59cc66bb5482343824bb7d4dff7a4e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 276361474308050008, guid: df59cc66bb5482343824bb7d4dff7a4e, type: 3}
+      propertyPath: m_Name
+      value: RunnerFloorTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 4360925842228171782, guid: df59cc66bb5482343824bb7d4dff7a4e, type: 3}
+      propertyPath: m_animator
+      value: 
+      objectReference: {fileID: 6385439707437339536}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: df59cc66bb5482343824bb7d4dff7a4e, type: 3}
+--- !u!4 &994230536966273459 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 87152324085720814, guid: df59cc66bb5482343824bb7d4dff7a4e, type: 3}
+  m_PrefabInstance: {fileID: 934945473675059037}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2106698068080846667
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -342,7 +340,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100004, guid: 93ab7702cfd201a4dbf500415596065c, type: 3}
       propertyPath: m_Name
-      value: runnerModel1
+      value: RunnerModel1
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 93ab7702cfd201a4dbf500415596065c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -489,13 +487,35 @@ PrefabInstance:
       objectReference: {fileID: 2078247657681537651}
     - target: {fileID: 7801706357498521759, guid: da7e632b0edda4430a04eabdaa7dccfc, type: 3}
       propertyPath: m_Name
-      value: E01RunnerUIManager
+      value: RunnerUIManager
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3270658909810310160, guid: da7e632b0edda4430a04eabdaa7dccfc, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7801706357498521759, guid: da7e632b0edda4430a04eabdaa7dccfc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7259794991975799629}
   m_SourcePrefab: {fileID: 100100000, guid: da7e632b0edda4430a04eabdaa7dccfc, type: 3}
+--- !u!1 &499721256861604179 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7801706357498521759, guid: da7e632b0edda4430a04eabdaa7dccfc, type: 3}
+  m_PrefabInstance: {fileID: 7686069295300325836}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7259794991975799629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 499721256861604179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4653230e1ca3dd478eaf8e60ffb214a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 0}
 --- !u!4 &9182033330325840203 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1569299855358546055, guid: da7e632b0edda4430a04eabdaa7dccfc, type: 3}

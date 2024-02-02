@@ -1,12 +1,12 @@
 ﻿using Cinemachine;
 using UnityEngine;
 
-public class RunnerGameObjectSpawner : GameObjectSpawner
+public class FSMRunnerGameObjectSpawner : GameObjectSpawner
 {
     [field: SerializeField]
     private GameObject RunnerCameraAssetsPrefab { get; set; }
 
-    private RunnerOnlineControls m_networkedRunnerMovement;
+    private RunnerControllerStateMachine m_networkedRunnerMovement;
     private GameObject m_runnerGameObject;
     private GameObject m_runnerCamAssetsGameObject;
     private CinemachineVirtualCamera m_virtualCamera;
@@ -41,9 +41,13 @@ public class RunnerGameObjectSpawner : GameObjectSpawner
         }
     }
 
+
+    /**
+     * replace by FSM
+     */
     protected override void GetNetworkedPlayerControls()
     {
-        m_networkedRunnerMovement = GetComponent<RunnerOnlineControls>();
+        m_networkedRunnerMovement = GetComponent<RunnerControllerStateMachine>();
         if (m_networkedRunnerMovement == null)
         {
             Debug.LogError("NetworkedRunnerMovement Not found!");
