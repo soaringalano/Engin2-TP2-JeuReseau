@@ -18,9 +18,7 @@ public class RunnerControllerStateMachine : AbstractNetworkStateMachine<RunnerSt
     [field: SerializeField] private float MaxBackwardVelocity { get; set; }
     [field: SerializeField] private float JumpIntensity { get; set; } = 100.0f;
     [field: SerializeField] private float MeshRotationLerpSpeed { get; set; } = 4.0f;
-<<<<<<< HEAD
-    [field: SerializeField] public CharacterFloorTrigger m_floorTrigger { get; private set; }
-=======
+
     [field: SerializeField] public RunnerFloorTrigger m_floorTrigger { get; private set; }
     [field: SerializeField] public GameObject StaminaBarSliderPrefab { private get; set; }
     private Transform m_staminaBarTransform;
@@ -33,7 +31,6 @@ public class RunnerControllerStateMachine : AbstractNetworkStateMachine<RunnerSt
     [field: SerializeField] public float StaminaLoseSpeedInDoubleJump = 5f;
     private Vector3 m_currentStaminaBarScale = Vector3.one;
 
->>>>>>> main
 
     private Vector2 CurrentDirectionalInputs { get; set; }
     private float AnimatorRunningValue { get; set; } = 0.5f; // Has to stay between 0.5 and 1

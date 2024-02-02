@@ -21,12 +21,12 @@ public class JumpState : RunnerState
     {
         Debug.Log("Exit state: JumpState\n");
         m_currentStateTimer = 0;
-        m_stateMachine.Land();
+        //m_stateMachine.Land();
     }
 
     public override void OnFixedUpdate()
     {
-        m_stateMachine.FixedLoseStamina(m_stateMachine.StaminaLoseSpeedInJump);
+        //m_stateMachine.FixedLoseStamina(m_stateMachine.StaminaLoseSpeedInJump);
     }
 
     public override void OnUpdate()
@@ -38,10 +38,10 @@ public class JumpState : RunnerState
     {
         //This must be run in Update absolutely
         // if must rest, then cannot enter.
-        if (m_stateMachine.MustRest(m_stateMachine.StaminaLoseSpeedInJump))
-        {
-            return false;
-        }
+        //if (m_stateMachine.MustRest(m_stateMachine.StaminaLoseSpeedInJump))
+        //{
+        //    return false;
+        //}
         // if is on the ground
         if (m_stateMachine.m_floorTrigger.IsOnFloor)
         {
@@ -57,10 +57,10 @@ public class JumpState : RunnerState
     public override bool CanExit()
     {
         // if not enough stamina for this action, then go to FreeState to rest
-        if (m_stateMachine.MustRest(m_stateMachine.StaminaLoseSpeedInJump))
-        {
-            return true;
-        }
+        //if (m_stateMachine.MustRest(m_stateMachine.StaminaLoseSpeedInJump))
+        //{
+        //    return true;
+        //}
         // if is not on the ground
         if(!m_stateMachine.m_floorTrigger.IsOnFloor)
         {

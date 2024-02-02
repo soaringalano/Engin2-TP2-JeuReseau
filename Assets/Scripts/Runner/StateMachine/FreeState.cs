@@ -41,7 +41,7 @@ public class FreeState : RunnerState
     {
         m_stateMachine.UpdateMovementsToAnimator();
         m_stateMachine.ApplyMovementsOnFloorFU();
-        m_stateMachine.FixedRegainStamina();
+        //m_stateMachine.FixedRegainStamina();
     }
 
 

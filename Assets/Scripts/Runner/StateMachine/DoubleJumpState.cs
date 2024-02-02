@@ -8,10 +8,10 @@ public class DoubleJumpState : RunnerState
     public override bool CanEnter(IState currentState)
     {
         // if current stamina does not support this action, then don't allow to enter
-        if (m_stateMachine.MustRest(m_stateMachine.StaminaLoseSpeedInDoubleJump))
-        {
-            return false;
-        }
+        //if (m_stateMachine.MustRest(m_stateMachine.StaminaLoseSpeedInDoubleJump))
+        //{
+        //    return false;
+        //}
         // if current in JumpState and not on the ground and is_jumping
         if (currentState.GetType() == typeof(JumpState) &&
             m_stateMachine.m_floorTrigger.IsOnFloor == false &&
@@ -30,10 +30,10 @@ public class DoubleJumpState : RunnerState
     public override bool CanExit()
     {
         // if must rest, then allow to exit
-        if (m_stateMachine.MustRest(m_stateMachine.StaminaLoseSpeedInDoubleJump))
-        {
-            return true;
-        }
+        //if (m_stateMachine.MustRest(m_stateMachine.StaminaLoseSpeedInDoubleJump))
+        //{
+        //    return true;
+        //}
         // if is now on floor
         if(m_stateMachine.m_floorTrigger.IsOnFloor)
         {
@@ -65,7 +65,6 @@ public class DoubleJumpState : RunnerState
 
     public override void OnFixedUpdate()
     {
-        m_stateMachine.FixedLoseStamina(m_stateMachine.StaminaLoseSpeedInDoubleJump);
+        //m_stateMachine.FixedLoseStamina(m_stateMachine.StaminaLoseSpeedInDoubleJump);
     }
-
 }

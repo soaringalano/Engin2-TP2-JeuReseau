@@ -17,7 +17,7 @@ public class RoleSelection : NetworkBehaviour
         Debug.Log("Runner slected!");
         //GameObject go = Instantiate(NetworkManager.singleton.spawnPrefabs[0], transform);
         singleton.RunHuntPlayer.SetRole(Role.Runner);
-        GameEventManager.GetInstance().RaiseOnPlayerRoleSelectedEvent();
+        //GameEventManager.GetInstance().RaiseOnPlayerRoleSelectedEvent();
         gameObject.SetActive(false);
     }
 
@@ -31,7 +31,7 @@ public class RoleSelection : NetworkBehaviour
         Debug.Log("Hunter slected!");
         //GameObject go = Instantiate(NetworkManager.singleton.spawnPrefabs[1], transform);
         singleton.RunHuntPlayer.SetRole(Role.Runner);
-        GameEventManager.GetInstance().RaiseOnPlayerRoleSelectedEvent();
+        //GameEventManager.GetInstance().RaiseOnPlayerRoleSelectedEvent();
         gameObject.SetActive(false);
     }
 }
