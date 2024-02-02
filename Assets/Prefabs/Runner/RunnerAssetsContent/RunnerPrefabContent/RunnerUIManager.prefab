@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1569299855358546055}
-  - component: {fileID: 3270658909810310160}
+  - component: {fileID: 8767084069646335627}
   m_Layer: 0
   m_Name: RunnerUIManager
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3270658909810310160
+--- !u!114 &8767084069646335627
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,7 +41,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7801706357498521759}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 630e1bd2c24394e9abb6a26a49f9ba63, type: 3}
+  m_Script: {fileID: 11500000, guid: e4653230e1ca3dd478eaf8e60ffb214a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 0}
