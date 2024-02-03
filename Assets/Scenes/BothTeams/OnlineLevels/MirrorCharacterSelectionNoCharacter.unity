@@ -3329,11 +3329,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3266697494358766766, guid: 6acf49d76d0eb47c08e908da71d52859, type: 3}
       propertyPath: m_characterTitles.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3266697494358766766, guid: 6acf49d76d0eb47c08e908da71d52859, type: 3}
       propertyPath: m_playablePrefabs.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3266697494358766766, guid: 6acf49d76d0eb47c08e908da71d52859, type: 3}
       propertyPath: characterTitles.Array.data[0]
@@ -3353,30 +3353,42 @@ PrefabInstance:
       objectReference: {fileID: 193520, guid: ea2a922827ac72748825b90e7ba89560, type: 3}
     - target: {fileID: 3266697494358766766, guid: 6acf49d76d0eb47c08e908da71d52859, type: 3}
       propertyPath: m_characterTitles.Array.data[0]
-      value: Runner
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3266697494358766766, guid: 6acf49d76d0eb47c08e908da71d52859, type: 3}
       propertyPath: m_characterTitles.Array.data[1]
+      value: Runner
+      objectReference: {fileID: 0}
+    - target: {fileID: 3266697494358766766, guid: 6acf49d76d0eb47c08e908da71d52859, type: 3}
+      propertyPath: m_characterTitles.Array.data[2]
       value: Hunter
       objectReference: {fileID: 0}
     - target: {fileID: 3266697494358766766, guid: 6acf49d76d0eb47c08e908da71d52859, type: 3}
       propertyPath: m_playablePrefabs.Array.data[0]
       value: 
-      objectReference: {fileID: 56868658535408414, guid: 7f3cb201d41aff0478af94d28ba82119, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 3266697494358766766, guid: 6acf49d76d0eb47c08e908da71d52859, type: 3}
       propertyPath: m_playablePrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 56868658535408414, guid: 7f3cb201d41aff0478af94d28ba82119, type: 3}
+    - target: {fileID: 3266697494358766766, guid: 6acf49d76d0eb47c08e908da71d52859, type: 3}
+      propertyPath: m_playablePrefabs.Array.data[2]
       value: 
       objectReference: {fileID: 6565551724579044330, guid: a8e6d2bdb3499d44fa322002f4bdd2ed, type: 3}
     - target: {fileID: 3266697494358766766, guid: 6acf49d76d0eb47c08e908da71d52859, type: 3}
       propertyPath: m_selectionPosePrefabs.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3266697494358766766, guid: 6acf49d76d0eb47c08e908da71d52859, type: 3}
       propertyPath: m_selectionPosePrefabs.Array.data[0]
       value: 
-      objectReference: {fileID: 1292141603276078456, guid: 11e46f9775f2da14f83f2716ca497984, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 3266697494358766766, guid: 6acf49d76d0eb47c08e908da71d52859, type: 3}
       propertyPath: m_selectionPosePrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 1292141603276078456, guid: 11e46f9775f2da14f83f2716ca497984, type: 3}
+    - target: {fileID: 3266697494358766766, guid: 6acf49d76d0eb47c08e908da71d52859, type: 3}
+      propertyPath: m_selectionPosePrefabs.Array.data[2]
       value: 
       objectReference: {fileID: 193520, guid: ea2a922827ac72748825b90e7ba89560, type: 3}
     - target: {fileID: 3266697494358766767, guid: 6acf49d76d0eb47c08e908da71d52859, type: 3}
