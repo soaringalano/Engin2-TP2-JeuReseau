@@ -88,7 +88,7 @@ namespace Mirror.Examples.CharacterSelection
             //Debug.Log("ButtonNextCharacter");
 
             currentlySelectedCharacter += 1;
-            if (currentlySelectedCharacter >= characterData.characterPrefabs.Length)
+            if (currentlySelectedCharacter >= characterData.m_playablePrefabs.Length)
             {
                 currentlySelectedCharacter = 1;
             }
@@ -113,23 +113,24 @@ namespace Mirror.Examples.CharacterSelection
 
         private void SetupCharacters()
         {
-            textTitle.text = "" + characterData.characterTitles[currentlySelectedCharacter];
-            textHealth.text = "Health: " + characterData.characterHealths[currentlySelectedCharacter];
-            textSpeed.text = "Speed: " + characterData.characterSpeeds[currentlySelectedCharacter];
-            textAttack.text = "Attack: " + characterData.characterAttack[currentlySelectedCharacter];
-            textAbilities.text = "Abilities:\n" + characterData.characterAbilities[currentlySelectedCharacter];
+            textTitle.text = "" + characterData.m_characterTitles[currentlySelectedCharacter];
+            //textHealth.text = "Health: " + characterData.characterHealths[currentlySelectedCharacter];
+            //textSpeed.text = "Speed: " + characterData.characterSpeeds[currentlySelectedCharacter];
+            //textAttack.text = "Attack: " + characterData.characterAttack[currentlySelectedCharacter];
+            //textAbilities.text = "Abilities:\n" + characterData.characterAbilities[currentlySelectedCharacter];
 
             if (currentInstantiatedCharacter)
             {
                 Destroy(currentInstantiatedCharacter);
             }
-            currentInstantiatedCharacter = Instantiate(characterData.characterPrefabs[currentlySelectedCharacter]);
+            //currentInstantiatedCharacter = Instantiate(characterData.m_playablePrefabs[currentlySelectedCharacter]);
+            currentInstantiatedCharacter = Instantiate(characterData.m_selectionPosePrefabs[currentlySelectedCharacter]);
             currentInstantiatedCharacter.transform.position = podiumPosition.position;
             currentInstantiatedCharacter.transform.rotation = podiumPosition.rotation;
             characterSelection = currentInstantiatedCharacter.GetComponent<CharacterSelection>();
             currentInstantiatedCharacter.transform.SetParent(this.transform.root);
 
-            SetupCharacterColours();
+            //SetupCharacterColours();
             SetupPlayerName();
 
             if (cameraObj)
@@ -181,7 +182,7 @@ namespace Mirror.Examples.CharacterSelection
             }
 
             // check that prefab is set, or exists for saved character number data
-            if (StaticVariables.characterNumber > 0 && StaticVariables.characterNumber < characterData.characterPrefabs.Length)
+            if (StaticVariables.characterNumber > 0 && StaticVariables.characterNumber < characterData.m_playablePrefabs.Length)
             {
                 currentlySelectedCharacter = StaticVariables.characterNumber;
             }

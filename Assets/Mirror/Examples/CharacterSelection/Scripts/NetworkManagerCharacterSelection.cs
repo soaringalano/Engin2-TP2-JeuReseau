@@ -76,10 +76,10 @@ namespace Mirror.Examples.CharacterSelection
 
             // check that prefab is set, or exists for saved character number data
             // could be a cheater, or coding error, or different version conflict
-            if (message.characterNumber <= 0 || message.characterNumber >= characterData.characterPrefabs.Length)
+            if (message.characterNumber <= 0 || message.characterNumber >= characterData.m_playablePrefabs.Length)
             {
                 Debug.Log("OnCreateCharacter prefab Invalid or not set, use random.");
-                message.characterNumber = UnityEngine.Random.Range(1, characterData.characterPrefabs.Length);
+                message.characterNumber = UnityEngine.Random.Range(1, characterData.m_playablePrefabs.Length);
             }
 
             // check if the save data has been pre-set
@@ -90,8 +90,8 @@ namespace Mirror.Examples.CharacterSelection
             }
 
             GameObject playerObject = startPos != null
-                ? Instantiate(characterData.characterPrefabs[message.characterNumber], startPos.position, startPos.rotation)
-                : Instantiate(characterData.characterPrefabs[message.characterNumber]);
+                ? Instantiate(characterData.m_playablePrefabs[message.characterNumber], startPos.position, startPos.rotation)
+                : Instantiate(characterData.m_playablePrefabs[message.characterNumber]);
 
 
             // Apply data from the message however appropriate for your game
@@ -110,7 +110,7 @@ namespace Mirror.Examples.CharacterSelection
             // Cache a reference to the current player object
             GameObject oldPlayer = conn.identity.gameObject;
 
-            GameObject playerObject = Instantiate(characterData.characterPrefabs[message.createCharacterMessage.characterNumber], oldPlayer.transform.position, oldPlayer.transform.rotation);
+            GameObject playerObject = Instantiate(characterData.m_playablePrefabs[message.createCharacterMessage.characterNumber], oldPlayer.transform.position, oldPlayer.transform.rotation);
 
             // Instantiate the new player object and broadcast to clients
             // Include true for keepAuthority paramater to prevent ownership change
