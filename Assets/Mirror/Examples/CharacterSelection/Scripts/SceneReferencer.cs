@@ -10,8 +10,8 @@ namespace Mirror.Examples.CharacterSelection
 
         private CharacterData characterData;
         public GameObject characterSelectionObject;
-        public GameObject sceneObjects;
-        public GameObject cameraObject;
+        //public GameObject sceneObjects;
+        //public GameObject cameraObject;
 
         private void Start()
         {
@@ -29,8 +29,8 @@ namespace Mirror.Examples.CharacterSelection
         {
             // server-only mode should not press this button
             //Debug.Log("ButtonCharacterSelection");
-            cameraObject.SetActive(false);
-            sceneObjects.SetActive(false);
+            //cameraObject.SetActive(false);
+            //sceneObjects.SetActive(false);
             characterSelectionObject.SetActive(true);
             this.GetComponent<Canvas>().enabled = false;
         }
@@ -38,9 +38,9 @@ namespace Mirror.Examples.CharacterSelection
         public void CloseCharacterSelection()
         {
             //Debug.Log("CloseCharacterSelection");
-            cameraObject.SetActive(true);
+            //cameraObject.SetActive(true);
             characterSelectionObject.SetActive(false);
-            sceneObjects.SetActive(true);
+            //sceneObjects.SetActive(true);
             this.GetComponent<Canvas>().enabled = true;
         }
     }

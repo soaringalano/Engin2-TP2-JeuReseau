@@ -17,13 +17,13 @@ public class FreeState : RunnerState
 
     public override void OnEnter()
     {
-        Debug.Log("Enter state: FreeState\n");
+        //Debug.Log("Enter state: FreeState\n");
         m_stateMachine.SetWalkingInput();
     }
 
     public override void OnExit()
     {
-        Debug.Log("Exit state: FreeState\n");
+        //Debug.Log("Exit state: FreeState\n");
 
     }
 

@@ -89,7 +89,7 @@ namespace Mirror.Examples.CharacterSelection
             // Deprecated in Unity 2023.1
             sceneReferencer = GameObject.FindObjectOfType<SceneReferencer>();
 #endif
-            cameraObj = sceneReferencer.cameraObject.transform;
+            //cameraObj = sceneReferencer.cameraObject.transform;
         }
 
         public override void OnStopAuthority()
