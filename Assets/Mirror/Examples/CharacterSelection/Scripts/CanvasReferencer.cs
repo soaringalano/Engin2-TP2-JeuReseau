@@ -52,7 +52,7 @@ namespace Mirror.Examples.CharacterSelection
 
         public void ButtonGo()
         {
-            //Debug.Log("ButtonGo");
+            Debug.Log("ButtonGo");
 
             // presumes we're already in-game
             if (sceneReferencer && NetworkClient.active)
@@ -75,6 +75,9 @@ namespace Mirror.Examples.CharacterSelection
                 };
                 NetworkManagerCharacterSelection.singleton.ReplaceCharacter(replaceCharacterMessage);
                 sceneReferencer.CloseCharacterSelection();
+                //Debug.Log("NetworkClient.Ready()");
+                //NetworkClient.Ready();
+                Debug.Log("ButtonGo end");
             }
             else
             {
