@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 202be7bff131eb64cabb668a6e0f752c
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - <RunnerCameraPrefab>k__BackingField: {fileID: 2502197940380891415, guid: 104ad32be306cd44ca8550552d96fe85, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

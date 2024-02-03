@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Runner-Equipe1-Scenes/MergeRunner.unity
+    path: Assets/Scenes/Runner/DEPRECATEDMergeRunner.unity
     guid: 71b6f5b6e4124435eb55824811cce2be
   m_configObjects: {}

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/Hunter/NetworkMineExplotion.cs.meta
+guid: ab259562d2afdc849878e29bc270ca21
+========
+guid: 551db99d2fd09aa4b899bcaefafd79c2
+>>>>>>>> main:Assets/Scripts/Runner/FSMRunnerGameObjectSpawner.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - <RunnerCameraPrefab>k__BackingField: {fileID: 2502197940380891415, guid: 104ad32be306cd44ca8550552d96fe85, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
