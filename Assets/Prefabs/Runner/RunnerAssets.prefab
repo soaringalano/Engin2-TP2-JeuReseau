@@ -77,6 +77,7 @@ MonoBehaviour:
   <JumpIntensity>k__BackingField: 400
   <MeshRotationLerpSpeed>k__BackingField: 4
   <m_floorTrigger>k__BackingField: {fileID: 2621183255143896938}
+  <m_networkAnimator>k__BackingField: {fileID: 8403922479734184492}
   <StaminaBarSliderPrefab>k__BackingField: {fileID: 0}
   <MaxStamina>k__BackingField: 100
   <CurrentStamina>k__BackingField: 100

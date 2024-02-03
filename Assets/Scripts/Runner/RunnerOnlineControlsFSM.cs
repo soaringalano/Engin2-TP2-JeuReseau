@@ -1,4 +1,5 @@
-﻿using RPGCharacterAnims.Lookups;
+﻿using Mirror;
+using RPGCharacterAnims.Lookups;
 using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -19,6 +20,7 @@ public class RunnerControllerStateMachine : AbstractNetworkStateMachine<RunnerSt
     [field: SerializeField] private float JumpIntensity { get; set; } = 100.0f;
     [field: SerializeField] private float MeshRotationLerpSpeed { get; set; } = 4.0f;
     [field: SerializeField] public RunnerFloorTrigger m_floorTrigger { get; private set; }
+    [field: SerializeField] public NetworkAnimator m_networkAnimator { get; private set; }
     [field: SerializeField] public GameObject StaminaBarSliderPrefab { private get; set; }
     private Transform m_staminaBarTransform;
     [field: SerializeField] public float MaxStamina { get; set; } = 100;
@@ -47,6 +49,8 @@ public class RunnerControllerStateMachine : AbstractNetworkStateMachine<RunnerSt
         m_possibleStates.Add(new JumpState());
         m_possibleStates.Add(new DoubleJumpState());
         m_possibleStates.Add(new RunState());
+        m_possibleStates.Add(new RagdollState());
+        m_possibleStates.Add(new GettingUpState());
     }
 
     protected override void Awake()
