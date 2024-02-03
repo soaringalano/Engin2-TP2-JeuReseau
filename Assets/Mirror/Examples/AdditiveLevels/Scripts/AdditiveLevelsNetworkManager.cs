@@ -170,6 +170,7 @@ namespace Mirror.Examples.AdditiveLevels
         // server to have subscenes async loaded from OnServerSceneChanged ahead of it.
         IEnumerator AddPlayerDelayed(NetworkConnectionToClient conn)
         {
+            Debug.Log("Enters AdditiveLevelsNetworkManager AddPlayerDelayed()");
             // Wait for server to async load all subscenes for game instances
             while (!subscenesLoaded)
                 yield return null;

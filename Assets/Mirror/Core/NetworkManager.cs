@@ -31,7 +31,7 @@ namespace Mirror
     [HelpURL("https://mirror-networking.gitbook.io/docs/components/network-manager")]
     public class NetworkManager : MonoBehaviour
     {
-        public RunhuntPlayer RunHuntPlayer { get; private set; }
+        public RunhuntPlayer RunHuntPlayer { get; set; }
 
         [SerializeField] public int selectedPrefabIndex;
 
@@ -746,16 +746,39 @@ namespace Mirror
         // Source: https://mirror-networking.gitbook.io/docs/manual/guides/gameobjects/custom-character-spawning
         void OnCreateCharacter(NetworkConnectionToClient conn, CreateRunhuntCharacterMessage message)
         {
+            Debug.Log("Enters OnCreateCharacter().");
             GameObject playerPrefab = null;
             if (selectedPrefabIndex < playerPrefabs.Count())
             {
                 playerPrefab = playerPrefabs[selectedPrefabIndex];
             }
 
+            Debug.Log("Get role prefab.");
+            GameObject rolePrefab = null;
+            foreach (GameObject _gameObject in singleton.spawnPrefabs)
+            {
+                if (_gameObject == null) return;
+
+                if (_gameObject.GetComponent<Runner>() != null)
+                {
+                    Debug.Log("Runner prefab found.");
+                    rolePrefab = _gameObject;
+                }
+                else if (_gameObject.GetComponent<Hunter>() != null)
+                {
+                    Debug.Log("Hunter prefab found.");
+                    rolePrefab = _gameObject;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+
             // playerPrefab is the one assigned in the inspector in Network
             // Manager but you can use different prefabs per race for example
             GameObject gameobject = Instantiate(playerPrefab);
-
+            Instantiate(rolePrefab, gameobject.transform);
             // Apply data from the message however appropriate for your game
             // Typically
             // Player would be a component you write with syncvars or properties
@@ -1484,15 +1507,6 @@ namespace Mirror
                 if (autoCreatePlayer)
                     NetworkClient.AddPlayer();
             }
-
-            // you can send the message here, or wherever else you want
-            CreateRunhuntCharacterMessage characterMessage = new CreateRunhuntCharacterMessage
-            {
-                role = Role.Runner,
-                name = "Joe Gaba Gaba",
-            };
-
-            NetworkClient.Send(characterMessage);
         }
 
         /// <summary>Called on clients when disconnected from a server.</summary>
@@ -1554,7 +1568,7 @@ namespace Mirror
         /// <summary>This is invoked when a server is started - including when a host is started.</summary>
         public virtual void OnStartServer() 
         {
-            //NetworkServer.RegisterHandler<CreateRunhuntCharacterMessage>(OnCreateCharacter);
+            NetworkServer.ReplaceHandler<CreateRunhuntCharacterMessage>(OnCreateCharacter);
         }
 
         /// <summary>This is invoked when the client is started.</summary>

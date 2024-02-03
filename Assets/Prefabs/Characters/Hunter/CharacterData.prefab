@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7801706357498521759
+--- !u!1 &7807482234878672219
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,40 +8,45 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1569299855358546055}
-  - component: {fileID: 8767084069646335627}
+  - component: {fileID: 7342173875355411368}
+  - component: {fileID: 1635843003496607331}
   m_Layer: 0
-  m_Name: RunnerUIManager
+  m_Name: CharacterData
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1569299855358546055
+--- !u!4 &7342173875355411368
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7801706357498521759}
+  m_GameObject: {fileID: 7807482234878672219}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 468.13663, y: 322.58255, z: -0.75135285}
+  m_LocalPosition: {x: -3.694591, y: 0.44966963, z: 2.4900506}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8767084069646335627
+--- !u!114 &1635843003496607331
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7801706357498521759}
+  m_GameObject: {fileID: 7807482234878672219}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4653230e1ca3dd478eaf8e60ffb214a, type: 3}
+  m_Script: {fileID: 11500000, guid: b8e6f75bfe994524195b84b51e73cb38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slider: {fileID: 0}
+  characterPrefabs:
+  - {fileID: 56868658535408414, guid: 9edd67f5a1bc46940bfad501b19280c2, type: 3}
+  - {fileID: 6565551724579044330, guid: e9e33badc3f79734fb97695f81a3bd4a, type: 3}
+  characterTitles:
+  - Runner
+  - Hunter

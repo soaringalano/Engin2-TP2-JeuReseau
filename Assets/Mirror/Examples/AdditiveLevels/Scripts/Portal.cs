@@ -57,6 +57,7 @@ namespace Mirror.Examples.AdditiveLevels
         [ServerCallback]
         IEnumerator SendPlayerToNewScene(GameObject player)
         {
+            Debug.Log("Enters Portal SendPlayerToNewScene()");
             if (player.TryGetComponent(out NetworkIdentity identity))
             {
                 NetworkConnectionToClient conn = identity.connectionToClient;

@@ -13,49 +13,72 @@ namespace Mirror
         [SyncVar]
         public string m_role;
 
+        private void Start()
+        {
+            Debug.Log("Enters RunhuntPlayer Start()");
+            if (!isLocalPlayer) return;
+            Debug.Log("RunhuntPlayer Start() isLocalPlayer");
+            transform.GetChild(0).gameObject.SetActive(true);
+            singleton.RunHuntPlayer = this;
+        }
+
         public void SetRole(Role newRole)
         {
             Debug.Log("Role set.");
             m_role = GetRoleToString(newRole);
         }
-
   
         public void GetSpawnablePrefab()
         {
-            if (m_role == "Count")
+            CreateRunhuntCharacterMessage characterMessage = new CreateRunhuntCharacterMessage
             {
-                Debug.LogError("Wrong type of player role!");
-                return;
-            }
-            Debug.Log("Instanciate character.");
+                role = GetStringToRole(),
+                name = m_playerName,
+            };
 
-            foreach (GameObject _gameObject in singleton.spawnPrefabs) 
-            {
-                if (_gameObject == null) return;
+            NetworkClient.Send(characterMessage);
 
-                if (_gameObject.GetComponent<Runner>() != null)
-                {
-                    InstanciateCharacter(_gameObject);
-                }
-                else if (_gameObject.GetComponent<Hunter>() != null)
-                {
-                    InstanciateCharacter(_gameObject);
-                }
-                else
-                {
-                    continue;
-                }
-            }
+            //if (m_role == "Count")
+            //{
+            //    Debug.LogError("Wrong type of player role!");
+            //    return;
+            //}
+
+            //Debug.Log("Get role prefab.");
+
+            //foreach (GameObject _gameObject in singleton.spawnPrefabs)
+            //{
+            //    if (_gameObject == null) return;
+
+            //    if (_gameObject.GetComponent<Runner>() != null)
+            //    {
+            //        Debug.Log("Runner prefab found.");
+            //        InstanciateCharacter(_gameObject);
+            //    }
+            //    else if (_gameObject.GetComponent<Hunter>() != null)
+            //    {
+            //        Debug.Log("Hunter prefab found.");
+            //        InstanciateCharacter(_gameObject);
+            //    }
+            //    else
+            //    {
+            //        continue;
+            //    }
+            //}
         }
 
+        // Source : https://mirror-networking.gitbook.io/docs/manual/guides/gameobjects/custom-character-spawning
         // Source : https://mirror-networking.gitbook.io/docs/manual/guides/authority
         //[Command]
         private void InstanciateCharacter(GameObject _gameObject)
         {
+            Debug.Log("Instanciate player role spawnable prefab.");
             GameObject playerGO = Instantiate(_gameObject, transform);
+            Debug.Log("Player role spawnable prefab instanciated.");
             //NetworkIdentity networkIdentity = GetComponent<NetworkIdentity>();
             //networkIdentity.AssignClientAuthority(connectionToClient);
             NetworkServer.Spawn(playerGO, connectionToClient);
+            //NetworkServer.AddPlayerForConnection(connectionToClient, playerGO);
         }
 
         private Role GetStringToRole()

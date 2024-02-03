@@ -65,6 +65,7 @@ namespace Mirror.Examples.CharacterSelection
 
         void OnCreateCharacter(NetworkConnectionToClient conn, CreateCharacterMessage message)
         {
+            Debug.Log("Enters NetworkManagerCharacterSelection OnCreateCharacter()");
             Transform startPos = GetStartPosition();
 
             // check if the save data has been pre-set

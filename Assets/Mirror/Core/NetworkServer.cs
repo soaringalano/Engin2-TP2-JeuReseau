@@ -944,6 +944,7 @@ namespace Mirror
         // on this playerControllerId for this connection, this will fail.
         public static bool AddPlayerForConnection(NetworkConnectionToClient conn, GameObject player)
         {
+            Debug.Log("Enters NetworkServer AddPlayerForConnection()");
             if (!player.TryGetComponent(out NetworkIdentity identity))
             {
                 Debug.LogWarning($"AddPlayer: playerGameObject has no NetworkIdentity. Please add a NetworkIdentity to {player}");

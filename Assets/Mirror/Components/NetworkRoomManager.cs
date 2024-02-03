@@ -297,6 +297,7 @@ namespace Mirror
         /// <param name="conn">Connection from client.</param>
         public override void OnServerAddPlayer(NetworkConnectionToClient conn)
         {
+            Debug.Log("Enters NetworkRoomManager OnServerAddPlayer()");
             // increment the index before adding the player, so first player starts at 1
             clientIndex++;
 
