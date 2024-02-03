@@ -1,56 +1,59 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HunterAbilities : MonoBehaviour
+namespace Runhunt.Hunter
 {
-    [SerializeField]
-    private Image m_filler;
-    [SerializeField]
-    private Button m_button;
-    [SerializeField]
-    private float m_cooldown = 5.0f;
-    [SerializeField]
-    private bool m_isInCooldown = false;
-    [SerializeField]
-    private bool m_buttonclick = false;
-
-    void Start()
+    public class HunterAbilities : MonoBehaviour
     {
-        m_filler.fillAmount = 0.0f;
-    }
+        [SerializeField]
+        private Image m_filler;
+        [SerializeField]
+        private Button m_button;
+        [SerializeField]
+        private float m_cooldown = 5.0f;
+        [SerializeField]
+        private bool m_isInCooldown = false;
+        [SerializeField]
+        private bool m_buttonclick = false;
 
-    private void Update()
-    {
-        AbilitiesCooldown();
-    }
-
-    public void OnUseButton()
-    {
-        if (m_isInCooldown == true)
+        void Start()
         {
-            return;
-        }
-        m_buttonclick = true;
-        AbilitiesCooldown();
-    }
-
-    private void AbilitiesCooldown()
-    {
-        if (m_buttonclick == true)
-        {
-            m_buttonclick = false;
-            m_isInCooldown = true;
-            m_filler.fillAmount = 1.0f;
+            m_filler.fillAmount = 0.0f;
         }
 
-        if (m_isInCooldown == true)
+        private void Update()
         {
-            m_filler.fillAmount -= 1.0f / m_cooldown * Time.deltaTime;
+            AbilitiesCooldown();
+        }
 
-            if (m_filler.fillAmount <= 0.0f)
+        public void OnUseButton()
+        {
+            if (m_isInCooldown == true)
             {
-                m_filler.fillAmount = 0.0f;
-                m_isInCooldown = false;
+                return;
+            }
+            m_buttonclick = true;
+            AbilitiesCooldown();
+        }
+
+        private void AbilitiesCooldown()
+        {
+            if (m_buttonclick == true)
+            {
+                m_buttonclick = false;
+                m_isInCooldown = true;
+                m_filler.fillAmount = 1.0f;
+            }
+
+            if (m_isInCooldown == true)
+            {
+                m_filler.fillAmount -= 1.0f / m_cooldown * Time.deltaTime;
+
+                if (m_filler.fillAmount <= 0.0f)
+                {
+                    m_filler.fillAmount = 0.0f;
+                    m_isInCooldown = false;
+                }
             }
         }
     }

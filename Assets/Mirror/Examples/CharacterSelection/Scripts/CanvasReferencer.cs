@@ -75,15 +75,23 @@ namespace Mirror.Examples.CharacterSelection
                 };
                 NetworkManagerCharacterSelection.singleton.ReplaceCharacter(replaceCharacterMessage);
                 sceneReferencer.CloseCharacterSelection();
-                //Debug.Log("NetworkClient.Ready()");
-                //NetworkClient.Ready();
-                Debug.Log("ButtonGo end");
+
+                InitializeCharacterPrefab();
             }
             else
             {
                 // not in-game
                 SceneManager.LoadScene("MirrorCharacterSelection");
             }
+        }
+
+        private void InitializeCharacterPrefab()
+        {
+
+            RunnerOnlineControlsFSM runnerAssets = currentInstantiatedCharacter.GetComponentInChildren<RunnerOnlineControlsFSM>();
+            runnerAssets.Initialize();
+
+            Debug.Log("ButtonGo end");
         }
 
         public void ButtonNextCharacter()
@@ -127,11 +135,12 @@ namespace Mirror.Examples.CharacterSelection
                 Destroy(currentInstantiatedCharacter);
             }
             //currentInstantiatedCharacter = Instantiate(characterData.m_playablePrefabs[currentlySelectedCharacter]);
-            currentInstantiatedCharacter = Instantiate(characterData.m_selectionPosePrefabs[currentlySelectedCharacter]);
+            currentInstantiatedCharacter = Instantiate(characterData.m_playablePrefabs[currentlySelectedCharacter]);
             currentInstantiatedCharacter.transform.position = podiumPosition.position;
             currentInstantiatedCharacter.transform.rotation = podiumPosition.rotation;
             characterSelection = currentInstantiatedCharacter.GetComponent<CharacterSelection>();
             currentInstantiatedCharacter.transform.SetParent(this.transform.root);
+            //currentInstantiatedCharacter.GetComponent<CharacterSelection>().ChangeCharacterSelectionState(true);
 
             //SetupCharacterColours();
             SetupPlayerName();

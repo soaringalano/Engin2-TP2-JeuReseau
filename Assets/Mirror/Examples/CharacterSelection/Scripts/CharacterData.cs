@@ -8,7 +8,7 @@ namespace Mirror.Examples.CharacterSelection
 
         public static CharacterData characterDataSingleton { get; private set; }
 
-        public GameObject[] m_selectionPosePrefabs;
+        //public GameObject[] m_selectionPosePrefabs;
         public GameObject[] m_playablePrefabs;
         public string[] m_characterTitles;
         //public int[] characterHealths;
