@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 7307366001008025359}
   - component: {fileID: 6481846493386945722}
   - component: {fileID: 3444429685286514963}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RunnerAssets
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -78,7 +78,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   <RB>k__BackingField: {fileID: 6225640026644735257}
-  <FloorTrigger>k__BackingField: {fileID: 0}
+  <FloorTrigger>k__BackingField: {fileID: 2621183255143896938}
   <StaminaBarTransform>k__BackingField: {fileID: 8093937187131535060}
   <AccelerationValue>k__BackingField: 0
   <MaxForwardVelocity>k__BackingField: 0
@@ -355,6 +355,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1983574630363285167, guid: 1710dc0641bba0642b3c863c425358c1, type: 3}
   m_PrefabInstance: {fileID: 168881365132272429}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2621183255143896938 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2753859898174977095, guid: 1710dc0641bba0642b3c863c425358c1, type: 3}
+  m_PrefabInstance: {fileID: 168881365132272429}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0175e24c3815d174fa4e5d89bcf0577a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &259671327272291217
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -571,6 +582,10 @@ PrefabInstance:
     - target: {fileID: 2358310055920764321, guid: f1e4d961ba86a52488bdfb849126d735, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4244115150385280014, guid: f1e4d961ba86a52488bdfb849126d735, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7291791529097059771, guid: f1e4d961ba86a52488bdfb849126d735, type: 3}
       propertyPath: m_AnchorMax.x

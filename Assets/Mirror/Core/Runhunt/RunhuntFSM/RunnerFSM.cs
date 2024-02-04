@@ -49,11 +49,6 @@ namespace Mirror
 
         protected override void Start()
         {
-            StaminaBarTransform = GameObject.Find("StaminaBar_Slider").transform;
-            if (StaminaBarTransform != null)
-            {
-                Debug.Log("Stamina Bar Slider found!");
-            }
             foreach (RunnerState state in m_possibleStates)
             {
                 state.OnStart(this);
