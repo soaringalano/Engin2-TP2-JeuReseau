@@ -24,7 +24,7 @@ public class AbstractNetworkFSM<T> : NetworkBehaviour where T : IState
 
     protected virtual void Update()
     {
-        Debug.Log("Current state:" + m_currentState.GetType());
+        //Debug.Log("Current state:" + m_currentState.GetType());
         m_currentState.OnUpdate();
         TryStateTransition();
     }

@@ -196,7 +196,7 @@ namespace Mirror
             // if current state is FreeState and velocity is > 0, then cannot regain stamina
             if (CurrentStamina == MaxStamina || RB.velocity.magnitude > 0)
             {
-                Debug.Log("Stamina is full or player is in action, cannot regain stamina");
+                //Debug.Log("Stamina is full or player is in action, cannot regain stamina");
                 return;
             }
             // value to regain
@@ -210,14 +210,14 @@ namespace Mirror
             float rate = val / MaxStamina;
             Vector3 diff = new Vector3(rate, 0);
             StaminaBarTransform.localScale += new Vector3(rate, 0);
-            Debug.Log("Stamina is regaining by " + val);
+            //Debug.Log("Stamina is regaining by " + val);
         }
 
         public void FixedLoseStamina(float speed)
         {
             if (CurrentStamina == 0)
             {
-                Debug.Log("Stamina is 0, player must rest to regain stamina");
+                //Debug.Log("Stamina is 0, player must rest to regain stamina");
                 return;
             }
             float val = speed * Time.fixedDeltaTime;
@@ -229,14 +229,14 @@ namespace Mirror
             float rate = val / MaxStamina;
             Vector3 diff = new Vector3(rate, 0);
             StaminaBarTransform.localScale -= diff;
-            Debug.Log("Stamina is losing by " + val);
+            //Debug.Log("Stamina is losing by " + val);
         }
 
         public bool MustRest(float speed)
         {
             if (CurrentStamina < speed)
             {
-                Debug.Log("Current stamina does not support player's action, player must rest to regain stamina");
+                //Debug.Log("Current stamina does not support player's action, player must rest to regain stamina");
                 return true;
             }
             return false;

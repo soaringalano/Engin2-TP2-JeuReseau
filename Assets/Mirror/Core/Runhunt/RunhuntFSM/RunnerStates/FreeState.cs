@@ -23,8 +23,7 @@ namespace Mirror
 
         public override void OnExit()
         {
-            Debug.Log("Exit state: FreeState\n");
-
+            //Debug.Log("Exit state: FreeState\n");
         }
 
         public override void OnStart()
