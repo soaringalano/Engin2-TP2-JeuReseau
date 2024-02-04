@@ -7,7 +7,7 @@ namespace Mirror
     public class RunnerFSM : AbstractNetworkFSM<RunnerState>
     {
         [field: SerializeField] public GameObject RunnerUI { get; private set; }
-        private Transform StaminaBarTransform { get;  set; }
+        private Transform StaminaBarTransform { get; set; }
         public Camera Camera { get; set; }
         private Rigidbody RB { get; set; }
         public RunnerFloorTrigger FloorTrigger { get; private set; }
@@ -59,7 +59,7 @@ namespace Mirror
 
             RB = GetComponentInChildren<Rigidbody>();
             if (RB == null) Debug.LogError("Runner RigidBody not found in children!");
-            if(RB.gameObject.name != "RunnerModel") Debug.LogError("The GameObject RigidBody might not be the Runner's RB!");
+            if (RB.gameObject.name != "RunnerModel") Debug.LogError("The GameObject RigidBody might not be the Runner's RB!");
 
             FloorTrigger = GetComponentInChildren<RunnerFloorTrigger>();
             if (FloorTrigger == null) Debug.LogError("FloorTrigger not found in children!");
@@ -71,12 +71,9 @@ namespace Mirror
         {
             Debug.Log("Runner Start()");
 
-            if (GetComponentInParent<Transform>() != null)
-            {
-                Debug.Log("Scene not null.");
-                Scene = GetComponentInParent<Transform>();
-            }
-
+            Scene = GetScene().transform;
+            if (Scene == null) Debug.LogError("Scene not found!");
+     
             foreach (RunnerState state in m_possibleStates)
             {
                 state.OnStart(this);
@@ -85,6 +82,23 @@ namespace Mirror
             base.Start();
             m_currentState = m_possibleStates[0];
             m_currentState.OnEnter();
+        }
+
+        public GameObject GetScene()
+        {
+            // Source : https://discussions.unity.com/t/find-gameobjects-in-specific-scene-only/163901
+            GameObject[] gameObjects = gameObject.scene.GetRootGameObjects();
+            GameObject sceneGO = null;
+
+            foreach (GameObject _gameObject in gameObjects)
+            {
+                if (_gameObject.name != "Scene") continue;
+
+                sceneGO = _gameObject;
+                break;
+            }
+
+            return sceneGO;
         }
 
         protected override void Update()

@@ -14,23 +14,13 @@ namespace Mirror
             Debug.Log("CharacterSelectionState OnStart(): " + m_stateMachine.Scene.name);
             if (m_stateMachine.Scene != null)
             {
-                Debug.Log("Scene is null, that can mean the spawn is made in selection.");
-                m_sceneRef = m_stateMachine.Scene.GetComponentInChildren<SceneReferencer>();
+                Debug.Log("Scene is not null, that can mean the spawn is made in selection: " + m_stateMachine.Scene.name);
+                m_sceneRef = m_stateMachine.Scene.gameObject.GetComponentInChildren<SceneReferencer>();
+                if (m_sceneRef == null) Debug.LogError("SceneReferencer not found in children of scene!");
             }
             else if (m_stateMachine.Scene == null)
             {
-                Debug.Log("Scene is null, that can mean the spawn is made in scene.");
-                // Source : https://discussions.unity.com/t/find-gameobjects-in-specific-scene-only/163901
-                GameObject[] gameObjects = m_stateMachine.gameObject.scene.GetRootGameObjects();
-                GameObject sceneGO = null;
-
-                foreach (GameObject _gameObject in gameObjects)
-                {
-                    if (_gameObject.name != "Scene") continue;
-
-                    sceneGO = _gameObject;
-                    break;
-                }
+                GameObject sceneGO = m_stateMachine.GetScene();
 
                 SceneReferencer m_sceneRef = sceneGO.GetComponentInChildren<SceneReferencer>();
                 if (m_sceneRef == null) Debug.LogError("SceneReferencer not found in children of Scene!");
