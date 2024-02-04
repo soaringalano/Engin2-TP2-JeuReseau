@@ -44,10 +44,6 @@ namespace Runhunt.ObjectSpawner
             }
         }
 
-
-        /**
-         * replace by FSM
-         */
         protected override void GetNetworkedPlayerControls()
         {
             m_networkedRunnerMovement = GetComponent<RunnerFSM>();

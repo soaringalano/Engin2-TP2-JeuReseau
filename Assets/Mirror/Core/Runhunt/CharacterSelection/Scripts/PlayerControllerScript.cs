@@ -1,11 +1,10 @@
 using UnityEngine;
-using Mirror;
 
-namespace Mirror.Examples.CharacterSelection
+namespace Mirror
 {
     [RequireComponent(typeof(CapsuleCollider))]
     [RequireComponent(typeof(CharacterController))]
-    [RequireComponent(typeof(NetworkTransformUnreliable))]
+    //[RequireComponent(typeof(NetworkTransformUnreliable))]
     [RequireComponent(typeof(Rigidbody))]
     public class PlayerControllerScript : NetworkBehaviour
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Mirror.Examples.CharacterSelection
+namespace Mirror
 {
     // A fun little bob script for characters.
     // You could reference this and change values depending on characters state, idle, walk, run.

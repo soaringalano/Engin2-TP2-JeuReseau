@@ -6,7 +6,7 @@ namespace Mirror
 {
     public class RunnerFSM : AbstractNetworkFSM<RunnerState>
     {
-        [field: SerializeField] public Transform RunnerUI { get; private set; }
+        [field: SerializeField] public GameObject RunnerUI { get; private set; }
         private Transform StaminaBarTransform { get;  set; }
         public Camera Camera { get; set; }
         private Rigidbody RB { get; set; }
@@ -49,7 +49,7 @@ namespace Mirror
         protected override void Awake()
         {
             Debug.Log("Runner Awake()");
-            StaminaBarTransform = RunnerUI.GetChild(0);
+            StaminaBarTransform = RunnerUI.transform.GetChild(0);
             if (StaminaBarTransform == null) Debug.LogError("Stamina bar not found in RunnerUI, please drag and drop RunnerUI GM in RunnerFSM!");
             if (StaminaBarTransform.gameObject.name != "RunnerUI") Debug.LogError("The GameObject RigidBody might not be the Runner's RB!");
 

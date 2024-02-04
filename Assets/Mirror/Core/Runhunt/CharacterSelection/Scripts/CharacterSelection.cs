@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Mirror.Examples.CharacterSelection
+namespace Mirror
 {
     public class CharacterSelection : NetworkBehaviour
     {

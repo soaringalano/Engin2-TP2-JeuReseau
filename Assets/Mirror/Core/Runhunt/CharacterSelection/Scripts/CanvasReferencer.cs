@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static Mirror.Examples.CharacterSelection.NetworkManagerCharacterSelection;
+using static Mirror.NetworkManagerCharacterSelection;
 
-namespace Mirror.Examples.CharacterSelection
+namespace Mirror
 { 
     public class CanvasReferencer : MonoBehaviour
     {
@@ -75,8 +75,6 @@ namespace Mirror.Examples.CharacterSelection
                 };
                 NetworkManagerCharacterSelection.singleton.ReplaceCharacter(replaceCharacterMessage);
                 sceneReferencer.CloseCharacterSelection();
-
-                InitializeCharacterPrefab();
             }
             else
             {
@@ -84,19 +82,6 @@ namespace Mirror.Examples.CharacterSelection
                 SceneManager.LoadScene("MirrorCharacterSelection");
             }
         }
-
-        private void InitializeCharacterPrefab()
-        {
-
-            RunnerFSM runnerAssets = currentInstantiatedCharacter.GetComponent<RunnerFSM>();
-            if (runnerAssets == null) Debug.LogError("RunnerFSM not found");
-            Debug.Log("UI active: " + runnerAssets.RunnerUI.gameObject.activeSelf);
-            runnerAssets.RunnerUI.gameObject.SetActive(true);
-            Debug.Log("UI active: " + runnerAssets.RunnerUI.gameObject.activeSelf);
-            if (runnerAssets.RunnerUI.gameObject.activeSelf == false) Debug.LogError("RunnerUI did not activate!");
-            Debug.Log("ButtonGo end");
-        }
-
 
         public void ButtonNextCharacter()
         {

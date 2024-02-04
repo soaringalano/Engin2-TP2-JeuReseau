@@ -72,7 +72,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  <RunnerUI>k__BackingField: {fileID: 1209625793911022463}
+  <RunnerUI>k__BackingField: {fileID: 8300496892258388889}
 --- !u!114 &1186892595291560370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,6 +290,11 @@ PrefabInstance:
 --- !u!4 &1209625793911022463 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3154356851058671759, guid: 65211498b01e3524289d4bb3ac9a20d7, type: 3}
+  m_PrefabInstance: {fileID: 4255886906985505776}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8300496892258388889 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5205804265197594729, guid: 65211498b01e3524289d4bb3ac9a20d7, type: 3}
   m_PrefabInstance: {fileID: 4255886906985505776}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6620692070998589640

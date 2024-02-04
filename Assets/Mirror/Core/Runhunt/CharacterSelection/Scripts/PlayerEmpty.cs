@@ -1,7 +1,7 @@
 using UnityEngine;
 using Mirror;
 
-namespace Mirror.Examples.CharacterSelection
+namespace Mirror
 {
     public class PlayerEmpty : NetworkBehaviour
     {
