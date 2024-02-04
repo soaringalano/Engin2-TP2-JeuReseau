@@ -11,6 +11,7 @@ namespace Mirror
         public Camera Camera { get; set; }
         private Rigidbody RB { get; set; }
         public RunnerFloorTrigger FloorTrigger { get; private set; }
+        public Transform Scene { get; private set; }
 
         private float AccelerationValue { get; set; } = 25f;
         private float MaxForwardVelocity { get; set; } = 6f;
@@ -69,10 +70,19 @@ namespace Mirror
         protected override void Start()
         {
             Debug.Log("Runner Start()");
+
+            if (GetComponentInParent<Transform>() != null)
+            {
+                Debug.Log("Scene not null.");
+                Scene = GetComponentInParent<Transform>();
+            }
+
             foreach (RunnerState state in m_possibleStates)
             {
                 state.OnStart(this);
             }
+
+            base.Start();
             m_currentState = m_possibleStates[0];
             m_currentState.OnEnter();
         }

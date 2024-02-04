@@ -123,13 +123,13 @@ namespace Mirror
             {
                 Destroy(currentInstantiatedCharacter);
             }
-            //currentInstantiatedCharacter = Instantiate(characterData.m_playablePrefabs[currentlySelectedCharacter]);
+
             currentInstantiatedCharacter = Instantiate(characterData.m_playablePrefabs[currentlySelectedCharacter]);
             currentInstantiatedCharacter.transform.position = podiumPosition.position;
             currentInstantiatedCharacter.transform.rotation = podiumPosition.rotation;
             characterSelection = currentInstantiatedCharacter.GetComponent<CharacterSelection>();
-            currentInstantiatedCharacter.transform.SetParent(this.transform.root);
-            //currentInstantiatedCharacter.GetComponent<CharacterSelection>().ChangeCharacterSelectionState(true);
+            //currentInstantiatedCharacter.transform.SetParent(this.transform.root);
+            currentInstantiatedCharacter.transform.SetParent(transform);
 
             //SetupCharacterColours();
             SetupPlayerName();

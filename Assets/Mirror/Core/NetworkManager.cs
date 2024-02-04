@@ -1438,7 +1438,7 @@ namespace Mirror
                 // if no scene was loaded, then Ready/AddPlayer it here instead.
                 if (!NetworkClient.ready)
                 {
-                    Debug.Log("NetworkClient.Ready()");
+                    //Debug.Log("NetworkClient.Ready()");
                     NetworkClient.Ready();
                 }
 
