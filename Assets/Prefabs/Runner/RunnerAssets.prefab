@@ -77,6 +77,7 @@ MonoBehaviour:
   <JumpIntensity>k__BackingField: 400
   <MeshRotationLerpSpeed>k__BackingField: 4
   <m_floorTrigger>k__BackingField: {fileID: 2621183255143896938}
+  <MineTrigger>k__BackingField: {fileID: 8917792193239121724}
   <m_networkAnimator>k__BackingField: {fileID: 8403922479734184492}
   <StaminaBarSliderPrefab>k__BackingField: {fileID: 0}
   <MaxStamina>k__BackingField: 100
@@ -674,6 +675,7 @@ MonoBehaviour:
   m_teamSide: 0
   m_affectedSide: 01000000
   m_deleteTimer: 1.6
+  <IsMineExploded>k__BackingField: 0
 --- !u!114 &2621183255143896938 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3493818072732928859, guid: 6e362fd5e02eaf94b88994f131bf07a3, type: 3}

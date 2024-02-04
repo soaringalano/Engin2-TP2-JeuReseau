@@ -15,6 +15,8 @@ public class HunterMineExplotion : NetworkBehaviour
     protected List<ETeamSide> m_affectedSide = new List<ETeamSide>();
     [SerializeField]
     private float m_deleteTimer = 1.6f;
+    [field: SerializeField]
+    public bool IsMineExploded { get; private set; }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -28,6 +30,7 @@ public class HunterMineExplotion : NetworkBehaviour
         {
             Debug.Log(gameObject.name + " got hit by: " + otherHitBox);
             m_explotionSystem.SetActive(true);
+            IsMineExploded = true;
             StartCoroutine(DeleteMine());
         }
     }
@@ -36,6 +39,7 @@ public class HunterMineExplotion : NetworkBehaviour
     {
         yield return new WaitForSeconds(m_deleteTimer);
         Debug.Log("mine destroy");
+        IsMineExploded = false;
         Destroy(this.gameObject);
     }
 

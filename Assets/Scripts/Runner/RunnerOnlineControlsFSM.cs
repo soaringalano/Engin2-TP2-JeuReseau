@@ -20,6 +20,7 @@ public class RunnerControllerStateMachine : AbstractNetworkStateMachine<RunnerSt
     [field: SerializeField] private float JumpIntensity { get; set; } = 100.0f;
     [field: SerializeField] private float MeshRotationLerpSpeed { get; set; } = 4.0f;
     [field: SerializeField] public RunnerFloorTrigger m_floorTrigger { get; private set; }
+    [field: SerializeField] public HunterMineExplotion MineTrigger { get; private set; }
     [field: SerializeField] public NetworkAnimator m_networkAnimator { get; private set; }
     [field: SerializeField] public GameObject StaminaBarSliderPrefab { private get; set; }
     private Transform m_staminaBarTransform;
