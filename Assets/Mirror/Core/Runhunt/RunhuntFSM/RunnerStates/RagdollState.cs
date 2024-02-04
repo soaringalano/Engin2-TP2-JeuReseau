@@ -32,7 +32,7 @@ namespace Mirror
             //This must be run in Update absolutely
             if (m_stateMachine.FloorTrigger.IsOnFloor)
             {
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetKeyDown(KeyCode.R))
                 {
                     return true;
                 }

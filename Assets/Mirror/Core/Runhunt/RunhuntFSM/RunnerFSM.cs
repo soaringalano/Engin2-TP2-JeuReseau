@@ -6,24 +6,28 @@ namespace Mirror
 {
     public class RunnerFSM : AbstractNetworkFSM<RunnerState>
     {
+        [field: SerializeField] public Transform RunnerUI { get; private set; }
+        private Transform StaminaBarTransform { get;  set; }
         public Camera Camera { get; set; }
-        [field: SerializeField] public Rigidbody RB { get; private set; }
-        [field: SerializeField] public RunnerFloorTrigger FloorTrigger { get; private set; }
-        [field: SerializeField] public Transform StaminaBarTransform { get; private set; }
-        [field: SerializeField] private float AccelerationValue { get; set; }
-        [field: SerializeField] private float MaxForwardVelocity { get; set; }
-        [field: SerializeField] private float MaxSidewaysVelocity { get; set; }
-        [field: SerializeField] private float MaxBackwardVelocity { get; set; }
-        [field: SerializeField] private float JumpIntensity { get; set; } = 100.0f;
-        [field: SerializeField] private float MeshRotationLerpSpeed { get; set; } = 4.0f;
-        [field: SerializeField] public float MaxStamina { get; set; } = 100;
-        [field: SerializeField] public float CurrentStamina { get; private set; }
-        [field: SerializeField] public float StaminaRegainSpeed { get; private set; } = 10f;
-        [field: SerializeField] public float StaminaLoseSpeedInRun { get; private set; } = 10f;
-        [field: SerializeField] public float StaminaLoseSpeedInWalk { get; private set; } = 0f;
-        [field: SerializeField] public float StaminaLoseSpeedInJump { get; private set; } = 10f;
-        [field: SerializeField] public float StaminaLoseSpeedInDoubleJump { get; private set; } = 5f;
-        [field: SerializeField] public bool m_isJumping { get; private set; } = false;
+        private Rigidbody RB { get; set; }
+        public RunnerFloorTrigger FloorTrigger { get; private set; }
+
+        private float AccelerationValue { get; set; } = 25f;
+        private float MaxForwardVelocity { get; set; } = 6f;
+        private float MaxSidewaysVelocity { get; set; } = 4f;
+        private float MaxBackwardVelocity { get; set; } = 3f;
+        private float JumpIntensity { get; set; } = 400.0f;
+        private float MeshRotationLerpSpeed { get; set; } = 4.0f;
+
+        private float MaxStamina { get; set; } = 100;
+        private float CurrentStamina { get; set; }
+        private float StaminaRegainSpeed { get; set; } = 10f;
+        public float StaminaLoseSpeedInRun { get; private set; } = 10f;
+        private float StaminaLoseSpeedInWalk { get; set; } = 0f;
+        public float StaminaLoseSpeedInJump { get; private set; } = 10f;
+        public float StaminaLoseSpeedInDoubleJump { get; private set; } = 5f;
+
+        public bool m_isJumping { get; private set; } = false;
         public Animator Animator { get; private set; }
         private Vector2 CurrentDirectionalInputs { get; set; }
         private float AnimatorRunningValue { get; set; } = 0.5f; // Has to stay between 0.5 and 1
@@ -33,6 +37,7 @@ namespace Mirror
         protected override void CreatePossibleStates()
         {
             m_possibleStates = new List<RunnerState>();
+            m_possibleStates.Add(new CharacterSelectionState());
             m_possibleStates.Add(new FreeState());
             m_possibleStates.Add(new JumpState());
             m_possibleStates.Add(new DoubleJumpState());
@@ -43,12 +48,27 @@ namespace Mirror
 
         protected override void Awake()
         {
+            Debug.Log("Runner Awake()");
+            StaminaBarTransform = RunnerUI.GetChild(0);
+            if (StaminaBarTransform == null) Debug.LogError("Stamina bar not found in RunnerUI, please drag and drop RunnerUI GM in RunnerFSM!");
+            if (StaminaBarTransform.gameObject.name != "RunnerUI") Debug.LogError("The GameObject RigidBody might not be the Runner's RB!");
+
             Animator = GetComponent<Animator>();
+            if (Animator == null) Debug.LogError("Runner animator not found in self!");
+
+            RB = GetComponentInChildren<Rigidbody>();
+            if (RB == null) Debug.LogError("Runner RigidBody not found in children!");
+            if(RB.gameObject.name != "RunnerModel") Debug.LogError("The GameObject RigidBody might not be the Runner's RB!");
+
+            FloorTrigger = GetComponentInChildren<RunnerFloorTrigger>();
+            if (FloorTrigger == null) Debug.LogError("FloorTrigger not found in children!");
+
             base.Awake();
         }
 
         protected override void Start()
         {
+            Debug.Log("Runner Start()");
             foreach (RunnerState state in m_possibleStates)
             {
                 state.OnStart(this);

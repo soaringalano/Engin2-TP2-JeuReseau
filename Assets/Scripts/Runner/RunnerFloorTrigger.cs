@@ -4,10 +4,15 @@ namespace Runhunt.Runner
 {
     public class RunnerFloorTrigger : MonoBehaviour
     {
-        [SerializeField]
         private Animator m_animator;
         [field: SerializeField]
         public bool IsOnFloor { get; private set; }
+
+        private void Awake()
+        {
+            m_animator = GetComponentInParent<Animator>();
+            if (m_animator == null) Debug.LogError("Animator not found in parent RunnerAssets!");
+        }
 
         private void OnTriggerStay(Collider other)
         {

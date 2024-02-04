@@ -88,11 +88,15 @@ namespace Mirror.Examples.CharacterSelection
         private void InitializeCharacterPrefab()
         {
 
-            RunnerFSM runnerAssets = currentInstantiatedCharacter.GetComponentInChildren<RunnerFSM>();
-            //runnerAssets.Initialize();
-
+            RunnerFSM runnerAssets = currentInstantiatedCharacter.GetComponent<RunnerFSM>();
+            if (runnerAssets == null) Debug.LogError("RunnerFSM not found");
+            Debug.Log("UI active: " + runnerAssets.RunnerUI.gameObject.activeSelf);
+            runnerAssets.RunnerUI.gameObject.SetActive(true);
+            Debug.Log("UI active: " + runnerAssets.RunnerUI.gameObject.activeSelf);
+            if (runnerAssets.RunnerUI.gameObject.activeSelf == false) Debug.LogError("RunnerUI did not activate!");
             Debug.Log("ButtonGo end");
         }
+
 
         public void ButtonNextCharacter()
         {
