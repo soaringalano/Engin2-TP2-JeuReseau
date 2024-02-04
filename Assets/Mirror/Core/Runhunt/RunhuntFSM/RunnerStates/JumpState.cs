@@ -41,7 +41,7 @@ namespace Mirror
                 return false;
             }
             // if is on the ground
-            if (m_stateMachine.m_floorTrigger.IsOnFloor)
+            if (m_stateMachine.FloorTrigger.IsOnFloor)
             {
                 // if the timer is 0 and space bar pressed, then enter
                 if (m_currentStateTimer == 0 && Input.GetKeyDown(KeyCode.Space))
@@ -60,7 +60,7 @@ namespace Mirror
                 return true;
             }
             // if is not on the ground
-            if (!m_stateMachine.m_floorTrigger.IsOnFloor)
+            if (!m_stateMachine.FloorTrigger.IsOnFloor)
             {
                 // if is jumping and space bar pressed, then enter DoubleJumpState
                 if (m_stateMachine.m_isJumping && Input.GetKeyDown(KeyCode.Space))

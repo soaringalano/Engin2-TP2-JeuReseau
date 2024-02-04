@@ -8,16 +8,16 @@ namespace Mirror
     {
         public Camera Camera { get; set; }
         [field: SerializeField] public Rigidbody RB { get; private set; }
+        [field: SerializeField] public RunnerFloorTrigger FloorTrigger { get; private set; }
+        [field: SerializeField] public Transform StaminaBarTransform { get; private set; }
         [field: SerializeField] private float AccelerationValue { get; set; }
         [field: SerializeField] private float MaxForwardVelocity { get; set; }
         [field: SerializeField] private float MaxSidewaysVelocity { get; set; }
         [field: SerializeField] private float MaxBackwardVelocity { get; set; }
         [field: SerializeField] private float JumpIntensity { get; set; } = 100.0f;
         [field: SerializeField] private float MeshRotationLerpSpeed { get; set; } = 4.0f;
-        [field: SerializeField] public RunnerFloorTrigger m_floorTrigger { get; private set; }
         [field: SerializeField] public float MaxStamina { get; set; } = 100;
         [field: SerializeField] public float CurrentStamina { get; private set; }
-        [field: SerializeField] public Transform StaminaBarTransform { get; private set; }
         [field: SerializeField] public float StaminaRegainSpeed { get; private set; } = 10f;
         [field: SerializeField] public float StaminaLoseSpeedInRun { get; private set; } = 10f;
         [field: SerializeField] public float StaminaLoseSpeedInWalk { get; private set; } = 0f;

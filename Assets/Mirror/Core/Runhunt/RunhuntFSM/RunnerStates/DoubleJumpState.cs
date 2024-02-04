@@ -13,7 +13,7 @@ namespace Mirror
             }
             // if current in JumpState and not on the ground and is_jumping
             if (currentState.GetType() == typeof(JumpState) &&
-                m_stateMachine.m_floorTrigger.IsOnFloor == false &&
+                m_stateMachine.FloorTrigger.IsOnFloor == false &&
                 m_stateMachine.m_isJumping == true)
             {
                 // if space bar pressed, then enter
@@ -34,7 +34,7 @@ namespace Mirror
                 return true;
             }
             // if is now on floor
-            if (m_stateMachine.m_floorTrigger.IsOnFloor)
+            if (m_stateMachine.FloorTrigger.IsOnFloor)
             {
                 return true;
             }

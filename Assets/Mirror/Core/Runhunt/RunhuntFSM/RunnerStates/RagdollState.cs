@@ -30,7 +30,7 @@ namespace Mirror
         public override bool CanEnter(IState currentState)
         {
             //This must be run in Update absolutely
-            if (m_stateMachine.m_floorTrigger.IsOnFloor)
+            if (m_stateMachine.FloorTrigger.IsOnFloor)
             {
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
@@ -42,7 +42,7 @@ namespace Mirror
 
         public override bool CanExit()
         {
-            return m_stateMachine.m_floorTrigger.IsOnFloor;
+            return m_stateMachine.FloorTrigger.IsOnFloor;
         }
     }
 }

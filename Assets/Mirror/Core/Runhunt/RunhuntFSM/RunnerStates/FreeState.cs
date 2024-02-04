@@ -7,7 +7,7 @@ namespace Mirror
 
         public override bool CanEnter(IState currentState)
         {
-            return m_stateMachine.m_floorTrigger.IsOnFloor;
+            return m_stateMachine.FloorTrigger.IsOnFloor;
         }
 
         public override bool CanExit()
