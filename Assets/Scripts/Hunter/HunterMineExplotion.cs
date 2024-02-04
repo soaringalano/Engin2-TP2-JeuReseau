@@ -18,6 +18,7 @@ public class HunterMineExplotion : NetworkBehaviour
     [field: SerializeField]
     public bool IsMineExploded { get; private set; }
 
+
     private void OnTriggerEnter(Collider other)
     {
         var otherHitBox = other.GetComponent<HunterMineExplotion>();
@@ -29,14 +30,14 @@ public class HunterMineExplotion : NetworkBehaviour
         if (CanInteract(otherHitBox))
         {
             Debug.Log(gameObject.name + " got hit by: " + otherHitBox);
-            m_explotionSystem.SetActive(true);
-            IsMineExploded = true;
+            m_explotionSystem.SetActive(true);        
             StartCoroutine(DeleteMine());
         }
     }
 
     IEnumerator DeleteMine()
     {
+        IsMineExploded = true;
         yield return new WaitForSeconds(m_deleteTimer);
         Debug.Log("mine destroy");
         IsMineExploded = false;

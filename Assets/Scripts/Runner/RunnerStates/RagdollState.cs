@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RagdollState : RunnerState
@@ -8,8 +6,8 @@ public class RagdollState : RunnerState
     {
         Debug.Log("Enter state: RagdollState\n");
 
-       // m_stateMachine.m_animator.enabled = false;
-       // m_stateMachine.m_networkAnimator.enabled = false;
+        // m_stateMachine.m_animator.enabled = false;
+        // m_stateMachine.m_networkAnimator.enabled = false;
     }
 
     public override void OnExit()
@@ -30,18 +28,20 @@ public class RagdollState : RunnerState
     public override bool CanEnter(IState currentState)
     {
         //This must be run in Update absolutely
-        if (m_stateMachine.m_floorTrigger.IsOnFloor)
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                return true;
-            }
-        }
-        return false;
+        return m_stateMachine.MineTrigger.IsMineExploded;
+        //if (m_stateMachine.MineTrigger.IsMineExploded)
+        //{
+        //    return true;
+        //}
+        //return false;
     }
 
     public override bool CanExit()
     {
-        return m_stateMachine.m_floorTrigger.IsOnFloor;
+        if (m_stateMachine.MineTrigger.IsMineExploded ==  false) 
+        {
+            return true;
+        }
+        return false;
     }
 }
