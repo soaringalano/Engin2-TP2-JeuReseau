@@ -36,7 +36,7 @@ namespace Runhunt.ObjectSpawner
             m_hunterTransform = transform.GetComponentInChildren<Rigidbody>().transform;
             if (m_hunterTransform == null || m_hunterTransform.name != "LookAt")
             {
-                Debug.LogError("Hunter GameObject Not found! Or is not named LookAt!");
+                Debug.LogError("Hunter GameObject Not found! Or is not named LookAt!: " + m_hunterTransform.name);
                 return;
             }
         }
@@ -63,29 +63,30 @@ namespace Runhunt.ObjectSpawner
             // Source : https://discussions.unity.com/t/find-gameobjects-in-specific-scene-only/163901
             Scene scene = gameObject.scene;
             GameObject[] gameObjects = scene.GetRootGameObjects();
-            Transform environmentTransform = null;
+            Transform sceneTransform = null;
 
             foreach (GameObject _gameObject in gameObjects)
             {
-                if (_gameObject.name != "Environment") continue;
+                if (_gameObject.name != "Scene") continue;
 
-                environmentTransform = _gameObject.transform;
+                sceneTransform = _gameObject.transform;
                 break;
             }
 
-            if (environmentTransform == null)
+            if (sceneTransform == null)
             {
                 Debug.LogError("First scene child GameObject not found!");
                 return;
             }
 
-            if (environmentTransform.name != "Environment")
+            Transform environement = sceneTransform.GetChild(0);
+            if (environement.name != "Environment")
             {
-                Debug.LogError("Please place Environment GameObject as first child in the scene! First scene child GameObject name: " + environmentTransform.name);
+                Debug.LogError("Please place Environment GameObject as first child in the scene! First scene child GameObject name: " + sceneTransform.name);
                 return;
             }
 
-            Transform runnerPlatform = environmentTransform.GetChild(0);
+            Transform runnerPlatform = environement.GetChild(0);
             if (runnerPlatform.name != "RunnerPlatform")
             {
                 Debug.LogError("Please place RunnerPlatform GameObject as first child in Environment! Cureent GO is: " + runnerPlatform.name);

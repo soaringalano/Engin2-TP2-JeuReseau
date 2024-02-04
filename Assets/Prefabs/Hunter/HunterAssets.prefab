@@ -168,8 +168,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2360140988656718671}
   - {fileID: 4955299921843428613}
+  - {fileID: 2360140988656718671}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6901326816560653269
@@ -229,7 +229,6 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  <RunnerControllerFSM>k__BackingField: {fileID: 0}
   floatingInfo: {fileID: 3874457048859685493}
   characterNumber: 0
   textMeshName: {fileID: 3874457048260912712}

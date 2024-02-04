@@ -21,18 +21,9 @@ namespace Mirror
             else if (m_stateMachine.Scene == null)
             {
                 GameObject sceneGO = m_stateMachine.GetScene();
+                m_sceneRef = sceneGO.GetComponentInChildren<SceneReferencer>();
 
-                SceneReferencer m_sceneRef = sceneGO.GetComponentInChildren<SceneReferencer>();
                 if (m_sceneRef == null) Debug.LogError("SceneReferencer not found in children of Scene!");
-
-                //Debug.Log("CharacterSelectionState OnStart()");
-                //GameObject scene = m_stateMachine.gameObject.scene.GetRootGameObjects()[0];
-                //if (scene.name != "Scene") Debug.LogError("First child of scene is not Scene GO! Please put Scene as first child of the scene!");
-
-                //SceneReferencer m_sceneRef = scene.GetComponentInChildren<SceneReferencer>();
-                //if (m_sceneRef == null) Debug.LogError("SceneReferencer not found in children of Scene!");
-
-                if (m_sceneRef == null) Debug.LogError("m_sceneRef null");
                 if (m_sceneRef.characterSelectionObject == null) Debug.LogError("characterSelectionObject null");
             }
 
