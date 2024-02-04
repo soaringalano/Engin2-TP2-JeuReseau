@@ -1,11 +1,10 @@
-﻿
-namespace Mirror
+﻿namespace Mirror
 {
     public abstract class RunnerState : IState
     {
-        protected RunnerOnlineControlsFSM m_stateMachine;
+        protected RunnerFSM m_stateMachine;
 
-        public void OnStart(RunnerOnlineControlsFSM stateMachine)
+        public void OnStart(RunnerFSM stateMachine)
         {
             m_stateMachine = stateMachine;
         }
@@ -39,6 +38,5 @@ namespace Mirror
         {
             throw new System.NotImplementedException();
         }
-
     }
 }

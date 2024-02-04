@@ -4,7 +4,6 @@ namespace Mirror
 {
     public class JumpState : RunnerState
     {
-
         private const float STATE_EXIT_TIMER = 0.5f;
         private float m_currentStateTimer = 0.0f;
 
@@ -80,7 +79,5 @@ namespace Mirror
             // other case, cannot exit
             return false;
         }
-
-
     }
 }

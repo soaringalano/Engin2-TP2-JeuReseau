@@ -4,7 +4,6 @@ namespace Mirror
 {
     public class DoubleJumpState : RunnerState
     {
-
         public override bool CanEnter(IState currentState)
         {
             // if current stamina does not support this action, then don't allow to enter
@@ -67,6 +66,5 @@ namespace Mirror
         {
             m_stateMachine.FixedLoseStamina(m_stateMachine.StaminaLoseSpeedInDoubleJump);
         }
-
     }
 }

@@ -4,9 +4,6 @@ namespace Mirror.Examples.CharacterSelection
 {
     public class CharacterSelection : NetworkBehaviour
     {
-        [field:SerializeField]
-        private RunnerOnlineControlsFSM RunnerControllerFSM {  get; set; }
-
         public Transform floatingInfo;
 
         [SyncVar]
@@ -50,11 +47,6 @@ namespace Mirror.Examples.CharacterSelection
         public void AssignName()
         {
             textMeshName.text = playerName;
-        }
-
-        public void ChangeCharacterSelectionState(bool isInSelectionState)
-        {
-            RunnerControllerFSM.m_isInCharacterSelectionMenu = isInSelectionState;
         }
 
         // To change server controlled sync vars, clients end Commands, and the hooks will fire

@@ -4,7 +4,6 @@ namespace Mirror
 {
     public class RunState : RunnerState
     {
-
         public override bool CanEnter(IState currentState)
         {
             if (m_stateMachine.MustRest(m_stateMachine.StaminaLoseSpeedInRun))
@@ -40,7 +39,6 @@ namespace Mirror
         public override void OnExit()
         {
             Debug.Log("Exit state: RunState\n");
-
         }
 
         public override void OnStart()
@@ -58,8 +56,6 @@ namespace Mirror
             m_stateMachine.FixedLoseStamina(m_stateMachine.StaminaLoseSpeedInRun);
             m_stateMachine.UpdateMovementsToAnimator();
             m_stateMachine.ApplyMovementsOnFloorFU();
-
         }
-
     }
 }

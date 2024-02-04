@@ -8,7 +8,8 @@ namespace Mirror
         {
             Debug.Log("Enter state: RagdollState\n");
 
-            m_stateMachine.Jump();
+            m_stateMachine.Animator.enabled = false;
+            // m_stateMachine.m_networkAnimator.enabled = false;
         }
 
         public override void OnExit()

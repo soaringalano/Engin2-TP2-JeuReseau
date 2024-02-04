@@ -88,8 +88,8 @@ namespace Mirror.Examples.CharacterSelection
         private void InitializeCharacterPrefab()
         {
 
-            RunnerOnlineControlsFSM runnerAssets = currentInstantiatedCharacter.GetComponentInChildren<RunnerOnlineControlsFSM>();
-            runnerAssets.Initialize();
+            RunnerFSM runnerAssets = currentInstantiatedCharacter.GetComponentInChildren<RunnerFSM>();
+            //runnerAssets.Initialize();
 
             Debug.Log("ButtonGo end");
         }

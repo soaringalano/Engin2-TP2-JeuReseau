@@ -4,9 +4,8 @@ using Runhunt.Runner;
 
 namespace Mirror
 {
-    public class RunnerOnlineControlsFSM : AbstractNetworkStateMachine<RunnerState>
+    public class RunnerFSM : AbstractNetworkFSM<RunnerState>
     {
-
         public Camera Camera { get; set; }
         [field: SerializeField] public Rigidbody RB { get; private set; }
         [field: SerializeField] private float AccelerationValue { get; set; }
@@ -16,27 +15,20 @@ namespace Mirror
         [field: SerializeField] private float JumpIntensity { get; set; } = 100.0f;
         [field: SerializeField] private float MeshRotationLerpSpeed { get; set; } = 4.0f;
         [field: SerializeField] public RunnerFloorTrigger m_floorTrigger { get; private set; }
-        [field: SerializeField] public GameObject StaminaBarSliderPrefab { private get; set; }
-        private Transform m_staminaBarTransform;
         [field: SerializeField] public float MaxStamina { get; set; } = 100;
         [field: SerializeField] public float CurrentStamina { get; private set; }
-        [field: SerializeField] public float StaminaRegainSpeed = 10f;
-        [field: SerializeField] public float StaminaLoseSpeedInRun = 10f;
-        [field: SerializeField] public float StaminaLoseSpeedInWalk = 0f;
-        [field: SerializeField] public float StaminaLoseSpeedInJump = 10f;
-        [field: SerializeField] public float StaminaLoseSpeedInDoubleJump = 5f;
-        private Vector3 m_currentStaminaBarScale = Vector3.one;
-
-
+        [field: SerializeField] public Transform StaminaBarTransform { get; private set; }
+        [field: SerializeField] public float StaminaRegainSpeed { get; private set; } = 10f;
+        [field: SerializeField] public float StaminaLoseSpeedInRun { get; private set; } = 10f;
+        [field: SerializeField] public float StaminaLoseSpeedInWalk { get; private set; } = 0f;
+        [field: SerializeField] public float StaminaLoseSpeedInJump { get; private set; } = 10f;
+        [field: SerializeField] public float StaminaLoseSpeedInDoubleJump { get; private set; } = 5f;
+        [field: SerializeField] public bool m_isJumping { get; private set; } = false;
+        public Animator Animator { get; private set; }
         private Vector2 CurrentDirectionalInputs { get; set; }
         private float AnimatorRunningValue { get; set; } = 0.5f; // Has to stay between 0.5 and 1
         private float AccelerationRunningValue { get; set; } = 10.0f;
 
-        [SerializeField] private GameObject m_character;
-        [SerializeField] public Animator m_animator;
-
-        [SerializeField] public bool m_isJumping { get; private set; } = false;
-        public bool m_isInCharacterSelectionMenu { get;  set; } = true;
 
         protected override void CreatePossibleStates()
         {
@@ -45,31 +37,23 @@ namespace Mirror
             m_possibleStates.Add(new JumpState());
             m_possibleStates.Add(new DoubleJumpState());
             m_possibleStates.Add(new RunState());
-            //m_possibleStates.Add(new CharacterSelectionState());
+            m_possibleStates.Add(new RagdollState());
+            m_possibleStates.Add(new GettingUpState());
         }
 
-        //protected override void Awake()
-        //{
-        //    base.Awake();
-        //}
-
-        public override void Initialize()
+        protected override void Awake()
         {
-            GameObject runnerPrefab = GetComponentInChildren<Rigidbody>().gameObject;
+            Animator = GetComponent<Animator>();
+            base.Awake();
+        }
 
-            if (runnerPrefab == null) Debug.LogError("RunnerPrefab with RigidBody not found!");
-
-            RunnerUI runnerUI = runnerPrefab.GetComponentInChildren<RunnerUI>();
-
-            if (runnerUI == null) Debug.LogError("runnerUI not found!");
-
-            runnerUI.gameObject.SetActive(true);
-            m_staminaBarTransform = runnerUI.transform.GetChild(0);
-
-            if (m_staminaBarTransform.name != "StaminaBar_Slider") Debug.LogError("Make sure to put StaminaBar_Slider as the first child of RunnerUI!");
-
-            if (m_staminaBarTransform == null) Debug.LogError("Stamina Bar Slider not found!");
-
+        protected override void Start()
+        {
+            StaminaBarTransform = GameObject.Find("StaminaBar_Slider").transform;
+            if (StaminaBarTransform != null)
+            {
+                Debug.Log("Stamina Bar Slider found!");
+            }
             foreach (RunnerState state in m_possibleStates)
             {
                 state.OnStart(this);
@@ -97,10 +81,7 @@ namespace Mirror
 
             SetDirectionalInputs();
             RotatePlayerMesh();
-            //UpdateMovementsToAnimator();
-            //ApplyMovementsOnFloorFU();
             base.FixedUpdate();
-            //Set2dRelativeVelocity();
         }
 
         public float GetCurrentMaxSpeed()
@@ -161,21 +142,21 @@ namespace Mirror
         public void UpdateMovementsToAnimator()
         {
             // Set the animator values
-            m_animator.SetFloat("MoveX", CurrentDirectionalInputs.x * AnimatorRunningValue);
-            m_animator.SetFloat("MoveY", CurrentDirectionalInputs.y * AnimatorRunningValue);
+            Animator.SetFloat("MoveX", CurrentDirectionalInputs.x * AnimatorRunningValue);
+            Animator.SetFloat("MoveY", CurrentDirectionalInputs.y * AnimatorRunningValue);
         }
 
         public void Jump()
         {
             RB.AddForce(Vector3.up * JumpIntensity, ForceMode.Acceleration);
-            m_animator.SetTrigger("Jump");
+            Animator.SetTrigger("Jump");
             m_isJumping = true;
 
         }
         public void DoubleJump()
         {
             RB.AddForce(Vector3.up * JumpIntensity, ForceMode.Acceleration);
-            m_animator.SetTrigger("DoubleJump");
+            Animator.SetTrigger("DoubleJump");
             m_isJumping = false;
         }
 
@@ -220,7 +201,7 @@ namespace Mirror
             // if current state is FreeState and velocity is > 0, then cannot regain stamina
             if (CurrentStamina == MaxStamina || RB.velocity.magnitude > 0)
             {
-                //Debug.Log("Stamina is full or player is in action, cannot regain stamina");
+                Debug.Log("Stamina is full or player is in action, cannot regain stamina");
                 return;
             }
             // value to regain
@@ -233,7 +214,7 @@ namespace Mirror
             }
             float rate = val / MaxStamina;
             Vector3 diff = new Vector3(rate, 0);
-            m_staminaBarTransform.localScale += new Vector3(rate, 0);
+            StaminaBarTransform.localScale += new Vector3(rate, 0);
             Debug.Log("Stamina is regaining by " + val);
         }
 
@@ -252,9 +233,8 @@ namespace Mirror
             }
             float rate = val / MaxStamina;
             Vector3 diff = new Vector3(rate, 0);
-            m_staminaBarTransform.localScale -= diff;
-            //m_staminaBarTransform.localPosition -= diff;
-            //Debug.Log("Stamina is losing by " + val);
+            StaminaBarTransform.localScale -= diff;
+            Debug.Log("Stamina is losing by " + val);
         }
 
         public bool MustRest(float speed)
@@ -266,13 +246,5 @@ namespace Mirror
             }
             return false;
         }
-
-        /*    public void UpdateStaminaBarStatus()
-            {
-                float rate = CurrentStamina / MaxStamina;
-                m_currentStaminaBarScale.x = rate;
-                m_staminaBarTransform = m_currentStaminaBarScale;
-            }*/
-
     }
 }

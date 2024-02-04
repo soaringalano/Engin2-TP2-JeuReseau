@@ -9,7 +9,7 @@ namespace Runhunt.ObjectSpawner
         [field: SerializeField]
         private GameObject RunnerCameraAssetsPrefab { get; set; }
 
-        private RunnerOnlineControlsFSM m_networkedRunnerMovement;
+        private RunnerFSM m_networkedRunnerMovement;
         private GameObject m_runnerGameObject;
         private GameObject m_runnerCamAssetsGameObject;
         private CinemachineVirtualCamera m_virtualCamera;
@@ -50,7 +50,7 @@ namespace Runhunt.ObjectSpawner
          */
         protected override void GetNetworkedPlayerControls()
         {
-            m_networkedRunnerMovement = GetComponent<RunnerOnlineControlsFSM>();
+            m_networkedRunnerMovement = GetComponent<RunnerFSM>();
             if (m_networkedRunnerMovement == null)
             {
                 Debug.LogError("NetworkedRunnerMovement Not found!");
