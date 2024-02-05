@@ -1,10 +1,13 @@
 using Mirror;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HunterMineExplotion : NetworkBehaviour
+public class HunterMineExplosion : NetworkBehaviour
 {
+    public static event Action<HunterMineExplosion> OnExplosionEvent;
+
     [SerializeField]
     private GameObject m_explotionSystem;
     [SerializeField]
@@ -15,13 +18,10 @@ public class HunterMineExplotion : NetworkBehaviour
     protected List<ETeamSide> m_affectedSide = new List<ETeamSide>();
     [SerializeField]
     private float m_deleteTimer = 1.6f;
-    [field: SerializeField]
-    public bool IsMineExploded { get; private set; }
-
 
     private void OnTriggerEnter(Collider other)
     {
-        var otherHitBox = other.GetComponent<HunterMineExplotion>();
+        var otherHitBox = other.GetComponent<HunterMineExplosion>();
         if (otherHitBox == null)
         {
             return;
@@ -29,6 +29,10 @@ public class HunterMineExplotion : NetworkBehaviour
 
         if (CanInteract(otherHitBox))
         {
+            if (OnExplosionEvent != null)
+            {
+                OnExplosionEvent(this);
+            }
             Debug.Log(gameObject.name + " got hit by: " + otherHitBox);
             m_explotionSystem.SetActive(true);        
             StartCoroutine(DeleteMine());
@@ -37,14 +41,12 @@ public class HunterMineExplotion : NetworkBehaviour
 
     IEnumerator DeleteMine()
     {
-        IsMineExploded = true;
         yield return new WaitForSeconds(m_deleteTimer);
         Debug.Log("mine destroy");
-        IsMineExploded = false;
         Destroy(this.gameObject);
     }
 
-    protected bool CanInteract(HunterMineExplotion other)
+    protected bool CanInteract(HunterMineExplosion other)
     {
         return (m_canBeAffected &&
             m_affectedSide.Contains(other.m_teamSide));

@@ -1,6 +1,7 @@
 ﻿using Mirror;
 using RPGCharacterAnims.Lookups;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 //using UnityEditorInternal;
@@ -10,6 +11,7 @@ using static UnityEditorInternal.VersionControl.ListControl;
 
 public class RunnerControllerStateMachine : AbstractNetworkStateMachine<RunnerState>
 {
+    public static Action<HunterMineExplosion> OnExplosionEvent;
 
     public Camera Camera { get; set; }
     [field: SerializeField] public Rigidbody RB { get; private set; }
@@ -20,7 +22,7 @@ public class RunnerControllerStateMachine : AbstractNetworkStateMachine<RunnerSt
     [field: SerializeField] private float JumpIntensity { get; set; } = 100.0f;
     [field: SerializeField] private float MeshRotationLerpSpeed { get; set; } = 4.0f;
     [field: SerializeField] public RunnerFloorTrigger m_floorTrigger { get; private set; }
-    [field: SerializeField] public HunterMineExplotion MineTrigger { get; private set; }
+    [field: SerializeField] public HunterMineExplosion MineTrigger { get; private set; }
     [field: SerializeField] public NetworkAnimator m_networkAnimator { get; private set; }
     [field: SerializeField] public GameObject StaminaBarSliderPrefab { private get; set; }
     private Transform m_staminaBarTransform;
@@ -33,14 +35,13 @@ public class RunnerControllerStateMachine : AbstractNetworkStateMachine<RunnerSt
     [field: SerializeField] public float StaminaLoseSpeedInDoubleJump = 5f;
     private Vector3 m_currentStaminaBarScale = Vector3.one;
 
-
     private Vector2 CurrentDirectionalInputs { get; set; }
     private float AnimatorRunningValue { get; set; } = 0.5f; // Has to stay between 0.5 and 1
     private float AccelerationRunningValue { get; set; } = 10.0f;
 
     [SerializeField] private GameObject m_character;
     [SerializeField] public Animator m_animator;
-
+    [SerializeField] public bool test =false;
     [SerializeField] public bool m_isJumping { get; private set; } = false;
 
     protected override void CreatePossibleStates()
@@ -61,8 +62,9 @@ public class RunnerControllerStateMachine : AbstractNetworkStateMachine<RunnerSt
 
     protected override void Start()
     {
+        HunterMineExplosion.OnExplosionEvent += StartRagdoll;
         m_staminaBarTransform = GameObject.Find("StaminaBar_Slider").transform;
-        if(m_staminaBarTransform != null)
+        if (m_staminaBarTransform != null)
         {
             Debug.Log("Stamina Bar Slider found!");
         }
@@ -74,6 +76,22 @@ public class RunnerControllerStateMachine : AbstractNetworkStateMachine<RunnerSt
         m_currentState.OnEnter();
     }
 
+    private void StartRagdoll(HunterMineExplosion explosion)
+    {
+        Debug.Log("ExplosionSystem here");
+
+        if (explosion != null)
+        {
+           test = true;
+        }
+        StartCoroutine(ResetBool());
+    }
+    IEnumerator ResetBool()
+    {
+        yield return new WaitForSeconds(1.0f);
+        test = false;
+        Debug.Log("bool reset");
+    }
     protected override void Update()
     {
         if (!isLocalPlayer)
@@ -152,7 +170,7 @@ public class RunnerControllerStateMachine : AbstractNetworkStateMachine<RunnerSt
     {
         AnimatorRunningValue = 0.5f;
         AccelerationRunningValue = 1.0f;
-    }    
+    }
 
 
     public void UpdateMovementsToAnimator()
@@ -170,7 +188,7 @@ public class RunnerControllerStateMachine : AbstractNetworkStateMachine<RunnerSt
 
     }
     public void DoubleJump()
-    { 
+    {
         RB.AddForce(Vector3.up * JumpIntensity, ForceMode.Acceleration);
         m_animator.SetTrigger("DoubleJump");
         m_isJumping = false;
@@ -215,7 +233,7 @@ public class RunnerControllerStateMachine : AbstractNetworkStateMachine<RunnerSt
     public void FixedRegainStamina()
     {
         // if current state is FreeState and velocity is > 0, then cannot regain stamina
-        if(CurrentStamina == MaxStamina || RB.velocity.magnitude > 0)
+        if (CurrentStamina == MaxStamina || RB.velocity.magnitude > 0)
         {
             Debug.Log("Stamina is full or player is in action, cannot regain stamina");
             return;
@@ -224,7 +242,7 @@ public class RunnerControllerStateMachine : AbstractNetworkStateMachine<RunnerSt
         float val = StaminaRegainSpeed * Time.fixedDeltaTime;
         CurrentStamina += val;
         //clamp to max value
-        if(CurrentStamina > MaxStamina)
+        if (CurrentStamina > MaxStamina)
         {
             CurrentStamina = MaxStamina;
         }
@@ -256,7 +274,7 @@ public class RunnerControllerStateMachine : AbstractNetworkStateMachine<RunnerSt
 
     public bool MustRest(float speed)
     {
-        if(CurrentStamina < speed)
+        if (CurrentStamina < speed)
         {
             Debug.Log("Current stamina does not support player's action, player must rest to regain stamina");
             return true;
@@ -264,11 +282,11 @@ public class RunnerControllerStateMachine : AbstractNetworkStateMachine<RunnerSt
         return false;
     }
 
-/*    public void UpdateStaminaBarStatus()
-    {
-        float rate = CurrentStamina / MaxStamina;
-        m_currentStaminaBarScale.x = rate;
-        m_staminaBarTransform = m_currentStaminaBarScale;
-    }*/
+    /*    public void UpdateStaminaBarStatus()
+        {
+            float rate = CurrentStamina / MaxStamina;
+            m_currentStaminaBarScale.x = rate;
+            m_staminaBarTransform = m_currentStaminaBarScale;
+        }*/
 
 }

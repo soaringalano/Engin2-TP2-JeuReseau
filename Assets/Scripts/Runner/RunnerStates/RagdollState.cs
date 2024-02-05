@@ -28,17 +28,16 @@ public class RagdollState : RunnerState
     public override bool CanEnter(IState currentState)
     {
         //This must be run in Update absolutely
-        return m_stateMachine.MineTrigger.IsMineExploded;
-        //if (m_stateMachine.MineTrigger.IsMineExploded)
-        //{
-        //    return true;
-        //}
-        //return false;
+        if (m_stateMachine.test == true)
+        {
+            return true;
+        }
+        return false;
     }
 
     public override bool CanExit()
     {
-        if (m_stateMachine.MineTrigger.IsMineExploded ==  false) 
+        if (m_stateMachine.test == false)
         {
             return true;
         }
