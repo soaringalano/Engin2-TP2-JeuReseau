@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
+using Runhunt.Runner;
 
 namespace Mirror
 {
     public class JumpState : RunnerState
     {
+
         private const float STATE_EXIT_TIMER = 0.5f;
         private float m_currentStateTimer = 0.0f;
 
@@ -54,7 +56,7 @@ namespace Mirror
 
         public override bool CanExit()
         {
-            // if not enough stamina for this action, then go to FreeState to rest
+            // if not enough stamina for this action, then go to RunnerFreeState to rest
             if (m_stateMachine.MustRest(m_stateMachine.StaminaLoseSpeedInJump))
             {
                 return true;
@@ -79,5 +81,7 @@ namespace Mirror
             // other case, cannot exit
             return false;
         }
+
+
     }
 }

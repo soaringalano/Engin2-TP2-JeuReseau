@@ -2,28 +2,28 @@
 
 namespace Mirror
 {
-    public class RunnerFreeState : RunnerState
+    public class PlateformRotationState : HunterState
     {
         public override bool CanEnter(IState currentState)
         {
-            return m_stateMachine.FloorTrigger.IsOnFloor;
+            return Input.GetMouseButton(1) && m_stateMachine.GetCurrentDirectionalInput().magnitude == 0;
         }
 
         public override bool CanExit()
         {
-            return true;
+            return Input.GetMouseButtonUp(1);
         }
 
         public override void OnEnter()
         {
             Debug.Log("Enter state: FreeState\n");
-            m_stateMachine.SetWalkingInput();
+            m_stateMachine.EnterRotation();
         }
 
         public override void OnExit()
         {
             Debug.Log("Exit state: FreeState\n");
-
+            m_stateMachine.ExitRotation();
         }
 
         public override void OnStart()
@@ -38,9 +38,7 @@ namespace Mirror
 
         public override void OnFixedUpdate()
         {
-            m_stateMachine.UpdateMovementsToAnimator();
-            m_stateMachine.ApplyMovementsOnFloorFU();
-            m_stateMachine.FixedRegainStamina();
+            m_stateMachine.FixedRotatePlatform();
         }
     }
 }

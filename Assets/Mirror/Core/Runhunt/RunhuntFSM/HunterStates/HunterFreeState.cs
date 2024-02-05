@@ -1,12 +1,14 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Mirror
 {
-    public class RunnerFreeState : RunnerState
+    public class HunterFreeState : HunterState
     {
         public override bool CanEnter(IState currentState)
         {
-            return m_stateMachine.FloorTrigger.IsOnFloor;
+            return m_stateMachine.GetCurrentDirectionalInput().magnitude > 0;
         }
 
         public override bool CanExit()
@@ -16,13 +18,12 @@ namespace Mirror
 
         public override void OnEnter()
         {
-            Debug.Log("Enter state: FreeState\n");
-            m_stateMachine.SetWalkingInput();
+            Debug.Log("Enter state: HunterFreeState\n");
         }
 
         public override void OnExit()
         {
-            Debug.Log("Exit state: FreeState\n");
+            Debug.Log("Exit state: HunterFreeState\n");
 
         }
 
@@ -33,14 +34,14 @@ namespace Mirror
 
         public override void OnUpdate()
         {
+            m_stateMachine.EnableMouseTracking();
+            m_stateMachine.SetStopLookAt(true);
             base.OnUpdate();
         }
 
         public override void OnFixedUpdate()
         {
-            m_stateMachine.UpdateMovementsToAnimator();
-            m_stateMachine.ApplyMovementsOnFloorFU();
-            m_stateMachine.FixedRegainStamina();
+            m_stateMachine.FixedMoveByDirectionalInput();
         }
     }
 }
