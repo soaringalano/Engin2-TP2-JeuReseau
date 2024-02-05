@@ -4,51 +4,54 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameObjectHelper
+namespace Runhunt.Utils
 {
-
-    private static GameObjectHelper s_instance;
-
-    public static GameObjectHelper GetInstance()
+    public class GameObjectHelper
     {
 
-        if (s_instance == null)
-            s_instance = new GameObjectHelper();
-        return s_instance;
+        private static GameObjectHelper s_instance;
 
-    }
-
-    public List<GameObject> GetGameObjectsByLayerIdAndObjectName(int layer, string name)
-    {
-
-        List<GameObject> gameObjects = new List<GameObject>();
-        List<GameObject> allGO = FindAllGameObjectsInScene();
-
-        foreach (GameObject gameObject in allGO)
+        public static GameObjectHelper GetInstance()
         {
-            if (gameObject.layer == layer && gameObject.name == name)
+
+            if (s_instance == null)
+                s_instance = new GameObjectHelper();
+            return s_instance;
+
+        }
+
+        public List<GameObject> GetGameObjectsByLayerIdAndObjectName(int layer, string name)
+        {
+
+            List<GameObject> gameObjects = new List<GameObject>();
+            List<GameObject> allGO = FindAllGameObjectsInScene();
+
+            foreach (GameObject gameObject in allGO)
             {
-                gameObjects.Add(gameObject);
+                if (gameObject.layer == layer && gameObject.name == name)
+                {
+                    gameObjects.Add(gameObject);
+                }
             }
+
+            return gameObjects.Count == 0 ? null : gameObjects;
         }
 
-        return gameObjects.Count == 0 ? null : gameObjects;
-    }
-
-    public static List<GameObject> FindAllGameObjectsInScene()
-    {
-        List<GameObject> objectsInScene = new List<GameObject>();
-        List<GameObject> rootObjects = new List<GameObject>();
-        Scene scene = SceneManager.GetActiveScene();
-        scene.GetRootGameObjects(rootObjects);
-
-        // iterate root objects and do something
-        for (int i = 0; i < rootObjects.Count; ++i)
+        public static List<GameObject> FindAllGameObjectsInScene()
         {
-            GameObject gameObject = rootObjects[i];
-            objectsInScene.Add(gameObject);
-        }
-        return objectsInScene;
-    }
+            List<GameObject> objectsInScene = new List<GameObject>();
+            List<GameObject> rootObjects = new List<GameObject>();
+            Scene scene = SceneManager.GetActiveScene();
+            scene.GetRootGameObjects(rootObjects);
 
+            // iterate root objects and do something
+            for (int i = 0; i < rootObjects.Count; ++i)
+            {
+                GameObject gameObject = rootObjects[i];
+                objectsInScene.Add(gameObject);
+            }
+            return objectsInScene;
+        }
+
+    }
 }

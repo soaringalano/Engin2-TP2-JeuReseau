@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3916430210428963472}
   - component: {fileID: 4098825298725155084}
   - component: {fileID: 9178785270930563940}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Virtual Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CollideAgainst:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 128
   m_IgnoreTag: 
   m_TransparentLayers:
     serializedVersion: 2
@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 212686944955538003}
   - component: {fileID: 4901096468637313677}
   - component: {fileID: 8722581219677895319}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -263,7 +263,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3867317467364615044}
-  m_Layer: 9
+  m_Layer: 13
   m_Name: RunnerCameraPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -299,7 +299,7 @@ GameObject:
   - component: {fileID: 6896300638223519239}
   - component: {fileID: 6407668833251293076}
   - component: {fileID: 4548715120070968664}
-  m_Layer: 9
+  m_Layer: 13
   m_Name: Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}

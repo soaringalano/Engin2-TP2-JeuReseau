@@ -18,8 +18,8 @@ TagManager:
   - RunnerCollider
   - HunterCollider
   - HunterCameraCollider
-  - 
-  - 
+  - RunnerCameraCollider
+  - SceneObjectCollider
   - 
   - 
   - 

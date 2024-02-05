@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class HunterOnlineControls : NetworkBehaviour
 {
-
     public Camera Camera { get; set; }
     public CinemachineVirtualCamera VirtualCamera { get; set; }
 
@@ -21,6 +20,9 @@ public class HunterOnlineControls : NetworkBehaviour
     private float m_cinemachinePOVMaxSpeedVertical;
 
     [field: SerializeField] public Transform m_objectToLookAt { get; set; }
+    private Transform m_hunterSelectionPose { get; set; }
+    private Transform m_lookAt { get; set; }
+    private SceneReferencer m_sceneRef { get; set; }
 
     [Header("LookAt controls Settings")]
     [SerializeField] private float m_lookAtMinTorque = 100.0f;
@@ -92,8 +94,41 @@ public class HunterOnlineControls : NetworkBehaviour
             m_framingTransposer = VirtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
         }
         else Debug.LogError("CinemachinePOV not found!");
+        
+        m_lookAt = transform.GetChild(0);
+        if (m_lookAt == null) Debug.LogError("Lookat not found! Please check if it still first child in HunterPrefabs.");
+        if (m_lookAt.gameObject.name != "LookAt") Debug.LogError("The GameObject is not LookAt!: " + m_lookAt.gameObject.name);
+
+        m_hunterSelectionPose = transform.GetChild(1);
+        if (m_hunterSelectionPose == null) Debug.LogError("HunterSelectionPose not found!");
+        if (m_hunterSelectionPose.gameObject.name != "HunterSelectionPose") Debug.LogError("The GameObject is not HunterSelectionPose!: "+ m_hunterSelectionPose.gameObject.name);
+
+        // TODO:When the HunterFSM will be available, make both CharacterSelectionState and HunterFSM
+        //      call the same methode to find the SceneReferencer.
+        GameObject sceneGO = GetScene();
+        m_sceneRef = sceneGO.GetComponentInChildren<SceneReferencer>();
+        if (m_sceneRef == null) Debug.LogError("SceneReferencer not found in children of Scene!");
 
         m_isInitialized = true;
+    }
+
+    // TODO: When the HunterFSM will be available, make both RunnerFSM and HunterFSM
+    //       call the same GetScene() in their shared parent in protected scope.
+    public GameObject GetScene()
+    {
+        // Source : https://discussions.unity.com/t/find-gameobjects-in-specific-scene-only/163901
+        GameObject[] gameObjects = gameObject.scene.GetRootGameObjects();
+        GameObject sceneGO = null;
+
+        foreach (GameObject _gameObject in gameObjects)
+        {
+            if (_gameObject.name != "Scene") continue;
+
+            sceneGO = _gameObject;
+            break;
+        }
+
+        return sceneGO;
     }
 
     private void Update()
@@ -106,6 +141,19 @@ public class HunterOnlineControls : NetworkBehaviour
         if (!isLocalPlayer)
         {
             return;
+        }
+
+        //TODO: In the HunterFSM this logic has to be moved to its own CharacterSelectionState
+        //      similar to the one in the runner CharacterSelectionState
+        if (m_sceneRef.characterSelectionObject.activeSelf)
+        {
+            m_hunterSelectionPose.gameObject.SetActive(!m_sceneRef.characterSelectionObject.activeSelf);
+            m_lookAt.gameObject.SetActive(m_sceneRef.characterSelectionObject.activeSelf);
+        }
+        else
+        {
+            m_hunterSelectionPose.gameObject.SetActive(m_sceneRef.characterSelectionObject.activeSelf);
+            m_lookAt.gameObject.SetActive(!m_sceneRef.characterSelectionObject.activeSelf);
         }
 
         if (Input.GetKeyUp(KeyCode.LeftShift) || (Input.GetKeyUp(KeyCode.LeftShift) && GetIsAnyDirectionPressed()))

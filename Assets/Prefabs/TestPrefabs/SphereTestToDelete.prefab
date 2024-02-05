@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7964888878219533217}
   - component: {fileID: 1792577310566420686}
   - component: {fileID: 3304728973098399348}
-  m_Layer: 10
+  m_Layer: 14
   m_Name: SphereTestToDelete
   m_TagString: Untagged
   m_Icon: {fileID: 0}
