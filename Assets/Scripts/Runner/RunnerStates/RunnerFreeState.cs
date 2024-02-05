@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FreeState : RunnerState
+public class RunnerFreeState : RunnerState
 {
 
     public override bool CanEnter(IState currentState)

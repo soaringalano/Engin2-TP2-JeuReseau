@@ -56,7 +56,7 @@ public class JumpState : RunnerState
 
     public override bool CanExit()
     {
-        // if not enough stamina for this action, then go to FreeState to rest
+        // if not enough stamina for this action, then go to RunnerFreeState to rest
         if (m_stateMachine.MustRest(m_stateMachine.StaminaLoseSpeedInJump))
         {
             return true;

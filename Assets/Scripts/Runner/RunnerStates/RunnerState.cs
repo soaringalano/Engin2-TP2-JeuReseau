@@ -1,8 +1,8 @@
 ﻿public abstract class RunnerState : IState
 {
-    protected RunnerControllerStateMachine m_stateMachine;
+    protected RunnerOnlineControlsFSM m_stateMachine;
 
-    public void OnStart(RunnerControllerStateMachine stateMachine)
+    public void OnStart(RunnerOnlineControlsFSM stateMachine)
     {
         m_stateMachine = stateMachine;
     }

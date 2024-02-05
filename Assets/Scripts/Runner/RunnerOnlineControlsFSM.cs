@@ -7,7 +7,7 @@ using UnityEngine;
 using static UnityEditorInternal.VersionControl.ListControl;
 //using UnityEngine.Rendering.Universal.Internal;
 
-public class RunnerControllerStateMachine : AbstractNetworkStateMachine<RunnerState>
+public class RunnerOnlineControlsFSM : AbstractNetworkStateMachine<RunnerState>
 {
 
     public Camera Camera { get; set; }
@@ -43,7 +43,7 @@ public class RunnerControllerStateMachine : AbstractNetworkStateMachine<RunnerSt
     protected override void CreatePossibleStates()
     {
         m_possibleStates = new List<RunnerState>();
-        m_possibleStates.Add(new FreeState());
+        m_possibleStates.Add(new RunnerFreeState());
         m_possibleStates.Add(new JumpState());
         m_possibleStates.Add(new DoubleJumpState());
         m_possibleStates.Add(new RunState());
@@ -209,7 +209,7 @@ public class RunnerControllerStateMachine : AbstractNetworkStateMachine<RunnerSt
 
     public void FixedRegainStamina()
     {
-        // if current state is FreeState and velocity is > 0, then cannot regain stamina
+        // if current state is RunnerFreeState and velocity is > 0, then cannot regain stamina
         if(CurrentStamina == MaxStamina || RB.velocity.magnitude > 0)
         {
             Debug.Log("Stamina is full or player is in action, cannot regain stamina");
