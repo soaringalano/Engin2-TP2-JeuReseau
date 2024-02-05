@@ -36,6 +36,7 @@ namespace Mirror
                 if (GUILayout.Button("Client Ready"))
                 {
                     // client ready
+                    Debug.Log("NetworkClient.Ready()");
                     NetworkClient.Ready();
                     if (NetworkClient.localPlayer == null)
                         NetworkClient.AddPlayer();
