@@ -48,13 +48,13 @@ namespace Mirror
         public override void OnEnter()
         {
             Debug.Log("CharacterSelectionState OnEnter()");
-            m_stateMachine.RunnerUI.SetActive(false);
+            m_stateMachine.UI.SetActive(false);
         }
 
         public override void OnExit()
         {
             Debug.Log("CharacterSelectionState OnExit()");
-            m_stateMachine.RunnerUI.SetActive(true);
+            m_stateMachine.UI.SetActive(true);
         }
 
         public override void OnUpdate()

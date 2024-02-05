@@ -2997,7 +2997,7 @@ GameObject:
   - component: {fileID: 8437065188876336282}
   - component: {fileID: 1755360094905643713}
   m_Layer: 10
-  m_Name: RunnerModel
+  m_Name: RunnerPrefab
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

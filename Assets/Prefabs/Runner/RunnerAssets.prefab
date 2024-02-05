@@ -72,7 +72,8 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  <RunnerUI>k__BackingField: {fileID: 8300496892258388889}
+  <UI>k__BackingField: {fileID: 8300496892258388889}
+  <StaminaBarTransform>k__BackingField: {fileID: 1771230947923581047}
 --- !u!114 &1186892595291560370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,14 +227,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6749037258961928793}
     m_Modifications:
-    - target: {fileID: 931536693334817086, guid: 65211498b01e3524289d4bb3ac9a20d7, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 931536693334817086, guid: 65211498b01e3524289d4bb3ac9a20d7, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3154356851058671759, guid: 65211498b01e3524289d4bb3ac9a20d7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -278,10 +271,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
-    - target: {fileID: 5205804265197594729, guid: 65211498b01e3524289d4bb3ac9a20d7, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -290,6 +279,11 @@ PrefabInstance:
 --- !u!4 &1209625793911022463 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3154356851058671759, guid: 65211498b01e3524289d4bb3ac9a20d7, type: 3}
+  m_PrefabInstance: {fileID: 4255886906985505776}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &1771230947923581047 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2565749684332313479, guid: 65211498b01e3524289d4bb3ac9a20d7, type: 3}
   m_PrefabInstance: {fileID: 4255886906985505776}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &8300496892258388889 stripped
