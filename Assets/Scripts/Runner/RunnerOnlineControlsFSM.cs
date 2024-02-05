@@ -88,7 +88,7 @@ public class RunnerControllerStateMachine : AbstractNetworkStateMachine<RunnerSt
     }
     IEnumerator ResetBool()
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(2f);
         test = false;
         Debug.Log("bool reset");
     }

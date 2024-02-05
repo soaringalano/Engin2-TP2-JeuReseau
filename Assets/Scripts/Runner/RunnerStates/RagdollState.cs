@@ -6,13 +6,16 @@ public class RagdollState : RunnerState
     {
         Debug.Log("Enter state: RagdollState\n");
 
-        // m_stateMachine.m_animator.enabled = false;
-        // m_stateMachine.m_networkAnimator.enabled = false;
+        m_stateMachine.m_animator.enabled = false;
+        m_stateMachine.m_networkAnimator.enabled = false;
     }
 
     public override void OnExit()
     {
         Debug.Log("Exit state: RagdollState\n");
+
+        m_stateMachine.m_animator.enabled = true;
+        m_stateMachine.m_networkAnimator.enabled = true;
     }
 
     public override void OnFixedUpdate()
