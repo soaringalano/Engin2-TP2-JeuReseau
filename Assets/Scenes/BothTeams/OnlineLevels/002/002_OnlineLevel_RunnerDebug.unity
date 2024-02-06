@@ -131,10 +131,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 160892147670895848, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: spawnPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 56868658535408414, guid: fd3ea437a4f46a4469fee17b743e134e, type: 3}
     - target: {fileID: 1418524531298870426, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
       propertyPath: sceneId
       value: 1112759149
       objectReference: {fileID: 0}
+    - target: {fileID: 1821071080231342526, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: m_playablePrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 56868658535408414, guid: fd3ea437a4f46a4469fee17b743e134e, type: 3}
     - target: {fileID: 2454374125170674874, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
       propertyPath: sceneId
       value: 1600751279

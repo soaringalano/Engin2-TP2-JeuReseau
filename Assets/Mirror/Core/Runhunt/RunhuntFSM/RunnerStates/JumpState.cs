@@ -9,7 +9,7 @@ namespace Mirror
 
         public override void OnEnter()
         {
-            Debug.Log("Enter state: JumpState\n");
+            //Debug.Log("Enter state: JumpState\n");
 
             m_currentStateTimer = STATE_EXIT_TIMER;
             m_stateMachine.Jump();
@@ -17,7 +17,7 @@ namespace Mirror
 
         public override void OnExit()
         {
-            Debug.Log("Exit state: JumpState\n");
+            //Debug.Log("Exit state: JumpState\n");
             m_currentStateTimer = 0;
             m_stateMachine.Land();
         }

@@ -7,7 +7,7 @@ namespace Mirror
     public class RunnerFSM : AbstractNetworkFSM<RunnerState>
     {
         [field: SerializeField] public GameObject RunnerUI { get; private set; }
-        private Transform StaminaBarTransform { get; set; }
+        private Transform StaminaBarSlider { get; set; }
         public Camera Camera { get; set; }
         private Rigidbody RB { get; set; }
         public RunnerFloorTrigger FloorTrigger { get; private set; }
@@ -21,7 +21,7 @@ namespace Mirror
         private float MeshRotationLerpSpeed { get; set; } = 4.0f;
 
         private float MaxStamina { get; set; } = 100;
-        private float CurrentStamina { get; set; }
+        private float CurrentStamina { get; set; } = 100;
         private float StaminaRegainSpeed { get; set; } = 10f;
         public float StaminaLoseSpeedInRun { get; private set; } = 10f;
         private float StaminaLoseSpeedInWalk { get; set; } = 0f;
@@ -49,17 +49,21 @@ namespace Mirror
 
         protected override void Awake()
         {
-            Debug.Log("Runner Awake()");
-            StaminaBarTransform = RunnerUI.transform.GetChild(0);
-            if (StaminaBarTransform == null) Debug.LogError("Stamina bar not found in RunnerUI, please drag and drop RunnerUI GM in RunnerFSM!");
-            if (StaminaBarTransform.gameObject.name != "RunnerUI") Debug.LogError("The GameObject RigidBody might not be the Runner's RB!");
+            //Debug.Log("Runner Awake()");
+            //Transform staminaBarTransform = RunnerUI.transform.GetChild(1);
+            //if (staminaBarTransform == null) Debug.LogError("Stamina Bar not found!");
+            //if (staminaBarTransform.gameObject.name != "StaminaBar") Debug.LogError("The GameObject is not StaminaBar! Name is: " + staminaBarTransform.gameObject.name);
+
+            //StaminaBarSlider = staminaBarTransform.transform.GetChild(1);
+            //if (StaminaBarSlider == null) Debug.LogError("Stamina Bar Slider not found!");
+            //if (StaminaBarSlider.gameObject.name != "StaminaBar_Slider") Debug.LogError("The GameObject is not StaminaBar! Name is: " + StaminaBarSlider.gameObject.name);
 
             Animator = GetComponent<Animator>();
             if (Animator == null) Debug.LogError("Runner animator not found in self!");
 
             RB = GetComponentInChildren<Rigidbody>();
             if (RB == null) Debug.LogError("Runner RigidBody not found in children!");
-            if (RB.gameObject.name != "RunnerModel") Debug.LogError("The GameObject RigidBody might not be the Runner's RB!");
+            if (RB.gameObject.name != "RunnerPrefab") Debug.LogError("The GameObject RigidBody might not be the Runner's RB! Name is: " + RB.gameObject.name);
 
             FloorTrigger = GetComponentInChildren<RunnerFloorTrigger>();
             if (FloorTrigger == null) Debug.LogError("FloorTrigger not found in children!");
@@ -70,6 +74,23 @@ namespace Mirror
         protected override void Start()
         {
             Debug.Log("Runner Start()");
+            Transform staminaBarTransform = RunnerUI.transform.GetChild(1);
+            if (staminaBarTransform == null) Debug.LogError("Stamina Bar not found!");
+            if (staminaBarTransform.gameObject.name != "StaminaBar") Debug.LogError("The GameObject is not StaminaBar! Name is: " + staminaBarTransform.gameObject.name);
+
+            StaminaBarSlider = staminaBarTransform.transform.GetChild(1);
+            if (StaminaBarSlider == null) Debug.LogError("Stamina Bar Slider not found!");
+            if (StaminaBarSlider.gameObject.name != "StaminaBar_Slider") Debug.LogError("The GameObject is not StaminaBar! Name is: " + StaminaBarSlider.gameObject.name);
+
+            Animator = GetComponent<Animator>();
+            if (Animator == null) Debug.LogError("Runner animator not found in self!");
+
+            RB = GetComponentInChildren<Rigidbody>();
+            if (RB == null) Debug.LogError("Runner RigidBody not found in children!");
+            if (RB.gameObject.name != "RunnerPrefab") Debug.LogError("The GameObject RigidBody might not be the Runner's RB! Name is: " + RB.gameObject.name);
+
+            FloorTrigger = GetComponentInChildren<RunnerFloorTrigger>();
+            if (FloorTrigger == null) Debug.LogError("FloorTrigger not found in children!");
 
             Scene = GetScene().transform;
             if (Scene == null) Debug.LogError("Scene not found!");
@@ -253,7 +274,7 @@ namespace Mirror
             }
             float rate = val / MaxStamina;
             Vector3 diff = new Vector3(rate, 0);
-            StaminaBarTransform.localScale += new Vector3(rate, 0);
+            StaminaBarSlider.localScale += new Vector3(rate, 0);
             //Debug.Log("Stamina is regaining by " + val);
         }
 
@@ -272,7 +293,7 @@ namespace Mirror
             }
             float rate = val / MaxStamina;
             Vector3 diff = new Vector3(rate, 0);
-            StaminaBarTransform.localScale -= diff;
+            StaminaBarSlider.localScale -= diff;
             //Debug.Log("Stamina is losing by " + val);
         }
 
