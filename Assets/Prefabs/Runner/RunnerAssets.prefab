@@ -265,6 +265,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3474198580050644058, guid: 6ca0453f0d6700e4e831ee043610d072, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6160904787946521573, guid: 6ca0453f0d6700e4e831ee043610d072, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6160904787946521573, guid: 6ca0453f0d6700e4e831ee043610d072, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6160904787946521573, guid: 6ca0453f0d6700e4e831ee043610d072, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6160904787946521573, guid: 6ca0453f0d6700e4e831ee043610d072, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7144594517361583605, guid: 6ca0453f0d6700e4e831ee043610d072, type: 3}
       propertyPath: m_Name
       value: RunnerPrefab
