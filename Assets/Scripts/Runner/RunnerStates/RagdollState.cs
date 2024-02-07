@@ -5,7 +5,6 @@ public class RagdollState : RunnerState
     public override void OnEnter()
     {
         Debug.Log("Enter state: RagdollState\n");
-
         m_stateMachine.m_animator.enabled = false;
         m_stateMachine.m_networkAnimator.enabled = false;
     }
@@ -13,7 +12,6 @@ public class RagdollState : RunnerState
     public override void OnExit()
     {
         Debug.Log("Exit state: RagdollState\n");
-
         m_stateMachine.m_animator.enabled = true;
         m_stateMachine.m_networkAnimator.enabled = true;
     }
@@ -30,8 +28,7 @@ public class RagdollState : RunnerState
 
     public override bool CanEnter(IState currentState)
     {
-        //This must be run in Update absolutely
-        if (m_stateMachine.test == true)
+        if (m_stateMachine.test == true && m_stateMachine.m_floorTrigger.ISDetectMine == true)
         {
             return true;
         }

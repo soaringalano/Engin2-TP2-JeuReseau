@@ -11,32 +11,16 @@ public class HunterMineExplosion : NetworkBehaviour
     [SerializeField]
     private GameObject m_explotionSystem;
     [SerializeField]
-    protected bool m_canBeAffected;
-    [SerializeField]
-    protected ETeamSide m_teamSide = ETeamSide.Count;
-    [SerializeField]
-    protected List<ETeamSide> m_affectedSide = new List<ETeamSide>();
-    [SerializeField]
     private float m_deleteTimer = 1.6f;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter()
     {
-        var otherHitBox = other.GetComponent<HunterMineExplosion>();
-        if (otherHitBox == null)
+        if (OnExplosionEvent != null)
         {
-            return;
+            OnExplosionEvent(this);
         }
-
-        if (CanInteract(otherHitBox))
-        {
-            if (OnExplosionEvent != null)
-            {
-                OnExplosionEvent(this);
-            }
-            Debug.Log(gameObject.name + " got hit by: " + otherHitBox);
-            m_explotionSystem.SetActive(true);        
-            StartCoroutine(DeleteMine());
-        }
+        m_explotionSystem.SetActive(true);
+        StartCoroutine(DeleteMine());
     }
 
     IEnumerator DeleteMine()
@@ -45,17 +29,4 @@ public class HunterMineExplosion : NetworkBehaviour
         Debug.Log("mine destroy");
         Destroy(this.gameObject);
     }
-
-    protected bool CanInteract(HunterMineExplosion other)
-    {
-        return (m_canBeAffected &&
-            m_affectedSide.Contains(other.m_teamSide));
-    }
-}
-
-public enum ETeamSide
-{
-    FloorTriger,
-    Trap,
-    Count
 }

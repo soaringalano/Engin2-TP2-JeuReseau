@@ -77,7 +77,7 @@ MonoBehaviour:
   <JumpIntensity>k__BackingField: 400
   <MeshRotationLerpSpeed>k__BackingField: 4
   <m_floorTrigger>k__BackingField: {fileID: 2621183255143896938}
-  <MineTrigger>k__BackingField: {fileID: 8917792193239121724}
+  <MineTrigger>k__BackingField: {fileID: 0}
   <m_networkAnimator>k__BackingField: {fileID: 8403922479734184492}
   <StaminaBarSliderPrefab>k__BackingField: {fileID: 0}
   <MaxStamina>k__BackingField: 100
@@ -89,6 +89,7 @@ MonoBehaviour:
   StaminaLoseSpeedInDoubleJump: 5
   m_character: {fileID: 428478306684100937}
   m_animator: {fileID: 5512822503541690273}
+  test: 0
 --- !u!114 &8403922479734184492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,6 +236,10 @@ PrefabInstance:
     - target: {fileID: 1671847897752458670, guid: 6e362fd5e02eaf94b88994f131bf07a3, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -0.000011444092
+      objectReference: {fileID: 0}
+    - target: {fileID: 1986357944558114695, guid: 6e362fd5e02eaf94b88994f131bf07a3, type: 3}
+      propertyPath: m_Constraints
+      value: 112
       objectReference: {fileID: 0}
     - target: {fileID: 2106698067485248755, guid: 6e362fd5e02eaf94b88994f131bf07a3, type: 3}
       propertyPath: m_Layer
@@ -615,9 +620,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6385439707444764736, guid: 6e362fd5e02eaf94b88994f131bf07a3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3210684243847250342}
-    - targetCorrespondingSourceObject: {fileID: 1093322200259154693, guid: 6e362fd5e02eaf94b88994f131bf07a3, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8917792193239121724}
     - targetCorrespondingSourceObject: {fileID: 499721256861604179, guid: 6e362fd5e02eaf94b88994f131bf07a3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 856720269619067236}
@@ -650,38 +652,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 0}
---- !u!1 &1959237298812161844 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1093322200259154693, guid: 6e362fd5e02eaf94b88994f131bf07a3, type: 3}
-  m_PrefabInstance: {fileID: 1449272112376962097}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8917792193239121724
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1959237298812161844}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab259562d2afdc849878e29bc270ca21, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
-  m_explotionSystem: {fileID: 0}
-  m_canBeAffected: 0
-  m_teamSide: 0
-  m_affectedSide: 01000000
-  m_deleteTimer: 1.6
-  <IsMineExploded>k__BackingField: 0
 --- !u!114 &2621183255143896938 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3493818072732928859, guid: 6e362fd5e02eaf94b88994f131bf07a3, type: 3}
   m_PrefabInstance: {fileID: 1449272112376962097}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1959237298812161844}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0175e24c3815d174fa4e5d89bcf0577a, type: 3}
