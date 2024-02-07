@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using Runhunt.Runner;
+using System.Collections;
 
 namespace Mirror
 {
     public class RunnerFSM : AbstractNetworkFSM<RunnerState>
     {
         [field: SerializeField] public GameObject RunnerUI { get; private set; }
+        [field: SerializeField] public NetworkAnimator NetworkAnimator { get; private set; }
         private Transform StaminaBarSlider { get; set; }
         public Camera Camera { get; set; }
         private Rigidbody RB { get; set; }
@@ -34,6 +36,7 @@ namespace Mirror
         private float AnimatorRunningValue { get; set; } = 0.5f; // Has to stay between 0.5 and 1
         private float AccelerationRunningValue { get; set; } = 10.0f;
 
+        public bool m_isInRagdoll = false;
 
         protected override void CreatePossibleStates()
         {
@@ -73,6 +76,7 @@ namespace Mirror
 
         protected override void Start()
         {
+
             Debug.Log("Runner Start()");
             Transform staminaBarTransform = RunnerUI.transform.GetChild(1);
             if (staminaBarTransform == null) Debug.LogError("Stamina Bar not found!");
@@ -99,10 +103,28 @@ namespace Mirror
             {
                 state.OnStart(this);
             }
-
+            HunterMineExplosion.OnExplosionEvent += StartRagdoll;
             base.Start();
             m_currentState = m_possibleStates[0];
             m_currentState.OnEnter();
+        }
+
+        private void StartRagdoll(HunterMineExplosion explosion)
+        {
+            Debug.Log("ExplosionSystem here");
+
+            if (explosion != null)
+            {
+                m_isInRagdoll = true;
+                StartCoroutine(ResetBool());
+            }          
+        }
+
+        IEnumerator ResetBool()
+        {
+            yield return new WaitForSeconds(1.0f);
+            m_isInRagdoll = false;
+            Debug.Log("bool reset");
         }
 
         public GameObject GetScene()
