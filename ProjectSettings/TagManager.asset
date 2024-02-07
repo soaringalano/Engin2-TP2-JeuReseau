@@ -11,16 +11,16 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - RunnerWall
   - RunnerFloor
   - HunterFloor
   - HunterWall
   - RunnerCollider
   - HunterCollider
   - HunterCameraCollider
-  - 
-  - 
-  - 
+  - RunnerCameraCollider
+  - SceneObjectCollider
+  - HunterTrap
   - 
   - 
   - 

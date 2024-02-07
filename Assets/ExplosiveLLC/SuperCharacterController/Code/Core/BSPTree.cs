@@ -240,10 +240,10 @@ public class BSPTree:MonoBehaviour
 	/// THE SOFTWARE.
 	///
 	/// </summary>
-	/// <param name="point">The point to test.</param>
-	/// <param name="vertex1">The first vertex to test.</param>
-	/// <param name="vertex2">The second vertex to test.</param>
-	/// <param name="vertex3">The third vertex to test.</param>
+	/// <param name="point">The point to m_isInRagdoll.</param>
+	/// <param name="vertex1">The first vertex to m_isInRagdoll.</param>
+	/// <param name="vertex2">The second vertex to m_isInRagdoll.</param>
+	/// <param name="vertex3">The third vertex to m_isInRagdoll.</param>
 	/// <param name="result">When the method completes, contains the closest point between the two objects.</param>
 	public static void ClosestPointOnTriangleToPoint(ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3, ref Vector3 point, out Vector3 result)
 	{

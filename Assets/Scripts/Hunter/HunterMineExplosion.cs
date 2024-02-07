@@ -1,10 +1,9 @@
 using Mirror;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class HunterMineExplosion : NetworkBehaviour
+public class HunterMineExplosion : MonoBehaviour
 {
     public static event Action<HunterMineExplosion> OnExplosionEvent;
 
