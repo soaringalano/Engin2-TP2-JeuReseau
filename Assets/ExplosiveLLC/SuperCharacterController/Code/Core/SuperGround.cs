@@ -44,7 +44,7 @@ public partial class SuperCharacterController
 
 		/// <summary>
 		/// Scan the surface below us for ground. Follow up the initial scan with subsequent scans
-		/// designed to test what kind of surface we are standing above and handle different edge cases.
+		/// designed to m_isInRagdoll what kind of surface we are standing above and handle different edge cases.
 		/// </summary>
 		/// <param name="origin">Center of the sphere for the initial SphereCast.</param>
 		/// <param name="iter">Debug tool to print out which ProbeGround iteration is being run.
@@ -218,7 +218,7 @@ public partial class SuperCharacterController
 		/// check that the ground below us is "steady", or that the controller is not standing
 		/// on too extreme of a ledge.
 		/// </summary>
-		/// <param name="normal">Normal of the surface to test against.</param>
+		/// <param name="normal">Normal of the surface to m_isInRagdoll against.</param>
 		/// <param name="point">Point of contact with the surface.</param>
 		/// <returns>True if the ground is steady.</returns>
 		private bool OnSteadyGround(Vector3 normal, Vector3 point)
