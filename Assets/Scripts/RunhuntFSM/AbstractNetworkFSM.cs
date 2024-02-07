@@ -24,6 +24,7 @@ namespace Mirror
                 state.OnStart();
             }
             m_currentState = m_possibleStates[0];
+
             m_currentState.OnEnter();
         }
 

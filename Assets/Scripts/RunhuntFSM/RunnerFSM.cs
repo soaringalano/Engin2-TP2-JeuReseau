@@ -33,6 +33,7 @@ namespace Mirror
         private float AnimatorRunningValue { get; set; } = 0.5f; // Has to stay between 0.5 and 1
         private float AccelerationRunningValue { get; set; } = 10.0f;
 
+        private bool IsInitialized { get; set; } = false;
 
         protected override void CreatePossibleStates()
         {

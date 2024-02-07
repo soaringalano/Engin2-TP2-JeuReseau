@@ -114,7 +114,8 @@ namespace Mirror
             if (HunterSelectionPose == null) Debug.LogError("HunterSelectionPose not found!");
             if (HunterSelectionPose.gameObject.name != "HunterSelectionPose") Debug.LogError("The GameObject is not HunterSelectionPose!: " + HunterSelectionPose.gameObject.name);
             else Debug.Log("HunterSelectionPose found!");
-            base.Start();
+
+            IsInitialized = true;
         }
 
         protected override void Start()
