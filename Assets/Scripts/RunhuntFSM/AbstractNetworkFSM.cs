@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Mirror
 {
@@ -6,6 +7,7 @@ namespace Mirror
     {
         protected T m_currentState;
         protected List<T> m_possibleStates;
+        static public Transform Scene { get; private set; }
 
         protected virtual void Awake()
         {
@@ -14,6 +16,9 @@ namespace Mirror
 
         protected virtual void Start()
         {
+            Scene = GetScene(gameObject).transform;
+            if (Scene == null) Debug.LogError("Scene not found!");
+
             foreach (IState state in m_possibleStates)
             {
                 state.OnStart();
@@ -67,6 +72,23 @@ namespace Mirror
                     return;
                 }
             }
+        }
+
+        static public GameObject GetScene(GameObject characterGO)
+        {
+            // Source : https://discussions.unity.com/t/find-gameobjects-in-specific-scene-only/163901
+            GameObject[] gameObjects = characterGO.scene.GetRootGameObjects();
+            GameObject sceneGO = null;
+
+            foreach (GameObject _gameObject in gameObjects)
+            {
+                if (_gameObject.name != "Scene") continue;
+
+                sceneGO = _gameObject;
+                break;
+            }
+
+            return sceneGO;
         }
     }
 }

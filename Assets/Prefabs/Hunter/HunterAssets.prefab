@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3179125084276444865}
   - component: {fileID: 9091623843833613748}
   m_Layer: 11
-  m_Name: LookAt
+  m_Name: HunterLookAtFloorBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -143,7 +143,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6681866067940792872}
   - component: {fileID: 6901326816560653269}
-  - component: {fileID: 7389630161411274484}
   - component: {fileID: 951193054216338233}
   - component: {fileID: 7453221913500065546}
   - component: {fileID: 4889030215161262300}
@@ -190,31 +189,6 @@ MonoBehaviour:
   syncInterval: 0
   <HunterCameraAssetsPrefab>k__BackingField: {fileID: 1571365358454482429, guid: 0af3642d719fbc24b8809d5413e463d7, type: 3}
   <HunterUIPrefab>k__BackingField: {fileID: 6375949729559261390, guid: 2dad97f27c1e49e429ae15abee0493db, type: 3}
---- !u!114 &7389630161411274484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6565551724579044330}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 702d736727d638140ac3be924a519f8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
-  <OfflineCamera>k__BackingField: {fileID: 0}
-  <OfflineVirtualCamera>k__BackingField: {fileID: 0}
-  <m_objectToLookAt>k__BackingField: {fileID: 0}
-  m_lookAtMinTorque: 100
-  m_lookAtMaxTorque: 500
-  m_lookAtMinVelocity: 10
-  m_lookAtMaxVelocity: 20
-  m_terrainPlane: {fileID: 0}
-  m_rotationSpeed: 0
-  m_maxRotationAngle: 15
 --- !u!114 &951193054216338233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,14 +206,7 @@ MonoBehaviour:
   syncInterval: 0
   <OfflineCamera>k__BackingField: {fileID: 0}
   <OfflineVirtualCamera>k__BackingField: {fileID: 0}
-  <m_objectToLookAt>k__BackingField: {fileID: 4955299921843428613}
-  m_lookAtMinTorque: 100
-  m_lookAtMaxTorque: 500
-  m_lookAtMinVelocity: 10
-  m_lookAtMaxVelocity: 20
-  m_terrainPlane: {fileID: 0}
-  m_rotationSpeed: 0.01
-  m_maxRotationAngle: 6
+  <HunterLookAtFloorBody>k__BackingField: {fileID: 4955299921843428613}
 --- !u!114 &7453221913500065546
 MonoBehaviour:
   m_ObjectHideFlags: 0

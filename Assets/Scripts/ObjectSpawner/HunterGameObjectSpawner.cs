@@ -10,7 +10,7 @@ namespace Runhunt.ObjectSpawner
         [field: SerializeField] private GameObject HunterCameraAssetsPrefab { get; set; }
         [field: SerializeField] private GameObject HunterUIPrefab { get; set; }
 
-        private HunterFSM m_networkedHunterMovement;
+        private HunterFSM m_hunterFSM;
         private GameObject m_hunterCamAssetsGameObject;
         private Transform m_hunterTransform;
         private CinemachineVirtualCamera m_virtualCamera;
@@ -35,9 +35,9 @@ namespace Runhunt.ObjectSpawner
         protected override void GetPlayerGameObject()
         {
             m_hunterTransform = transform.GetComponentInChildren<Rigidbody>().transform;
-            if (m_hunterTransform == null || m_hunterTransform.name != "LookAt")
+            if (m_hunterTransform == null || m_hunterTransform.name != "HunterLookAtFloorBody")
             {
-                Debug.LogError("Hunter GameObject Not found! Or is not named LookAt!: " + m_hunterTransform.name);
+                Debug.LogError("Hunter GameObject Not found! Or is not named HunterLookAtFloorBody!: " + m_hunterTransform.name);
                 return;
             }
         }
@@ -52,8 +52,8 @@ namespace Runhunt.ObjectSpawner
         protected override void GetNetworkedPlayerControls()
         {
             Debug.Log("Get NetworkedHunterControls.");
-            m_networkedHunterMovement = GetComponent<HunterFSM>();
-            if (m_networkedHunterMovement == null)
+            m_hunterFSM = GetComponent<HunterFSM>();
+            if (m_hunterFSM == null)
             {
                 Debug.LogError("NetworkedRunnerMovement Not found!");
             }
@@ -107,26 +107,24 @@ namespace Runhunt.ObjectSpawner
                 return;
             }
 
-            if (m_networkedHunterMovement == null)
+            if (m_hunterFSM == null)
             {
                 Debug.LogError("NetworkedHunterMovement is not ready to be accesed!");
                 return;
             }
 
-            m_networkedHunterMovement.m_terrainPlane = runnerFloorPlatform.gameObject;
+            m_hunterFSM.TerrainPlane = runnerFloorPlatform.gameObject;
         }
 
 
         protected override void SetCameraInNetworkedPlayerControls()
         {
             Debug.Log("Set Camera in NetworkedPlayerControls.");
-            m_networkedHunterMovement.Camera = Camera.main;
-            m_networkedHunterMovement.VirtualCamera = m_hunterCamAssetsGameObject.GetComponentInChildren<CinemachineVirtualCamera>();
+            m_hunterFSM.Camera = Camera.main;
+            m_hunterFSM.VirtualCamera = m_hunterCamAssetsGameObject.GetComponentInChildren<CinemachineVirtualCamera>();
 
-            if (m_networkedHunterMovement.Camera == null)
-            {
-                Debug.LogError("MainCamera Not found!");
-            }
+            if (m_hunterFSM.Camera == null) Debug.LogError("MainCamera Not found!");
+            else Debug.Log("Hunter MainCamera found!");
         }
 
         protected override void SetTheCameraFollow()
@@ -139,7 +137,7 @@ namespace Runhunt.ObjectSpawner
             }
 
             m_virtualCamera = virtualCam;
-            m_virtualCamera.m_Follow = m_networkedHunterMovement.m_objectToLookAt;
+            m_virtualCamera.m_Follow = m_hunterFSM.HunterLookAtFloorBody;
         }
 
         protected override void SetTheCameraLookAt()
@@ -152,9 +150,9 @@ namespace Runhunt.ObjectSpawner
 
             Transform lookAt = m_hunterTransform;
 
-            if (lookAt.name != "LookAt")
+            if (lookAt.name != "HunterLookAtFloorBody")
             {
-                Debug.LogError("Make sure that the GameObject LookAt is the first child of in this prefab hierarchy! The current GameObject is: " + lookAt.name);
+                Debug.LogError("Make sure that the GameObject HunterLookAtFloorBody is the first child of in this prefab hierarchy! The current GameObject is: " + lookAt.name);
             }
 
             m_virtualCamera.m_LookAt = lookAt;
@@ -162,7 +160,7 @@ namespace Runhunt.ObjectSpawner
 
         protected override void InitializeSpawnedAssets()
         {
-            m_networkedHunterMovement.Initialize();
+            m_hunterFSM.Initialize();
         }
     }
 }

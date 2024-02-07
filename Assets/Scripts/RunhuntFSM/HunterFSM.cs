@@ -16,59 +16,117 @@ namespace Mirror
         /* ######################################################################################################## */
 
         private Rigidbody RB { get; set; }
-        private Transform m_hunterTransform;
-        private CinemachinePOV m_cinemachinePOV;
-        private CinemachineFramingTransposer m_framingTransposer;
-        private float m_cinemachinePOVMaxSpeedHorizontal;
-        private float m_cinemachinePOVMaxSpeedVertical;
+        private Transform HunterTransform { get; set; }
+        private CinemachinePOV CinemachinePOV { get; set; }
+        private CinemachineFramingTransposer FramingTransposer { get; set; }
+        private float CinemachinePOVMaxSpeedHorizontal { get; set; }
+        private float CinemachinePOVMaxSpeedVertical { get; set; }
 
-        [field: SerializeField] public Transform m_objectToLookAt { get; set; }
-
-        [Header("LookAt controls Settings")]
-        [SerializeField] private float m_lookAtMinTorque = 100.0f;
-        [SerializeField] private float m_lookAtMaxTorque = 500.0f;
-        [SerializeField] private float m_lookAtMinVelocity = 10.0f;
-        [SerializeField] private float m_lookAtMaxVelocity = 20.0f;
-        private float m_LookAtCurrentMaxVelocity = 0f;
-        private bool m_isLookAtSetToStop = false;
-        private float m_lookAtDecelerationRate = 0.2f;
-        private float m_camDistLookAtSpeedMultiplier = 0.1f;
+        [field: SerializeField] public Transform HunterLookAtFloorBody { get; set; }
+        public Transform HunterSelectionPose { get; private set; }
 
 
-        [Header("Scrolling Settings")]
-        private float m_scrollSpeed = 200.0f;
-        private float m_minCamDist = 15.0f;
-        private float m_maxCamDist = 60.0f;
-        private float m_minCamFOV = 1.0f;
-        private float m_maxCamFOV = 90.0f;
-        private float m_scrollSmoothDampTime = 0.01f;
-        private float m_FOVmoothDampTime = 0.4f;
+        [field: Header("HunterLookAtFloorBody controls Settings")]
+        [SerializeField] private float HunterLookAtFloorBodyMinTorque { get; set; } = 100.0f;
+        [SerializeField] private float HunterLookAtFloorBodyMaxTorque { get; set; } = 500.0f;
+        [SerializeField] private float HunterLookAtFloorBodyMinVelocity { get; set; } = 10.0f;
+        [SerializeField] private float HunterLookAtFloorBodyMaxVelocity { get; set; } = 20.0f;
+        private float HunterLookAtFloorBodyCurrentMaxVelocity { get; set; } = 0f;
+        private bool IsHunterLookAtFloorBodySetToStop { get; set; } = false;
+        private float HunterLookAtFloorBodyDecelerationRate { get; set; } = 0.2f;
+        private float CamDistHunterLookAtFloorBodySpeedMultiplier { get; set; } = 0.1f;
 
-        [Header("Rotating PLatform Settings")]
-        [SerializeField] public GameObject m_terrainPlane;
-        [SerializeField] private float m_rotationSpeed = 0f;
-        [SerializeField] private float m_maxRotationAngle = 15f;
-        private Vector3 m_previousMousePosition;
+
+        [field: Header("Scrolling Settings")]
+        private float ScrollSpeed { get; set; } = 200.0f;
+        private float MinCamDist { get; set; } = 15.0f;
+        private float MaxCamDist { get; set; } = 60.0f;
+        private float MinCamFOV { get; set; } = 1.0f;
+        private float MaxCamFOV { get; set; } = 90.0f;
+        private float ScrollSmoothDampTime { get; set; } = 0.01f;
+        private float FOVmoothDampTime { get; set; } = 0.4f;
+
+        [field: Header("Rotating PLatform Settings")]
+        [SerializeField] public GameObject TerrainPlane { get; set; }
+        [SerializeField] private float RotationSpeed { get; set; } = 0f;
+        [SerializeField] private float MaxRotationAngle { get; set; } = 15f;
+        private Vector3 PreviousMousePosition { get; set; }
         private Vector3 m_currentRotation = Vector3.zero;
 
-        [Header("Moving Settings")]
-        private Vector3 m_currentDirectionalInput = Vector3.zero;
-
-
-        private bool m_isInitialized = false;
-
-
-        protected override void Start()
-        {
-            base.Start();
-        }
+        [field: Header("Moving Settings")]
+        private Vector3 CurrentDirectionalInput { get; set; } = Vector3.zero;
 
         protected override void CreatePossibleStates()
         {
             m_possibleStates = new List<HunterState>();
+            m_possibleStates.Add(new HunterCharacterSelectionState());
             m_possibleStates.Add(new HunterFreeState());
             m_possibleStates.Add(new PowerUpState());
             m_possibleStates.Add(new PlateformRotationState());
+        }
+
+        private bool IsInitialized { get; set; } = false;
+
+        public void Initialize()
+        {
+            if (!isLocalPlayer)
+            {
+                return;
+            }
+            HunterLookAtFloorBodyCurrentMaxVelocity = HunterLookAtFloorBodyMinTorque;
+            RB = GetComponentInChildren<Rigidbody>();
+            if (RB != null) Debug.Log("Hunter RigidBody found!");
+            else Debug.LogError("Hunter RigidBody not found!");
+
+            HunterTransform = RB.transform;
+            if (HunterTransform != null) Debug.Log("Hunter Transform found!");
+            else Debug.LogError("Hunter Transform not found!");
+
+            // Offline mode has not GameObjectSpawner to fill in the Camera
+            if (Camera == null)
+            {
+                Debug.LogWarning("No networked camera found! Using offline camera.");
+                Camera = OfflineCamera;
+            }
+
+            // Offline mode has not GameObjectSpawner to fill in the VirtualCamera
+            if (VirtualCamera == null)
+            {
+                Debug.LogWarning("No networked VirtualCamera found! Using offline VirtualCamera.");
+                VirtualCamera = OfflineVirtualCamera;
+            }
+
+            CinemachinePOV = VirtualCamera.GetCinemachineComponent<CinemachinePOV>();
+            if (CinemachinePOV != null)
+            {
+                Debug.Log("CinemachinePOV found!");
+                CinemachinePOVMaxSpeedHorizontal = CinemachinePOV.m_HorizontalAxis.m_MaxSpeed;
+                CinemachinePOVMaxSpeedVertical = CinemachinePOV.m_VerticalAxis.m_MaxSpeed;
+                FramingTransposer = VirtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
+            }
+            else Debug.LogError("CinemachinePOV not found!");
+
+            HunterLookAtFloorBody = transform.GetChild(0);
+            if (HunterLookAtFloorBody == null) Debug.LogError("HunterLookAtFloorBody not found! Please check if it still first child in HunterPrefabs.");
+            if (HunterLookAtFloorBody.gameObject.name != "HunterLookAtFloorBody") Debug.LogError("The GameObject is not HunterLookAtFloorBody!: " + HunterLookAtFloorBody.gameObject.name);
+
+            HunterSelectionPose = transform.GetChild(1);
+            if (HunterSelectionPose == null) Debug.LogError("HunterSelectionPose not found!");
+            if (HunterSelectionPose.gameObject.name != "HunterSelectionPose") Debug.LogError("The GameObject is not HunterSelectionPose!: " + HunterSelectionPose.gameObject.name);
+            else Debug.Log("HunterSelectionPose found!");
+            base.Start();
+        }
+
+        protected override void Start()
+        {
+            foreach (HunterState state in m_possibleStates)
+            {
+                state.OnStart(this);
+            }
+
+            base.Start();
+            m_currentState = m_possibleStates[0];
+            m_currentState.OnEnter();
         }
 
         public void FixedRefreshDirectionalInput()
@@ -94,26 +152,26 @@ namespace Mirror
 
             if (direction.magnitude > 0)
             {
-                m_currentDirectionalInput = direction;
+                CurrentDirectionalInput = direction;
             }
             else
             {
-                m_currentDirectionalInput = Vector3.zero;
+                CurrentDirectionalInput = Vector3.zero;
             }
         }
 
         public Vector3 GetCurrentDirectionalInput()
         {
-            return m_currentDirectionalInput;
+            return CurrentDirectionalInput;
         }
 
         public void FixedMoveByDirectionalInput()
         {
             EnableMouseTracking();
-            SetStopLookAt(false);
+            SetStopHunterLookAtFloorBody(false);
 
-            if (RB.velocity.magnitude <= m_LookAtCurrentMaxVelocity)
-                RB.AddTorque(GetShiftPressedSpeed() * GetCameraDistanceSpeed() * Time.fixedDeltaTime * m_currentDirectionalInput, ForceMode.Force);
+            if (RB.velocity.magnitude <= HunterLookAtFloorBodyCurrentMaxVelocity)
+                RB.AddTorque(GetShiftPressedSpeed() * GetCameraDistanceSpeed() * Time.fixedDeltaTime * CurrentDirectionalInput, ForceMode.Force);
         }
 
         public void SetCurrentRotation(float currentRotationX, float currentRotationZ)
@@ -130,7 +188,7 @@ namespace Mirror
         public void EnterRotation()
         {
             DisableMouseTracking();
-            m_previousMousePosition = Input.mousePosition;
+            PreviousMousePosition = Input.mousePosition;
         }
 
         public void ExitRotation()
@@ -138,52 +196,9 @@ namespace Mirror
             EnableMouseTracking();
         }
 
-        public void Initialize()
-        {
-            if (!isLocalPlayer)
-            {
-                return;
-            }
-
-            m_LookAtCurrentMaxVelocity = m_lookAtMinTorque;
-            RB = GetComponentInChildren<Rigidbody>();
-            if (RB != null) Debug.Log("Hunter RigidBody found!");
-            else Debug.LogError("Hunter RigidBody not found!");
-
-            m_hunterTransform = RB.transform;
-            if (m_hunterTransform != null) Debug.Log("Hunter Transform found!");
-            else Debug.LogError("Hunter Transform not found!");
-
-            // Offline mode has not GameObjectSpawner to fill in the Camera
-            if (Camera == null)
-            {
-                Debug.LogWarning("No networked camera found! Using offline camera.");
-                Camera = OfflineCamera;
-            }
-
-            // Offline mode has not GameObjectSpawner to fill in the VirtualCamera
-            if (VirtualCamera == null)
-            {
-                Debug.LogWarning("No networked VirtualCamera found! Using offline VirtualCamera.");
-                VirtualCamera = OfflineVirtualCamera;
-            }
-
-            m_cinemachinePOV = VirtualCamera.GetCinemachineComponent<CinemachinePOV>();
-            if (m_cinemachinePOV != null)
-            {
-                Debug.Log("CinemachinePOV found!");
-                m_cinemachinePOVMaxSpeedHorizontal = m_cinemachinePOV.m_HorizontalAxis.m_MaxSpeed;
-                m_cinemachinePOVMaxSpeedVertical = m_cinemachinePOV.m_VerticalAxis.m_MaxSpeed;
-                m_framingTransposer = VirtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
-            }
-            else Debug.LogError("CinemachinePOV not found!");
-
-            m_isInitialized = true;
-        }
-
         protected override void Update()
         {
-            if (!m_isInitialized)
+            if (!IsInitialized)
             {
                 return;
             }
@@ -195,24 +210,24 @@ namespace Mirror
 
             if (Input.GetKeyUp(KeyCode.LeftShift))
             {
-                SetStopLookAt(true);
+                SetStopHunterLookAtFloorBody(true);
             }
             base.Update();
         }
 
-        public void SetStopLookAt(bool stopLookAt)
+        public void SetStopHunterLookAtFloorBody(bool stopHunterLookAtFloorBody)
         {
-            m_isLookAtSetToStop = stopLookAt;
+            IsHunterLookAtFloorBodySetToStop = stopHunterLookAtFloorBody;
         }
 
         public void SetLastMousePosition(Vector3 mousePosition)
         {
-            m_previousMousePosition = Input.mousePosition;
+            PreviousMousePosition = Input.mousePosition;
         }
 
         protected override void FixedUpdate()
         {
-            if (!m_isInitialized)
+            if (!IsInitialized)
             {
                 return;
             }
@@ -227,7 +242,7 @@ namespace Mirror
 
         private void LateUpdate()
         {
-            if (!m_isInitialized)
+            if (!IsInitialized)
             {
                 return;
             }
@@ -239,14 +254,14 @@ namespace Mirror
 
             LateUpdateCameraScroll();
             LateUpdateFOV();
-            LateUpdateStopLookAtRBVelocity();
+            LateUpdateStopHunterLookAtFloorBodyRBVelocity();
         }
 
         private void LateUpdateFOV()
         {
-            float distancePercent = m_framingTransposer.m_CameraDistance / m_maxCamDist;
+            float distancePercent = FramingTransposer.m_CameraDistance / MaxCamDist;
 
-            float newFOV = Mathf.Lerp(m_maxCamFOV, m_minCamFOV, distancePercent * m_FOVmoothDampTime);
+            float newFOV = Mathf.Lerp(MaxCamFOV, MinCamFOV, distancePercent * FOVmoothDampTime);
             VirtualCamera.m_Lens.FieldOfView = newFOV;
         }
 
@@ -256,73 +271,78 @@ namespace Mirror
 
             if (Mathf.Approximately(scrollDelta, 0f)) return;
 
-            float lerpedScrolDist = Mathf.Lerp(m_framingTransposer.m_CameraDistance, m_framingTransposer.m_CameraDistance - (scrollDelta * m_scrollSpeed), m_scrollSmoothDampTime);
-            m_framingTransposer.m_CameraDistance = Mathf.Clamp(lerpedScrolDist, m_minCamDist, m_maxCamDist);
+            float lerpedScrolDist = Mathf.Lerp(FramingTransposer.m_CameraDistance, FramingTransposer.m_CameraDistance - (scrollDelta * ScrollSpeed), ScrollSmoothDampTime);
+            FramingTransposer.m_CameraDistance = Mathf.Clamp(lerpedScrolDist, MinCamDist, MaxCamDist);
         }
 
-        public void LateUpdateStopLookAtRBVelocity()
+        public void LateUpdateStopHunterLookAtFloorBodyRBVelocity()
         {
-            if (m_isLookAtSetToStop)
-                RB.velocity = Vector3.Lerp(RB.velocity, Vector3.zero, m_lookAtDecelerationRate);
+            if (IsHunterLookAtFloorBodySetToStop)
+                RB.velocity = Vector3.Lerp(RB.velocity, Vector3.zero, HunterLookAtFloorBodyDecelerationRate);
         }
 
         public void FixedRotatePlatform()
         {
 
-            Vector3 mouseDelta = Input.mousePosition - m_previousMousePosition;
+            Vector3 mouseDelta = Input.mousePosition - PreviousMousePosition;
 
-            float angleZ = mouseDelta.x * m_rotationSpeed;
-            float angleX = mouseDelta.y * m_rotationSpeed;
+            float angleZ = mouseDelta.x * RotationSpeed;
+            float angleX = mouseDelta.y * RotationSpeed;
 
             m_currentRotation.x += angleX;
             m_currentRotation.z += angleZ;
 
 
-            m_currentRotation.x = Mathf.Clamp(m_currentRotation.x, -m_maxRotationAngle, m_maxRotationAngle);
-            m_currentRotation.z = Mathf.Clamp(m_currentRotation.z, -m_maxRotationAngle, m_maxRotationAngle);
+            m_currentRotation.x = Mathf.Clamp(m_currentRotation.x, -MaxRotationAngle, MaxRotationAngle);
+            m_currentRotation.z = Mathf.Clamp(m_currentRotation.z, -MaxRotationAngle, MaxRotationAngle);
 
             // Calculate delta rotation to apply
-            float deltaRotationX = m_currentRotation.x - m_terrainPlane.transform.rotation.eulerAngles.x;
-            float deltaRotationZ = m_currentRotation.z - m_terrainPlane.transform.rotation.eulerAngles.z;
+            float deltaRotationX = m_currentRotation.x - TerrainPlane.transform.rotation.eulerAngles.x;
+            float deltaRotationZ = m_currentRotation.z - TerrainPlane.transform.rotation.eulerAngles.z;
 
             // Apply rotation
-            m_terrainPlane.transform.Rotate(Vector3.right, deltaRotationX, Space.World);
-            m_terrainPlane.transform.Rotate(Vector3.forward, deltaRotationZ, Space.World);
+            TerrainPlane.transform.Rotate(Vector3.right, deltaRotationX, Space.World);
+            TerrainPlane.transform.Rotate(Vector3.forward, deltaRotationZ, Space.World);
         }
 
         public void DisableMouseTracking()
         {
-            if (m_cinemachinePOV == null) Debug.LogError("CinemachinePOV not set correctly!");
+            if (CinemachinePOV == null) Debug.LogError("CinemachinePOV not set correctly!");
 
             Cursor.visible = true;
-            m_cinemachinePOV.m_HorizontalAxis.m_MaxSpeed = 0;
-            m_cinemachinePOV.m_VerticalAxis.m_MaxSpeed = 0;
+            CinemachinePOV.m_HorizontalAxis.m_MaxSpeed = 0;
+            CinemachinePOV.m_VerticalAxis.m_MaxSpeed = 0;
         }
 
         public void EnableMouseTracking()
         {
-            if (m_cinemachinePOV == null) Debug.LogError("CinemachinePOV not set correctly!");
+            if (CinemachinePOV == null) Debug.LogError("CinemachinePOV not set correctly!");
 
             Cursor.visible = false;
-            m_cinemachinePOV.m_HorizontalAxis.m_MaxSpeed = m_cinemachinePOVMaxSpeedHorizontal;
-            m_cinemachinePOV.m_VerticalAxis.m_MaxSpeed = m_cinemachinePOVMaxSpeedVertical;
+            CinemachinePOV.m_HorizontalAxis.m_MaxSpeed = CinemachinePOVMaxSpeedHorizontal;
+            CinemachinePOV.m_VerticalAxis.m_MaxSpeed = CinemachinePOVMaxSpeedVertical;
         }
 
         private float GetShiftPressedSpeed()
         {
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                m_LookAtCurrentMaxVelocity = m_lookAtMaxVelocity;
-                return m_lookAtMaxTorque;
+                HunterLookAtFloorBodyCurrentMaxVelocity = HunterLookAtFloorBodyMaxVelocity;
+                return HunterLookAtFloorBodyMaxTorque;
             }
 
-            m_LookAtCurrentMaxVelocity = m_lookAtMinVelocity;
-            return m_lookAtMinTorque;
+            HunterLookAtFloorBodyCurrentMaxVelocity = HunterLookAtFloorBodyMinVelocity;
+            return HunterLookAtFloorBodyMinTorque;
         }
 
         public float GetCameraDistanceSpeed()
         {
-            return m_framingTransposer.m_CameraDistance * m_camDistLookAtSpeedMultiplier;
+            return FramingTransposer.m_CameraDistance * CamDistHunterLookAtFloorBodySpeedMultiplier;
+        }
+
+        public void SetStopLookAt(bool isSetToStop)
+        {
+            IsHunterLookAtFloorBodySetToStop = isSetToStop;
         }
     }
 }

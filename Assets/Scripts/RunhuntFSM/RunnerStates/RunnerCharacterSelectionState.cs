@@ -1,26 +1,23 @@
-﻿
-using UnityEditor.SearchService;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 
 namespace Mirror
 {
-    public class CharacterSelectionState : RunnerState
+    public class RunnerCharacterSelectionState : RunnerState
     {
         private SceneReferencer m_sceneRef;
 
         public override void OnStart()
         {
-            Debug.Log("CharacterSelectionState OnStart(): " + m_stateMachine.Scene.name);
-            if (m_stateMachine.Scene != null)
+            Debug.Log("RunnerCharacterSelectionState OnStart(): " + AbstractNetworkFSM<RunnerState>.Scene.name);
+            if (AbstractNetworkFSM<RunnerState>.Scene != null)
             {
-                Debug.Log("Scene is not null, that can mean the spawn is made in selection: " + m_stateMachine.Scene.name);
-                m_sceneRef = m_stateMachine.Scene.gameObject.GetComponentInChildren<SceneReferencer>();
+                Debug.Log("Scene is not null, that can mean the spawn is made in selection: " + AbstractNetworkFSM<RunnerState>.Scene.name);
+                m_sceneRef = AbstractNetworkFSM<RunnerState>.Scene.gameObject.GetComponentInChildren<SceneReferencer>();
                 if (m_sceneRef == null) Debug.LogError("SceneReferencer not found in children of scene!");
             }
-            else if (m_stateMachine.Scene == null)
+            else if (AbstractNetworkFSM<RunnerState>.Scene == null)
             {
-                GameObject sceneGO = m_stateMachine.GetScene();
+                GameObject sceneGO = AbstractNetworkFSM<RunnerState>.GetScene(m_stateMachine.gameObject);
                 m_sceneRef = sceneGO.GetComponentInChildren<SceneReferencer>();
 
                 if (m_sceneRef == null) Debug.LogError("SceneReferencer not found in children of Scene!");
@@ -47,13 +44,13 @@ namespace Mirror
 
         public override void OnEnter()
         {
-            Debug.Log("CharacterSelectionState OnEnter()");
+            Debug.Log("RunnerCharacterSelectionState OnEnter()");
             m_stateMachine.RunnerUI.SetActive(false);
         }
 
         public override void OnExit()
         {
-            Debug.Log("CharacterSelectionState OnExit()");
+            Debug.Log("RunnerCharacterSelectionState OnExit()");
             m_stateMachine.RunnerUI.SetActive(true);
         }
 
