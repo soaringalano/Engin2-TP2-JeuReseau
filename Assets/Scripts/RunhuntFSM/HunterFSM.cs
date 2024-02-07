@@ -55,6 +55,7 @@ namespace Mirror
 
         [field: Header("Moving Settings")]
         private Vector3 CurrentDirectionalInput { get; set; } = Vector3.zero;
+        public bool IsInitialized { get; set; } = false;
 
         protected override void CreatePossibleStates()
         {
@@ -64,8 +65,6 @@ namespace Mirror
             m_possibleStates.Add(new PowerUpState());
             m_possibleStates.Add(new PlateformRotationState());
         }
-
-        private bool IsInitialized { get; set; } = false;
 
         public void Initialize()
         {

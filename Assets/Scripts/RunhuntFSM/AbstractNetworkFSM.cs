@@ -8,6 +8,7 @@ namespace Mirror
         protected T m_currentState;
         protected List<T> m_possibleStates;
         static public Transform Scene { get; private set; }
+        
 
         protected virtual void Awake()
         {
@@ -24,7 +25,6 @@ namespace Mirror
                 state.OnStart();
             }
             m_currentState = m_possibleStates[0];
-
             m_currentState.OnEnter();
         }
 

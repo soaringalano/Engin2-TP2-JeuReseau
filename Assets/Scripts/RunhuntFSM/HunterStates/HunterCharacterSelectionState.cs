@@ -33,7 +33,6 @@ namespace Mirror
         {
             if (m_sceneRef == null) Debug.LogError("m_sceneRef null");
             if (m_sceneRef.characterSelectionObject == null) Debug.LogError("characterSelectionObject null");
-            else Debug.Log("CanEnter() characterSelectionObject not null!");
 
             return m_sceneRef.characterSelectionObject.activeSelf;
         }
@@ -42,34 +41,33 @@ namespace Mirror
         {
             if (m_sceneRef == null) Debug.LogError("m_sceneRef null");
             if (m_sceneRef.characterSelectionObject == null) Debug.LogError("characterSelectionObject null");
-            else Debug.Log("CanExit() characterSelectionObject not null!");
+
+            if (m_sceneRef.characterSelectionObject.activeSelf == false) Debug.Log("Can exit Char selection.");
+            if (m_sceneRef.characterSelectionObject.activeSelf == true) Debug.Log("Cannot exit Char selection.");
 
             return !m_sceneRef.characterSelectionObject.activeSelf;
         }
 
         public override void OnEnter()
         {
+            if (!m_stateMachine.IsInitialized) return;
+
             Debug.Log("HunterCharacterSelectionState OnEnter()");
-            if (m_stateMachine == null)
-            {
-                Debug.LogWarning("m_stateMachine is not initialized yet!");
-                return;
-            }
+            if (m_stateMachine == null) Debug.LogWarning("m_stateMachine is not initialized yet!");
+            if (m_stateMachine.HunterSelectionPose == null) Debug.LogWarning("m_stateMachine.HunterSelectionPose is not initialized yet!");
 
-            if (m_stateMachine.HunterSelectionPose == null)
-            {
-                Debug.LogWarning("m_stateMachine.HunterSelectionPose is not initialized yet!");
-                return;
-            }
-
-            m_stateMachine.HunterSelectionPose.gameObject.SetActive(false); 
+            // Will make the mode appear in free state : m_stateMachine.HunterSelectionPose.gameObject.SetActive(true); 
+            // Mirror character selection exemple create the prefab everytime we switch character in character selection
+            // This state is never used in character selection (for now) only in gameplay mode.
+            m_stateMachine.HunterSelectionPose.gameObject.SetActive(false);
             // TODO: Add here if the HunterUI appears in the selection menu
         }
 
         public override void OnExit()
         {
+            if (!m_stateMachine.IsInitialized) return;
             Debug.Log("HunterCharacterSelectionState OnExit()");
-            m_stateMachine.HunterSelectionPose.gameObject.SetActive(true);
+            m_stateMachine.HunterSelectionPose.gameObject.SetActive(false);
             // TODO: Add here if the HunterUI appears in the selection menu
         }
 

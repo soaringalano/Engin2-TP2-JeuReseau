@@ -36,6 +36,7 @@ namespace Mirror
         private float AccelerationRunningValue { get; set; } = 10.0f;
 
         public bool m_isInRagdoll = false;
+
         private bool IsInitialized { get; set; } = false;
 
         protected override void CreatePossibleStates()
@@ -84,41 +85,8 @@ namespace Mirror
             base.Start();
             m_currentState = m_possibleStates[0];
             m_currentState.OnEnter();
-        }
 
-        private void StartRagdoll(HunterMineExplosion explosion)
-        {
-            Debug.Log("ExplosionSystem here");
-
-            if (explosion != null)
-            {
-                m_isInRagdoll = true;
-                StartCoroutine(ResetBool());
-            }          
-        }
-
-        IEnumerator ResetBool()
-        {
-            yield return new WaitForSeconds(1.0f);
-            m_isInRagdoll = false;
-            Debug.Log("bool reset");
-        }
-
-        public GameObject GetScene()
-        {
-            // Source : https://discussions.unity.com/t/find-gameobjects-in-specific-scene-only/163901
-            GameObject[] gameObjects = gameObject.scene.GetRootGameObjects();
-            GameObject sceneGO = null;
-
-            foreach (GameObject _gameObject in gameObjects)
-            {
-                if (_gameObject.name != "Scene") continue;
-
-                sceneGO = _gameObject;
-                break;
-            }
-
-            return sceneGO;
+            IsInitialized = true;
         }
 
         protected override void Update()
@@ -304,6 +272,24 @@ namespace Mirror
                 return true;
             }
             return false;
+        }
+
+        private void StartRagdoll(HunterMineExplosion explosion)
+        {
+            Debug.Log("ExplosionSystem here");
+
+            if (explosion != null)
+            {
+                m_isInRagdoll = true;
+                StartCoroutine(ResetBool());
+            }
+        }
+
+        IEnumerator ResetBool()
+        {
+            yield return new WaitForSeconds(1.0f);
+            m_isInRagdoll = false;
+            Debug.Log("bool reset");
         }
     }
 }
