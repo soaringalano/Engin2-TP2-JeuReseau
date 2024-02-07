@@ -72,6 +72,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   <RunnerUI>k__BackingField: {fileID: 1374354616873605870}
+  <NetworkAnimator>k__BackingField: {fileID: 8403922479734184492}
+  m_isInRagdoll: 0
 --- !u!114 &4443521735286620746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -375,7 +377,8 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 112
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3769617021146839645, guid: 6ca0453f0d6700e4e831ee043610d072, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 2337494239403005241, guid: 6ca0453f0d6700e4e831ee043610d072, type: 3}

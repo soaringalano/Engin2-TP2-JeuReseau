@@ -31,7 +31,7 @@ namespace RPGCharacterAnims.Extensions
 		/// <summary>
 		/// Returns true if the weapon number can use IKHands.
 		/// </summary>
-		/// <param name="weapon">Weapon to test.</param>
+		/// <param name="weapon">Weapon to m_isInRagdoll.</param>
 		public static bool IsIKWeapon(this Weapon weapon)
 		{ return weapon == Weapon.TwoHandSword; }
 
