@@ -27,12 +27,12 @@ namespace Mirror
 
 
         [field: Header("HunterLookAtFloorBody controls Settings")]
-        private float FloorBodyMinSpeed { get; set; } = 70.0f; 
+        private float FloorBodyMinSpeed { get; set; } = 80.0f; 
         private float FloorBodyMaxSpeed { get; set; } = 150.0f;
-        private float FloorBodyCurrentMaxSpeed { get; set; } = 100f;
+        private float FloorBodyCurrentMaxSpeed { get; set; } = 80f;
         private bool IsFloorBodySetToStop { get; set; } = false;
         private float FloorBodyDecelerationRate { get; set; } = 0.2f;
-        private float CamDistFloorBodySpeedMultiplier { get; set; } = 0.1f;
+        private float CamDistFloorBodySpeedMultiplier { get; set; } = 0.05f;
 
 
         [field: Header("Scrolling Settings")]
@@ -206,28 +206,14 @@ namespace Mirror
             return CurrentDirectionalInputs;
         }
 
-        //public void FixedMoveByDirectionalInput()
-        //{
-        //    EnableMouseTracking();
-        //    SetStopHunterLookAtFloorBody(false);
-
-        //    RB.AddTorque(GetShiftPressedSpeed() * GetCameraDistanceSpeed() * Time.fixedDeltaTime * CurrentDirectionalInput, ForceMode.Force);
-        //}
-
         public void ApplyMovementsOnFloorFU()
         {
             var vectorOnFloor = Vector3.ProjectOnPlane(Camera.transform.forward * CurrentDirectionalInputs.y, Vector3.up);
 
             vectorOnFloor += Vector3.ProjectOnPlane(Camera.transform.right * CurrentDirectionalInputs.x, Vector3.up);
             vectorOnFloor.Normalize();
-            //     var currentMaxSpeed = FloorBodyCurrentMaxSpeed;
 
             RB.AddForce(vectorOnFloor * (GetShiftPressedSpeed() * GetCameraDistanceSpeed()), ForceMode.Acceleration);
-            //if (RB.velocity.magnitude > currentMaxSpeed)
-            //{
-            //    RB.velocity = RB.velocity.normalized;
-            //    RB.velocity *= currentMaxSpeed;
-            //}
         }
 
         public void SetCurrentRotation(float currentRotationX, float currentRotationZ)

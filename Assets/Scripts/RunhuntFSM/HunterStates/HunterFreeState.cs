@@ -8,8 +8,6 @@ namespace Mirror
     {
         public override bool CanEnter(IState currentState)
         {
-            //Debug.Log("magnitude: " + m_stateMachine.GetCurrentDirectionalInput().magnitude);
-            //return m_stateMachine.GetCurrentDirectionalInput().magnitude > 0;
             return (Input.GetMouseButton(1) && Input.GetKey(KeyCode.Space) == false) 
                 || (Input.GetKey(KeyCode.Space) == false);
         }
@@ -21,13 +19,13 @@ namespace Mirror
 
         public override void OnEnter()
         {
-            Debug.Log("Enter state: HunterFreeState\n");
+            //Debug.Log("Enter state: HunterFreeState\n");
             m_stateMachine.SetStopLookAt(false);
         }
 
         public override void OnExit()
         {
-            Debug.Log("Exit state: HunterFreeState\n");
+            //Debug.Log("Exit state: HunterFreeState\n");
             m_stateMachine.SetStopLookAt(true);
 
         }
