@@ -19,11 +19,13 @@ namespace Mirror
         public override void OnEnter()
         {
             Debug.Log("Enter state: HunterFreeState\n");
+            m_stateMachine.SetStopLookAt(false);
         }
 
         public override void OnExit()
         {
             Debug.Log("Exit state: HunterFreeState\n");
+            m_stateMachine.SetStopLookAt(true);
 
         }
 
@@ -35,7 +37,6 @@ namespace Mirror
         public override void OnUpdate()
         {
             m_stateMachine.EnableMouseTracking();
-            m_stateMachine.SetStopLookAt(true);
             base.OnUpdate();
         }
 

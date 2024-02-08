@@ -42,9 +42,6 @@ namespace Mirror
             if (m_sceneRef == null) Debug.LogError("m_sceneRef null");
             if (m_sceneRef.characterSelectionObject == null) Debug.LogError("characterSelectionObject null");
 
-            if (m_sceneRef.characterSelectionObject.activeSelf == false) Debug.Log("Can exit Char selection.");
-            if (m_sceneRef.characterSelectionObject.activeSelf == true) Debug.Log("Cannot exit Char selection.");
-
             return !m_sceneRef.characterSelectionObject.activeSelf;
         }
 

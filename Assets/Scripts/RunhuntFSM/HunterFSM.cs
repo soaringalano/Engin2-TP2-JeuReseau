@@ -27,29 +27,29 @@ namespace Mirror
 
 
         [field: Header("HunterLookAtFloorBody controls Settings")]
-        [SerializeField] private float HunterLookAtFloorBodyMinTorque { get; set; } = 100.0f;
-        [SerializeField] private float HunterLookAtFloorBodyMaxTorque { get; set; } = 500.0f;
-        [SerializeField] private float HunterLookAtFloorBodyMinVelocity { get; set; } = 10.0f;
-        [SerializeField] private float HunterLookAtFloorBodyMaxVelocity { get; set; } = 20.0f;
-        private float HunterLookAtFloorBodyCurrentMaxVelocity { get; set; } = 0f;
-        private bool IsHunterLookAtFloorBodySetToStop { get; set; } = false;
-        private float HunterLookAtFloorBodyDecelerationRate { get; set; } = 0.2f;
-        private float CamDistHunterLookAtFloorBodySpeedMultiplier { get; set; } = 0.1f;
+        private float FloorBodyMinTorque { get; set; } = 1000.0f;
+        private float FloorBodyMaxTorque { get; set; } = 5000.0f;
+        private float FloorBodyMinVelocity { get; set; } = 40.0f;
+        private float FloorBodyMaxVelocity { get; set; } = 90.0f;
+        private float FloorBodyCurrentMaxVelocity { get; set; } = 0f;
+        private bool IsFloorBodySetToStop { get; set; } = false;
+        private float FloorBodyDecelerationRate { get; set; } = 0.2f;
+        private float CamDistFloorBodySpeedMultiplier { get; set; } = 0.1f;
 
 
         [field: Header("Scrolling Settings")]
         private float ScrollSpeed { get; set; } = 200.0f;
-        private float MinCamDist { get; set; } = 15.0f;
-        private float MaxCamDist { get; set; } = 60.0f;
+        private float MinCamDist { get; set; } = 20.0f;
+        private float MaxCamDist { get; set; } = 80.0f;
         private float MinCamFOV { get; set; } = 1.0f;
         private float MaxCamFOV { get; set; } = 90.0f;
         private float ScrollSmoothDampTime { get; set; } = 0.01f;
         private float FOVmoothDampTime { get; set; } = 0.4f;
 
         [field: Header("Rotating PLatform Settings")]
-        [SerializeField] public GameObject TerrainPlane { get; set; }
-        [SerializeField] private float RotationSpeed { get; set; } = 0f;
-        [SerializeField] private float MaxRotationAngle { get; set; } = 15f;
+        [field: SerializeField] public GameObject TerrainPlane { get; set; }
+        [field: SerializeField] private float RotationSpeed { get; set; } = 0f;
+        [field: SerializeField] private float MaxRotationAngle { get; set; } = 15f;
         private Vector3 PreviousMousePosition { get; set; }
         private Vector3 m_currentRotation = Vector3.zero;
 
@@ -72,7 +72,7 @@ namespace Mirror
             {
                 return;
             }
-            HunterLookAtFloorBodyCurrentMaxVelocity = HunterLookAtFloorBodyMinTorque;
+            FloorBodyCurrentMaxVelocity = FloorBodyMinTorque;
             RB = GetComponentInChildren<Rigidbody>();
             if (RB != null) Debug.Log("Hunter RigidBody found!");
             else Debug.LogError("Hunter RigidBody not found!");
@@ -160,42 +160,6 @@ namespace Mirror
             }
         }
 
-        public Vector3 GetCurrentDirectionalInput()
-        {
-            return CurrentDirectionalInput;
-        }
-
-        public void FixedMoveByDirectionalInput()
-        {
-            EnableMouseTracking();
-            SetStopHunterLookAtFloorBody(false);
-
-            if (RB.velocity.magnitude <= HunterLookAtFloorBodyCurrentMaxVelocity)
-                RB.AddTorque(GetShiftPressedSpeed() * GetCameraDistanceSpeed() * Time.fixedDeltaTime * CurrentDirectionalInput, ForceMode.Force);
-        }
-
-        public void SetCurrentRotation(float currentRotationX, float currentRotationZ)
-        {
-            m_currentRotation.x = currentRotationX;
-            m_currentRotation.z = currentRotationZ;
-        }
-
-        public Vector3 GetCurrentRotation()
-        {
-            return m_currentRotation;
-        }
-
-        public void EnterRotation()
-        {
-            DisableMouseTracking();
-            PreviousMousePosition = Input.mousePosition;
-        }
-
-        public void ExitRotation()
-        {
-            EnableMouseTracking();
-        }
-
         protected override void Update()
         {
             if (!IsInitialized)
@@ -213,16 +177,6 @@ namespace Mirror
                 SetStopHunterLookAtFloorBody(true);
             }
             base.Update();
-        }
-
-        public void SetStopHunterLookAtFloorBody(bool stopHunterLookAtFloorBody)
-        {
-            IsHunterLookAtFloorBodySetToStop = stopHunterLookAtFloorBody;
-        }
-
-        public void SetLastMousePosition(Vector3 mousePosition)
-        {
-            PreviousMousePosition = Input.mousePosition;
         }
 
         protected override void FixedUpdate()
@@ -257,6 +211,56 @@ namespace Mirror
             LateUpdateStopHunterLookAtFloorBodyRBVelocity();
         }
 
+        public Vector3 GetCurrentDirectionalInput()
+        {
+            return CurrentDirectionalInput;
+        }
+
+        public void FixedMoveByDirectionalInput()
+        {
+            EnableMouseTracking();
+            SetStopHunterLookAtFloorBody(false);
+            //if (RB.velocity.magnitude > FloorBodyCurrentMaxVelocity) Debug.Log(RB.velocity.magnitude);
+            //    return;
+            //if (RB.velocity.magnitude <= FloorBodyCurrentMaxVelocity)
+            Debug.Log("velma : " + RB.velocity.magnitude);
+            Debug.Log("Force : " + GetShiftPressedSpeed() * GetCameraDistanceSpeed() * Time.fixedDeltaTime * CurrentDirectionalInput);
+            RB.AddTorque(GetShiftPressedSpeed() * GetCameraDistanceSpeed() * Time.fixedDeltaTime * CurrentDirectionalInput, ForceMode.Force);
+           
+        }
+
+        public void SetCurrentRotation(float currentRotationX, float currentRotationZ)
+        {
+            m_currentRotation.x = currentRotationX;
+            m_currentRotation.z = currentRotationZ;
+        }
+
+        public Vector3 GetCurrentRotation()
+        {
+            return m_currentRotation;
+        }
+
+        public void EnterRotation()
+        {
+            DisableMouseTracking();
+            PreviousMousePosition = Input.mousePosition;
+        }
+
+        public void ExitRotation()
+        {
+            EnableMouseTracking();
+        }
+
+        public void SetStopHunterLookAtFloorBody(bool stopHunterLookAtFloorBody)
+        {
+            IsFloorBodySetToStop = stopHunterLookAtFloorBody;
+        }
+
+        public void SetLastMousePosition(Vector3 mousePosition)
+        {
+            PreviousMousePosition = Input.mousePosition;
+        }
+
         private void LateUpdateFOV()
         {
             float distancePercent = FramingTransposer.m_CameraDistance / MaxCamDist;
@@ -277,8 +281,10 @@ namespace Mirror
 
         public void LateUpdateStopHunterLookAtFloorBodyRBVelocity()
         {
-            if (IsHunterLookAtFloorBodySetToStop)
-                RB.velocity = Vector3.Lerp(RB.velocity, Vector3.zero, HunterLookAtFloorBodyDecelerationRate);
+            if (!IsFloorBodySetToStop) return;
+
+            //Debug.Log("Floor Body Set To Stop");
+            RB.velocity = Vector3.Lerp(RB.velocity, Vector3.zero, FloorBodyDecelerationRate);
         }
 
         public void FixedRotatePlatform()
@@ -327,22 +333,22 @@ namespace Mirror
         {
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                HunterLookAtFloorBodyCurrentMaxVelocity = HunterLookAtFloorBodyMaxVelocity;
-                return HunterLookAtFloorBodyMaxTorque;
+                FloorBodyCurrentMaxVelocity = FloorBodyMaxVelocity;
+                return FloorBodyMaxTorque;
             }
 
-            HunterLookAtFloorBodyCurrentMaxVelocity = HunterLookAtFloorBodyMinVelocity;
-            return HunterLookAtFloorBodyMinTorque;
+            FloorBodyCurrentMaxVelocity = FloorBodyMinVelocity;
+            return FloorBodyMinTorque;
         }
 
         public float GetCameraDistanceSpeed()
         {
-            return FramingTransposer.m_CameraDistance * CamDistHunterLookAtFloorBodySpeedMultiplier;
+            return FramingTransposer.m_CameraDistance * CamDistFloorBodySpeedMultiplier;
         }
 
         public void SetStopLookAt(bool isSetToStop)
         {
-            IsHunterLookAtFloorBodySetToStop = isSetToStop;
+            IsFloorBodySetToStop = isSetToStop;
         }
     }
 }
