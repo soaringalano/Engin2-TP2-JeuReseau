@@ -27,24 +27,26 @@ namespace Mirror
 
 
         [field: Header("HunterLookAtFloorBody controls Settings")]
-        private float FloorBodyMinTorque { get; set; } = 1000.0f;
-        private float FloorBodyMaxTorque { get; set; } = 5000.0f;
-        private float FloorBodyMinVelocity { get; set; } = 40.0f;
-        private float FloorBodyMaxVelocity { get; set; } = 90.0f;
-        private float FloorBodyCurrentMaxVelocity { get; set; } = 0f;
-        private bool IsFloorBodySetToStop { get; set; } = false;
-        private float FloorBodyDecelerationRate { get; set; } = 0.2f;
-        private float CamDistFloorBodySpeedMultiplier { get; set; } = 0.1f;
+        //[field: SerializeField] private float FloorBodyMinTorque { get; set; } = 1000.0f;
+        //[field: SerializeField] private float FloorBodyMaxTorque { get; set; } = 5000.0f;
+        //[field: SerializeField] private float AccelerationValue { get; set; } = 25f;
+        //private float AccelerationRunningValue { get; set; } = 10.0f;
+        private float FloorBodyMinSpeed { get; set; } = 70.0f; 
+        private float FloorBodyMaxSpeed { get; set; } = 150.0f;
+        private float FloorBodyCurrentMaxSpeed { get; set; } = 100f;
+        [field: SerializeField] private bool IsFloorBodySetToStop { get; set; } = false;
+        [field: SerializeField] private float FloorBodyDecelerationRate { get; set; } = 0.2f;
+        [field: SerializeField] private float CamDistFloorBodySpeedMultiplier { get; set; } = 0.1f;
 
 
         [field: Header("Scrolling Settings")]
-        private float ScrollSpeed { get; set; } = 200.0f;
-        private float MinCamDist { get; set; } = 20.0f;
-        private float MaxCamDist { get; set; } = 80.0f;
-        private float MinCamFOV { get; set; } = 1.0f;
-        private float MaxCamFOV { get; set; } = 90.0f;
-        private float ScrollSmoothDampTime { get; set; } = 0.01f;
-        private float FOVmoothDampTime { get; set; } = 0.4f;
+        [field: SerializeField] private float ScrollSpeed { get; set; } = 200.0f;
+        [field: SerializeField] private float MinCamDist { get; set; } = 30.0f;
+        [field: SerializeField] private float MaxCamDist { get; set; } = 80.0f;
+        [field: SerializeField] private float MinCamFOV { get; set; } = 1.0f;
+        [field: SerializeField] private float MaxCamFOV { get; set; } = 90.0f;
+        [field: SerializeField] private float ScrollSmoothDampTime { get; set; } = 0.01f;
+        [field: SerializeField] private float FOVmoothDampTime { get; set; } = 0.4f;
 
         [field: Header("Rotating PLatform Settings")]
         [field: SerializeField] public GameObject TerrainPlane { get; set; }
@@ -54,7 +56,7 @@ namespace Mirror
         private Vector3 m_currentRotation = Vector3.zero;
 
         [field: Header("Moving Settings")]
-        private Vector3 CurrentDirectionalInput { get; set; } = Vector3.zero;
+        private Vector2 CurrentDirectionalInputs { get; set; } = Vector3.zero;
         public bool IsInitialized { get; set; } = false;
 
         protected override void CreatePossibleStates()
@@ -72,7 +74,7 @@ namespace Mirror
             {
                 return;
             }
-            FloorBodyCurrentMaxVelocity = FloorBodyMinTorque;
+            FloorBodyCurrentMaxSpeed = FloorBodyMinSpeed;
             RB = GetComponentInChildren<Rigidbody>();
             if (RB != null) Debug.Log("Hunter RigidBody found!");
             else Debug.LogError("Hunter RigidBody not found!");
@@ -102,6 +104,7 @@ namespace Mirror
                 CinemachinePOVMaxSpeedHorizontal = CinemachinePOV.m_HorizontalAxis.m_MaxSpeed;
                 CinemachinePOVMaxSpeedVertical = CinemachinePOV.m_VerticalAxis.m_MaxSpeed;
                 FramingTransposer = VirtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
+                FramingTransposer.m_CameraDistance = MaxCamDist;
             }
             else Debug.LogError("CinemachinePOV not found!");
 
@@ -129,34 +132,52 @@ namespace Mirror
             m_currentState.OnEnter();
         }
 
-        public void FixedRefreshDirectionalInput()
+        public void SetDirectionalInputs()
         {
-            Vector3 direction = new Vector3();
+            //Vector3 direction = new Vector3();
+
+            //if (Input.GetKey(KeyCode.W))
+            //{
+            //    direction += Camera.transform.TransformDirection(1, 0, 0);
+            //}
+            //if (Input.GetKey(KeyCode.A))
+            //{
+            //    direction += Camera.transform.TransformDirection(0, 0, 1);
+            //}
+            //if (Input.GetKey(KeyCode.S))
+            //{
+            //    direction += Camera.transform.TransformDirection(-1, 0, 0);
+            //}
+            //if (Input.GetKey(KeyCode.D))
+            //{
+            //    direction += Camera.transform.TransformDirection(0, 0, -1);
+            //}
+
+            //if (direction.magnitude > 0)
+            //{
+            //    CurrentDirectionalInputs = direction;
+            //}
+            //else
+            //{
+            //    CurrentDirectionalInputs = Vector3.zero;
+            //}
+            CurrentDirectionalInputs = Vector2.zero;
 
             if (Input.GetKey(KeyCode.W))
             {
-                direction += Camera.transform.TransformDirection(1, 0, 0);
-            }
-            if (Input.GetKey(KeyCode.A))
-            {
-                direction += Camera.transform.TransformDirection(0, 0, 1);
+                CurrentDirectionalInputs += Vector2.up;
             }
             if (Input.GetKey(KeyCode.S))
             {
-                direction += Camera.transform.TransformDirection(-1, 0, 0);
+                CurrentDirectionalInputs += Vector2.down;
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                CurrentDirectionalInputs += Vector2.left;
             }
             if (Input.GetKey(KeyCode.D))
             {
-                direction += Camera.transform.TransformDirection(0, 0, -1);
-            }
-
-            if (direction.magnitude > 0)
-            {
-                CurrentDirectionalInput = direction;
-            }
-            else
-            {
-                CurrentDirectionalInput = Vector3.zero;
+                CurrentDirectionalInputs += Vector2.right;
             }
         }
 
@@ -190,7 +211,7 @@ namespace Mirror
             {
                 return;
             }
-            FixedRefreshDirectionalInput();
+            SetDirectionalInputs();
             base.FixedUpdate();
         }
 
@@ -213,20 +234,31 @@ namespace Mirror
 
         public Vector3 GetCurrentDirectionalInput()
         {
-            return CurrentDirectionalInput;
+            return CurrentDirectionalInputs;
         }
 
-        public void FixedMoveByDirectionalInput()
+        //public void FixedMoveByDirectionalInput()
+        //{
+        //    EnableMouseTracking();
+        //    SetStopHunterLookAtFloorBody(false);
+
+        //    RB.AddTorque(GetShiftPressedSpeed() * GetCameraDistanceSpeed() * Time.fixedDeltaTime * CurrentDirectionalInput, ForceMode.Force);
+        //}
+
+        public void ApplyMovementsOnFloorFU()
         {
-            EnableMouseTracking();
-            SetStopHunterLookAtFloorBody(false);
-            //if (RB.velocity.magnitude > FloorBodyCurrentMaxVelocity) Debug.Log(RB.velocity.magnitude);
-            //    return;
-            //if (RB.velocity.magnitude <= FloorBodyCurrentMaxVelocity)
-            //Debug.Log("velma : " + RB.velocity.magnitude);
-            //Debug.Log("Force : " + GetShiftPressedSpeed() * GetCameraDistanceSpeed() * Time.fixedDeltaTime * CurrentDirectionalInput);
-            RB.AddTorque(GetShiftPressedSpeed() * GetCameraDistanceSpeed() * Time.fixedDeltaTime * CurrentDirectionalInput, ForceMode.Force);
-           
+            var vectorOnFloor = Vector3.ProjectOnPlane(Camera.transform.forward * CurrentDirectionalInputs.y, Vector3.up);
+
+            vectorOnFloor += Vector3.ProjectOnPlane(Camera.transform.right * CurrentDirectionalInputs.x, Vector3.up);
+            vectorOnFloor.Normalize();
+            //     var currentMaxSpeed = FloorBodyCurrentMaxSpeed;
+
+            RB.AddForce(vectorOnFloor * (GetShiftPressedSpeed() * GetCameraDistanceSpeed()), ForceMode.Acceleration);
+            //if (RB.velocity.magnitude > currentMaxSpeed)
+            //{
+            //    RB.velocity = RB.velocity.normalized;
+            //    RB.velocity *= currentMaxSpeed;
+            //}
         }
 
         public void SetCurrentRotation(float currentRotationX, float currentRotationZ)
@@ -333,12 +365,12 @@ namespace Mirror
         {
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                FloorBodyCurrentMaxVelocity = FloorBodyMaxVelocity;
-                return FloorBodyMaxTorque;
+                FloorBodyCurrentMaxSpeed = FloorBodyMaxSpeed;
+                return FloorBodyMaxSpeed;
             }
 
-            FloorBodyCurrentMaxVelocity = FloorBodyMinVelocity;
-            return FloorBodyMinTorque;
+            FloorBodyCurrentMaxSpeed = FloorBodyMinSpeed;
+            return FloorBodyMinSpeed;
         }
 
         public float GetCameraDistanceSpeed()

@@ -52,7 +52,8 @@ namespace Mirror
 
         public override void OnFixedUpdate()
         {
-            m_stateMachine.FixedMoveByDirectionalInput();
+            //m_stateMachine.FixedMoveByDirectionalInput();
+            m_stateMachine.ApplyMovementsOnFloorFU();
         }
     }
 }

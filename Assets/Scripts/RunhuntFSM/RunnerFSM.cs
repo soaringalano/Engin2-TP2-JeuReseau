@@ -15,6 +15,7 @@ namespace Mirror
         public RunnerFloorTrigger FloorTrigger { get; private set; }
 
         private float AccelerationValue { get; set; } = 25f;
+        private float AccelerationRunningValue { get; set; } = 10.0f;
         private float MaxForwardVelocity { get; set; } = 6f;
         private float MaxSidewaysVelocity { get; set; } = 4f;
         private float MaxBackwardVelocity { get; set; } = 3f;
@@ -33,7 +34,6 @@ namespace Mirror
         public Animator Animator { get; private set; }
         private Vector2 CurrentDirectionalInputs { get; set; }
         private float AnimatorRunningValue { get; set; } = 0.5f; // Has to stay between 0.5 and 1
-        private float AccelerationRunningValue { get; set; } = 10.0f;
 
         public bool m_isInRagdoll = false;
 
@@ -43,7 +43,7 @@ namespace Mirror
         {
             m_possibleStates = new List<RunnerState>();
             m_possibleStates.Add(new RunnerCharacterSelectionState());
-            m_possibleStates.Add(new FreeState());
+            m_possibleStates.Add(new RunnerFreeState());
             m_possibleStates.Add(new JumpState());
             m_possibleStates.Add(new DoubleJumpState());
             m_possibleStates.Add(new RunState());

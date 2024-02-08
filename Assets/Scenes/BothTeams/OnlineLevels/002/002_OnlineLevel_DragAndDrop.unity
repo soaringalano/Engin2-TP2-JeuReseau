@@ -131,6 +131,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 643938473274239124, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 119.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 700525614881534473, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 119.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1418524531298870426, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
       propertyPath: sceneId
       value: 1112759149
@@ -187,7 +195,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 678758227768635827, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+    - {fileID: 4364343580963174904, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+    - {fileID: 6538072835152033854, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+    - {fileID: 6001635191633130930, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+    - {fileID: 8846404814334855882, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+    - {fileID: 7709412599534383493, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

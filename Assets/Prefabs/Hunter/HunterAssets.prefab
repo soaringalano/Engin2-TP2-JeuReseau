@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 24373835584756242}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.04, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -121,7 +121,7 @@ Transform:
   m_GameObject: {fileID: 6565551724579044330}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.61620015, y: 1.6217492, z: 2.2888536}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -164,6 +164,16 @@ MonoBehaviour:
   <OfflineCamera>k__BackingField: {fileID: 0}
   <OfflineVirtualCamera>k__BackingField: {fileID: 0}
   <HunterLookAtFloorBody>k__BackingField: {fileID: 4955299921843428613}
+  <IsFloorBodySetToStop>k__BackingField: 0
+  <FloorBodyDecelerationRate>k__BackingField: 0.2
+  <CamDistFloorBodySpeedMultiplier>k__BackingField: 0.1
+  <ScrollSpeed>k__BackingField: 200
+  <MinCamDist>k__BackingField: 30
+  <MaxCamDist>k__BackingField: 80
+  <MinCamFOV>k__BackingField: 1
+  <MaxCamFOV>k__BackingField: 90
+  <ScrollSmoothDampTime>k__BackingField: 0.01
+  <FOVmoothDampTime>k__BackingField: 0.4
   <TerrainPlane>k__BackingField: {fileID: 0}
   <RotationSpeed>k__BackingField: 0.1
   <MaxRotationAngle>k__BackingField: 15
