@@ -8,7 +8,9 @@ namespace Mirror
     {
         public override bool CanEnter(IState currentState)
         {
-            return m_stateMachine.GetCurrentDirectionalInput().magnitude > 0;
+            //Debug.Log("magnitude: " + m_stateMachine.GetCurrentDirectionalInput().magnitude);
+            //return m_stateMachine.GetCurrentDirectionalInput().magnitude > 0;
+            return true;
         }
 
         public override bool CanExit()
@@ -37,6 +39,14 @@ namespace Mirror
         public override void OnUpdate()
         {
             m_stateMachine.EnableMouseTracking();
+
+            if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.A) &&
+                !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D))
+            {
+                //Debug.Log("No key pressed.");
+                m_stateMachine.SetStopLookAt(true);
+            }
+
             base.OnUpdate();
         }
 

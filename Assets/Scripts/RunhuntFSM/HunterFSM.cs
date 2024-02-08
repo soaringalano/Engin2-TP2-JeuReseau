@@ -48,8 +48,8 @@ namespace Mirror
 
         [field: Header("Rotating PLatform Settings")]
         [field: SerializeField] public GameObject TerrainPlane { get; set; }
-        [field: SerializeField] private float RotationSpeed { get; set; } = 0f;
-        [field: SerializeField] private float MaxRotationAngle { get; set; } = 15f;
+        [field: SerializeField] private float RotationSpeed { get; set; } = 0.01f;
+        [field: SerializeField] private float MaxRotationAngle { get; set; } = 5f;
         private Vector3 PreviousMousePosition { get; set; }
         private Vector3 m_currentRotation = Vector3.zero;
 
@@ -223,8 +223,8 @@ namespace Mirror
             //if (RB.velocity.magnitude > FloorBodyCurrentMaxVelocity) Debug.Log(RB.velocity.magnitude);
             //    return;
             //if (RB.velocity.magnitude <= FloorBodyCurrentMaxVelocity)
-            Debug.Log("velma : " + RB.velocity.magnitude);
-            Debug.Log("Force : " + GetShiftPressedSpeed() * GetCameraDistanceSpeed() * Time.fixedDeltaTime * CurrentDirectionalInput);
+            //Debug.Log("velma : " + RB.velocity.magnitude);
+            //Debug.Log("Force : " + GetShiftPressedSpeed() * GetCameraDistanceSpeed() * Time.fixedDeltaTime * CurrentDirectionalInput);
             RB.AddTorque(GetShiftPressedSpeed() * GetCameraDistanceSpeed() * Time.fixedDeltaTime * CurrentDirectionalInput, ForceMode.Force);
            
         }

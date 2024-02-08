@@ -11,7 +11,7 @@ namespace Mirror
 
         public override bool CanExit()
         {
-            if (!Input.GetKey(KeyCode.Space)) Debug.Log("Space not pressed");
+            //if (!Input.GetKey(KeyCode.Space)) Debug.Log("Space not pressed");
             //if (Input.GetKeyUp(KeyCode.Space)) Debug.Log("Space released");
             return (Input.GetKeyUp(KeyCode.Space) || !Input.GetKey(KeyCode.Space));
         }
