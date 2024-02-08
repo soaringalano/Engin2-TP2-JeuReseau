@@ -32,6 +32,10 @@ namespace Mirror
 
         public override bool CanEnter(IState currentState)
         {
+            if (currentState is RagdollState)
+            {
+                return false;
+            }
             if (m_sceneRef == null) Debug.LogError("m_sceneRef null");
             if (m_sceneRef.characterSelectionObject == null) Debug.LogError("characterSelectionObject null");
 

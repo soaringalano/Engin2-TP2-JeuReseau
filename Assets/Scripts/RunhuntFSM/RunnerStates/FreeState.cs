@@ -7,6 +7,10 @@ namespace Mirror
 
         public override bool CanEnter(IState currentState)
         {
+            if (currentState is RagdollState)
+            {
+                return false;
+            }
             return m_stateMachine.FloorTrigger.IsOnFloor;
         }
 

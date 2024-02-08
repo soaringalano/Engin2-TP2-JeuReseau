@@ -6,6 +6,10 @@ namespace Mirror
     {
         public override bool CanEnter(IState currentState)
         {
+            if (currentState is RagdollState)
+            {
+                return false;
+            }
             // if current stamina does not support this action, then don't allow to enter
             if (m_stateMachine.MustRest(m_stateMachine.StaminaLoseSpeedInDoubleJump))
             {

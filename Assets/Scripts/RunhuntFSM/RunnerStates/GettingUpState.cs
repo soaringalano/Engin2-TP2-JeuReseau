@@ -8,7 +8,7 @@ namespace Mirror
         {
             Debug.Log("Enter state: GettingUpState\n");
 
-            m_stateMachine.Jump();
+            //m_stateMachine.Jump();
         }
 
         public override void OnExit()
@@ -29,12 +29,9 @@ namespace Mirror
         public override bool CanEnter(IState currentState)
         {
             //This must be run in Update absolutely
-            if (m_stateMachine.FloorTrigger.IsOnFloor)
+            if (currentState is RagdollState)
             {
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    return true;
-                }
+                return true;
             }
             return false;
         }
