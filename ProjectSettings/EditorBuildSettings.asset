@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/BothTeams/OnlineLevels/002_OnlineLevela.unity
-    guid: 881d675b244d56448b65e8127ec4722b
+  - enabled: 1
+    path: Assets/Scenes/BothTeams/OnlineLevels/002/002_OnlineLevel_DragAndDrop.unity
+    guid: 924bd959d7c0d0a44a214c2b163dabf6
   m_configObjects: {}

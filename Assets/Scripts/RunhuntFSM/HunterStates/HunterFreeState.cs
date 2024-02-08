@@ -10,7 +10,8 @@ namespace Mirror
         {
             //Debug.Log("magnitude: " + m_stateMachine.GetCurrentDirectionalInput().magnitude);
             //return m_stateMachine.GetCurrentDirectionalInput().magnitude > 0;
-            return true;
+            return (Input.GetMouseButton(1) && Input.GetKey(KeyCode.Space) == false) 
+                || (Input.GetKey(KeyCode.Space) == false);
         }
 
         public override bool CanExit()

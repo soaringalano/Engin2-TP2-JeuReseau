@@ -27,31 +27,27 @@ namespace Mirror
 
 
         [field: Header("HunterLookAtFloorBody controls Settings")]
-        //[field: SerializeField] private float FloorBodyMinTorque { get; set; } = 1000.0f;
-        //[field: SerializeField] private float FloorBodyMaxTorque { get; set; } = 5000.0f;
-        //[field: SerializeField] private float AccelerationValue { get; set; } = 25f;
-        //private float AccelerationRunningValue { get; set; } = 10.0f;
         private float FloorBodyMinSpeed { get; set; } = 70.0f; 
         private float FloorBodyMaxSpeed { get; set; } = 150.0f;
         private float FloorBodyCurrentMaxSpeed { get; set; } = 100f;
-        [field: SerializeField] private bool IsFloorBodySetToStop { get; set; } = false;
-        [field: SerializeField] private float FloorBodyDecelerationRate { get; set; } = 0.2f;
-        [field: SerializeField] private float CamDistFloorBodySpeedMultiplier { get; set; } = 0.1f;
+        private bool IsFloorBodySetToStop { get; set; } = false;
+        private float FloorBodyDecelerationRate { get; set; } = 0.2f;
+        private float CamDistFloorBodySpeedMultiplier { get; set; } = 0.1f;
 
 
         [field: Header("Scrolling Settings")]
-        [field: SerializeField] private float ScrollSpeed { get; set; } = 200.0f;
-        [field: SerializeField] private float MinCamDist { get; set; } = 30.0f;
-        [field: SerializeField] private float MaxCamDist { get; set; } = 80.0f;
-        [field: SerializeField] private float MinCamFOV { get; set; } = 1.0f;
-        [field: SerializeField] private float MaxCamFOV { get; set; } = 90.0f;
-        [field: SerializeField] private float ScrollSmoothDampTime { get; set; } = 0.01f;
-        [field: SerializeField] private float FOVmoothDampTime { get; set; } = 0.4f;
+        private float ScrollSpeed { get; set; } = 200.0f;
+        private float MinCamDist { get; set; } = 30.0f;
+        private float MaxCamDist { get; set; } = 80.0f;
+        private float MinCamFOV { get; set; } = 1.0f;
+        private float MaxCamFOV { get; set; } = 90.0f;
+        private float ScrollSmoothDampTime { get; set; } = 0.01f;
+        private float FOVmoothDampTime { get; set; } = 0.4f;
 
         [field: Header("Rotating PLatform Settings")]
         [field: SerializeField] public GameObject TerrainPlane { get; set; }
-        [field: SerializeField] private float RotationSpeed { get; set; } = 0.01f;
-        [field: SerializeField] private float MaxRotationAngle { get; set; } = 5f;
+        private float RotationSpeed { get; set; } = 0.01f;
+        private float MaxRotationAngle { get; set; } = 5f;
         private Vector3 PreviousMousePosition { get; set; }
         private Vector3 m_currentRotation = Vector3.zero;
 
@@ -134,33 +130,6 @@ namespace Mirror
 
         public void SetDirectionalInputs()
         {
-            //Vector3 direction = new Vector3();
-
-            //if (Input.GetKey(KeyCode.W))
-            //{
-            //    direction += Camera.transform.TransformDirection(1, 0, 0);
-            //}
-            //if (Input.GetKey(KeyCode.A))
-            //{
-            //    direction += Camera.transform.TransformDirection(0, 0, 1);
-            //}
-            //if (Input.GetKey(KeyCode.S))
-            //{
-            //    direction += Camera.transform.TransformDirection(-1, 0, 0);
-            //}
-            //if (Input.GetKey(KeyCode.D))
-            //{
-            //    direction += Camera.transform.TransformDirection(0, 0, -1);
-            //}
-
-            //if (direction.magnitude > 0)
-            //{
-            //    CurrentDirectionalInputs = direction;
-            //}
-            //else
-            //{
-            //    CurrentDirectionalInputs = Vector3.zero;
-            //}
             CurrentDirectionalInputs = Vector2.zero;
 
             if (Input.GetKey(KeyCode.W))
