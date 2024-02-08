@@ -17,7 +17,7 @@ namespace Mirror
 
         public override void OnEnter()
         {
-            //Debug.Log("Enter state: PowerUpState\n");
+            Debug.Log("Enter state: PowerUpState\n");
             m_stateMachine.SetStopLookAt(true);
         }
 

@@ -17,6 +17,7 @@ namespace Mirror
 
         private Rigidbody RB { get; set; }
         private Transform HunterTransform { get; set; }
+        [field: SerializeField] public GameObject MinesPrefab { get; set; }
         private CinemachinePOV CinemachinePOV { get; set; }
         private CinemachineFramingTransposer FramingTransposer { get; set; }
         private float CinemachinePOVMaxSpeedHorizontal { get; set; }
@@ -62,6 +63,7 @@ namespace Mirror
             m_possibleStates.Add(new HunterFreeState());
             m_possibleStates.Add(new PowerUpState());
             m_possibleStates.Add(new PlateformRotationState());
+            m_possibleStates.Add(new DragAndDropState());
         }
 
         public void Initialize()

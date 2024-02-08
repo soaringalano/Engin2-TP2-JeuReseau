@@ -19,7 +19,7 @@ namespace Mirror
 
         public override void OnEnter()
         {
-            //Debug.Log("Enter state: HunterFreeState\n");
+            Debug.Log("Enter state: HunterFreeState\n");
             m_stateMachine.SetStopLookAt(false);
         }
 
