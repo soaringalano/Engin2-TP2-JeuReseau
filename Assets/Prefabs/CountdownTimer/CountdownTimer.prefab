@@ -226,8 +226,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncDirection: 0
   syncMode: 0
-  syncInterval: 0
-  <m_currentTimeInSecond>k__BackingField: 180
+  syncInterval: 0.2
+  m_currentTimeInSecond: 180
   <m_countdownTimerTextMesh>k__BackingField: {fileID: 102022348236949318}
 --- !u!1 &3024183963867786914
 GameObject:

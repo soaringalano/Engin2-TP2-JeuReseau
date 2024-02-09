@@ -54,7 +54,7 @@ namespace Runhunt.Utils
             return objectsInScene;
         }
 
-        public static string GetTimeAsString(float time)
+        public static string GetTimeAsString(double time)
         {
             TimeSpan ret = TimeSpan.FromSeconds(time);
 

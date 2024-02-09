@@ -9,10 +9,15 @@ using UnityEngine;
 public class CountdownTimerController : NetworkBehaviour
 {
 
-    [SyncVar]
-    public float m_currentTimeInSecond = 180;
+    [SyncVar(hook = nameof(OnTimeChanged))]
+    public double m_serverTime = 180;
 
-    [field: SerializeField] public GameObject m_countdownTimerTextMesh { get; set; }
+
+    private double m_clientTime;
+
+    [SerializeField] public GameObject m_countdownTimerTextMesh;
+
+    private TextMeshProUGUI m_countdownTimerText;
 
     void Awake()
     {
@@ -21,33 +26,52 @@ public class CountdownTimerController : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if(isLocalPlayer)
+        {
+            m_countdownTimerText = m_countdownTimerTextMesh.GetComponent<TextMeshProUGUI>();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*if (!isServer)
+        if (!isLocalPlayer)
         {
             return;
-        }*/
-        string timetext = GameObjectHelper.GetTimeAsString(m_currentTimeInSecond);
-        m_countdownTimerTextMesh.GetComponent<TextMeshProUGUI>().SetText(timetext);
+        }
+        string timetext;
+        if(isServer)
+        {
+            timetext = GameObjectHelper.GetTimeAsString(m_serverTime);
+        }
+        else
+        {
+            timetext = GameObjectHelper.GetTimeAsString(m_clientTime);
+        }
+        m_countdownTimerText.SetText(timetext);
     }
 
     void FixedUpdate()
     {
-        /*if (!isServer)
-        { 
-            return; 
-        }*/
+        if (isLocalPlayer)
+        {
+            if (isServer)
+            {
+                if (m_serverTime > 0)
+                {
+                    m_serverTime -= Time.fixedDeltaTime;
+                }
+            }
+            else if (isClient)
+            {
 
-        if(m_currentTimeInSecond >  0)
-            m_currentTimeInSecond -= Time.fixedDeltaTime;
+            }
+        }
     }
 
-    public bool TimesUp()
+    public void OnTimeChanged(double oldTime, double newTime)
     {
-        return m_currentTimeInSecond <= 0;
+        m_clientTime += newTime;
     }
 
 }
