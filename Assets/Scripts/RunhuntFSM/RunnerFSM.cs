@@ -13,9 +13,9 @@ namespace Mirror
         public Camera Camera { get; set; }
         private Rigidbody RB { get; set; }
         public RunnerFloorTrigger FloorTrigger { get; private set; }
-        public Transform Scene { get; private set; }
 
         private float AccelerationValue { get; set; } = 25f;
+        private float AccelerationRunningValue { get; set; } = 10.0f;
         private float MaxForwardVelocity { get; set; } = 6f;
         private float MaxSidewaysVelocity { get; set; } = 4f;
         private float MaxBackwardVelocity { get; set; } = 3f;
@@ -34,15 +34,16 @@ namespace Mirror
         public Animator Animator { get; private set; }
         private Vector2 CurrentDirectionalInputs { get; set; }
         private float AnimatorRunningValue { get; set; } = 0.5f; // Has to stay between 0.5 and 1
-        private float AccelerationRunningValue { get; set; } = 10.0f;
 
         public bool m_isInRagdoll = false;
+
+        private bool IsInitialized { get; set; } = false;
 
         protected override void CreatePossibleStates()
         {
             m_possibleStates = new List<RunnerState>();
-            m_possibleStates.Add(new CharacterSelectionState());
-            m_possibleStates.Add(new FreeState());
+            m_possibleStates.Add(new RunnerCharacterSelectionState());
+            m_possibleStates.Add(new RunnerFreeState());
             m_possibleStates.Add(new JumpState());
             m_possibleStates.Add(new DoubleJumpState());
             m_possibleStates.Add(new RunState());
@@ -52,31 +53,11 @@ namespace Mirror
 
         protected override void Awake()
         {
-            //Debug.Log("Runner Awake()");
-            //Transform staminaBarTransform = RunnerUI.transform.GetChild(1);
-            //if (staminaBarTransform == null) Debug.LogError("Stamina Bar not found!");
-            //if (staminaBarTransform.gameObject.name != "StaminaBar") Debug.LogError("The GameObject is not StaminaBar! Name is: " + staminaBarTransform.gameObject.name);
-
-            //StaminaBarSlider = staminaBarTransform.transform.GetChild(1);
-            //if (StaminaBarSlider == null) Debug.LogError("Stamina Bar Slider not found!");
-            //if (StaminaBarSlider.gameObject.name != "StaminaBar_Slider") Debug.LogError("The GameObject is not StaminaBar! Name is: " + StaminaBarSlider.gameObject.name);
-
-            Animator = GetComponent<Animator>();
-            if (Animator == null) Debug.LogError("Runner animator not found in self!");
-
-            RB = GetComponentInChildren<Rigidbody>();
-            if (RB == null) Debug.LogError("Runner RigidBody not found in children!");
-            if (RB.gameObject.name != "RunnerPrefab") Debug.LogError("The GameObject RigidBody might not be the Runner's RB! Name is: " + RB.gameObject.name);
-
-            FloorTrigger = GetComponentInChildren<RunnerFloorTrigger>();
-            if (FloorTrigger == null) Debug.LogError("FloorTrigger not found in children!");
-
             base.Awake();
         }
 
         protected override void Start()
         {
-
             Debug.Log("Runner Start()");
             Transform staminaBarTransform = RunnerUI.transform.GetChild(1);
             if (staminaBarTransform == null) Debug.LogError("Stamina Bar not found!");
@@ -95,9 +76,6 @@ namespace Mirror
 
             FloorTrigger = GetComponentInChildren<RunnerFloorTrigger>();
             if (FloorTrigger == null) Debug.LogError("FloorTrigger not found in children!");
-
-            Scene = GetScene().transform;
-            if (Scene == null) Debug.LogError("Scene not found!");
      
             foreach (RunnerState state in m_possibleStates)
             {
@@ -107,41 +85,8 @@ namespace Mirror
             base.Start();
             m_currentState = m_possibleStates[0];
             m_currentState.OnEnter();
-        }
 
-        private void StartRagdoll(HunterMineExplosion explosion)
-        {
-            Debug.Log("ExplosionSystem here");
-
-            if (explosion != null)
-            {
-                m_isInRagdoll = true;
-                StartCoroutine(ResetBool());
-            }          
-        }
-
-        IEnumerator ResetBool()
-        {
-            yield return new WaitForSeconds(1.0f);
-            m_isInRagdoll = false;
-            Debug.Log("bool reset");
-        }
-
-        public GameObject GetScene()
-        {
-            // Source : https://discussions.unity.com/t/find-gameobjects-in-specific-scene-only/163901
-            GameObject[] gameObjects = gameObject.scene.GetRootGameObjects();
-            GameObject sceneGO = null;
-
-            foreach (GameObject _gameObject in gameObjects)
-            {
-                if (_gameObject.name != "Scene") continue;
-
-                sceneGO = _gameObject;
-                break;
-            }
-
-            return sceneGO;
+            IsInitialized = true;
         }
 
         protected override void Update()
@@ -327,6 +272,24 @@ namespace Mirror
                 return true;
             }
             return false;
+        }
+
+        private void StartRagdoll(HunterMineExplosion explosion)
+        {
+            Debug.Log("ExplosionSystem here");
+
+            if (explosion != null)
+            {
+                m_isInRagdoll = true;
+                StartCoroutine(ResetBool());
+            }
+        }
+
+        IEnumerator ResetBool()
+        {
+            yield return new WaitForSeconds(1.0f);
+            m_isInRagdoll = false;
+            Debug.Log("bool reset");
         }
     }
 }
