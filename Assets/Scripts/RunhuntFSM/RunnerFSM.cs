@@ -235,6 +235,11 @@ namespace Mirror
             m_isJumping = true;
 
         }
+        public void GetUp()
+        {
+            Animator.SetTrigger("IsGettingUp");
+        }
+
         public void DoubleJump()
         {
             RB.AddForce(Vector3.up * JumpIntensity, ForceMode.Acceleration);
