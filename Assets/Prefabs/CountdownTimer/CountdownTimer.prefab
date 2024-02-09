@@ -188,7 +188,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6544247112236815178}
-  - component: {fileID: 2688943602781332543}
   m_Layer: 5
   m_Name: CountdownTimer
   m_TagString: Untagged
@@ -212,23 +211,6 @@ Transform:
   - {fileID: 2149206343799578245}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2688943602781332543
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2764455631531838769}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cbf0de5fbaf04e4fae9215f406ac9a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0.2
-  m_serverTime: 180
-  m_countdownTimerTextMesh: {fileID: 102022348236949318}
 --- !u!1 &3024183963867786914
 GameObject:
   m_ObjectHideFlags: 0

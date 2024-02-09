@@ -13,7 +13,7 @@ public class CountdownTimerController : NetworkBehaviour
     public double m_serverTime = 180;
 
 
-    private double m_clientTime;
+    private double m_clientTime = 0;
 
     [SerializeField] public GameObject m_countdownTimerTextMesh;
 
@@ -28,6 +28,7 @@ public class CountdownTimerController : NetworkBehaviour
     {
         if(isLocalPlayer)
         {
+            Debug.Log("is local player on start");
             m_countdownTimerText = m_countdownTimerTextMesh.GetComponent<TextMeshProUGUI>();
         }
     }
@@ -39,14 +40,17 @@ public class CountdownTimerController : NetworkBehaviour
         {
             return;
         }
+        Debug.Log("is local player on update");
         string timetext;
         if(isServer)
         {
             timetext = GameObjectHelper.GetTimeAsString(m_serverTime);
+            Debug.Log("Server is updating time display" + timetext);
         }
         else
         {
             timetext = GameObjectHelper.GetTimeAsString(m_clientTime);
+            Debug.Log("Client is updating time display" + timetext);
         }
         m_countdownTimerText.SetText(timetext);
     }
@@ -55,11 +59,13 @@ public class CountdownTimerController : NetworkBehaviour
     {
         if (isLocalPlayer)
         {
+            Debug.Log("is local player on fixedupdate");
             if (isServer)
             {
                 if (m_serverTime > 0)
                 {
                     m_serverTime -= Time.fixedDeltaTime;
+                    RPCSyncTime(m_serverTime);
                 }
             }
             else if (isClient)
@@ -71,7 +77,25 @@ public class CountdownTimerController : NetworkBehaviour
 
     public void OnTimeChanged(double oldTime, double newTime)
     {
-        m_clientTime += newTime;
+        if(isClientOnly)
+        {
+            Debug.Log("OnTimeChanged is local player ?:" + isLocalPlayer + " is server ?:" + isServer + " is client ?:" + isClient + " old time :" + oldTime + " new time :" + newTime);
+            m_clientTime = newTime;
+            Debug.Log("Server time : " + m_serverTime + " Client time : " + m_clientTime);
+
+        }
+    }
+
+    [ClientRpc]
+    public void RPCSyncTime(double time)
+    {
+        Debug.Log("RPCSyncTime is local player ?:" + isLocalPlayer + " is server ?:" + isServer + " is client ?:" + isClient + " time :" + time);
+
+        if (isLocalPlayer && isClientOnly)
+        {
+            m_clientTime = time;
+            Debug.Log("Server time : " + m_serverTime + " Client time : " + m_clientTime);
+        }
     }
 
 }
