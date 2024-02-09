@@ -76,12 +76,13 @@ namespace Mirror
 
             FloorTrigger = GetComponentInChildren<RunnerFloorTrigger>();
             if (FloorTrigger == null) Debug.LogError("FloorTrigger not found in children!");
-     
+
             foreach (RunnerState state in m_possibleStates)
             {
                 state.OnStart(this);
             }
             HunterMineExplosion.OnExplosionEvent += StartRagdoll;
+            BallHunter.BallCollition += StartCollitionRagdoll;
             base.Start();
             m_currentState = m_possibleStates[0];
             m_currentState.OnEnter();
@@ -284,6 +285,15 @@ namespace Mirror
             Debug.Log("ExplosionSystem here");
 
             if (explosion != null)
+            {
+                m_isInRagdoll = true;
+                StartCoroutine(ResetBool());
+            }
+        }
+
+        private void StartCollitionRagdoll(BallHunter collition)
+        {
+            if (collition != null)
             {
                 m_isInRagdoll = true;
                 StartCoroutine(ResetBool());
