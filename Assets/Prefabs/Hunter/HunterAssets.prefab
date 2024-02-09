@@ -99,7 +99,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3911071837641884416}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: HunterUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,6 +159,7 @@ Transform:
   m_Children:
   - {fileID: 4955299921843428613}
   - {fileID: 3282770716098063386}
+  - {fileID: 3911071837641884416}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6901326816560653269
@@ -196,19 +197,7 @@ MonoBehaviour:
   <OfflineCamera>k__BackingField: {fileID: 0}
   <OfflineVirtualCamera>k__BackingField: {fileID: 0}
   <HunterLookAtFloorBody>k__BackingField: {fileID: 4955299921843428613}
-  <IsFloorBodySetToStop>k__BackingField: 0
-  <FloorBodyDecelerationRate>k__BackingField: 0.2
-  <CamDistFloorBodySpeedMultiplier>k__BackingField: 0.1
-  <ScrollSpeed>k__BackingField: 200
-  <MinCamDist>k__BackingField: 30
-  <MaxCamDist>k__BackingField: 80
-  <MinCamFOV>k__BackingField: 1
-  <MaxCamFOV>k__BackingField: 90
-  <ScrollSmoothDampTime>k__BackingField: 0.01
-  <FOVmoothDampTime>k__BackingField: 0.4
   <TerrainPlane>k__BackingField: {fileID: 0}
-  <RotationSpeed>k__BackingField: 0.1
-  <MaxRotationAngle>k__BackingField: 15
 --- !u!114 &7453221913500065546
 MonoBehaviour:
   m_ObjectHideFlags: 0

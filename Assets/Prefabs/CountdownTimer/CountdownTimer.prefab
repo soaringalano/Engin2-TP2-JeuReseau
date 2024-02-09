@@ -189,7 +189,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6544247112236815178}
   - component: {fileID: 2688943602781332543}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CountdownTimer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -227,8 +227,8 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0.2
-  m_currentTimeInSecond: 180
-  <m_countdownTimerTextMesh>k__BackingField: {fileID: 102022348236949318}
+  m_serverTime: 180
+  m_countdownTimerTextMesh: {fileID: 102022348236949318}
 --- !u!1 &3024183963867786914
 GameObject:
   m_ObjectHideFlags: 0
