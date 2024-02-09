@@ -2,9 +2,8 @@
 
 namespace Mirror
 {
-    public class FreeState : RunnerState
+    public class RunnerFreeState : RunnerState
     {
-
         public override bool CanEnter(IState currentState)
         {
             if (currentState is RagdollState)
@@ -21,13 +20,14 @@ namespace Mirror
 
         public override void OnEnter()
         {
-            //Debug.Log("Enter state: FreeState\n");
+            Debug.Log("Enter state: FreeState\n");
             m_stateMachine.SetWalkingInput();
         }
 
         public override void OnExit()
         {
-            //Debug.Log("Exit state: FreeState\n");
+            Debug.Log("Exit state: FreeState\n");
+
         }
 
         public override void OnStart()
