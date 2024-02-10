@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_playablePrefabs:
   - {fileID: 0}
-  - {fileID: 56868658535408414, guid: 37f3a67c041af5a43b53f6c7978fdb4b, type: 3}
+  - {fileID: 56868658535408414, guid: fd3ea437a4f46a4469fee17b743e134e, type: 3}
   - {fileID: 6565551724579044330, guid: a8e6d2bdb3499d44fa322002f4bdd2ed, type: 3}
   m_characterTitles:
   - 

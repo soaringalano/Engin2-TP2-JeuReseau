@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -51,6 +52,13 @@ namespace Runhunt.Utils
                 objectsInScene.Add(gameObject);
             }
             return objectsInScene;
+        }
+
+        public static string GetTimeAsString(double time)
+        {
+            TimeSpan ret = TimeSpan.FromSeconds(time);
+
+            return ret.ToString("hh':'mm':'ss");
         }
 
     }

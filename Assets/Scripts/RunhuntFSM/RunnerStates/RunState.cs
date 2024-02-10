@@ -6,6 +6,10 @@ namespace Mirror
     {
         public override bool CanEnter(IState currentState)
         {
+            if (currentState is RagdollState)
+            {
+                return false;
+            }
             if (m_stateMachine.MustRest(m_stateMachine.StaminaLoseSpeedInRun))
             {
                 return false;
