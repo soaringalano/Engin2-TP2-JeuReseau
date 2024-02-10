@@ -45,7 +45,7 @@ public class CountdownTimerController : NetworkBehaviour
         if(isServer)
         {
             timetext = GameObjectHelper.GetTimeAsString(m_serverTime);
-            Debug.Log("Server is updating time display" + timetext);
+           // Debug.Log("Server is updating time display" + timetext);
         }
         else
         {
@@ -89,7 +89,7 @@ public class CountdownTimerController : NetworkBehaviour
     [ClientRpc]
     public void RPCSyncTime(double time)
     {
-        Debug.Log("RPCSyncTime is local player ?:" + isLocalPlayer + " is server ?:" + isServer + " is client ?:" + isClient + " time :" + time);
+       // Debug.Log("RPCSyncTime is local player ?:" + isLocalPlayer + " is server ?:" + isServer + " is client ?:" + isClient + " time :" + time);
 
         if (isLocalPlayer && isClientOnly)
         {

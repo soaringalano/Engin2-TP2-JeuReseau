@@ -123,6 +123,23 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &242066727 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2190601099870293364, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+  m_PrefabInstance: {fileID: 4825446373380609259}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &242066734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 242066727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aef56d6f43a5134d8dd42fa3b265f48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &725659968
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -271,7 +288,23 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 277530227858721725, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
       propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 277530227858721725, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 277530227858721725, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: m_IsKinematic
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 277530227858721725, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 277530227858721725, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 760152802362911945, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
       propertyPath: m_Layer
@@ -288,6 +321,14 @@ PrefabInstance:
     - target: {fileID: 2190601099870293364, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
       propertyPath: m_Layer
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2282850843233954336, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.2356
+      objectReference: {fileID: 0}
+    - target: {fileID: 2282850843233954336, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.3521
       objectReference: {fileID: 0}
     - target: {fileID: 2454374125170674874, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
       propertyPath: sceneId
@@ -353,12 +394,23 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8480709006853357778, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: m_Radius
+      value: 0.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 8480709006853357778, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 4567161065987244931, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
     - {fileID: 760152802362911945, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2190601099870293364, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 242066734}
   m_SourcePrefab: {fileID: 100100000, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
