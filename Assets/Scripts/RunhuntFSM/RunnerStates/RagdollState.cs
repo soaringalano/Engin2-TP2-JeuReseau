@@ -30,7 +30,7 @@ namespace Mirror
 
         public override bool CanEnter(IState currentState)
         {
-            if (m_stateMachine.m_isInRagdoll == true && m_stateMachine.FloorTrigger.ISDetectMine == true)
+            if (m_stateMachine.m_isInRagdoll == true && (m_stateMachine.FloorTrigger.ISDetectMine == true || m_stateMachine.BallCollition.IsBallDetected == true))
             {
                 return true;
             }
