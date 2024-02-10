@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 6681866067940792872}
   - component: {fileID: 6901326816560653269}
   - component: {fileID: 951193054216338233}
+  - component: {fileID: 348894751093289}
   - component: {fileID: 7453221913500065546}
   - component: {fileID: 4889030215161262300}
   - component: {fileID: 4049757006598413212}
@@ -163,9 +164,23 @@ MonoBehaviour:
   syncInterval: 0
   <OfflineCamera>k__BackingField: {fileID: 0}
   <OfflineVirtualCamera>k__BackingField: {fileID: 0}
-  <MinesPrefab>k__BackingField: {fileID: 0}
   <HunterLookAtFloorBody>k__BackingField: {fileID: 4955299921843428613}
-  <TerrainPlane>k__BackingField: {fileID: 0}
+--- !u!114 &348894751093289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6565551724579044330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d68baf7523ef9a2469c249094c07ab0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  m_prefab: {fileID: 7907876455901787764, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
 --- !u!114 &7453221913500065546
 MonoBehaviour:
   m_ObjectHideFlags: 0

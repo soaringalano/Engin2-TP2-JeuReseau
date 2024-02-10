@@ -1,37 +1,37 @@
+using Mirror;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Runhunt.Hunter
 {
-    public class HunterAbilities : MonoBehaviour
+    public class HunterPowerUpButton : MonoBehaviour
     {
-        [SerializeField]
-        private Image m_filler;
-        [SerializeField]
-        private Button m_button;
-        [SerializeField]
-        private float m_cooldown = 5.0f;
-        [SerializeField]
-        private bool m_isInCooldown = false;
-        [SerializeField]
-        private bool m_buttonclick = false;
+        protected HunterFSM m_stateMachine { get; set; }
+        [field: SerializeField] private Image m_filler { get; set; }
+        [field: SerializeField] private float m_cooldown { get; set; } = 5.0f;
+        [field: SerializeField] private bool m_isInCooldown { get; set; } = false;
+        [field: SerializeField] private bool m_buttonclick { get; set; } = false;
 
-        void Start()
+        virtual public void Start()
         {
+            m_stateMachine = GetComponentInParent<HunterFSM>();
             m_filler.fillAmount = 0.0f;
         }
 
-        private void Update()
+        virtual public void Update()
         {
             AbilitiesCooldown();
         }
 
-        public void OnUseButton()
+        virtual public void OnUseButton()
         {
+            Debug.Log("HunterPowerUpButton: OnUseButton.");
             if (m_isInCooldown == true)
             {
                 return;
             }
+
             m_buttonclick = true;
             AbilitiesCooldown();
         }

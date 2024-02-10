@@ -2,6 +2,7 @@ using Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Mirror;
+using Runhunt.Hunter;
 
 namespace Runhunt.ObjectSpawner
 {
@@ -11,6 +12,7 @@ namespace Runhunt.ObjectSpawner
         [field: SerializeField] private GameObject HunterUIPrefab { get; set; }
 
         private HunterFSM m_hunterFSM;
+        private HunterPowerUpButton m_hunterAbilities;
         private GameObject m_hunterCamAssetsGameObject;
         private Transform m_hunterTransform;
         private CinemachineVirtualCamera m_virtualCamera;
@@ -51,11 +53,11 @@ namespace Runhunt.ObjectSpawner
 
         protected override void GetNetworkedPlayerControls()
         {
-            Debug.Log("Get NetworkedHunterControls.");
+            Debug.Log("Get GetNetworkedPlayerControlsAndAbilities.");
             m_hunterFSM = GetComponent<HunterFSM>();
             if (m_hunterFSM == null)
             {
-                Debug.LogError("NetworkedRunnerMovement Not found!");
+                Debug.LogError("HunterFSM Not found!");
             }
         }
 

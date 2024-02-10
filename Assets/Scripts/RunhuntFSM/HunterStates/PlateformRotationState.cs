@@ -20,14 +20,17 @@ namespace Mirror
 
         public override void OnEnter()
         {
-            //Debug.Log("Enter state: PlateformRotationState\n");
-            m_stateMachine.EnterRotation();
+            Debug.Log("Enter state: PlateformRotationState");
+
+            m_stateMachine.DisableMouseTracking();
+            m_stateMachine.PreviousMousePosition = Input.mousePosition;
         }
 
         public override void OnExit()
         {
-            //Debug.Log("Exit state: PlateformRotationState\n");
-            m_stateMachine.ExitRotation();
+            Debug.Log("Exit state: PlateformRotationState");
+
+            m_stateMachine.EnableMouseTracking();
         }
 
         public override void OnStart()
