@@ -9,9 +9,9 @@ namespace Runhunt.Hunter
     {
         protected HunterFSM m_stateMachine { get; set; }
         [field: SerializeField] private Image m_filler { get; set; }
-        [field: SerializeField] private float m_cooldown { get; set; } = 5.0f;
-        [field: SerializeField] private bool m_isInCooldown { get; set; } = false;
-        [field: SerializeField] private bool m_buttonclick { get; set; } = false;
+        [field: SerializeField] protected float m_cooldown { get; set; } = 5.0f;
+        [field: SerializeField] public bool IsInCooldown { get; private set; } = false;
+        [field: SerializeField] private bool Buttonclick { get; set; } = false;
 
         virtual public void Start()
         {
@@ -27,32 +27,32 @@ namespace Runhunt.Hunter
         virtual public void OnUseButton()
         {
             Debug.Log("HunterPowerUpButton: OnUseButton.");
-            if (m_isInCooldown == true)
+            if (IsInCooldown == true)
             {
                 return;
             }
 
-            m_buttonclick = true;
+            Buttonclick = true;
             AbilitiesCooldown();
         }
 
         private void AbilitiesCooldown()
         {
-            if (m_buttonclick == true)
+            if (Buttonclick == true)
             {
-                m_buttonclick = false;
-                m_isInCooldown = true;
+                Buttonclick = false;
+                IsInCooldown = true;
                 m_filler.fillAmount = 1.0f;
             }
 
-            if (m_isInCooldown == true)
+            if (IsInCooldown == true)
             {
                 m_filler.fillAmount -= 1.0f / m_cooldown * Time.deltaTime;
 
                 if (m_filler.fillAmount <= 0.0f)
                 {
                     m_filler.fillAmount = 0.0f;
-                    m_isInCooldown = false;
+                    IsInCooldown = false;
                 }
             }
         }

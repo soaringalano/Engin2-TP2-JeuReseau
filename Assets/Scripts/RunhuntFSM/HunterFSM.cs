@@ -56,6 +56,7 @@ namespace Mirror
         public Vector3 PreviousMousePosition { get; set; }
         private Vector3 m_currentRotation = Vector3.zero;
         public bool IsDragging { get; set; } = false;
+        private MinePowerUpButton MinePowerUpButton { get; set; }
 
         [field: Header("Moving Settings")]
         private Vector2 CurrentDirectionalInputs { get; set; } = Vector3.zero;
@@ -78,6 +79,7 @@ namespace Mirror
                 return;
             }
             MinePool = GetComponent<HunterMinePool>();
+            MinePowerUpButton = GetComponentInChildren<MinePowerUpButton>();
             FloorBodyCurrentMaxSpeed = FloorBodyMinSpeed;
             RB = GetComponentInChildren<Rigidbody>();
             if (RB != null) Debug.Log("Hunter RigidBody found!");
@@ -332,28 +334,30 @@ namespace Mirror
         //}
 
         //[Command]
-        //public void CmdUpdatePosition(Vector3 newPosition)
-        //{
-        //    // Update the position on the server
-        //    MinesPrefab.transform.position = newPosition;
-        //    RpcUpdatePosition(newPosition);
-        //}
+        public void CmdUpdatePosition(Vector3 newPosition, GameObject mine)
+        {
+            // Update the position on the server
+            mine.transform.position = newPosition;
+            RpcUpdatePosition(newPosition, mine);
+        }
 
         //[ClientRpc]
-        //public void RpcUpdatePosition(Vector3 newPosition)
-        //{
-        //    // Update the position on all clients
-        //    MinesPrefab.transform.position = newPosition;
-        //}
+        public void RpcUpdatePosition(Vector3 newPosition, GameObject mine)
+        {
+            // Update the position on all clients
+            mine.transform.position = newPosition;
+        }
 
-        internal void GetMineFromPoolToPosition(Vector3 point)
+        internal GameObject GetMineFromPoolToPosition(Vector3 point)
         {
             Debug.Log("GetMineFromPoolToPosition");
             // Get a mine from the pool and set its position
             GameObject mine = MinePool.Get(point, Quaternion.identity);
-            if (mine == null) return;
+            //if (mine == null) Debug.LogError("Mine not found!");
+
             mine.SetActive(true);
             mine.transform.position = point;
+            return mine;
         }
     }
 }

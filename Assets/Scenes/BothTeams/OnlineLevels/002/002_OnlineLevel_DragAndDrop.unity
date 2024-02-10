@@ -147,6 +147,14 @@ PrefabInstance:
       propertyPath: sceneId
       value: 171588146
       objectReference: {fileID: 0}
+    - target: {fileID: 4363255935681496214, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: offsetX
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4363255935681496214, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: offsetY
+      value: 400
+      objectReference: {fileID: 0}
     - target: {fileID: 4567161065987244931, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
       propertyPath: m_IsActive
       value: 0

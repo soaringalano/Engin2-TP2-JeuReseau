@@ -7,7 +7,8 @@ namespace Mirror
     public class DragAndDropState : HunterState
     {
         private LayerMask m_raycastLayer;
-        private bool m_isMineSpawned = false;
+        private bool IsMineSpawned { get; set; } = false;
+        private GameObject CurrentMineGO { get; set; }
 
         public override bool CanEnter(IState currentState)
         {
@@ -18,7 +19,7 @@ namespace Mirror
 
         public override bool CanExit()
         {
-            return Input.GetMouseButtonUp(0) || m_isMineSpawned;
+            return Input.GetMouseButtonUp(0) || !m_stateMachine.IsDragging;
         }
 
         public override void OnEnter()
@@ -30,8 +31,9 @@ namespace Mirror
         public override void OnExit()
         {
             Debug.Log("Exit state: DragAndDropState");
+            IsMineSpawned = false;
             //m_stateMachine.SetStopLookAt(false);
-            m_isMineSpawned = false;
+            //IsMineSpawned = false;
         }
 
         public override void OnStart()
@@ -45,17 +47,29 @@ namespace Mirror
             m_stateMachine.DisableMouseTracking();
             base.OnUpdate();
 
+            RayCastMouseOnFloor();
+        }
+
+        private void RayCastMouseOnFloor()
+        {
             if (!m_stateMachine.IsDragging) return;
-            if (m_isMineSpawned) return;
+            //if (m_isMineSpawned) return;
             Debug.Log("OnUpdate() Is dragging");
 
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, m_raycastLayer))
             {
-                Debug.Log("Hit position: " + hit.point);
+                //Debug.Log("Hit position: " + hit.point);
                 //m_stateMachine.MinesPrefab = Object.Instantiate(m_stateMachine.MinesPrefab, hit.point, Quaternion.identity);
-                m_stateMachine.GetMineFromPoolToPosition(hit.point);
-                m_isMineSpawned = true;
+
+                if (!IsMineSpawned)
+                {
+                    CurrentMineGO = m_stateMachine.GetMineFromPoolToPosition(hit.point);
+                    IsMineSpawned = true;
+                    return;
+                }
+                
+                m_stateMachine.CmdUpdatePosition(hit.point, CurrentMineGO);
             }
         }
 
