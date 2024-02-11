@@ -20,12 +20,13 @@ namespace Mirror
         public override void OnEnter()
         {
             Debug.Log("Enter state: HunterFreeState.");
+            m_stateMachine.HunterSelectionPose.gameObject.SetActive(false);
             m_stateMachine.SetStopLookAt(false);
         }
 
         public override void OnExit()
         {
-            Debug.Log("Exit state: HunterFreeState\n");
+            Debug.Log("Exit state: HunterFreeState.");
             m_stateMachine.SetStopLookAt(true);
         }
 

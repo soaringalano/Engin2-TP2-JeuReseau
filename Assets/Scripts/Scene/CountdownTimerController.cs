@@ -28,7 +28,7 @@ public class CountdownTimerController : NetworkBehaviour
     {
         if(isLocalPlayer)
         {
-            Debug.Log("is local player on start");
+            //Debug.Log("is local player on start");
             m_countdownTimerText = m_countdownTimerTextMesh.GetComponent<TextMeshProUGUI>();
         }
     }
@@ -79,9 +79,9 @@ public class CountdownTimerController : NetworkBehaviour
     {
         if(isClientOnly)
         {
-            Debug.Log("OnTimeChanged is local player ?:" + isLocalPlayer + " is server ?:" + isServer + " is client ?:" + isClient + " old time :" + oldTime + " new time :" + newTime);
+            //Debug.Log("OnTimeChanged is local player ?:" + isLocalPlayer + " is server ?:" + isServer + " is client ?:" + isClient + " old time :" + oldTime + " new time :" + newTime);
             m_clientTime = newTime;
-            Debug.Log("Server time : " + m_serverTime + " Client time : " + m_clientTime);
+            //Debug.Log("Server time : " + m_serverTime + " Client time : " + m_clientTime);
 
         }
     }
@@ -94,8 +94,7 @@ public class CountdownTimerController : NetworkBehaviour
         if (isLocalPlayer && isClientOnly)
         {
             m_clientTime = time;
-            Debug.Log("Server time : " + m_serverTime + " Client time : " + m_clientTime);
+            //Debug.Log("Server time : " + m_serverTime + " Client time : " + m_clientTime);
         }
     }
-
 }

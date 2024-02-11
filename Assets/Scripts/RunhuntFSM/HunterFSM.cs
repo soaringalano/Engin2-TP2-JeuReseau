@@ -73,11 +73,6 @@ namespace Mirror
 
         public void Initialize()
         {
-            HunterSelectionPose = transform.GetChild(1);
-            if (HunterSelectionPose == null) Debug.LogError("HunterSelectionPose not found!");
-            if (HunterSelectionPose.gameObject.name != "HunterSelectionPose") Debug.LogError("The GameObject is not HunterSelectionPose!: " + HunterSelectionPose.gameObject.name);
-            else Debug.Log("HunterSelectionPose found!");
-
             if (!isLocalPlayer)
             {
                 return;
@@ -121,6 +116,11 @@ namespace Mirror
             HunterLookAtFloorBody = transform.GetChild(0);
             if (HunterLookAtFloorBody == null) Debug.LogError("HunterLookAtFloorBody not found! Please check if it still first child in HunterPrefabs.");
             if (HunterLookAtFloorBody.gameObject.name != "HunterLookAtFloorBody") Debug.LogError("The GameObject is not HunterLookAtFloorBody!: " + HunterLookAtFloorBody.gameObject.name);
+
+            HunterSelectionPose = transform.GetChild(1);
+            if (HunterSelectionPose == null) Debug.LogError("HunterSelectionPose not found!");
+            if (HunterSelectionPose.gameObject.name != "HunterSelectionPose") Debug.LogError("The GameObject is not HunterSelectionPose!: " + HunterSelectionPose.gameObject.name);
+            else Debug.Log("HunterSelectionPose found!");
 
             IsInitialized = true;
         }
