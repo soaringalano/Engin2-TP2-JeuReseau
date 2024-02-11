@@ -1,14 +1,14 @@
 using System.Collections;
 using UnityEngine;
 
-public class BallCollition : MonoBehaviour
+public class BallCollision : MonoBehaviour
 {
-    public bool IsBallDetected { get; private set; }
+    public bool IsBallCollisionDetected { get; private set; }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == 15)
         {
-            IsBallDetected = true;
+            IsBallCollisionDetected = true;
             StartCoroutine(ResetBool());
         }
     }
@@ -16,7 +16,7 @@ public class BallCollition : MonoBehaviour
     IEnumerator ResetBool()
     {
         yield return new WaitForSeconds(2f);
-        IsBallDetected = false;
+        IsBallCollisionDetected = false;
         Debug.Log("bool reset");
     }
 }

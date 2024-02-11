@@ -3,14 +3,14 @@ using UnityEngine;
 
 public class BallHunter : MonoBehaviour
 {
-    public static event Action<BallHunter> BallCollitionDetected;
+    public static event Action<BallHunter> BallCollisionDetected;
 
     private void OnTriggerEnter()
     {
         Debug.Log("collition avec la ball ");
-        if (BallCollitionDetected != null)
+        if (BallCollisionDetected != null)
         {
-            BallCollitionDetected(this);
+            BallCollisionDetected(this);
         }
     }
 }
