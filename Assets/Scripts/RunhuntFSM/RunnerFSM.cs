@@ -37,8 +37,6 @@ namespace Mirror
 
         public bool m_isInRagdoll = false;
 
-        private bool IsInitialized { get; set; } = false;
-
         protected override void CreatePossibleStates()
         {
             m_possibleStates = new List<RunnerState>();
@@ -86,8 +84,6 @@ namespace Mirror
             base.Start();
             m_currentState = m_possibleStates[0];
             m_currentState.OnEnter();
-
-            IsInitialized = true;
         }
 
         protected override void Update()
