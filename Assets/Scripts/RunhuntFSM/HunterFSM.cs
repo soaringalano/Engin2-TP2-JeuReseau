@@ -332,7 +332,7 @@ namespace Mirror
         //    NetworkServer.Spawn(MinesPrefab);
         //}
 
-        //[Command]
+        [Command]
         public void CmdUpdatePosition(Vector3 newPosition, GameObject mine)
         {
             // Update the position on the server
@@ -340,7 +340,7 @@ namespace Mirror
             RpcUpdatePosition(newPosition, mine);
         }
 
-        //[ClientRpc]
+        [ClientRpc]
         public void RpcUpdatePosition(Vector3 newPosition, GameObject mine)
         {
             // Update the position on all clients
@@ -356,6 +356,8 @@ namespace Mirror
 
             mine.SetActive(true);
             mine.transform.position = point;
+            NetworkServer.Spawn(mine);
+
             return mine;
         }
     }
