@@ -56,7 +56,6 @@ namespace Mirror
         public Vector3 PreviousMousePosition { get; set; }
         private Vector3 m_currentRotation = Vector3.zero;
         public bool IsDragging { get; set; } = false;
-        private MinePowerUpButton MinePowerUpButton { get; set; }
 
         [field: Header("Moving Settings")]
         private Vector2 CurrentDirectionalInputs { get; set; } = Vector3.zero;
@@ -79,7 +78,6 @@ namespace Mirror
                 return;
             }
             MinePool = GetComponent<HunterMinePool>();
-            MinePowerUpButton = GetComponentInChildren<MinePowerUpButton>();
             FloorBodyCurrentMaxSpeed = FloorBodyMinSpeed;
             RB = GetComponentInChildren<Rigidbody>();
             if (RB != null) Debug.Log("Hunter RigidBody found!");
