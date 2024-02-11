@@ -13,7 +13,7 @@ namespace Mirror
         public Camera Camera { get; set; }
         private Rigidbody RB { get; set; }
         public RunnerFloorTrigger FloorTrigger { get; private set; }
-        public BallCollition BallCollition { get; private set; }
+        public BallCollision BallCollision { get; private set; }
 
 
         private float AccelerationValue { get; set; } = 25f;
@@ -79,15 +79,15 @@ namespace Mirror
             FloorTrigger = GetComponentInChildren<RunnerFloorTrigger>();
             if (FloorTrigger == null) Debug.LogError("FloorTrigger not found in children!");
 
-            BallCollition = GetComponentInChildren<BallCollition>();
-            if (BallCollition == null) Debug.LogError("BallCollition not found in children!");
+            BallCollision = GetComponentInChildren<BallCollision>();
+            if (BallCollision == null) Debug.LogError("BallCollision not found in children!");
 
             foreach (RunnerState state in m_possibleStates)
             {
                 state.OnStart(this);
             }
             HunterMineExplosion.OnExplosionEvent += StartRagdoll;
-            BallHunter.BallCollitionDetected += StartCollitionRagdoll;
+            BallHunter.BallCollisionDetected += StartCollitionRagdoll;
             base.Start();
             m_currentState = m_possibleStates[0];
             m_currentState.OnEnter();
