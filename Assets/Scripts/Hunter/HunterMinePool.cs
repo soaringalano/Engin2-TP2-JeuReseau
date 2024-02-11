@@ -10,12 +10,12 @@ public class HunterMinePool : NetworkBehaviour
     private int m_currentCount;
     public const int MAX_MINES = 1000;
 
-    void Start()
+    public void Start()
     {
         m_pool = new Pool<GameObject>(CreateNew, MAX_MINES);
     }
 
-    GameObject CreateNew()
+    private GameObject CreateNew()
     {
         GameObject next = Instantiate(m_prefab, transform);
         next.name = $"{m_prefab.name}_pooled_{m_currentCount}";
@@ -31,7 +31,7 @@ public class HunterMinePool : NetworkBehaviour
         return next;
     }
 
-    void Return(GameObject spawned)
+    protected void Return(GameObject spawned)
     {
         // reset any state on the object
         spawned.SetActive(false);
