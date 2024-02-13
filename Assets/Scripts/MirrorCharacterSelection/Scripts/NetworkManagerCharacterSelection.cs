@@ -1,8 +1,9 @@
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Mirror
 {
-    public class NetworkManagerCharacterSelection : NetworkManager
+    public class NetworkManagerCharacterSelection : NetworkManager, IObservedObject //added by mao, implement the IObservedObject interface
     {
         // See the scene 'SceneMapSpawnWithNoCharacter', to spawn as empty player.
         // 'SceneMap' will auto spawn as random player character.
@@ -23,6 +24,8 @@ namespace Mirror
             }
             base.Awake();
             singleton = this;
+            //added by mao, register the game manager as an observer
+            RegisterObserver(GameManagerFSM.s_instance);
         }
 
         public struct CreateCharacterMessage : NetworkMessage
@@ -103,6 +106,9 @@ namespace Mirror
 
             // call this to use this gameobject as the primary controller
             NetworkServer.AddPlayerForConnection(conn, playerObject);
+
+            //added by mao, notify the game manager that a new player has joined
+            NotifyObservers(new EventPlayerJoined(Time.timeAsDouble, message.playerName));
         }
 
         void OnReplaceCharacterMessage(NetworkConnectionToClient conn, ReplaceCharacterMessage message)
@@ -131,6 +137,22 @@ namespace Mirror
         public void ReplaceCharacter(ReplaceCharacterMessage message)
         {
             NetworkClient.Send(message);
+        }
+
+        private List<IObserver> m_observers = new List<IObserver>();
+
+        public void NotifyObservers(IEvent e)
+        {
+            foreach(IObserver observer in m_observers)
+            {
+                observer.OnNotify(e);
+            }
+        }
+
+        public void RegisterObserver(IObserver observer)
+        {
+            if(!m_observers.Contains(observer))
+                m_observers.Add(observer);
         }
     }
 }

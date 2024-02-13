@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class HunterMineExplosion : MonoBehaviour
+public class HunterMineExplosion : HunterMinePool
 {
     public static event Action<HunterMineExplosion> OnExplosionEvent;
 
@@ -25,6 +25,6 @@ public class HunterMineExplosion : MonoBehaviour
     {
         yield return new WaitForSeconds(m_deleteTimer);
         Debug.Log("mine destroy");
-        Destroy(this.gameObject);
+        base.Return(gameObject);
     }
 }

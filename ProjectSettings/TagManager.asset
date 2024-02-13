@@ -21,8 +21,8 @@ TagManager:
   - RunnerCameraCollider
   - SceneObjectCollider
   - HunterTrap
-  - 
-  - 
+  - DestinationArea
+  - Player
   - 
   - 
   - 

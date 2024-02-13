@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using System;
+using System.Drawing;
+using Telepathy;
 
 namespace Mirror
 {
@@ -17,6 +20,8 @@ namespace Mirror
 
         private Rigidbody RB { get; set; }
         private Transform HunterTransform { get; set; }
+        //public GameObject MinesPrefab { get; set; }
+        public HunterMinePool MinePool { get; private set; }
         private CinemachinePOV CinemachinePOV { get; set; }
         private CinemachineFramingTransposer FramingTransposer { get; set; }
         private float CinemachinePOVMaxSpeedHorizontal { get; set; }
@@ -27,7 +32,7 @@ namespace Mirror
 
 
         [field: Header("HunterLookAtFloorBody controls Settings")]
-        private float FloorBodyMinSpeed { get; set; } = 80.0f; 
+        private float FloorBodyMinSpeed { get; set; } = 80.0f;
         private float FloorBodyMaxSpeed { get; set; } = 150.0f;
         private float FloorBodyCurrentMaxSpeed { get; set; } = 80f;
         private bool IsFloorBodySetToStop { get; set; } = false;
@@ -45,11 +50,12 @@ namespace Mirror
         private float FOVmoothDampTime { get; set; } = 0.4f;
 
         [field: Header("Rotating PLatform Settings")]
-        [field: SerializeField] public GameObject TerrainPlane { get; set; }
+        public GameObject TerrainPlane { get; set; }
         private float RotationSpeed { get; set; } = 0.01f;
         private float MaxRotationAngle { get; set; } = 5f;
-        private Vector3 PreviousMousePosition { get; set; }
+        public Vector3 PreviousMousePosition { get; set; }
         private Vector3 m_currentRotation = Vector3.zero;
+        public bool IsDragging { get; set; } = false;
 
         [field: Header("Moving Settings")]
         private Vector2 CurrentDirectionalInputs { get; set; } = Vector3.zero;
@@ -62,6 +68,7 @@ namespace Mirror
             m_possibleStates.Add(new HunterFreeState());
             m_possibleStates.Add(new PowerUpState());
             m_possibleStates.Add(new PlateformRotationState());
+            m_possibleStates.Add(new DragAndDropState());
         }
 
         public void Initialize()
@@ -70,6 +77,8 @@ namespace Mirror
             {
                 return;
             }
+
+            MinePool = GetComponent<HunterMinePool>();
             FloorBodyCurrentMaxSpeed = FloorBodyMinSpeed;
             RB = GetComponentInChildren<Rigidbody>();
             if (RB != null) Debug.Log("Hunter RigidBody found!");
@@ -216,28 +225,6 @@ namespace Mirror
             RB.AddForce(vectorOnFloor * (GetShiftPressedSpeed() * GetCameraDistanceSpeed()), ForceMode.Acceleration);
         }
 
-        public void SetCurrentRotation(float currentRotationX, float currentRotationZ)
-        {
-            m_currentRotation.x = currentRotationX;
-            m_currentRotation.z = currentRotationZ;
-        }
-
-        public Vector3 GetCurrentRotation()
-        {
-            return m_currentRotation;
-        }
-
-        public void EnterRotation()
-        {
-            DisableMouseTracking();
-            PreviousMousePosition = Input.mousePosition;
-        }
-
-        public void ExitRotation()
-        {
-            EnableMouseTracking();
-        }
-
         public void SetStopHunterLookAtFloorBody(bool stopHunterLookAtFloorBody)
         {
             IsFloorBodySetToStop = stopHunterLookAtFloorBody;
@@ -337,5 +324,55 @@ namespace Mirror
         {
             IsFloorBodySetToStop = isSetToStop;
         }
+
+        //[Command] // This method is called on the servercastlenau
+        //public void CmdSpawnCube(Vector3 position)
+        //{
+        //    MinesPrefab = Instantiate(MinesPrefab, position, Quaternion.identity);
+        //    NetworkServer.Spawn(MinesPrefab);
+        //}
+
+        [Command]
+        public void CmdUpdatePosition(Vector3 newPosition, GameObject mine)
+        {
+            // Update the position on the server
+            mine.transform.position = newPosition;
+            RpcUpdatePosition(newPosition, mine);
+        }
+
+        [ClientRpc]
+        public void RpcUpdatePosition(Vector3 newPosition, GameObject mine)
+        {
+            // Update the position on all clients
+            mine.transform.position = newPosition;
+        }
+
+        internal GameObject GetMineFromPoolToPosition(Vector3 point)
+        {
+            Debug.Log("GetMineFromPoolToPosition");
+            // Get a mine from the pool and set its position
+            GameObject mine = MinePool.Get(point, Quaternion.identity);
+            //if (mine == null) Debug.LogError("Mine not found!");
+
+            mine.SetActive(true);
+            mine.transform.position = point;
+            NetworkServer.Spawn(mine);
+
+            return mine;
+        }
     }
 }
+//if (MinesPrefab == null)
+//    return;
+
+//Vector3 newPosition = point;
+//Debug.Log("OnDrag pos: " + point);
+//if (isServer)
+//{
+//    MinesPrefab.transform.position = newPosition;
+//    CmdUpdatePosition(newPosition);
+//}
+//else
+//{
+//    CmdUpdatePosition(newPosition);
+//}
