@@ -143,17 +143,61 @@ PrefabInstance:
       propertyPath: m_playablePrefabs.Array.data[1]
       value: 
       objectReference: {fileID: 56868658535408414, guid: fd3ea437a4f46a4469fee17b743e134e, type: 3}
+    - target: {fileID: 2270434708832900252, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: sceneId
+      value: 1462394457
+      objectReference: {fileID: 0}
     - target: {fileID: 2454374125170674874, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
       propertyPath: sceneId
       value: 1600751279
+      objectReference: {fileID: 0}
+    - target: {fileID: 2698436673108698273, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: sceneId
+      value: 3113289918
+      objectReference: {fileID: 0}
+    - target: {fileID: 3284309056429292550, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: sceneId
+      value: 3544593237
       objectReference: {fileID: 0}
     - target: {fileID: 3955777482807307527, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
       propertyPath: sceneId
       value: 171588146
       objectReference: {fileID: 0}
+    - target: {fileID: 4083747553749172889, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4162345845065736938, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: sceneId
+      value: 1326781671
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944502960149628558, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: sceneId
+      value: 1018664449
+      objectReference: {fileID: 0}
+    - target: {fileID: 4974644356276387008, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: sceneId
+      value: 3624157368
+      objectReference: {fileID: 0}
+    - target: {fileID: 5324394706768448462, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: m_countdownTimerTextMesh
+      value: 
+      objectReference: {fileID: 4825446373380609261}
     - target: {fileID: 5765906584570298151, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
       propertyPath: sceneId
       value: 1351374431
+      objectReference: {fileID: 0}
+    - target: {fileID: 5976938667573488867, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: sceneId
+      value: 663283532
+      objectReference: {fileID: 0}
+    - target: {fileID: 6079712139086386545, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: sceneId
+      value: 1586094804
+      objectReference: {fileID: 0}
+    - target: {fileID: 6816014041040576291, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: m_countdownTimerTextMesh
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7586939192585625772, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
       propertyPath: m_Name
@@ -199,11 +243,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8053483007613987988, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: m_gameStateInfoTextMesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9152060890972962667, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: m_gameStateInfoTextMesh
+      value: 
+      objectReference: {fileID: 4825446373380609260}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 5375828466137706580, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+--- !u!1 &4825446373380609260 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8457423843954390871, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+  m_PrefabInstance: {fileID: 4825446373380609259}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4825446373380609261 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6097582808292178970, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+  m_PrefabInstance: {fileID: 4825446373380609259}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
