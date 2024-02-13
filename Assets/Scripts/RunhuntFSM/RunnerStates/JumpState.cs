@@ -36,6 +36,10 @@ namespace Mirror
 
         public override bool CanEnter(IState currentState)
         {
+            if (currentState is RagdollState)
+            {
+                return false;
+            }
             //This must be run in Update absolutely
             // if must rest, then cannot enter.
             if (m_stateMachine.MustRest(m_stateMachine.StaminaLoseSpeedInJump))

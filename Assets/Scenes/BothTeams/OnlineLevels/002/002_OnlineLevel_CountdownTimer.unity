@@ -143,6 +143,10 @@ PrefabInstance:
       propertyPath: m_playablePrefabs.Array.data[1]
       value: 
       objectReference: {fileID: 56868658535408414, guid: fd3ea437a4f46a4469fee17b743e134e, type: 3}
+    - target: {fileID: 1978117605871306695, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: sceneId
+      value: 4238411417
+      objectReference: {fileID: 0}
     - target: {fileID: 2270434708832900252, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
       propertyPath: sceneId
       value: 1462394457

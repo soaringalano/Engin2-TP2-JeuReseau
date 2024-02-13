@@ -13,6 +13,8 @@ namespace Mirror
         public Camera Camera { get; set; }
         private Rigidbody RB { get; set; }
         public RunnerFloorTrigger FloorTrigger { get; private set; }
+        public BallCollition BallCollition { get; private set; }
+
 
         private float AccelerationValue { get; set; } = 25f;
         private float AccelerationRunningValue { get; set; } = 10.0f;
@@ -36,8 +38,6 @@ namespace Mirror
         private float AnimatorRunningValue { get; set; } = 0.5f; // Has to stay between 0.5 and 1
 
         public bool m_isInRagdoll = false;
-
-        private bool IsInitialized { get; set; } = false;
 
         protected override void CreatePossibleStates()
         {
@@ -76,17 +76,19 @@ namespace Mirror
 
             FloorTrigger = GetComponentInChildren<RunnerFloorTrigger>();
             if (FloorTrigger == null) Debug.LogError("FloorTrigger not found in children!");
-     
+
+            BallCollition = GetComponentInChildren<BallCollition>();
+            if (BallCollition == null) Debug.LogError("BallCollition not found in children!");
+
             foreach (RunnerState state in m_possibleStates)
             {
                 state.OnStart(this);
             }
             HunterMineExplosion.OnExplosionEvent += StartRagdoll;
+            BallHunter.BallCollitionDetected += StartCollitionRagdoll;
             base.Start();
             m_currentState = m_possibleStates[0];
             m_currentState.OnEnter();
-
-            IsInitialized = true;
         }
 
         protected override void Update()
@@ -180,6 +182,11 @@ namespace Mirror
             m_isJumping = true;
 
         }
+        public void GetUp()
+        {
+            Animator.SetTrigger("IsGettingUp");
+        }
+
         public void DoubleJump()
         {
             RB.AddForce(Vector3.up * JumpIntensity, ForceMode.Acceleration);
@@ -279,6 +286,15 @@ namespace Mirror
             Debug.Log("ExplosionSystem here");
 
             if (explosion != null)
+            {
+                m_isInRagdoll = true;
+                StartCoroutine(ResetBool());
+            }
+        }
+
+        private void StartCollitionRagdoll(BallHunter collition)
+        {
+            if (collition != null)
             {
                 m_isInRagdoll = true;
                 StartCoroutine(ResetBool());

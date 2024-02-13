@@ -11,19 +11,31 @@ namespace Mirror
 
         public override bool CanExit()
         {
-            return (Input.GetKeyUp(KeyCode.Space) || !Input.GetKey(KeyCode.Space)
-                || Input.GetMouseButton(1));
+            bool isSpaceReleased = Input.GetKeyUp(KeyCode.Space) || !Input.GetKey(KeyCode.Space);
+            bool isPivoting = Input.GetMouseButton(1);
+            bool isClickAndDragging = Input.GetMouseButton(0) && m_stateMachine.IsDragging;
+
+            //Debug.Log(" ");
+            //Debug.Log("Input.GetMouseButton(0): " + Input.GetMouseButton(0));
+            //Debug.Log("m_stateMachine.IsDragging" + m_stateMachine.IsDragging);
+            //Debug.Log("isClickAndDragging" + isClickAndDragging);
+            //Debug.Log(" ");
+
+            return isSpaceReleased
+                || isPivoting
+                || isClickAndDragging;
         }
 
         public override void OnEnter()
         {
-            //Debug.Log("Enter state: PowerUpState\n");
+            Debug.Log("Enter state: PowerUpState\n");
+       
             m_stateMachine.SetStopLookAt(true);
         }
 
         public override void OnExit()
         {
-            //Debug.Log("Exit state: PowerUpState\n");
+            Debug.Log("Exit state: PowerUpState\n");
             m_stateMachine.SetStopLookAt(false);
         }
 

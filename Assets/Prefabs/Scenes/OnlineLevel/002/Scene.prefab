@@ -3562,6 +3562,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: InformationPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 5658540881569905819, guid: d58692c70ee131441a2729781045224d, type: 3}
+      propertyPath: _assetId
+      value: 1351581471
+      objectReference: {fileID: 0}
     - target: {fileID: 6544247112236815178, guid: d58692c70ee131441a2729781045224d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
