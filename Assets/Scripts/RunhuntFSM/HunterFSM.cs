@@ -30,7 +30,6 @@ namespace Mirror
         [field: SerializeField] public Transform HunterLookAtFloorBody { get; set; }
         public Transform HunterSelectionPose { get; private set; }
 
-
         [field: Header("HunterLookAtFloorBody controls Settings")]
         private float FloorBodyMinSpeed { get; set; } = 80.0f;
         private float FloorBodyMaxSpeed { get; set; } = 150.0f;
