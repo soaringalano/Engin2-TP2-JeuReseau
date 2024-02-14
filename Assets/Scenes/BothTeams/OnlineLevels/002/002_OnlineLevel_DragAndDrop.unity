@@ -131,9 +131,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 160892147670895848, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: spawnPrefabs.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 160892147670895848, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: spawnPrefabs.Array.data[4]
+      value: 
+      objectReference: {fileID: 7907876455901787764, guid: 47741a4e548dbe741b0e1e36f1711dd6, type: 3}
     - target: {fileID: 1418524531298870426, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
       propertyPath: sceneId
       value: 1112759149
+      objectReference: {fileID: 0}
+    - target: {fileID: 1821071080231342526, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: m_playablePrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 56868658535408414, guid: fd3ea437a4f46a4469fee17b743e134e, type: 3}
+    - target: {fileID: 1978117605871306695, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: sceneId
+      value: 3588371059
       objectReference: {fileID: 0}
     - target: {fileID: 2454374125170674874, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
       propertyPath: sceneId
@@ -142,6 +158,30 @@ PrefabInstance:
     - target: {fileID: 3955777482807307527, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
       propertyPath: sceneId
       value: 171588146
+      objectReference: {fileID: 0}
+    - target: {fileID: 4363255935681496214, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: offsetX
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4363255935681496214, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: offsetY
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567161065987244931, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4974644356276387008, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: sceneId
+      value: 1672895629
+      objectReference: {fileID: 0}
+    - target: {fileID: 5765906584570298151, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: sceneId
+      value: 1351374431
+      objectReference: {fileID: 0}
+    - target: {fileID: 6079712139086386545, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: sceneId
+      value: 477833157
       objectReference: {fileID: 0}
     - target: {fileID: 7586939192585625772, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
       propertyPath: m_Name

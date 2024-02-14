@@ -2,6 +2,7 @@ using Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Mirror;
+using Runhunt.Hunter;
 
 namespace Runhunt.ObjectSpawner
 {
@@ -11,6 +12,7 @@ namespace Runhunt.ObjectSpawner
         [field: SerializeField] private GameObject HunterUIPrefab { get; set; }
 
         private HunterFSM m_hunterFSM;
+        private HunterPowerUpButton m_hunterAbilities;
         private GameObject m_hunterCamAssetsGameObject;
         private Transform m_hunterTransform;
         private CinemachineVirtualCamera m_virtualCamera;
@@ -44,18 +46,32 @@ namespace Runhunt.ObjectSpawner
 
         protected override void InstanciateAssets()
         {
-            Debug.Log("Instanciate Hunter Assets.");
+
+            //TODO: instanciate later at the hunter camera position
+            Debug.Log("transform child count: " + transform.childCount);
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                GameObject child = transform.GetChild(i).gameObject;
+                Debug.Log("HunterUIPrefab child name: " + child.name);
+                if (child.name != "HunterSelectionPose") continue;
+
+                //Transform hunterDroneControlsTransform = child.GetComponent<HunterDroneControls>().transform;
+                child.transform.position = new Vector3(0, -500f, 0);
+                Debug.Log("HunterDroneControls position set to: " + child.transform.position);
+            }
+
+            Debug.Log("Instanciate Hunter Camera Assets.");
             m_hunterCamAssetsGameObject = Instantiate(HunterCameraAssetsPrefab, transform);
             Instantiate(HunterUIPrefab, transform);
         }
 
         protected override void GetNetworkedPlayerControls()
         {
-            Debug.Log("Get NetworkedHunterControls.");
+            Debug.Log("Get GetNetworkedPlayerControlsAndAbilities.");
             m_hunterFSM = GetComponent<HunterFSM>();
             if (m_hunterFSM == null)
             {
-                Debug.LogError("NetworkedRunnerMovement Not found!");
+                Debug.LogError("HunterFSM Not found!");
             }
         }
 

@@ -5,7 +5,9 @@ namespace Mirror
 {
     public class AbstractNetworkFSM<T> : NetworkBehaviour where T : IState
     {
+
         protected T m_currentState;
+        
         protected List<T> m_possibleStates;
         static public Transform Scene { get; private set; }
         
@@ -48,16 +50,17 @@ namespace Mirror
 
         protected void TryStateTransition()
         {
+
             if (!m_currentState.CanExit())
             {
                 return;
             }
 
             //Je PEUX quitter le state actuel
-            foreach (var state in m_possibleStates)
-            //for(int i=0;i<m_possibleStates.Count;i++)
+            //foreach (var state in m_possibleStates)
+            for(int i=0;i<m_possibleStates.Count;i++)
             {
-                //var state = m_possibleStates[(i+1) % m_possibleStates.Count];
+                var state = m_possibleStates[i];
                 if (m_currentState.Equals(state))
                 {
                     continue;
@@ -70,9 +73,18 @@ namespace Mirror
                     m_currentState = state;
                     //Rentrer dans le state state
                     m_currentState.OnEnter();
+
+                    //sync state change to clients
+                    RpcChangeState(i);
+                    
+                    
                     return;
                 }
             }
+        }
+
+        public virtual void RpcChangeState(int index)
+        {
         }
 
         static public GameObject GetScene(GameObject characterGO)
