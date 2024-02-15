@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/BothTeams/OfflineLevels/000_MainMenuScene.unity
+    guid: 6da36e12f46314bf8b39275fa590bfe7
+  - enabled: 1
     path: Assets/Scenes/BothTeams/OnlineLevels/002_OnlineLevel.unity
     guid: 71bd2c8d0df52664eb41496fd21c2617
+  - enabled: 1
+    path: Assets/Scenes/BothTeams/OnlineLevels/001_OnlineLevel.unity
+    guid: a569ef2deb910ff45b76728cb8f9f41a
   m_configObjects: {}
