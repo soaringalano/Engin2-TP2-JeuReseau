@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/BothTeams/OnlineLevels/002/002_OnlineLevel_Lobby_room.unity
     guid: 8200b1e2f807c1146b81791a47439b4b
   - enabled: 1
-    path: Assets/Scenes/BothTeams/OnlineLevels/002/MainTest.unity
-    guid: 61adcb83538848846a80918cba923494
+    path: Assets/Scenes/BothTeams/OnlineLevels/003_OnlineLevel.unity
+    guid: 3debf31a263fa6745bd173f37680c2d3
   m_configObjects: {}

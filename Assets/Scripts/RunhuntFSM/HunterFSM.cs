@@ -64,7 +64,7 @@ namespace Mirror
         protected override void CreatePossibleStates()
         {
             m_possibleStates = new List<HunterState>();
-            m_possibleStates.Add(new HunterCharacterSelectionState());
+            //m_possibleStates.Add(new HunterCharacterSelectionState());
             m_possibleStates.Add(new HunterFreeState());
             m_possibleStates.Add(new PowerUpState());
             m_possibleStates.Add(new PlateformRotationState());

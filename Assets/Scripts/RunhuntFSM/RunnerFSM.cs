@@ -42,7 +42,7 @@ namespace Mirror
         protected override void CreatePossibleStates()
         {
             m_possibleStates = new List<RunnerState>();
-            m_possibleStates.Add(new RunnerCharacterSelectionState());
+            //m_possibleStates.Add(new RunnerCharacterSelectionState());
             m_possibleStates.Add(new RunnerFreeState());
             m_possibleStates.Add(new JumpState());
             m_possibleStates.Add(new DoubleJumpState());
