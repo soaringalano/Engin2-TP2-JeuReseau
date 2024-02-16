@@ -1,6 +1,4 @@
 using Mirror;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HunterMinePool : NetworkBehaviour
@@ -9,20 +7,18 @@ public class HunterMinePool : NetworkBehaviour
     Pool<GameObject> m_pool;
     private int m_currentCount;
     public const int MAX_MINES = 1000;
-    HunterFSM hfsm;
-    Transform m_terrainTransform;
+    public Transform TerrainPlane { get; set; }
 
-    public void Start()
+    public void Initialize()
     {
         m_pool = new Pool<GameObject>(CreateNew, MAX_MINES);
-        hfsm = GetComponent<HunterFSM>();
-        m_terrainTransform = hfsm.TerrainPlane.transform;
     }
 
     private GameObject CreateNew()
     {
-        GameObject next = Instantiate(m_minePrefab, m_terrainTransform);
-        m_minePrefab.transform.SetParent(next.transform);
+        if (TerrainPlane == null) Debug.LogError("Terrain transform is null");
+        GameObject next = Instantiate(m_minePrefab, TerrainPlane);
+        //m_minePrefab.transform.SetParent(next.transform);
         next.name = $"{m_minePrefab.name}_pooled_{m_currentCount}";
         next.SetActive(false);
         m_currentCount++;

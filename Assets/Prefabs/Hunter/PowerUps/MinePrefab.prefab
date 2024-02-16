@@ -196,7 +196,7 @@ Transform:
   m_GameObject: {fileID: 7907876455901787764}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25.448872, y: 24.194195, z: -6.521044}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -220,7 +220,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  m_prefab: {fileID: 0}
+  m_minePrefab: {fileID: 0}
   m_explotionSystem: {fileID: 5933859157304006163}
   m_deleteTimer: 1.6
 --- !u!135 &1628203880132420311

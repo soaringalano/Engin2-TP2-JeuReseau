@@ -104,16 +104,16 @@ namespace Runhunt.ObjectSpawner
             }
 
             Transform runnerPlatform = environement.GetChild(0);
-            if (runnerPlatform.name != "RunnerPlatform")
+            if (runnerPlatform.name != "RunnerNetworkPlatform")
             {
                 Debug.LogError("Please place RunnerPlatform GameObject as first child in Environment! Cureent GO is: " + runnerPlatform.name);
                 return;
             }
 
             Transform runnerFloorPlatform = runnerPlatform.GetChild(0);
-            if (runnerFloorPlatform.name != "RunnerFloorPlatform")
+            if (runnerFloorPlatform.name != "RunnerFloorTransform")
             {
-                Debug.LogError("Please place RunnerFloorPlatform GameObject as first child in RunnerPlatform! Cureent GO is: " + runnerFloorPlatform.name);
+                Debug.LogError("Please place RunnerFloorTransform GameObject as first child in RunnerNetworkPlatform! Cureent GO is: " + runnerFloorPlatform.name);
                 return;
             }
 
@@ -130,6 +130,8 @@ namespace Runhunt.ObjectSpawner
             }
 
             m_hunterFSM.TerrainPlane = runnerFloorPlatform.gameObject;
+            GetComponent<HunterMinePool>().TerrainPlane = runnerFloorPlatform;
+            GetComponent<HunterMinePool>().Initialize();
         }
 
 
