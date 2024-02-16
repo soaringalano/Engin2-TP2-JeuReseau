@@ -15,20 +15,19 @@ public class HunterDroneControls : MonoBehaviour
 
     private void Update()
     {
-        if (Camera == null) return;
+        //if (Camera == null) return;
 
-        m_delayTimer += Time.deltaTime;
-        if (m_delayTimer > m_delayTime)
-        {
-            m_delayTimer = 0.0f;
-            m_delayTime = Delay;
+        //m_delayTimer += Time.deltaTime;
+        //if (m_delayTimer > m_delayTime)
+        //{
+        //    m_delayTimer = 0.0f;
+        //    m_delayTime = Delay;
 
-            m_targetPosition = Camera.position;
-            m_targetRotation = Camera.rotation;
-        }
+        //    m_targetPosition = Camera.position;
+        //    m_targetRotation = Camera.rotation;
+        //}
 
-        transform.position = Vector3.Lerp(transform.position, m_targetPosition, Speed * Time.deltaTime);
-        transform.rotation = Quaternion.Slerp(transform.rotation, m_targetRotation, RotationSpeed * Time.deltaTime);
+        //transform.position = Vector3.Lerp(transform.position, m_targetPosition, Speed * Time.deltaTime);
+        //transform.rotation = Quaternion.Slerp(transform.rotation, m_targetRotation, RotationSpeed * Time.deltaTime);
     }
-
 }

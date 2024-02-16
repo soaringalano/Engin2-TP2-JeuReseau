@@ -46,7 +46,21 @@ namespace Runhunt.ObjectSpawner
 
         protected override void InstanciateAssets()
         {
-            Debug.Log("Instanciate Hunter Assets.");
+
+            //TODO: instanciate later at the hunter camera position
+            Debug.Log("transform child count: " + transform.childCount);
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                GameObject child = transform.GetChild(i).gameObject;
+                Debug.Log("HunterUIPrefab child name: " + child.name);
+                if (child.name != "HunterSelectionPose") continue;
+
+                //Transform hunterDroneControlsTransform = child.GetComponent<HunterDroneControls>().transform;
+                child.transform.position = new Vector3(0, -500f, 0);
+                Debug.Log("HunterDroneControls position set to: " + child.transform.position);
+            }
+
+            Debug.Log("Instanciate Hunter Camera Assets.");
             m_hunterCamAssetsGameObject = Instantiate(HunterCameraAssetsPrefab, transform);
             Instantiate(HunterUIPrefab, transform);
         }

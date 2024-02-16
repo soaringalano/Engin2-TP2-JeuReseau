@@ -21,7 +21,7 @@ namespace Mirror
         private float MaxForwardVelocity { get; set; } = 6f;
         private float MaxSidewaysVelocity { get; set; } = 4f;
         private float MaxBackwardVelocity { get; set; } = 3f;
-        private float JumpIntensity { get; set; } = 400.0f;
+        private float JumpIntensity { get; set; } = 250.0f;
         private float MeshRotationLerpSpeed { get; set; } = 4.0f;
 
         private float MaxStamina { get; set; } = 100;

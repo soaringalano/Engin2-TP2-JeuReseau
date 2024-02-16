@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -139,6 +139,10 @@ PrefabInstance:
       propertyPath: m_playablePrefabs.Array.data[1]
       value: 
       objectReference: {fileID: 56868658535408414, guid: fd3ea437a4f46a4469fee17b743e134e, type: 3}
+    - target: {fileID: 1978117605871306695, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: sceneId
+      value: 1836764396
+      objectReference: {fileID: 0}
     - target: {fileID: 2454374125170674874, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
       propertyPath: sceneId
       value: 1283775115
@@ -146,6 +150,18 @@ PrefabInstance:
     - target: {fileID: 3955777482807307527, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
       propertyPath: sceneId
       value: 1685830433
+      objectReference: {fileID: 0}
+    - target: {fileID: 4974644356276387008, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: sceneId
+      value: 2794822178
+      objectReference: {fileID: 0}
+    - target: {fileID: 5602883949156575922, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6079712139086386545, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
+      propertyPath: sceneId
+      value: 3631016744
       objectReference: {fileID: 0}
     - target: {fileID: 7586939192585625772, guid: afe14491e3e9eb44582eede73ff6c7f3, type: 3}
       propertyPath: m_Name
