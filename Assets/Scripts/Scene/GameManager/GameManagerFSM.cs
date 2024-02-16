@@ -123,7 +123,6 @@ namespace Mirror
             m_currentState = m_possibleStates[index];
             m_currentState.OnEnter();
         }
-
     }
 
 }

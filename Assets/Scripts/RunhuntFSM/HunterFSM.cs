@@ -49,7 +49,9 @@ namespace Mirror
         private float FOVmoothDampTime { get; set; } = 0.4f;
 
         [field: Header("Rotating PLatform Settings")]
+        //chercher  dans la minePool
         public GameObject TerrainPlane { get; set; }
+
         private float RotationSpeed { get; set; } = 0.01f;
         private float MaxRotationAngle { get; set; } = 5f;
         public Vector3 PreviousMousePosition { get; set; }
@@ -130,7 +132,6 @@ namespace Mirror
             {
                 state.OnStart(this);
             }
-
             base.Start();
             m_currentState = m_possibleStates[0];
             m_currentState.OnEnter();
@@ -346,6 +347,7 @@ namespace Mirror
             mine.transform.position = newPosition;
         }
 
+        //instantiation de mine sur le terrain
         internal GameObject GetMineFromPoolToPosition(Vector3 point)
         {
             Debug.Log("GetMineFromPoolToPosition");
@@ -355,6 +357,7 @@ namespace Mirror
 
             mine.SetActive(true);
             mine.transform.position = point;
+           
             NetworkServer.Spawn(mine);
 
             return mine;

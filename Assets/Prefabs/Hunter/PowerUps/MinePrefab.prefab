@@ -178,7 +178,8 @@ GameObject:
   - component: {fileID: 8517783209824050360}
   - component: {fileID: 31703503350994657}
   - component: {fileID: 1628203880132420311}
-  - component: {fileID: 2167231411537607349}
+  - component: {fileID: 8491553161213894844}
+  - component: {fileID: 6858238839763904483}
   m_Layer: 15
   m_Name: MinePrefab
   m_TagString: Untagged
@@ -216,6 +217,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab259562d2afdc849878e29bc270ca21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  m_prefab: {fileID: 0}
   m_explotionSystem: {fileID: 5933859157304006163}
   m_deleteTimer: 1.6
 --- !u!135 &1628203880132420311
@@ -239,7 +244,19 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.25
   m_Center: {x: 0, y: -0.2110241, z: 0}
---- !u!114 &2167231411537607349
+--- !u!114 &8491553161213894844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7907876455901787764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c327682b551014d68a6bf513c14dd506, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6858238839763904483
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

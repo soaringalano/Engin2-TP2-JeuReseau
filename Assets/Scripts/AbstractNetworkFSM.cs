@@ -77,7 +77,6 @@ namespace Mirror
                     //sync state change to clients
                     RpcChangeState(i);
                     
-                    
                     return;
                 }
             }
