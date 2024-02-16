@@ -347,7 +347,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6863471331163259762, guid: 637c5e0eca750424997da2aa71442f73, type: 3}
   m_PrefabInstance: {fileID: 3134252490943061672}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1706535462}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 737dc1e372e2f9e4cb3710e49963ee68, type: 3}
@@ -800,19 +800,7 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1706535462}
-        m_TargetAssemblyTypeName: Mirror.RunhuntLoginUIHUD, Mirror
-        m_MethodName: 
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
@@ -1641,6 +1629,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Manager>k__BackingField: {fileID: 599482401}
+  <NetworkAddress>k__BackingField: {fileID: 848436798}
+  <NetworkPort>k__BackingField: {fileID: 1779753462}
 --- !u!1 &1624121981
 GameObject:
   m_ObjectHideFlags: 0
@@ -1720,11 +1710,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1624121981}
   m_CullTransparentMesh: 0
---- !u!1 &1706535462 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3419540948520867372, guid: 637c5e0eca750424997da2aa71442f73, type: 3}
-  m_PrefabInstance: {fileID: 3134252490943061672}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1725157048
 GameObject:
   m_ObjectHideFlags: 0
@@ -1903,31 +1888,7 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Mirror.RunhuntLoginUIHUD, Mirror
-        m_MethodName: SetNetworkPort
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: ToggleButtons
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
@@ -2410,6 +2371,10 @@ PrefabInstance:
     - target: {fileID: 6341598314390231463, guid: 637c5e0eca750424997da2aa71442f73, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6863471331163259762, guid: 637c5e0eca750424997da2aa71442f73, type: 3}
+      propertyPath: offlineScene
+      value: Assets/Scenes/BothTeams/Lobby/001_Lobby.unity
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
