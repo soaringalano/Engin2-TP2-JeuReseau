@@ -2942,22 +2942,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Environment
       objectReference: {fileID: 0}
-    - target: {fileID: 2262886437016098376, guid: f2adc831588dedf46a3fa3984bfd1b5b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2289123656413875309, guid: f2adc831588dedf46a3fa3984bfd1b5b, type: 3}
-      propertyPath: _assetId
-      value: 1351581471
-      objectReference: {fileID: 0}
-    - target: {fileID: 2680882420513389648, guid: f2adc831588dedf46a3fa3984bfd1b5b, type: 3}
-      propertyPath: _assetId
-      value: 1351581471
-      objectReference: {fileID: 0}
-    - target: {fileID: 4101318299614894696, guid: f2adc831588dedf46a3fa3984bfd1b5b, type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4994440514138580017, guid: f2adc831588dedf46a3fa3984bfd1b5b, type: 3}
       propertyPath: _assetId
       value: 1351581471
@@ -3002,7 +2986,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6678794626499854706, guid: f2adc831588dedf46a3fa3984bfd1b5b, type: 3}
+    - target: {fileID: 5947014591601919519, guid: f2adc831588dedf46a3fa3984bfd1b5b, type: 3}
       propertyPath: _assetId
       value: 1351581471
       objectReference: {fileID: 0}
@@ -3028,29 +3012,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: SphereTestToDelete (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 1792577310566420686, guid: f6551024bfcf388488d659696348f4da, type: 3}
-      propertyPath: m_Mass
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3304728973098399348, guid: f6551024bfcf388488d659696348f4da, type: 3}
-      propertyPath: sceneId
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3304728973098399348, guid: f6551024bfcf388488d659696348f4da, type: 3}
       propertyPath: _assetId
       value: 1351581471
-      objectReference: {fileID: 0}
-    - target: {fileID: 5001717747548124412, guid: f6551024bfcf388488d659696348f4da, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 3.3703756
-      objectReference: {fileID: 0}
-    - target: {fileID: 5001717747548124412, guid: f6551024bfcf388488d659696348f4da, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3.3703756
-      objectReference: {fileID: 0}
-    - target: {fileID: 5001717747548124412, guid: f6551024bfcf388488d659696348f4da, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 3.3703756
       objectReference: {fileID: 0}
     - target: {fileID: 5001717747548124412, guid: f6551024bfcf388488d659696348f4da, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3092,14 +3056,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5001717747548124412, guid: f6551024bfcf388488d659696348f4da, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5228307509798033539, guid: f6551024bfcf388488d659696348f4da, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: f74ed0f88f2620d48ba5b11282da0290, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3118,18 +3074,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7777592522128106923}
     m_Modifications:
-    - target: {fileID: 1330609108519346344, guid: ae58b3640c8a4a148a9e94a822efb65b, type: 3}
-      propertyPath: spawnPrefabs.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1330609108519346344, guid: ae58b3640c8a4a148a9e94a822efb65b, type: 3}
-      propertyPath: spawnPrefabs.Array.data[2]
-      value: 
-      objectReference: {fileID: 387287356582270471, guid: f6551024bfcf388488d659696348f4da, type: 3}
-    - target: {fileID: 1330609108519346344, guid: ae58b3640c8a4a148a9e94a822efb65b, type: 3}
-      propertyPath: spawnPrefabs.Array.data[3]
-      value: 
-      objectReference: {fileID: 6952917354324845399, guid: 2405b750a86c4474e9dcc8970d521635, type: 3}
     - target: {fileID: 1364231688820628920, guid: ae58b3640c8a4a148a9e94a822efb65b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3196,29 +3140,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: SphereTestToDelete (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 1792577310566420686, guid: f6551024bfcf388488d659696348f4da, type: 3}
-      propertyPath: m_Mass
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3304728973098399348, guid: f6551024bfcf388488d659696348f4da, type: 3}
-      propertyPath: sceneId
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3304728973098399348, guid: f6551024bfcf388488d659696348f4da, type: 3}
       propertyPath: _assetId
       value: 1351581471
-      objectReference: {fileID: 0}
-    - target: {fileID: 5001717747548124412, guid: f6551024bfcf388488d659696348f4da, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 3.3703756
-      objectReference: {fileID: 0}
-    - target: {fileID: 5001717747548124412, guid: f6551024bfcf388488d659696348f4da, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3.3703756
-      objectReference: {fileID: 0}
-    - target: {fileID: 5001717747548124412, guid: f6551024bfcf388488d659696348f4da, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 3.3703756
       objectReference: {fileID: 0}
     - target: {fileID: 5001717747548124412, guid: f6551024bfcf388488d659696348f4da, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3260,14 +3184,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5001717747548124412, guid: f6551024bfcf388488d659696348f4da, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5228307509798033539, guid: f6551024bfcf388488d659696348f4da, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: f74ed0f88f2620d48ba5b11282da0290, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3335,20 +3251,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8457423843954390871}
     - target: {fileID: 7540287152984726740, guid: 3bd77e395d49d94488ba1e70346ba0a7, type: 3}
-      propertyPath: syncInterval
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7540287152984726740, guid: 3bd77e395d49d94488ba1e70346ba0a7, type: 3}
       propertyPath: m_countdownTimerTextMesh
       value: 
       objectReference: {fileID: 6097582808292178970}
     - target: {fileID: 8439479667594887787, guid: 3bd77e395d49d94488ba1e70346ba0a7, type: 3}
       propertyPath: _assetId
       value: 1351581471
-      objectReference: {fileID: 0}
-    - target: {fileID: 9211883625777432633, guid: 3bd77e395d49d94488ba1e70346ba0a7, type: 3}
-      propertyPath: syncInterval
-      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3536,10 +3444,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5214744330850510553, guid: 7530c46bc3b0bcb49b24472b6a5b836e, type: 3}
-      propertyPath: m_playablePrefabs.Array.data[1]
-      value: 
-      objectReference: {fileID: 56868658535408414, guid: fd3ea437a4f46a4469fee17b743e134e, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

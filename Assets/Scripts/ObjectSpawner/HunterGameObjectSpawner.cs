@@ -2,7 +2,6 @@ using Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Mirror;
-using Runhunt.Hunter;
 
 namespace Runhunt.ObjectSpawner
 {
@@ -12,19 +11,25 @@ namespace Runhunt.ObjectSpawner
         [field: SerializeField] private GameObject HunterUIPrefab { get; set; }
 
         private HunterFSM m_hunterFSM;
-        private HunterPowerUpButton m_hunterAbilities;
         private GameObject m_hunterCamAssetsGameObject;
         private Transform m_hunterTransform;
         private CinemachineVirtualCamera m_virtualCamera;
+        private SceneReferencer m_sceneRef;
 
         void Start()
         {
-            if (!isLocalPlayer)
-            {
-                return;
-            }
+            GameObject RunhuntScene = AbstractNetworkFSM<HunterState>.GetScene(gameObject);
+            if (RunhuntScene == null) Debug.LogError("Scene not found!");
+            m_sceneRef = RunhuntScene.GetComponentInChildren<SceneReferencer>();
+            if (m_sceneRef == null) Debug.LogError("SceneReferencer not found in children of scene!");
+            else Debug.Log("SceneReferencer found in children of scene!");
 
             GetPlayerGameObject();
+            InitializeMinePublicPool();
+
+            if (!isLocalPlayer) return;
+            if (!m_sceneRef.characterSelectionObject.activeSelf) return;
+
             InstanciateAssets();
             GetNetworkedPlayerControls();
             SetAssetGameObject();
@@ -32,6 +37,13 @@ namespace Runhunt.ObjectSpawner
             SetTheCameraFollow();
             SetTheCameraLookAt();
             InitializeSpawnedAssets();
+        }
+
+        private void InitializeMinePublicPool()
+        {
+            Transform runnerFloorPlatform = GetRunnerPlatform();
+            GetComponent<HunterMinePool>().TerrainPlane = runnerFloorPlatform;
+            GetComponent<HunterMinePool>().Initialize();
         }
 
         protected override void GetPlayerGameObject()
@@ -77,6 +89,12 @@ namespace Runhunt.ObjectSpawner
 
         protected override void SetAssetGameObject()
         {
+            Transform runnerFloorPlatform = GetRunnerPlatform();
+            m_hunterFSM.TerrainPlane = runnerFloorPlatform.gameObject;
+        }
+
+        public Transform GetRunnerPlatform()
+        {
             // Source : https://discussions.unity.com/t/find-gameobjects-in-specific-scene-only/163901
             Scene scene = gameObject.scene;
             GameObject[] gameObjects = scene.GetRootGameObjects();
@@ -93,45 +111,38 @@ namespace Runhunt.ObjectSpawner
             if (sceneTransform == null)
             {
                 Debug.LogError("First scene child GameObject not found!");
-                return;
+                return null;
             }
 
             Transform environement = sceneTransform.GetChild(0);
             if (environement.name != "Environment")
             {
                 Debug.LogError("Please place Environment GameObject as first child in the scene! First scene child GameObject name: " + sceneTransform.name);
-                return;
+                return null;
             }
 
             Transform runnerPlatform = environement.GetChild(0);
-            if (runnerPlatform.name != "RunnerPlatform")
+            if (runnerPlatform.name != "RunnerNetworkPlatform")
             {
                 Debug.LogError("Please place RunnerPlatform GameObject as first child in Environment! Cureent GO is: " + runnerPlatform.name);
-                return;
+                return null;
             }
 
             Transform runnerFloorPlatform = runnerPlatform.GetChild(0);
-            if (runnerFloorPlatform.name != "RunnerFloorPlatform")
+            if (runnerFloorPlatform.name != "RunnerFloorTransform")
             {
-                Debug.LogError("Please place RunnerFloorPlatform GameObject as first child in RunnerPlatform! Cureent GO is: " + runnerFloorPlatform.name);
-                return;
+                Debug.LogError("Please place RunnerFloorTransform GameObject as first child in RunnerNetworkPlatform! Cureent GO is: " + runnerFloorPlatform.name);
+                return null;
             }
 
             if (runnerFloorPlatform == null)
             {
                 Debug.LogError("Setting the platform failed!");
-                return;
+                return null;
             }
 
-            if (m_hunterFSM == null)
-            {
-                Debug.LogError("NetworkedHunterMovement is not ready to be accesed!");
-                return;
-            }
-
-            m_hunterFSM.TerrainPlane = runnerFloorPlatform.gameObject;
+            return runnerFloorPlatform;
         }
-
 
         protected override void SetCameraInNetworkedPlayerControls()
         {
