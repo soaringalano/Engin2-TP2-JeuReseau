@@ -7,12 +7,12 @@ using UnityEngine;
 
 namespace Mirror
 {
-    [AddComponentMenu("")]
+    //[AddComponentMenu("")]
     public class RoomManager : NetworkRoomManager
     {
-        [Header("Spawner1 Setup")]
-        [Tooltip("Reward Prefab for the Spawner1")]
-        public GameObject rewardPrefab;
+        //[Header("Spawner1 Setup")]
+        //[Tooltip("Reward Prefab for the Spawner1")]
+        //public GameObject rewardPrefab;
 
         public static new RoomManager singleton { get; private set; }
 

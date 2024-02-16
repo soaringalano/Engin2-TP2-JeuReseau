@@ -34,5 +34,28 @@ namespace Mirror.Examples.NetworkRoom
         {
             base.OnGUI();
         }
+
+        private void Update()
+        {
+            DrawPlayerReadyState();
+
+
+        }
+
+        void DrawPlayerReadyState()
+        {
+            //if (readyToBegin)
+                //GUILayout.Label("Ready");
+            //else
+                //GUILayout.Label("Not Ready");
+
+            if (((isServer && index > 0) || isServerOnly))
+            {
+                // This button only shows on the Host for all players other than the Host
+                // Host and Players can't remove themselves (stop the client instead)
+                // Host can kick a Player this way.
+                GetComponent<NetworkIdentity>().connectionToClient.Disconnect();
+            }
+        }
     }
 }

@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class MainMenuScript : MonoBehaviour
 {
+    [field: SerializeField] public Scene SceneToLoad { get; set; }
     private GameObject panel;
 
     private void Start()
@@ -15,13 +15,28 @@ public class MainMenuScript : MonoBehaviour
     public void Play()
    {
         panel.SetActive(false);
-        SceneManager.LoadScene("002_OnlineLevel", LoadSceneMode.Single);
+        if (SceneToLoad == null) Debug.LogError("SceneToLoad is null");
+        Debug.Log("SceneToLoad: " + SceneToLoad.ToString());
+        LoadNextSceneByBuildIndex();
    }
 
-   //public void Options()
-   // {
-   //     Debug.Log("Options Button clicked");
-   // }
+    private void LoadNextSceneByBuildIndex()
+    {
+        int nextSceneBuildIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        if (nextSceneBuildIndex < SceneManager.sceneCountInBuildSettings)
+        {
+            SceneManager.LoadScene(nextSceneBuildIndex);
+        }
+        else
+        {
+            Debug.Log("No next scene in build settings");
+        }
+    }
+
+    //public void Options()
+    // {
+    //     Debug.Log("Options Button clicked");
+    // }
 
     public void Quit()
     {

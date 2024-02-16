@@ -40,7 +40,7 @@ public class RunhuntLoginUIHUD : MonoBehaviour
     {
         if (NetworkAddress.text == "localhost" || string.IsNullOrWhiteSpace(NetworkAddress.text) || string.IsNullOrEmpty(NetworkAddress.text))
         {
-            Debug.LogWarning("NetworkAddress is null, assign loacalhost");
+            Debug.LogWarning("NetworkAddress is null or localhost, assign loacalhost");
             Manager.networkAddress = "localhost";
         }
         else
