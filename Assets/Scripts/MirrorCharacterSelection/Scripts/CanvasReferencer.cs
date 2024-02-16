@@ -73,6 +73,7 @@ namespace Mirror
                 {
                     createCharacterMessage = _characterMessage
                 };
+                if (NetworkManagerCharacterSelection.singleton == null) Debug.LogError("NetworkManagerCharacterSelection.singleton is null");
                 NetworkManagerCharacterSelection.singleton.ReplaceCharacter(replaceCharacterMessage);
                 sceneReferencer.CloseCharacterSelection();
             }

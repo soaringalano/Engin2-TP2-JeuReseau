@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/BothTeams/OnlineLevels/002_OnlineLevel.unity
-    guid: 71bd2c8d0df52664eb41496fd21c2617
+    path: Assets/Scenes/BothTeams/OnlineLevels/002/002_OnlineLevel_DnDnPivot2.unity
+    guid: f54e5901d2152d94b8dd87c6d89736a4
   m_configObjects: {}
