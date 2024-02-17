@@ -300,6 +300,8 @@ namespace Mirror
             // increment the index before adding the player, so first player starts at 1
             clientIndex++;
 
+            Debug.Log($"OnServerAddPlayer {conn} {numPlayers}");
+
             if (Utils.IsSceneActive(RoomScene))
             {
                 allPlayersReady = false;

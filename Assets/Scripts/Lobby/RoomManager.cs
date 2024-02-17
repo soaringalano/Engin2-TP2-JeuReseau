@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Mirror
 {
-    //[AddComponentMenu("")]
+    [AddComponentMenu("")]
     public class RoomManager : NetworkRoomManager
     {
         //[Header("Spawner1 Setup")]

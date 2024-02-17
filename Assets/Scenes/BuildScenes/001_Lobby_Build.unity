@@ -2332,6 +2332,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RoomManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3419540948520867372, guid: 637c5e0eca750424997da2aa71442f73, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6341598314390231463, guid: 637c5e0eca750424997da2aa71442f73, type: 3}
       propertyPath: m_LocalPosition.x
       value: 412.29895
@@ -2382,7 +2386,7 @@ PrefabInstance:
       objectReference: {fileID: 3134252490943061674}
     - target: {fileID: 6863471331163259762, guid: 637c5e0eca750424997da2aa71442f73, type: 3}
       propertyPath: minPlayers
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6863471331163259762, guid: 637c5e0eca750424997da2aa71442f73, type: 3}
       propertyPath: onlineScene
@@ -2400,6 +2404,30 @@ PrefabInstance:
       propertyPath: GameplayScene
       value: Assets/Scenes/BuildScenes/003_OnlineLevel_Build.unity
       objectReference: {fileID: 0}
+    - target: {fileID: 6863471331163259762, guid: 637c5e0eca750424997da2aa71442f73, type: 3}
+      propertyPath: maxConnections
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6863471331163259762, guid: 637c5e0eca750424997da2aa71442f73, type: 3}
+      propertyPath: _allPlayersReady
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6863471331163259762, guid: 637c5e0eca750424997da2aa71442f73, type: 3}
+      propertyPath: playerPrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6863471331163259762, guid: 637c5e0eca750424997da2aa71442f73, type: 3}
+      propertyPath: playerPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 193462938415849019, guid: a6ebf7a6d61d0104abb882342ab237e5, type: 3}
+    - target: {fileID: 6863471331163259762, guid: 637c5e0eca750424997da2aa71442f73, type: 3}
+      propertyPath: playerPrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 193462938415849019, guid: a6ebf7a6d61d0104abb882342ab237e5, type: 3}
+    - target: {fileID: 6863471331163259762, guid: 637c5e0eca750424997da2aa71442f73, type: 3}
+      propertyPath: playerPrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 193462938415849019, guid: a6ebf7a6d61d0104abb882342ab237e5, type: 3}
     m_RemovedComponents:
     - {fileID: 7770450484051885175, guid: 637c5e0eca750424997da2aa71442f73, type: 3}
     m_RemovedGameObjects: []
