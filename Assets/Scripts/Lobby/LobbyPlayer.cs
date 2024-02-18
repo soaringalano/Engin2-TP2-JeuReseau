@@ -26,15 +26,6 @@ namespace Mirror.Examples.NetworkRoom
         [field: SerializeField] private GameObject UIPlayerFourHunter { get; set; }
         [field: SerializeField] private GameObject UIPlayerFourRunner { get; set; }
 
-        //[SerializeField][SyncVar] private GameObject m_uIPlayerHunter = null;
-        //[SerializeField][SyncVar] private GameObject m_uIPlayerRunner = null;
-        //[SerializeField][SyncVar] private GameObject m_uIPlayerUnselected = null;
-        //[SerializeField][SyncVar] private int m_playerSelectedUIIndex = 1;
-
-        //private int m_playerOneSelectedUIIndex = 1;
-        //private int m_playerTwoSelectedUIIndex = 1;
-        //private int m_playerThreeSelectedUIIndex = 1;
-        //private int m_playerFourSelectedUIIndex = 1;
 
         [SerializeField]
         [SyncVar(hook = nameof(CmdChangePlayerOneUIIndex))] private int m_playerOneSelectedUIIndex = 1;
@@ -45,16 +36,20 @@ namespace Mirror.Examples.NetworkRoom
         [SerializeField]
         [SyncVar(hook = nameof(CmdChangePlayerFourUIIndex))] private int m_playerFourSelectedUIIndex = 1;
 
+        [SerializeField]
+        [SyncVar(hook = nameof(CmdSetUnselectedImageAlpha))] private float m_unselectedImageAlpha = 0f;
+        [SerializeField]
+        [SyncVar(hook = nameof(CmdSetUnselectedTextAlpha))] private float m_unselectedTextAlpha = 0f;
+        [SerializeField]
+        [SyncVar(hook = nameof(CmdSetHunterImageAlpha))] private float m_hunterImageAlpha = 0f;
+        [SerializeField]
+        [SyncVar(hook = nameof(CmdSetRunnerImageAlpha))] private float m_runnerImageAlpha = 0f;
+
         private bool m_playerArrivedInLobby = false;
 
         public override void OnStartClient()
         {
             //Debug.Log($"OnStartClient {gameObject}");
-            // log player index and child index
-            //Debug.Log("LobbyPlayer OnStartClient player index: " + index + " child index: " + transform.GetSiblingIndex());
-            //base.OnStartClient();
-            //InitializeSynVars();
-
         }
 
         public override void OnClientEnterRoom()
@@ -84,30 +79,44 @@ namespace Mirror.Examples.NetworkRoom
             Debug.Log("LobbyPlayer Start player index: " + index + " child index: " + transform.GetSiblingIndex());
             base.Start();
 
-            if (!isLocalPlayer) return;
-            Image paneBackGround = GetComponentInChildren<Image>();
-            if (paneBackGround.name != "PanelBackground") Debug.LogError("PaneBackground not found in LobbyPlayer, name is: " + paneBackGround.name);
-            else Debug.Log("PaneBackground found in LobbyPlayer, name is: " + paneBackGround.name);
-            // set alpha to 1
-            paneBackGround.color = new Color(paneBackGround.color.r, paneBackGround.color.g, paneBackGround.color.b, 1);
-
-            //UIPlayerOneUnselected = GameObject.Find("Player1");
-            //UIPlayerTwoUnselected = GameObject.Find("Player2");
-            //UIPlayerThreeUnselected = GameObject.Find("Player3");
-            //UIPlayerFourUnselected = GameObject.Find("Player4");
-            //UIPlayerOneHunter = GameObject.Find("HunterP1");
-            //UIPlayerTwoHunter = GameObject.Find("HunterP2");
-            //UIPlayerThreeHunter = GameObject.Find("HunterP3");
-            //UIPlayerFourHunter = GameObject.Find("HunterP4");
-            //UIPlayerOneRunner = GameObject.Find("RunnerP1");
-            //UIPlayerTwoRunner = GameObject.Find("RunnerP2");
-            //UIPlayerThreeRunner = GameObject.Find("RunnerP3");
-            //UIPlayerFourRunner = GameObject.Find("RunnerP4");
+            //if (isClientOnly) return;
+            //Image paneBackGround = GetComponentInChildren<Image>();
+            //if (paneBackGround.name != "PanelBackground") Debug.LogError("PaneBackground not found in LobbyPlayer, name is: " + paneBackGround.name);
+            //else Debug.Log("PaneBackground found in LobbyPlayer, name is: " + paneBackGround.name);
+            //// set alpha to 1
+            //paneBackGround.color = new Color(paneBackGround.color.r, paneBackGround.color.g, paneBackGround.color.b, 1);
         }
 
 
         private void Update()
         {
+            if (!isLocalPlayer)
+            {
+                //Debug.Log("isLocalPlayer index: " + index + " child index: " + (transform.GetSiblingIndex() - 1));
+                //Debug.Log("Index: " + index);
+                switch (index)
+                {
+                    case 0:
+                        //Debug.Log("isLocalPlayer index: " + index + " child index: " + (transform.GetSiblingIndex() - 1));
+                        //Debug.Log("Player 1");
+                        UpdateActivePlayerUILocal(m_playerOneSelectedUIIndex);
+                        break;
+                    case 1:
+                        //Debug.Log("Player 2");
+                        UpdateActivePlayerUILocal(m_playerTwoSelectedUIIndex);
+                        break;
+                    case 2:
+                        //Debug.Log("Player 3");
+                        UpdateActivePlayerUILocal(m_playerThreeSelectedUIIndex);
+                        break;
+                    case 3:
+                        //Debug.Log("Player 4");
+                        UpdateActivePlayerUILocal(m_playerFourSelectedUIIndex);
+                        break;
+                }
+            }
+
+            //Debug.Log("isLocalPlayer index: " + index + " child index: " + (transform.GetSiblingIndex() - 1));
             if (m_playerArrivedInLobby == false && isClientOnly) return;
             // log player index and child index
             //Debug.Log("LobbyPlayer Update player index: " + index + " child index: " + transform.GetSiblingIndex());
@@ -115,57 +124,34 @@ namespace Mirror.Examples.NetworkRoom
             if (isLocalPlayer)
             {
 
-                Debug.Log("LobbyPlayer Update player index: " + index + " child index: " + (transform.GetSiblingIndex()-1));
+                //Debug.Log("LobbyPlayer Update player index: " + index + " child index: " + (transform.GetSiblingIndex()-1));
                 switch (index)
                 {
                     case 0:
                         //Debug.Log("Player 1");
-                        PlayerControlUpdate(m_playerOneSelectedUIIndex);
-                        UpdateActivePlayerUI(m_playerOneSelectedUIIndex);
+                        PlayerControlUpdateServer(m_playerOneSelectedUIIndex);
+                        UpdateActivePlayerUILocal(m_playerOneSelectedUIIndex);
                         break;
                     case 1:
                         //Debug.Log("Player 2");
-                        PlayerControlUpdate(m_playerTwoSelectedUIIndex);
-                        UpdateActivePlayerUI(m_playerTwoSelectedUIIndex);
+                        PlayerControlUpdateServer(m_playerTwoSelectedUIIndex);
+                        UpdateActivePlayerUILocal(m_playerTwoSelectedUIIndex);
                         break;
                     case 2:
                         //Debug.Log("Player 3");
-                        PlayerControlUpdate(m_playerThreeSelectedUIIndex);
-                        UpdateActivePlayerUI(m_playerThreeSelectedUIIndex);
+                        PlayerControlUpdateServer(m_playerThreeSelectedUIIndex);
+                        UpdateActivePlayerUILocal(m_playerThreeSelectedUIIndex);
                         break;
                     case 3:
                         //Debug.Log("Player 4");
-                        PlayerControlUpdate(m_playerFourSelectedUIIndex);
-                        UpdateActivePlayerUI(m_playerFourSelectedUIIndex);
-                        break;
-                }
-            } 
-            else if (!isLocalPlayer)
-            {
-                //Debug.Log("Index: " + index);
-                switch (index)
-                {
-                    case 0:
-                        //Debug.Log("Player 1");
-                        UpdateActivePlayerUI(m_playerOneSelectedUIIndex);
-                        break;
-                    case 1:
-                        //Debug.Log("Player 2");
-                        UpdateActivePlayerUI(m_playerTwoSelectedUIIndex);
-                        break;
-                    case 2:
-                        //Debug.Log("Player 3");
-                        UpdateActivePlayerUI(m_playerThreeSelectedUIIndex);
-                        break;
-                    case 3:
-                        //Debug.Log("Player 4");
-                        UpdateActivePlayerUI(m_playerFourSelectedUIIndex);
+                        PlayerControlUpdateServer(m_playerFourSelectedUIIndex);
+                        UpdateActivePlayerUILocal(m_playerFourSelectedUIIndex);
                         break;
                 }
             }
         }
 
-        private void PlayerControlUpdate(int playerSelectionUIIndex)
+        private void PlayerControlUpdateServer(int playerSelectionUIIndex)
         {
             //int playerSelectionUIIndex;
             //GetCurrentPlayerIndex(out playerSelectionUIIndex);
@@ -173,27 +159,23 @@ namespace Mirror.Examples.NetworkRoom
             {
                 if ((playerSelectionUIIndex - 1) < 0) return;
                 int newUiIndex = playerSelectionUIIndex - 1;
-                ChangePlayerUIIndex(playerSelectionUIIndex, newUiIndex);
+                ChangePlayerUIIndexServer(playerSelectionUIIndex, newUiIndex);
             }
             else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
             {
                 if ((playerSelectionUIIndex + 1) > 2) return;
                 int newUiIndex = playerSelectionUIIndex + 1;
-                ChangePlayerUIIndex(playerSelectionUIIndex, newUiIndex);
+                ChangePlayerUIIndexServer(playerSelectionUIIndex, newUiIndex);
             }
         }
 
-        private void UpdateActivePlayerUI(int playerSelectionUIIndex)
+        private void UpdateActivePlayerUILocal(int playerSelectionUIIndex)
         {
             //int playerSelectionUIIndex;
             //GetCurrentPlayerIndex(out playerSelectionUIIndex);
             GameObject uIPlayerHunter, uIPlayerUnselected, uIPlayerRunner;
             GetCurrentPlayerGO(out uIPlayerHunter, out uIPlayerUnselected, out uIPlayerRunner);
-            //Debug.Log(" ");
-            //Debug.Log("m_playerSelectedUIIndex == 0: " + (playerSelectionUIIndex == 0));
-            //Debug.Log("uIPlayerHunter.GetComponent<Image>().color.a == 0: " + (uIPlayerHunter.GetComponent<Image>().color.a == 0));
-            //if (uIPlayerHunter.GetComponent<Image>().color.a != 0) Debug.Log("uIPlayerHunter.GetComponent<Image>().gameObject.name: " + uIPlayerHunter.GetComponent<Image>().gameObject.name);
-            //Debug.Log(" ");
+            //Debug.Log("isLocalPlayer index: " + index + " child index: " + (transform.GetSiblingIndex() - 1) + " playerSelectionUIIndex == 1: " + (playerSelectionUIIndex == 1) + " IPlayerUnselected.GetComponent<Image>().color.a == 0: " + (uIPlayerUnselected.GetComponent<Image>().color.a == 0));
 
             if (playerSelectionUIIndex == 0 && uIPlayerHunter.GetComponent<Image>().color.a == 0)
             {
@@ -228,7 +210,7 @@ namespace Mirror.Examples.NetworkRoom
                 images = uIPlayerRunner.GetComponent<Image>();
                 images.color = new Color(images.color.r, images.color.g, images.color.b, 0);
 
-                Debug.Log("Player Unselected: " + uIPlayerUnselected.name + " selected by player " + index);
+                //Debug.Log("Player Unselected: " + uIPlayerUnselected.name + " selected by player " + index);
             }
             else if (playerSelectionUIIndex == 2 && uIPlayerRunner.GetComponent<Image>().color.a == 0)
             {
@@ -245,6 +227,108 @@ namespace Mirror.Examples.NetworkRoom
 
                 images = uIPlayerRunner.GetComponent<Image>();
                 images.color = new Color(images.color.r, images.color.g, images.color.b, 1);
+
+                //Debug.Log("Player Runner selected by player " + index);
+            }
+        }        
+        
+        private void UpdateActivePlayerUIServer(int playerSelectionUIIndex)
+        {
+            //int playerSelectionUIIndex;
+            //GetCurrentPlayerIndex(out playerSelectionUIIndex);
+            GameObject uIPlayerHunter, uIPlayerUnselected, uIPlayerRunner;
+            GetCurrentPlayerGO(out uIPlayerHunter, out uIPlayerUnselected, out uIPlayerRunner);
+            //Debug.Log(" ");
+            //Debug.Log("m_playerSelectedUIIndex == 0: " + (playerSelectionUIIndex == 0));
+            //Debug.Log("uIPlayerHunter.GetComponent<Image>().color.a == 0: " + (uIPlayerHunter.GetComponent<Image>().color.a == 0));
+            //if (uIPlayerHunter.GetComponent<Image>().color.a != 0) Debug.Log("uIPlayerHunter.GetComponent<Image>().gameObject.name: " + uIPlayerHunter.GetComponent<Image>().gameObject.name);
+            //Debug.Log(" ");
+
+            if (playerSelectionUIIndex == 0)
+            {
+                //UIPlayerOneHunter.SetActive(true);
+                //UIPlayerOneUnselected.SetActive(false);
+                //UIPlayerOneRunner.SetActive(false);
+                if (uIPlayerHunter.GetComponent<Image>().color.a == 1) return;
+                Image images = uIPlayerHunter.GetComponent<Image>();
+                CmdSetHunterImageAlpha(images.color.a, 1f);
+                images.color = new Color(images.color.r, images.color.g, images.color.b, m_unselectedImageAlpha);
+                
+                if (uIPlayerUnselected.GetComponent<Image>().color.a == 1)
+                {
+                    images = uIPlayerUnselected.GetComponent<Image>();
+                    CmdSetUnselectedImageAlpha(images.color.a, 0f);
+                    images.color = new Color(images.color.r, images.color.g, images.color.b, m_unselectedImageAlpha);
+
+                    TextMeshProUGUI textMeshPro = uIPlayerUnselected.gameObject.GetComponentInChildren<TextMeshProUGUI>();
+                    CmdSetUnselectedTextAlpha(images.color.a, 0f);
+                    textMeshPro.color = new Color(textMeshPro.color.r, textMeshPro.color.g, textMeshPro.color.b, m_unselectedImageAlpha);
+                }
+
+                if (uIPlayerRunner.GetComponent<Image>().color.a == 1)
+                {
+                    images = uIPlayerRunner.GetComponent<Image>();
+                    CmdSetRunnerImageAlpha(images.color.a, 0f);
+                    images.color = new Color(images.color.r, images.color.g, images.color.b, m_unselectedImageAlpha);
+                }
+
+                //Debug.Log("Player Hunter selected by player " + index);
+            }
+            else if (playerSelectionUIIndex == 1 && uIPlayerUnselected.GetComponent<Image>().color.a == 0)
+            {
+                //UIPlayerOneHunter.SetActive(false);
+                //UIPlayerOneUnselected.SetActive(true);
+                //UIPlayerOneRunner.SetActive(false);
+                if (uIPlayerUnselected.GetComponent<Image>().color.a == 1) return;
+
+                Image images = uIPlayerHunter.GetComponent<Image>();
+                if (images.color.a == 1)
+                {
+                    CmdSetHunterImageAlpha(images.color.a, 0f);
+                    images.color = new Color(images.color.r, images.color.g, images.color.b, m_unselectedImageAlpha);
+                }
+
+                images = uIPlayerUnselected.GetComponent<Image>();
+                CmdSetUnselectedImageAlpha(images.color.a, 1f);
+                images.color = new Color(images.color.r, images.color.g, images.color.b, m_unselectedImageAlpha);
+                TextMeshProUGUI textMeshPro = uIPlayerUnselected.gameObject.GetComponentInChildren<TextMeshProUGUI>();
+                CmdSetUnselectedTextAlpha(images.color.a, 1f);
+                textMeshPro.color = new Color(textMeshPro.color.r, textMeshPro.color.g, textMeshPro.color.b, m_unselectedImageAlpha);
+
+                if (uIPlayerRunner.GetComponent<Image>().color.a == 1)
+                {
+                    images = uIPlayerRunner.GetComponent<Image>();
+                    CmdSetRunnerImageAlpha(images.color.a, 0f);
+                    images.color = new Color(images.color.r, images.color.g, images.color.b, m_unselectedImageAlpha);
+                }
+
+                Debug.Log("Player Unselected: " + uIPlayerUnselected.name + " selected by player " + index);
+            }
+            else if (playerSelectionUIIndex == 2 && uIPlayerRunner.GetComponent<Image>().color.a == 0)
+            {
+                if (uIPlayerRunner.GetComponent<Image>().color.a == 1) return;
+
+                Image images = uIPlayerHunter.GetComponent<Image>();
+                if (uIPlayerHunter.GetComponent<Image>().color.a == 1)
+                {
+                    CmdSetHunterImageAlpha(images.color.a, 0f);
+                    images.color = new Color(images.color.r, images.color.g, images.color.b, m_unselectedImageAlpha);
+                }
+
+                if (uIPlayerUnselected.GetComponent<Image>().color.a == 1)
+                {
+                    images = uIPlayerUnselected.GetComponent<Image>();
+                    CmdSetUnselectedImageAlpha(images.color.a, 0f);
+                    images.color = new Color(images.color.r, images.color.g, images.color.b, m_unselectedImageAlpha);
+
+                    TextMeshProUGUI textMeshPro = uIPlayerUnselected.gameObject.GetComponentInChildren<TextMeshProUGUI>();
+                    CmdSetUnselectedTextAlpha(images.color.a, 0f);
+                    textMeshPro.color = new Color(textMeshPro.color.r, textMeshPro.color.g, textMeshPro.color.b, m_unselectedImageAlpha);
+                }
+
+                images = uIPlayerRunner.GetComponent<Image>();
+                CmdSetRunnerImageAlpha(images.color.a, 1f);
+                images.color = new Color(images.color.r, images.color.g, images.color.b, m_unselectedImageAlpha);
 
                 //Debug.Log("Player Runner selected by player " + index);
             }
@@ -283,31 +367,8 @@ namespace Mirror.Examples.NetworkRoom
             }
         }
 
-        //private void GetCurrentPlayerIndex(out int playerSelectionUIIndex)
-        //{
-        //    playerSelectionUIIndex = 99;
-        //    //Debug.Log("index: " + index);
-
-        //    if (index == 0)
-        //    {
-        //        playerSelectionUIIndex = m_playerOneSelectedUIIndex;
-        //    }
-        //    else if (index == 1)
-        //    {
-        //        playerSelectionUIIndex = m_playerTwoSelectedUIIndex;
-        //    }
-        //    else if (index == 2)
-        //    {
-        //        playerSelectionUIIndex = m_playerThreeSelectedUIIndex;
-        //    }
-        //    else if (index == 3)
-        //    {
-        //        playerSelectionUIIndex = m_playerFourSelectedUIIndex;
-        //    }
-        //}
-
-        [Command(requiresAuthority = false)]
-        private void ChangePlayerUIIndex(int oldIndex, int newIndex)
+        //[Command(requiresAuthority = false)]
+        private void ChangePlayerUIIndexServer(int oldIndex, int newIndex)
         {
             if (index == 0)
             {
@@ -325,6 +386,30 @@ namespace Mirror.Examples.NetworkRoom
             {
                 CmdChangePlayerFourUIIndex(oldIndex, newIndex);
             }
+        }
+
+        [Command(requiresAuthority = false)]
+        public void CmdSetUnselectedImageAlpha(float oldIndex, float newIndex)
+        {
+            m_unselectedImageAlpha = newIndex;
+        }
+
+        [Command(requiresAuthority = false)]
+        public void CmdSetUnselectedTextAlpha(float oldIndex, float newIndex)
+        {
+            m_unselectedTextAlpha = newIndex;
+        }
+        
+        [Command(requiresAuthority = false)]
+        public void CmdSetHunterImageAlpha(float oldIndex, float newIndex)
+        {
+            m_hunterImageAlpha = newIndex;
+        }
+
+        [Command(requiresAuthority = false)]
+        public void CmdSetRunnerImageAlpha(float oldIndex, float newIndex)
+        {
+            m_runnerImageAlpha = newIndex;
         }
 
         [Command(requiresAuthority = false)]
