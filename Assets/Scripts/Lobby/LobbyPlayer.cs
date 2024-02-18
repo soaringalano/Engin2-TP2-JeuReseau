@@ -1,214 +1,7 @@
-//using System.Collections.Generic;
-//using TMPro;
-//using UnityEngine;
 
-//namespace Mirror
-//{
-
-//    [AddComponentMenu("")]
-//    public class LobbyPlayer : NetworkRoomPlayer
-//    {
-//        private NetworkRoomManager m_room;
-
-//        [field: SerializeField] private GameObject UIPlayerOneUnselected { get; set; }
-//        [field: SerializeField] private GameObject UIPlayerTwoUnselected { get; set; }
-//        [field: SerializeField] private GameObject UIPlayerThreeUnselected { get; set; }
-//        [field: SerializeField] private GameObject UIPlayerFourUnselected { get; set; }
-
-//        [field: SerializeField] private GameObject UIPlayerOneHunter { get; set; }
-//        [field: SerializeField] private GameObject UIPlayerOneRunner { get; set; }
-
-//        [field: SerializeField] private GameObject UIPlayerTwoHunter { get; set; }
-//        [field: SerializeField] private GameObject UIPlayerTwoRunner { get; set; }
-
-//        [field: SerializeField] private GameObject UIPlayerThreeHunter { get; set; }
-//        [field: SerializeField] private GameObject UIPlayerThreeRunner { get; set; }
-
-//        [field: SerializeField] private GameObject UIPlayerFourHunter { get; set; }
-//        [field: SerializeField] private GameObject UIPlayerFourRunner { get; set; }
-//        private GameObject UIPlayerHunter { get; set; }
-//        private GameObject UIPlayerRunner { get; set; }
-//        private GameObject UIPlayerUnselected { get; set; }
-
-//        //[SyncVar(hook = nameof(OnSelectedUIIndexChanged))]
-//        private int m_playerSelectedUIIndex = 1;
-
-//        private int m_playerOneSelectedUIIndex = 1;
-//        private int m_playerTwoSelectedUIIndex = 1;
-//        private int m_playerThreeSelectedUIIndex = 1;
-//        private int m_playerFourSelectedUIIndex = 1;
-
-//        public override void Start()
-//        {
-//            base.Start();
-//            m_room = NetworkManager.singleton as NetworkRoomManager;
-//            //Debug.Log("Client Index: " + clientIndex);
-//        }
-
-//        private void Update()
-//        {
-//            if (!isLocalPlayer) return;
-//            AssignVariables();
-//            //Debug.Log("m_room.clientIndex: " + m_room.clientIndex);
-//            //Debug.Log("Index: " + index);
-//            switch (index)
-//            {
-//                case 0:
-//                    PlayerControlUpdate();
-//                    UpdateActiveUI();
-//                    break;
-//                case 1:
-//                    PlayerControlUpdate();
-//                    UpdateActiveUI();
-//                    break;
-//                case 2:
-//                    PlayerControlUpdate();
-//                    UpdateActiveUI();
-//                    break;
-//                case 3:
-//                    PlayerControlUpdate();
-//                    UpdateActiveUI();
-//                    break;
-//            }
-//        }
-
-//        private void AssignVariables()
-//        {
-//            if (UIPlayerHunter != null) return;
-
-//            switch (index)
-//            {
-//                case 0:
-//                    Debug.Log("Player 1 index: " + index);
-//                    Debug.Log("m_room.clientIndex: " + m_room.clientIndex);
-//                    UIPlayerHunter = UIPlayerOneHunter;
-//                    UIPlayerRunner = UIPlayerOneRunner;
-//                    UIPlayerUnselected = UIPlayerOneUnselected;
-//                    m_playerSelectedUIIndex = m_playerOneSelectedUIIndex;
-//                    break;
-//                case 1:
-//                    Debug.Log("Player 2 index: " + index);
-//                    Debug.Log("m_room.clientIndex: " + m_room.clientIndex);
-//                    UIPlayerHunter = UIPlayerTwoHunter;
-//                    UIPlayerRunner = UIPlayerTwoRunner;
-//                    UIPlayerUnselected = UIPlayerTwoUnselected;
-//                    m_playerSelectedUIIndex = m_playerTwoSelectedUIIndex;
-//                    break;
-//                case 2:
-//                    Debug.Log("Player 3 index: " + index);
-//                    Debug.Log("m_room.clientIndex: " + m_room.clientIndex);
-//                    UIPlayerHunter = UIPlayerThreeHunter;
-//                    UIPlayerRunner = UIPlayerThreeRunner;
-//                    UIPlayerUnselected = UIPlayerThreeUnselected;
-//                    m_playerSelectedUIIndex = m_playerThreeSelectedUIIndex;
-//                    break;
-//                case 3:
-//                    Debug.Log("Player 4 index: " + index);
-//                    Debug.Log("m_room.clientIndex: " + m_room.clientIndex);
-//                    UIPlayerHunter = UIPlayerFourHunter;
-//                    UIPlayerRunner = UIPlayerFourRunner;
-//                    UIPlayerUnselected = UIPlayerFourUnselected;
-//                    m_playerSelectedUIIndex = m_playerFourSelectedUIIndex;
-//                    break;
-//            }
-//        }
-
-//        private void PlayerControlUpdate()
-//        {
-//            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
-//            {
-//                if ((m_playerSelectedUIIndex - 1) < 0) return;
-//                int oldIndex = m_playerSelectedUIIndex;
-//                m_playerSelectedUIIndex--;
-//                //Debug.Log("Current Index: " + (m_playerSelectedUIIndex));
-//                //OnSelectedUIIndexChanged(oldIndex, m_playerSelectedUIIndex - 1);
-//            }
-//            else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
-//            {
-//                if ((m_playerSelectedUIIndex + 1) > 2) return;
-//                int oldIndex = m_playerSelectedUIIndex;
-//                m_playerSelectedUIIndex++;
-//                //Debug.Log("Current Index: " + (m_playerSelectedUIIndex));
-//                //OnSelectedUIIndexChanged(oldIndex, m_playerSelectedUIIndex);
-//            }
-//            //else
-//            //{
-//            //    OnSelectedUIIndexChanged(m_playerSelectedUIIndex, m_playerSelectedUIIndex);
-//            //}
-//        }
-
-//        //private void OnSelectedUIIndexChanged(int oldIndex, int newIndex)
-//        //{
-//        //    UpdateActiveUI(newIndex);
-//        //}
-
-//        private void UpdateActiveUI()
-//        {
-//            if (m_playerSelectedUIIndex == 0 && UIPlayerHunter.activeSelf == false)
-//            {
-//                UIPlayerHunter.SetActive(true);
-//                UIPlayerRunner.SetActive(false);
-//                UIPlayerUnselected.SetActive(false);
-//                //Debug.Log("Player Hunter selected by player " + index);
-//            }
-//            else if (m_playerSelectedUIIndex == 1 && UIPlayerUnselected.activeSelf == false)
-//            {
-//                UIPlayerHunter.SetActive(false);
-//                UIPlayerUnselected.SetActive(true);
-//                UIPlayerRunner.SetActive(false);
-//                //Debug.Log("Player Unselected selected by player " + index);
-//            }
-//            else if (m_playerSelectedUIIndex == 2 && UIPlayerRunner.activeSelf == false)
-//            {
-//                UIPlayerHunter.SetActive(false);
-//                UIPlayerUnselected.SetActive(false);
-//                UIPlayerRunner.SetActive(true);
-//                //Debug.Log("Player Runner selected by player " + index);
-//            }
-//        }
-
-//        public void OnReadyChecked()
-//        {
-//            CmdChangeReadyState(true);
-//        }
-
-//        public void OnReadyUnchecked()
-//        {
-//            CmdChangeReadyState(false);
-//        }
-
-//        //public override void OnClientEnterRoom() 
-//        //{ 
-//        //    base.OnClientEnterRoom();
-//        //    //NetworkRoomManager room = NetworkManager.singleton as NetworkRoomManager;
-//        //    //room.RecalculateRoomPlayerIndices();
-//        //}
-
-//        //public override void IndexChanged(int oldIndex, int newIndex)
-//        //{
-//        //    base.IndexChanged(oldIndex, newIndex);
-//        //}
-
-
-//        //public override void OnStartLocalPlayer()
-//        //{
-//        //    base.OnStartLocalPlayer();
-
-//        //    if (isLocalPlayer)
-//        //    {
-//        //        if (NetworkManager.singleton is NetworkRoomManager room)
-//        //        {
-//        //            Debug.Log("Local Player Index: " + index);
-//        //            room.RecalculateRoomPlayerIndices();
-//        //            Debug.Log("Local Player Index: " + index);
-//        //        }
-//        //    }
-//        //}
-//    }
-//}
-
-using System;
+using TMPro;
 using UnityEngine;
+using UnityEngine.ProBuilder.MeshOperations;
 using UnityEngine.UI;
 
 namespace Mirror.Examples.NetworkRoom
@@ -238,14 +31,30 @@ namespace Mirror.Examples.NetworkRoom
         //[SerializeField][SyncVar] private GameObject m_uIPlayerUnselected = null;
         //[SerializeField][SyncVar] private int m_playerSelectedUIIndex = 1;
 
-        private int m_playerOneSelectedUIIndex = 1;
-        private int m_playerTwoSelectedUIIndex = 1;
-        private int m_playerThreeSelectedUIIndex = 1;
-        private int m_playerFourSelectedUIIndex = 1;
+        //private int m_playerOneSelectedUIIndex = 1;
+        //private int m_playerTwoSelectedUIIndex = 1;
+        //private int m_playerThreeSelectedUIIndex = 1;
+        //private int m_playerFourSelectedUIIndex = 1;
+
+        [SerializeField]
+        [SyncVar(hook = nameof(CmdChangePlayerOneUIIndex))] private int m_playerOneSelectedUIIndex = 1;
+        [SerializeField]
+        [SyncVar(hook = nameof(CmdChangePlayerTwoUIIndex))] private int m_playerTwoSelectedUIIndex = 1;
+        [SerializeField]
+        [SyncVar(hook = nameof(CmdChangePlayerThreeUIIndex))] private int m_playerThreeSelectedUIIndex = 1;
+        [SerializeField]
+        [SyncVar(hook = nameof(CmdChangePlayerFourUIIndex))] private int m_playerFourSelectedUIIndex = 1;
+
+        private bool m_playerArrivedInLobby = false;
 
         public override void OnStartClient()
         {
             //Debug.Log($"OnStartClient {gameObject}");
+            // log player index and child index
+            //Debug.Log("LobbyPlayer OnStartClient player index: " + index + " child index: " + transform.GetSiblingIndex());
+            //base.OnStartClient();
+            //InitializeSynVars();
+
         }
 
         public override void OnClientEnterRoom()
@@ -260,7 +69,8 @@ namespace Mirror.Examples.NetworkRoom
 
         public override void IndexChanged(int oldIndex, int newIndex)
         {
-            //Debug.Log($"IndexChanged {newIndex}");
+            Debug.Log($"IndexChanged {newIndex}");
+            m_playerArrivedInLobby = true;
         }
 
         public override void ReadyStateChanged(bool oldReadyState, bool newReadyState)
@@ -270,6 +80,8 @@ namespace Mirror.Examples.NetworkRoom
 
         public override void Start()
         {
+            // log player index and child index
+            Debug.Log("LobbyPlayer Start player index: " + index + " child index: " + transform.GetSiblingIndex());
             base.Start();
 
             if (!isLocalPlayer) return;
@@ -279,320 +91,265 @@ namespace Mirror.Examples.NetworkRoom
             // set alpha to 1
             paneBackGround.color = new Color(paneBackGround.color.r, paneBackGround.color.g, paneBackGround.color.b, 1);
 
-            //if (!isLocalPlayer) return;
-            //if (isLocalPlayer)
-            //{
-            //Initialize();
-            //}
-            //else
-            //{
-            //    InitializeOnServer();
-            //}
-
+            //UIPlayerOneUnselected = GameObject.Find("Player1");
+            //UIPlayerTwoUnselected = GameObject.Find("Player2");
+            //UIPlayerThreeUnselected = GameObject.Find("Player3");
+            //UIPlayerFourUnselected = GameObject.Find("Player4");
+            //UIPlayerOneHunter = GameObject.Find("HunterP1");
+            //UIPlayerTwoHunter = GameObject.Find("HunterP2");
+            //UIPlayerThreeHunter = GameObject.Find("HunterP3");
+            //UIPlayerFourHunter = GameObject.Find("HunterP4");
+            //UIPlayerOneRunner = GameObject.Find("RunnerP1");
+            //UIPlayerTwoRunner = GameObject.Find("RunnerP2");
+            //UIPlayerThreeRunner = GameObject.Find("RunnerP3");
+            //UIPlayerFourRunner = GameObject.Find("RunnerP4");
         }
 
-        //private void InitializeOnServer()
-        //{
-        //    Debug.Log("Start() player index: " + index);
-        //    if (index == 0)
-        //    {
-        //        CmdSetUIPlayerHunter(UIPlayerOneHunter);
-        //        CmdSetUIPlayerRunner(UIPlayerOneRunner);
-        //        CmdSetUIPlayerUnselected(UIPlayerOneUnselected);
-        //    }
-        //    else if (index == 1)
-        //    {
-        //        CmdSetUIPlayerHunter(UIPlayerTwoHunter);
-        //        CmdSetUIPlayerRunner(UIPlayerTwoRunner);
-        //        CmdSetUIPlayerUnselected(UIPlayerTwoUnselected);
-        //    }
-        //    else if (index == 2)
-        //    {
-        //        CmdSetUIPlayerHunter(UIPlayerThreeHunter);
-        //        CmdSetUIPlayerRunner(UIPlayerThreeRunner);
-        //        CmdSetUIPlayerUnselected(UIPlayerThreeUnselected);
-        //    }
-        //    else if (index == 3)
-        //    {
-        //        CmdSetUIPlayerHunter(UIPlayerFourHunter);
-        //        CmdSetUIPlayerRunner(UIPlayerFourRunner);
-        //        CmdSetUIPlayerUnselected(UIPlayerFourUnselected);
-        //    }
-        //}
-
-        //private void Initialize()
-        //{
-        //    base.Start();
-        //    if (!isLocalPlayer) return;
-
-        //    Debug.Log("Start() player index: " + index);
-        //    if (index == 0)
-        //    {
-        //        m_uIPlayerHunter = UIPlayerOneHunter;
-        //        m_uIPlayerRunner = UIPlayerOneRunner;
-        //        m_uIPlayerUnselected = UIPlayerOneUnselected;
-        //    }
-        //    else if (index == 1)
-        //    {
-        //        m_uIPlayerHunter = UIPlayerTwoHunter;
-        //        m_uIPlayerRunner = UIPlayerTwoRunner;
-        //        m_uIPlayerUnselected = UIPlayerTwoUnselected;
-        //    }
-        //    else if (index == 2)
-        //    {
-        //        m_uIPlayerHunter = UIPlayerThreeHunter;
-        //        m_uIPlayerRunner = UIPlayerThreeRunner;
-        //        m_uIPlayerUnselected = UIPlayerThreeUnselected;
-        //    }
-        //    else if (index == 3)
-        //    {
-        //        m_uIPlayerHunter = UIPlayerFourHunter;
-        //        m_uIPlayerRunner = UIPlayerFourRunner;
-        //        m_uIPlayerUnselected = UIPlayerFourUnselected;
-        //    }
-        //}
 
         private void Update()
         {
+            if (m_playerArrivedInLobby == false && isClientOnly) return;
+            // log player index and child index
+            //Debug.Log("LobbyPlayer Update player index: " + index + " child index: " + transform.GetSiblingIndex());
             // Get player's current index
-            if (!isLocalPlayer) return;
-            //Debug.Log("Index: " + index);
-
-            switch (index)
+            if (isLocalPlayer)
             {
-                case 0:
-                    PlayerOneControlUpdate();
-                    UpdateActivePlayerOneUI();
-                    break;
-                case 1:
-                    PlayerTwoControlUpdate();
-                    UpdateActivePlayerTwoUI();
-                    break;
-                //case 2:
-                //    PlayerThreeControlUpdate();
-                //    UpdateActivePlayerThreeUI();
-                //    break;
-                //case 3:
-                //    PlayerFourControlUpdate();
-                //    UpdateActivePlayerFourUI();
-                //    break;
-            }
 
+                Debug.Log("LobbyPlayer Update player index: " + index + " child index: " + (transform.GetSiblingIndex()-1));
+                switch (index)
+                {
+                    case 0:
+                        //Debug.Log("Player 1");
+                        PlayerControlUpdate(m_playerOneSelectedUIIndex);
+                        UpdateActivePlayerUI(m_playerOneSelectedUIIndex);
+                        break;
+                    case 1:
+                        //Debug.Log("Player 2");
+                        PlayerControlUpdate(m_playerTwoSelectedUIIndex);
+                        UpdateActivePlayerUI(m_playerTwoSelectedUIIndex);
+                        break;
+                    case 2:
+                        //Debug.Log("Player 3");
+                        PlayerControlUpdate(m_playerThreeSelectedUIIndex);
+                        UpdateActivePlayerUI(m_playerThreeSelectedUIIndex);
+                        break;
+                    case 3:
+                        //Debug.Log("Player 4");
+                        PlayerControlUpdate(m_playerFourSelectedUIIndex);
+                        UpdateActivePlayerUI(m_playerFourSelectedUIIndex);
+                        break;
+                }
+            } 
+            else if (!isLocalPlayer)
+            {
+                //Debug.Log("Index: " + index);
+                switch (index)
+                {
+                    case 0:
+                        //Debug.Log("Player 1");
+                        UpdateActivePlayerUI(m_playerOneSelectedUIIndex);
+                        break;
+                    case 1:
+                        //Debug.Log("Player 2");
+                        UpdateActivePlayerUI(m_playerTwoSelectedUIIndex);
+                        break;
+                    case 2:
+                        //Debug.Log("Player 3");
+                        UpdateActivePlayerUI(m_playerThreeSelectedUIIndex);
+                        break;
+                    case 3:
+                        //Debug.Log("Player 4");
+                        UpdateActivePlayerUI(m_playerFourSelectedUIIndex);
+                        break;
+                }
+            }
         }
 
-        private void PlayerOneControlUpdate()
+        private void PlayerControlUpdate(int playerSelectionUIIndex)
         {
+            //int playerSelectionUIIndex;
+            //GetCurrentPlayerIndex(out playerSelectionUIIndex);
             if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
             {
-                if ((m_playerOneSelectedUIIndex - 1) < 0) return;
-                int newUiIndex = m_playerOneSelectedUIIndex - 1;
-                CmdChangePlayerOneUIIndex(newUiIndex);
+                if ((playerSelectionUIIndex - 1) < 0) return;
+                int newUiIndex = playerSelectionUIIndex - 1;
+                ChangePlayerUIIndex(playerSelectionUIIndex, newUiIndex);
             }
             else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
             {
-                if ((m_playerOneSelectedUIIndex + 1) > 2) return;
-                int newUiIndex = m_playerOneSelectedUIIndex + 1;
-                CmdChangePlayerOneUIIndex(newUiIndex);
+                if ((playerSelectionUIIndex + 1) > 2) return;
+                int newUiIndex = playerSelectionUIIndex + 1;
+                ChangePlayerUIIndex(playerSelectionUIIndex, newUiIndex);
             }
         }
 
-        private void PlayerTwoControlUpdate()
+        private void UpdateActivePlayerUI(int playerSelectionUIIndex)
         {
-            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
-            {
-                if ((m_playerTwoSelectedUIIndex - 1) < 0) return;
-                int newUiIndex = m_playerTwoSelectedUIIndex - 1;
-                CmdChangePlayerTwoUIIndex(newUiIndex);
-            }
-            else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
-            {
-                if ((m_playerTwoSelectedUIIndex + 1) > 2) return;
-                int newUiIndex = m_playerTwoSelectedUIIndex + 1;
-                CmdChangePlayerTwoUIIndex(newUiIndex);
-            }
-        }
+            //int playerSelectionUIIndex;
+            //GetCurrentPlayerIndex(out playerSelectionUIIndex);
+            GameObject uIPlayerHunter, uIPlayerUnselected, uIPlayerRunner;
+            GetCurrentPlayerGO(out uIPlayerHunter, out uIPlayerUnselected, out uIPlayerRunner);
+            //Debug.Log(" ");
+            //Debug.Log("m_playerSelectedUIIndex == 0: " + (playerSelectionUIIndex == 0));
+            //Debug.Log("uIPlayerHunter.GetComponent<Image>().color.a == 0: " + (uIPlayerHunter.GetComponent<Image>().color.a == 0));
+            //if (uIPlayerHunter.GetComponent<Image>().color.a != 0) Debug.Log("uIPlayerHunter.GetComponent<Image>().gameObject.name: " + uIPlayerHunter.GetComponent<Image>().gameObject.name);
+            //Debug.Log(" ");
 
-        //private void PlayerThreeControlUpdate()
-        //{
-        //    if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
-        //    {
-        //        if ((m_playerThreeSelectedUIIndex - 1) < 0) return;
-        //        int newUiIndex = m_playerThreeSelectedUIIndex - 1;
-        //        CmdChangePlayerThreeUIIndex(newUiIndex);
-        //    }
-        //    else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
-        //    {
-        //        if ((m_playerThreeSelectedUIIndex + 1) > 2) return;
-        //        int newUiIndex = m_playerThreeSelectedUIIndex + 1;
-        //        CmdChangePlayerThreeUIIndex(newUiIndex);
-        //    }
-        //}
-
-        //private void PlayerFourControlUpdate()
-        //{
-        //    if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
-        //    {
-        //        if ((m_playerFourSelectedUIIndex - 1) < 0) return;
-        //        int newUiIndex = m_playerFourSelectedUIIndex - 1;
-        //        CmdChangePlayerFourUIIndex(newUiIndex);
-        //    }
-        //    else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
-        //    {
-        //        if ((m_playerFourSelectedUIIndex + 1) > 2) return;
-        //        int newUiIndex = m_playerFourSelectedUIIndex + 1;
-        //        CmdChangePlayerFourUIIndex(newUiIndex);
-        //    }
-        //}
-
-        private void UpdateActivePlayerOneUI()
-        {
-            if (m_playerOneSelectedUIIndex == 0 && UIPlayerOneHunter.activeSelf == false)
+            if (playerSelectionUIIndex == 0 && uIPlayerHunter.GetComponent<Image>().color.a == 0)
             {
-                CmdSetUIPlayerOneHunterActive(true);
-                CmdSetUIPlayerOneUnselectedActive(false);
-                CmdSetUIPlayerOneRunnerActive(false);
+                //UIPlayerOneHunter.SetActive(true);
+                //UIPlayerOneUnselected.SetActive(false);
+                //UIPlayerOneRunner.SetActive(false);
+                Image images = uIPlayerHunter.GetComponent<Image>();
+                images.color = new Color(images.color.r, images.color.g, images.color.b, 1);
+
+                images = uIPlayerUnselected.GetComponent<Image>();
+                images.color = new Color(images.color.r, images.color.g, images.color.b, 0);
+                TextMeshProUGUI textMeshPro = uIPlayerUnselected.gameObject.GetComponentInChildren<TextMeshProUGUI>();
+                textMeshPro.color = new Color(textMeshPro.color.r, textMeshPro.color.g, textMeshPro.color.b, 0);
+
+                images = uIPlayerRunner.GetComponent<Image>();
+                images.color = new Color(images.color.r, images.color.g, images.color.b, 0);
                 //Debug.Log("Player Hunter selected by player " + index);
             }
-            else if (m_playerOneSelectedUIIndex == 1 && UIPlayerOneUnselected.activeSelf == false)
+            else if (playerSelectionUIIndex == 1 && uIPlayerUnselected.GetComponent<Image>().color.a == 0)
             {
-                CmdSetUIPlayerOneHunterActive(false);
-                CmdSetUIPlayerOneUnselectedActive(true);
-                CmdSetUIPlayerOneRunnerActive(false);
-                //Debug.Log("Player Unselected selected by player " + index);
+                //UIPlayerOneHunter.SetActive(false);
+                //UIPlayerOneUnselected.SetActive(true);
+                //UIPlayerOneRunner.SetActive(false);
+                Image images = uIPlayerHunter.GetComponent<Image>();
+                images.color = new Color(images.color.r, images.color.g, images.color.b, 0);
+
+                images = uIPlayerUnselected.GetComponent<Image>();
+                images.color = new Color(images.color.r, images.color.g, images.color.b, 1);
+                TextMeshProUGUI textMeshPro = uIPlayerUnselected.gameObject.GetComponentInChildren<TextMeshProUGUI>();
+                textMeshPro.color = new Color(textMeshPro.color.r, textMeshPro.color.g, textMeshPro.color.b, 1);
+
+                images = uIPlayerRunner.GetComponent<Image>();
+                images.color = new Color(images.color.r, images.color.g, images.color.b, 0);
+
+                Debug.Log("Player Unselected: " + uIPlayerUnselected.name + " selected by player " + index);
             }
-            else if (m_playerOneSelectedUIIndex == 2 && UIPlayerOneRunner.activeSelf == false)
+            else if (playerSelectionUIIndex == 2 && uIPlayerRunner.GetComponent<Image>().color.a == 0)
             {
-                CmdSetUIPlayerOneHunterActive(false);
-                CmdSetUIPlayerOneUnselectedActive(false);
-                CmdSetUIPlayerOneRunnerActive(true);
+                //UIPlayerOneHunter.SetActive(false);
+                //UIPlayerOneUnselected.SetActive(false);
+                //UIPlayerOneRunner.SetActive(true);
+                Image images = uIPlayerHunter.GetComponent<Image>();
+                images.color = new Color(images.color.r, images.color.g, images.color.b, 0);
+
+                images = uIPlayerUnselected.GetComponent<Image>();
+                images.color = new Color(images.color.r, images.color.g, images.color.b, 0);
+                TextMeshProUGUI textMeshPro = uIPlayerUnselected.gameObject.GetComponentInChildren<TextMeshProUGUI>();
+                textMeshPro.color = new Color(textMeshPro.color.r, textMeshPro.color.g, textMeshPro.color.b, 0);
+
+                images = uIPlayerRunner.GetComponent<Image>();
+                images.color = new Color(images.color.r, images.color.g, images.color.b, 1);
+
                 //Debug.Log("Player Runner selected by player " + index);
             }
         }
 
-        private void UpdateActivePlayerTwoUI()
+        private void GetCurrentPlayerGO(out GameObject uIPlayerHunter, out GameObject uIPlayerUnselected, out GameObject uIPlayerRunner)
         {
-            if (m_playerTwoSelectedUIIndex == 0 && UIPlayerTwoHunter.activeSelf == false)
+            uIPlayerHunter = null;
+            uIPlayerUnselected = null;
+            uIPlayerRunner = null;
+            //Debug.Log("index: " + index);
+
+            if (index == 0)
             {
-                CmdSetUIPlayerTwoHunterActive(true);
-                CmdSetUIPlayerTwoUnselectedActive(false);
-                CmdSetUIPlayerTwoRunnerActive(false);
-                //Debug.Log("Player Hunter selected by player " + index);
+                uIPlayerHunter = UIPlayerOneHunter;
+                uIPlayerUnselected = UIPlayerOneUnselected;
+                uIPlayerRunner = UIPlayerOneRunner;
             }
-            else if (m_playerTwoSelectedUIIndex == 1 && UIPlayerTwoUnselected.activeSelf == false)
+            else if (index == 1)
             {
-                CmdSetUIPlayerTwoHunterActive(false);
-                CmdSetUIPlayerTwoUnselectedActive(true);
-                CmdSetUIPlayerTwoRunnerActive(false);
-                //Debug.Log("Player Unselected selected by player " + index);
+                uIPlayerHunter = UIPlayerTwoHunter;
+                uIPlayerUnselected = UIPlayerTwoUnselected;
+                uIPlayerRunner = UIPlayerTwoRunner;
             }
-            else if (m_playerTwoSelectedUIIndex == 2 && UIPlayerTwoRunner.activeSelf == false)
+            else if (index == 2)
             {
-                CmdSetUIPlayerTwoHunterActive(false);
-                CmdSetUIPlayerTwoUnselectedActive(false);
-                CmdSetUIPlayerTwoRunnerActive(true);
-                //Debug.Log("Player Runner selected by player " + index);
+                uIPlayerHunter = UIPlayerThreeHunter;
+                uIPlayerUnselected = UIPlayerThreeUnselected;
+                uIPlayerRunner = UIPlayerThreeRunner;
+            }
+            else if (index == 3)
+            {
+                uIPlayerHunter = UIPlayerFourHunter;
+                uIPlayerUnselected = UIPlayerFourUnselected;
+                uIPlayerRunner = UIPlayerFourRunner;
             }
         }
 
-        //private void UpdateActiveUIToServer()
+        //private void GetCurrentPlayerIndex(out int playerSelectionUIIndex)
         //{
-        //    //if (m_uIPlayerHunter == null) Debug.LogError("m_uIPlayerHunter is null");
-        //    //if (m_uIPlayerUnselected == null) Debug.LogError("m_uIPlayerUnselected is null");
-        //    //if (m_uIPlayerRunner == null) Debug.LogError("m_uIPlayerRunner is null");
+        //    playerSelectionUIIndex = 99;
+        //    //Debug.Log("index: " + index);
 
-        //    if (m_playerSelectedUIIndex == 0 && m_uIPlayerHunter.activeSelf == false)
+        //    if (index == 0)
         //    {
-        //        CmdSetUIPlayerHunterActive(true);
-        //        CmdSetUIPlayerUnselectedActive(false);
-        //        CmdSetUIPlayerRunnerActive(false);
-        //        //Debug.Log("Player Hunter selected by player " + index);
+        //        playerSelectionUIIndex = m_playerOneSelectedUIIndex;
         //    }
-        //    else if (m_playerSelectedUIIndex == 1 && m_uIPlayerUnselected.activeSelf == false)
+        //    else if (index == 1)
         //    {
-        //        CmdSetUIPlayerHunterActive(false);
-        //        CmdSetUIPlayerUnselectedActive(true);
-        //        CmdSetUIPlayerRunnerActive(false);
-        //        //Debug.Log("Player Unselected selected by player " + index);
+        //        playerSelectionUIIndex = m_playerTwoSelectedUIIndex;
         //    }
-        //    else if (m_playerSelectedUIIndex == 2 && m_uIPlayerRunner.activeSelf == false)
+        //    else if (index == 2)
         //    {
-        //        CmdSetUIPlayerHunterActive(false);
-        //        CmdSetUIPlayerUnselectedActive(false);
-        //        CmdSetUIPlayerRunnerActive(true);
-        //        //Debug.Log("Player Runner selected by player " + index);
+        //        playerSelectionUIIndex = m_playerThreeSelectedUIIndex;
+        //    }
+        //    else if (index == 3)
+        //    {
+        //        playerSelectionUIIndex = m_playerFourSelectedUIIndex;
         //    }
         //}
 
-        [Command]
-        public void CmdChangePlayerOneUIIndex(int newIndex)
+        [Command(requiresAuthority = false)]
+        private void ChangePlayerUIIndex(int oldIndex, int newIndex)
+        {
+            if (index == 0)
+            {
+                CmdChangePlayerOneUIIndex(oldIndex, newIndex);
+            }
+            else if (index == 1)
+            {
+                CmdChangePlayerTwoUIIndex(oldIndex, newIndex);
+            }
+            else if (index == 2)
+            {
+                CmdChangePlayerThreeUIIndex(oldIndex, newIndex);
+            }
+            else if (index == 3)
+            {
+                CmdChangePlayerFourUIIndex(oldIndex, newIndex);
+            }
+        }
+
+        [Command(requiresAuthority = false)]
+        public void CmdChangePlayerOneUIIndex(int oldIndex, int newIndex)
         {
             m_playerOneSelectedUIIndex = newIndex;
         }
 
-        public void ChangePlayerOneUIIndex(int newIndex)
-        {
-            m_playerOneSelectedUIIndex = newIndex;
-        }
-
-        [Command]
-        private void CmdSetUIPlayerOneHunterActive(bool isActive)
-        {
-            UIPlayerOneHunter.SetActive(isActive);
-        }
-
-        [Command]
-        private void CmdSetUIPlayerOneRunnerActive(bool isActive)
-        {
-            UIPlayerOneRunner.SetActive(isActive);
-        }
-
-        [Command]
-        private void CmdSetUIPlayerOneUnselectedActive(bool isActive)
-        {
-            UIPlayerOneUnselected.SetActive(isActive);
-        }
-
-        public void CmdChangePlayerTwoUIIndex(int newIndex)
+        [Command(requiresAuthority = false)]
+        public void CmdChangePlayerTwoUIIndex(int oldIndex, int newIndex)
         {
             m_playerTwoSelectedUIIndex = newIndex;
         }
 
-        [Command]
-        private void CmdSetUIPlayerTwoHunterActive(bool isActive)
+        [Command(requiresAuthority = false)]
+        public void CmdChangePlayerThreeUIIndex(int oldIndex, int newIndex)
         {
-            UIPlayerTwoHunter.SetActive(isActive);
+            m_playerThreeSelectedUIIndex = newIndex;
         }
 
-        [Command]
-        private void CmdSetUIPlayerTwoRunnerActive(bool isActive)
+        [Command(requiresAuthority = false)]
+        public void CmdChangePlayerFourUIIndex(int oldIndex, int newIndex)
         {
-            UIPlayerTwoRunner.SetActive(isActive);
+            m_playerFourSelectedUIIndex = newIndex;
         }
-
-        [Command]
-        private void CmdSetUIPlayerTwoUnselectedActive(bool isActive)
-        {
-            UIPlayerTwoUnselected.SetActive(isActive);
-        }
-
-        //[Command]
-        //private void CmdSetUIPlayerHunter(GameObject _gameObject)
-        //{
-        //    m_uIPlayerHunter = _gameObject;
-        //}
-
-        //[Command]
-        //private void CmdSetUIPlayerRunner(GameObject _gameObject)
-        //{
-        //    m_uIPlayerRunner = _gameObject;
-        //}
-
-        //[Command]
-        //private void CmdSetUIPlayerUnselected(GameObject _gameObject)
-        //{
-        //    m_uIPlayerUnselected = _gameObject;
-        //}
-
 
         public override void OnGUI()
         {
