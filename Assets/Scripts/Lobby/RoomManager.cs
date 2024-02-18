@@ -1,4 +1,6 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 /*
 	Documentation: https://mirror-networking.gitbook.io/docs/components/network-manager
@@ -81,17 +83,42 @@ namespace Mirror
             else
             {
                 showStartButton = true;
+                ToggleStartButton(true);
             }
         }
 
-        public override void OnGUI()
+        private void ToggleStartButton(bool isVsible)
         {
-            base.OnGUI();
+            Button startButton = GetComponentInChildren<Button>();
+            GetComponentInChildren<Button>().interactable = isVsible;
 
-            if (allPlayersReady && showStartButton && GUI.Button(new Rect(150, 300, 120, 20), "START GAME"))
+            Image image = startButton.GetComponent<Image>();
+            image.color = new Color(image.color.r, image.color.g, image.color.b, isVsible ? 1 : 0);
+
+            TextMeshProUGUI textMeshProUGUI = startButton.GetComponentInChildren<TextMeshProUGUI>();
+            textMeshProUGUI.color = new Color(textMeshProUGUI.color.r, textMeshProUGUI.color.g, textMeshProUGUI.color.b, isVsible ? 1 : 0);
+        }
+
+        //public override void OnGUI()
+        //{
+        //    base.OnGUI();
+
+        //    if (allPlayersReady && showStartButton && GUI.Button(new Rect(150, 300, 120, 20), "START GAME"))
+        //    {
+        //        // set to false to hide it in the game scene
+        //        showStartButton = false;
+
+        //        ServerChangeScene(GameplayScene);
+        //    }
+        //}
+
+        public void OnStartButtonPressed()
+        {
+            if (allPlayersReady)
             {
                 // set to false to hide it in the game scene
                 showStartButton = false;
+                ToggleStartButton(false);
 
                 ServerChangeScene(GameplayScene);
             }

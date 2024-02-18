@@ -5,6 +5,8 @@ namespace Mirror
 {
     public class PlayerEmpty : NetworkBehaviour
     {
+        [field : SerializeField] private GameObject Runner { get; set; }
+        [field : SerializeField] private GameObject Hunter { get; set; }
         //private SceneReferencer sceneReferencer;
 
         public override void OnStartAuthority()
