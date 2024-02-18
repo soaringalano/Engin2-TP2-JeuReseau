@@ -186,21 +186,25 @@ namespace Mirror.Examples.NetworkRoom
                         //Debug.Log("isLocalPlayer index: " + index + " child index: " + (transform.GetSiblingIndex() - 1));
                         //Debug.Log("Player 1");
                         UpdateActivePlayerUILocal(m_playerOneSelectedUIIndex);
+                        TogglePlayerIsReadyUI(P1Ready);
                         //UpdatePlayerIsReady(m_playerOneSelectedUIIndex);
                         break;
                     case 1:
                         //Debug.Log("Player 2");
                         UpdateActivePlayerUILocal(m_playerTwoSelectedUIIndex);
+                        TogglePlayerIsReadyUI(P2Ready);
                         //UpdatePlayerIsReady(m_playerTwoSelectedUIIndex);
                         break;
                     case 2:
                         //Debug.Log("Player 3");
                         UpdateActivePlayerUILocal(m_playerThreeSelectedUIIndex);
+                        TogglePlayerIsReadyUI(P3Ready);
                         //UpdatePlayerIsReady(m_playerThreeSelectedUIIndex);
                         break;
                     case 3:
                         //Debug.Log("Player 4");
                         UpdateActivePlayerUILocal(m_playerFourSelectedUIIndex);
+                        TogglePlayerIsReadyUI(P4Ready);
                         //UpdatePlayerIsReady(m_playerFourSelectedUIIndex);
                         break;
                 }
