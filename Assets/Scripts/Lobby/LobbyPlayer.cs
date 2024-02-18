@@ -1,7 +1,9 @@
 
+using System.Net.Http.Headers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.ProBuilder.MeshOperations;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Mirror.Examples.NetworkRoom
@@ -26,6 +28,12 @@ namespace Mirror.Examples.NetworkRoom
         [field: SerializeField] private GameObject UIPlayerFourHunter { get; set; }
         [field: SerializeField] private GameObject UIPlayerFourRunner { get; set; }
 
+        [field: SerializeField] private GameObject UIReadyBox { get; set; }
+        [field: SerializeField] private GameObject P1Ready { get; set; }
+        [field: SerializeField] private GameObject P2Ready { get; set; }
+        [field: SerializeField] private GameObject P3Ready { get; set; }
+        [field: SerializeField] private GameObject P4Ready { get; set; }
+
 
         [SerializeField]
         [SyncVar(hook = nameof(CmdChangePlayerOneUIIndex))] private int m_playerOneSelectedUIIndex = 1;
@@ -45,41 +53,98 @@ namespace Mirror.Examples.NetworkRoom
         [SerializeField]
         [SyncVar(hook = nameof(CmdSetRunnerImageAlpha))] private float m_runnerImageAlpha = 0f;
 
+        private int m_previousSelection = 1;
         private bool m_playerArrivedInLobby = false;
 
         public override void OnStartClient()
         {
-            //Debug.Log($"OnStartClient {gameObject}");
+            Debug.Log($"OnStartClient {gameObject}");
         }
 
         public override void OnClientEnterRoom()
         {
-            //Debug.Log($"OnClientEnterRoom {SceneManager.GetActiveScene().path}");
+            Debug.Log($"OnClientEnterRoom {SceneManager.GetActiveScene().path}");
+
         }
 
         public override void OnClientExitRoom()
         {
-            //Debug.Log($"OnClientExitRoom {SceneManager.GetActiveScene().path}");
+            Debug.Log($"OnClientExitRoom {SceneManager.GetActiveScene().path}");
         }
 
         public override void IndexChanged(int oldIndex, int newIndex)
         {
             Debug.Log($"IndexChanged {newIndex}");
+            if (!isLocalPlayer) return;
             m_playerArrivedInLobby = true;
         }
 
         public override void ReadyStateChanged(bool oldReadyState, bool newReadyState)
         {
-            //Debug.Log($"ReadyStateChanged {newReadyState}");
+            Debug.Log($"ReadyStateChanged {newReadyState}");
+            if (!isLocalPlayer) return;
+
+            Debug.Log("ReadyStateChanged - Show ready - isLocalPlayer: " + isLocalPlayer + " index: " + index);
+
+            switch (index)
+            {
+                case 0:
+                    if (P1Ready == null) Debug.LogError("P1Ready is null");
+                    TogglePlayerIsReadyUI(P1Ready);
+                    break;
+                case 1:
+                    if (P2Ready == null) Debug.LogError("P2Ready is null");
+                    TogglePlayerIsReadyUI(P2Ready);
+                    break;
+                case 2:
+                    if (P3Ready == null) Debug.LogError("P3Ready is null");
+                    TogglePlayerIsReadyUI(P3Ready);
+                    break;
+                case 3:
+                    if (P4Ready == null) Debug.LogError("P4Ready is null");
+                    TogglePlayerIsReadyUI(P4Ready);
+                    break;
+            }
+        }
+
+        private void TogglePlayerIsReadyUI(GameObject pIsReadyUi)
+        {
+            Debug.Log("TogglePlayerIsReadyUI - isLocalPlayer: " + isLocalPlayer + " index: " + index);
+            if (pIsReadyUi == null) Debug.LogError("pIsReadyUi is null");
+            bool isReady = UIReadyBox.GetComponent<Toggle>().isOn;
+
+            Image image = pIsReadyUi.GetComponent<Image>();
+            if (image == null) Debug.LogError("Image is null" + pIsReadyUi.name);
+            pIsReadyUi.GetComponent<Image>().color = new Color(image.color.r, image.color.g, image.color.b, isReady ? 1 : 0);
+
+            TextMeshProUGUI textMeshPro = pIsReadyUi.GetComponentInChildren<TextMeshProUGUI>();
+            if (textMeshPro == null) Debug.LogError("TextMeshPro is null" + pIsReadyUi.name);
+            pIsReadyUi.GetComponentInChildren<TextMeshProUGUI>().color = new Color(textMeshPro.color.r, textMeshPro.color.g, textMeshPro.color.b, isReady ? 1 : 0);
         }
 
         public override void Start()
         {
             // log player index and child index
-            Debug.Log("LobbyPlayer Start player index: " + index + " child index: " + transform.GetSiblingIndex());
+            Debug.Log("LobbyPlayer Start player index: " + index + " child index: " + (transform.GetSiblingIndex() - 1));
             base.Start();
+            if (!isLocalPlayer) return;
+            //if (!isLocalPlayer)
+            //{
+            //    Debug.Log("OnClientEnterRoom - isLocalPlayer: " + isLocalPlayer + " index: " + index);
+            //    UIReadyBox.GetComponentInChildren<Image>().color = new Color(UIReadyBox.GetComponentInChildren<Image>().color.r, UIReadyBox.GetComponentInChildren<Image>().color.g, UIReadyBox.GetComponentInChildren<Image>().color.b, 1);
+            //    UIReadyBox.GetComponentInChildren<Text>().color = new Color(UIReadyBox.GetComponentInChildren<Text>().color.r, UIReadyBox.GetComponentInChildren<Text>().color.g, UIReadyBox.GetComponentInChildren<Text>().color.b, 1);
+            //    UIReadyBox.GetComponent<Toggle>().interactable = false;
+            //    UIReadyBox.GetComponent<Toggle>().isOn = false;
+            //}
+            //else if (isLocalPlayer)
+            //{
+            Debug.Log("OnClientEnterRoom - isLocalPlayer: " + isLocalPlayer + " index: " + index);
+            UIReadyBox.GetComponentInChildren<Image>().color = new Color(UIReadyBox.GetComponentInChildren<Image>().color.r, UIReadyBox.GetComponentInChildren<Image>().color.g, UIReadyBox.GetComponentInChildren<Image>().color.b, 1);
+            UIReadyBox.GetComponentInChildren<Text>().color = new Color(UIReadyBox.GetComponentInChildren<Text>().color.r, UIReadyBox.GetComponentInChildren<Text>().color.g, UIReadyBox.GetComponentInChildren<Text>().color.b, 1);
+            UIReadyBox.GetComponent<Toggle>().interactable = false;
+            //UIReadyBox.GetComponent<Toggle>().isOn = false;
+            //}
         }
-
 
         private void Update()
         {
@@ -91,18 +156,22 @@ namespace Mirror.Examples.NetworkRoom
                         //Debug.Log("isLocalPlayer index: " + index + " child index: " + (transform.GetSiblingIndex() - 1));
                         //Debug.Log("Player 1");
                         UpdateActivePlayerUILocal(m_playerOneSelectedUIIndex);
+                        //UpdatePlayerIsReady(m_playerOneSelectedUIIndex);
                         break;
                     case 1:
                         //Debug.Log("Player 2");
                         UpdateActivePlayerUILocal(m_playerTwoSelectedUIIndex);
+                        //UpdatePlayerIsReady(m_playerOneSelectedUIIndex);
                         break;
                     case 2:
                         //Debug.Log("Player 3");
                         UpdateActivePlayerUILocal(m_playerThreeSelectedUIIndex);
+                        //UpdatePlayerIsReady(m_playerOneSelectedUIIndex);
                         break;
                     case 3:
                         //Debug.Log("Player 4");
                         UpdateActivePlayerUILocal(m_playerFourSelectedUIIndex);
+                        //UpdatePlayerIsReady(m_playerOneSelectedUIIndex);
                         break;
                 }
             }
@@ -122,21 +191,25 @@ namespace Mirror.Examples.NetworkRoom
                         //Debug.Log("Player 1");
                         PlayerControlUpdateServer(m_playerOneSelectedUIIndex);
                         UpdateActivePlayerUILocal(m_playerOneSelectedUIIndex);
+                        UpdatePlayerIsReady(m_playerOneSelectedUIIndex);
                         break;
                     case 1:
                         //Debug.Log("Player 2");
                         PlayerControlUpdateServer(m_playerTwoSelectedUIIndex);
                         UpdateActivePlayerUILocal(m_playerTwoSelectedUIIndex);
+                        UpdatePlayerIsReady(m_playerTwoSelectedUIIndex);
                         break;
                     case 2:
                         //Debug.Log("Player 3");
                         PlayerControlUpdateServer(m_playerThreeSelectedUIIndex);
                         UpdateActivePlayerUILocal(m_playerThreeSelectedUIIndex);
+                        UpdatePlayerIsReady(m_playerThreeSelectedUIIndex);
                         break;
                     case 3:
                         //Debug.Log("Player 4");
                         PlayerControlUpdateServer(m_playerFourSelectedUIIndex);
                         UpdateActivePlayerUILocal(m_playerFourSelectedUIIndex);
+                        UpdatePlayerIsReady(m_playerFourSelectedUIIndex);
                         break;
                 }
             }
@@ -206,94 +279,34 @@ namespace Mirror.Examples.NetworkRoom
                 images = uIPlayerRunner.GetComponent<Image>();
                 images.color = new Color(images.color.r, images.color.g, images.color.b, 1);
             }
-        }        
-        
-        private void UpdateActivePlayerUIServer(int playerSelectionUIIndex)
+        }
+
+        private void UpdatePlayerIsReady(int playerSelectionUIIndex)
         {
             GameObject uIPlayerHunter, uIPlayerUnselected, uIPlayerRunner;
             GetCurrentPlayerGO(out uIPlayerHunter, out uIPlayerUnselected, out uIPlayerRunner);
+            //Debug.Log("isLocalPlayer index: " + index + " child index: " + (transform.GetSiblingIndex() - 1) + " playerSelectionUIIndex == 1: " + (playerSelectionUIIndex == 1) + " IPlayerUnselected.GetComponent<Image>().color.a == 0: " + (uIPlayerUnselected.GetComponent<Image>().color.a == 0));
+            if (m_previousSelection == playerSelectionUIIndex) return;
+            m_previousSelection = playerSelectionUIIndex;
 
-            if (playerSelectionUIIndex == 0)
+            if (playerSelectionUIIndex == 0 && UIReadyBox.GetComponent<Toggle>().interactable == false)
             {
-                if (uIPlayerHunter.GetComponent<Image>().color.a == 1) return;
-                Image images = uIPlayerHunter.GetComponent<Image>();
-                CmdSetHunterImageAlpha(images.color.a, 1f);
-                images.color = new Color(images.color.r, images.color.g, images.color.b, m_unselectedImageAlpha);
-                
-                if (uIPlayerUnselected.GetComponent<Image>().color.a == 1)
-                {
-                    images = uIPlayerUnselected.GetComponent<Image>();
-                    CmdSetUnselectedImageAlpha(images.color.a, 0f);
-                    images.color = new Color(images.color.r, images.color.g, images.color.b, m_unselectedImageAlpha);
-
-                    TextMeshProUGUI textMeshPro = uIPlayerUnselected.gameObject.GetComponentInChildren<TextMeshProUGUI>();
-                    CmdSetUnselectedTextAlpha(images.color.a, 0f);
-                    textMeshPro.color = new Color(textMeshPro.color.r, textMeshPro.color.g, textMeshPro.color.b, m_unselectedImageAlpha);
-                }
-
-                if (uIPlayerRunner.GetComponent<Image>().color.a == 1)
-                {
-                    images = uIPlayerRunner.GetComponent<Image>();
-                    CmdSetRunnerImageAlpha(images.color.a, 0f);
-                    images.color = new Color(images.color.r, images.color.g, images.color.b, m_unselectedImageAlpha);
-                }
-
-                //Debug.Log("Player Hunter selected by player " + index);
+                UIReadyBox.GetComponent<Toggle>().isOn = false;
+                UIReadyBox.GetComponent<Toggle>().interactable = true;
+                Debug.Log("UpdatePlayerIsReady index: " + index + " child index: " + (transform.GetSiblingIndex() - 1));
             }
-            else if (playerSelectionUIIndex == 1 && uIPlayerUnselected.GetComponent<Image>().color.a == 0)
+            else if (playerSelectionUIIndex == 1 && UIReadyBox.GetComponent<Toggle>().interactable)
             {
-                if (uIPlayerUnselected.GetComponent<Image>().color.a == 1) return;
 
-                Image images = uIPlayerHunter.GetComponent<Image>();
-                if (images.color.a == 1)
-                {
-                    CmdSetHunterImageAlpha(images.color.a, 0f);
-                    images.color = new Color(images.color.r, images.color.g, images.color.b, m_unselectedImageAlpha);
-                }
-
-                images = uIPlayerUnselected.GetComponent<Image>();
-                CmdSetUnselectedImageAlpha(images.color.a, 1f);
-                images.color = new Color(images.color.r, images.color.g, images.color.b, m_unselectedImageAlpha);
-                TextMeshProUGUI textMeshPro = uIPlayerUnselected.gameObject.GetComponentInChildren<TextMeshProUGUI>();
-                CmdSetUnselectedTextAlpha(images.color.a, 1f);
-                textMeshPro.color = new Color(textMeshPro.color.r, textMeshPro.color.g, textMeshPro.color.b, m_unselectedImageAlpha);
-
-                if (uIPlayerRunner.GetComponent<Image>().color.a == 1)
-                {
-                    images = uIPlayerRunner.GetComponent<Image>();
-                    CmdSetRunnerImageAlpha(images.color.a, 0f);
-                    images.color = new Color(images.color.r, images.color.g, images.color.b, m_unselectedImageAlpha);
-                }
-
-                Debug.Log("Player Unselected: " + uIPlayerUnselected.name + " selected by player " + index);
+                UIReadyBox.GetComponent<Toggle>().isOn = false;
+                UIReadyBox.GetComponent<Toggle>().interactable = false;
+                Debug.Log("UpdatePlayerIsReady index: " + index + " child index: " + (transform.GetSiblingIndex() - 1));
             }
-            else if (playerSelectionUIIndex == 2 && uIPlayerRunner.GetComponent<Image>().color.a == 0)
+            else if (playerSelectionUIIndex == 2 && UIReadyBox.GetComponent<Toggle>().interactable == false)
             {
-                if (uIPlayerRunner.GetComponent<Image>().color.a == 1) return;
-
-                Image images = uIPlayerHunter.GetComponent<Image>();
-                if (uIPlayerHunter.GetComponent<Image>().color.a == 1)
-                {
-                    CmdSetHunterImageAlpha(images.color.a, 0f);
-                    images.color = new Color(images.color.r, images.color.g, images.color.b, m_unselectedImageAlpha);
-                }
-
-                if (uIPlayerUnselected.GetComponent<Image>().color.a == 1)
-                {
-                    images = uIPlayerUnselected.GetComponent<Image>();
-                    CmdSetUnselectedImageAlpha(images.color.a, 0f);
-                    images.color = new Color(images.color.r, images.color.g, images.color.b, m_unselectedImageAlpha);
-
-                    TextMeshProUGUI textMeshPro = uIPlayerUnselected.gameObject.GetComponentInChildren<TextMeshProUGUI>();
-                    CmdSetUnselectedTextAlpha(images.color.a, 0f);
-                    textMeshPro.color = new Color(textMeshPro.color.r, textMeshPro.color.g, textMeshPro.color.b, m_unselectedImageAlpha);
-                }
-
-                images = uIPlayerRunner.GetComponent<Image>();
-                CmdSetRunnerImageAlpha(images.color.a, 1f);
-                images.color = new Color(images.color.r, images.color.g, images.color.b, m_unselectedImageAlpha);
-
-                //Debug.Log("Player Runner selected by player " + index);
+                UIReadyBox.GetComponent<Toggle>().isOn = false;
+                UIReadyBox.GetComponent<Toggle>().interactable = true;
+                Debug.Log("UpdatePlayerIsReady index: " + index + " child index: " + (transform.GetSiblingIndex() - 1));
             }
         }
 
@@ -362,7 +375,7 @@ namespace Mirror.Examples.NetworkRoom
         {
             m_unselectedTextAlpha = newIndex;
         }
-        
+
         [Command(requiresAuthority = false)]
         public void CmdSetHunterImageAlpha(float oldIndex, float newIndex)
         {
@@ -397,6 +410,45 @@ namespace Mirror.Examples.NetworkRoom
         public void CmdChangePlayerFourUIIndex(int oldIndex, int newIndex)
         {
             m_playerFourSelectedUIIndex = newIndex;
+        }
+
+        public void OnReadyTicked()
+        {
+            if (!isLocalPlayer) return;
+
+            switch (index)
+            {
+                case 0:
+                    Debug.LogError("P1");
+                    TogglePlayerReadyState();
+                    break;
+                case 1:
+                    Debug.LogError("P2");
+                    TogglePlayerReadyState();
+                    break;
+                case 2:
+                    Debug.LogError("P3");
+                    TogglePlayerReadyState();
+                    break;
+                case 3:
+                    Debug.LogError("P4");
+                    TogglePlayerReadyState();
+                    break;
+            }
+        }
+
+        private void TogglePlayerReadyState()
+        {
+            if (UIReadyBox.GetComponent<Toggle>().isOn)
+            {
+                Debug.Log("Player " + index + " is ready");
+                CmdChangeReadyState(true);
+            }
+            else
+            {
+                Debug.Log("Player " + index + " is not ready");
+                CmdChangeReadyState(false);
+            }
         }
 
         public override void OnGUI()
