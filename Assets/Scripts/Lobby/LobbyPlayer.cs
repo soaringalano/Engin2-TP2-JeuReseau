@@ -55,6 +55,7 @@ namespace Mirror.Examples.NetworkRoom
 
         private int m_previousSelection = 1;
         private bool m_playerArrivedInLobby = false;
+        private bool m_previousReadyToBegin = false;
 
         public override void OnStartClient()
         {
@@ -64,7 +65,6 @@ namespace Mirror.Examples.NetworkRoom
         public override void OnClientEnterRoom()
         {
             Debug.Log($"OnClientEnterRoom {SceneManager.GetActiveScene().path}");
-
         }
 
         public override void OnClientExitRoom()
@@ -75,75 +75,105 @@ namespace Mirror.Examples.NetworkRoom
         public override void IndexChanged(int oldIndex, int newIndex)
         {
             Debug.Log($"IndexChanged {newIndex}");
+
+
+
             if (!isLocalPlayer) return;
             m_playerArrivedInLobby = true;
+
+
         }
 
         public override void ReadyStateChanged(bool oldReadyState, bool newReadyState)
         {
             Debug.Log($"ReadyStateChanged {newReadyState}");
-            if (!isLocalPlayer) return;
+            //if (!isLocalPlayer) return;
 
-            Debug.Log("ReadyStateChanged - Show ready - isLocalPlayer: " + isLocalPlayer + " index: " + index);
+            //Debug.Log("ReadyStateChanged - Show ready - isLocalPlayer: " + isLocalPlayer + " index: " + index);
 
-            switch (index)
-            {
-                case 0:
-                    if (P1Ready == null) Debug.LogError("P1Ready is null");
-                    TogglePlayerIsReadyUI(P1Ready);
-                    break;
-                case 1:
-                    if (P2Ready == null) Debug.LogError("P2Ready is null");
-                    TogglePlayerIsReadyUI(P2Ready);
-                    break;
-                case 2:
-                    if (P3Ready == null) Debug.LogError("P3Ready is null");
-                    TogglePlayerIsReadyUI(P3Ready);
-                    break;
-                case 3:
-                    if (P4Ready == null) Debug.LogError("P4Ready is null");
-                    TogglePlayerIsReadyUI(P4Ready);
-                    break;
-            }
+            //switch (index)
+            //{
+            //    case 0:
+            //        if (P1Ready == null) Debug.LogError("P1Ready is null");
+            //        TogglePlayerIsReadyUI(P1Ready);
+            //        break;
+            //    case 1:
+            //        if (P2Ready == null) Debug.LogError("P2Ready is null");
+            //        TogglePlayerIsReadyUI(P2Ready);
+            //        break;
+            //    case 2:
+            //        if (P3Ready == null) Debug.LogError("P3Ready is null");
+            //        TogglePlayerIsReadyUI(P3Ready);
+            //        break;
+            //    case 3:
+            //        if (P4Ready == null) Debug.LogError("P4Ready is null");
+            //        TogglePlayerIsReadyUI(P4Ready);
+            //        break;
+            //}
+
+            //if (!isLocalPlayer) return;
+            ////if (!isLocalPlayer)
+            ////{
+            ////    Debug.Log("OnClientEnterRoom - isLocalPlayer: " + isLocalPlayer + " index: " + index);
+            ////    UIReadyBox.GetComponentInChildren<Image>().color = new Color(UIReadyBox.GetComponentInChildren<Image>().color.r, UIReadyBox.GetComponentInChildren<Image>().color.g, UIReadyBox.GetComponentInChildren<Image>().color.b, 1);
+            ////    UIReadyBox.GetComponentInChildren<Text>().color = new Color(UIReadyBox.GetComponentInChildren<Text>().color.r, UIReadyBox.GetComponentInChildren<Text>().color.g, UIReadyBox.GetComponentInChildren<Text>().color.b, 1);
+            ////    UIReadyBox.GetComponent<Toggle>().interactable = false;
+            ////    UIReadyBox.GetComponent<Toggle>().isOn = false;
+            ////}
+            ////else if (isLocalPlayer)
+            ////{
+            //    Debug.Log("OnClientEnterRoom - isLocalPlayer: " + isLocalPlayer + " index: " + index);
+            //    UIReadyBox.GetComponentInChildren<Image>().color = new Color(UIReadyBox.GetComponentInChildren<Image>().color.r, UIReadyBox.GetComponentInChildren<Image>().color.g, UIReadyBox.GetComponentInChildren<Image>().color.b, 1);
+            //    UIReadyBox.GetComponentInChildren<Text>().color = new Color(UIReadyBox.GetComponentInChildren<Text>().color.r, UIReadyBox.GetComponentInChildren<Text>().color.g, UIReadyBox.GetComponentInChildren<Text>().color.b, 1);
+            //    UIReadyBox.GetComponent<Toggle>().interactable = false;
+            //    //UIReadyBox.GetComponent<Toggle>().isOn = false;
+            ////}
         }
 
-        private void TogglePlayerIsReadyUI(GameObject pIsReadyUi)
-        {
-            Debug.Log("TogglePlayerIsReadyUI - isLocalPlayer: " + isLocalPlayer + " index: " + index);
-            if (pIsReadyUi == null) Debug.LogError("pIsReadyUi is null");
-            bool isReady = UIReadyBox.GetComponent<Toggle>().isOn;
+        //private void TogglePlayerIsReadyUI(GameObject pIsReadyUi)
+        //{
+        //    Debug.Log("TogglePlayerIsReadyUI - isLocalPlayer: " + isLocalPlayer + " index: " + index);
+        //    if (pIsReadyUi == null) Debug.LogError("pIsReadyUi is null");
 
-            Image image = pIsReadyUi.GetComponent<Image>();
-            if (image == null) Debug.LogError("Image is null" + pIsReadyUi.name);
-            pIsReadyUi.GetComponent<Image>().color = new Color(image.color.r, image.color.g, image.color.b, isReady ? 1 : 0);
+        //    Image image = pIsReadyUi.GetComponent<Image>();
+        //    if (image == null) Debug.LogError("Image is null" + pIsReadyUi.name);
+        //    pIsReadyUi.GetComponent<Image>().color = new Color(image.color.r, image.color.g, image.color.b, readyToBegin ? 1 : 0);
 
-            TextMeshProUGUI textMeshPro = pIsReadyUi.GetComponentInChildren<TextMeshProUGUI>();
-            if (textMeshPro == null) Debug.LogError("TextMeshPro is null" + pIsReadyUi.name);
-            pIsReadyUi.GetComponentInChildren<TextMeshProUGUI>().color = new Color(textMeshPro.color.r, textMeshPro.color.g, textMeshPro.color.b, isReady ? 1 : 0);
-        }
+        //    TextMeshProUGUI textMeshPro = pIsReadyUi.GetComponentInChildren<TextMeshProUGUI>();
+        //    if (textMeshPro == null) Debug.LogError("TextMeshPro is null" + pIsReadyUi.name);
+        //    pIsReadyUi.GetComponentInChildren<TextMeshProUGUI>().color = new Color(textMeshPro.color.r, textMeshPro.color.g, textMeshPro.color.b, readyToBegin ? 1 : 0);
+        //}
 
         public override void Start()
         {
             // log player index and child index
             Debug.Log("LobbyPlayer Start player index: " + index + " child index: " + (transform.GetSiblingIndex() - 1));
             base.Start();
-            if (!isLocalPlayer) return;
-            //if (!isLocalPlayer)
-            //{
-            //    Debug.Log("OnClientEnterRoom - isLocalPlayer: " + isLocalPlayer + " index: " + index);
-            //    UIReadyBox.GetComponentInChildren<Image>().color = new Color(UIReadyBox.GetComponentInChildren<Image>().color.r, UIReadyBox.GetComponentInChildren<Image>().color.g, UIReadyBox.GetComponentInChildren<Image>().color.b, 1);
-            //    UIReadyBox.GetComponentInChildren<Text>().color = new Color(UIReadyBox.GetComponentInChildren<Text>().color.r, UIReadyBox.GetComponentInChildren<Text>().color.g, UIReadyBox.GetComponentInChildren<Text>().color.b, 1);
-            //    UIReadyBox.GetComponent<Toggle>().interactable = false;
-            //    UIReadyBox.GetComponent<Toggle>().isOn = false;
-            //}
-            //else if (isLocalPlayer)
-            //{
+
+            //if (!isLocalPlayer) return;
+            if (!isOwned)
+            {
+                ToggleReadyBoxVisibility(false);
+                ToggleReadyBoxInteractibility(false);
+            }
+            else if (isOwned)
+            {
+                ToggleReadyBoxVisibility(true);
+                ToggleReadyBoxInteractibility(false);
+            }
+        }
+
+        private void ToggleReadyBoxVisibility(bool isVisible)
+        {
             Debug.Log("OnClientEnterRoom - isLocalPlayer: " + isLocalPlayer + " index: " + index);
-            UIReadyBox.GetComponentInChildren<Image>().color = new Color(UIReadyBox.GetComponentInChildren<Image>().color.r, UIReadyBox.GetComponentInChildren<Image>().color.g, UIReadyBox.GetComponentInChildren<Image>().color.b, 1);
-            UIReadyBox.GetComponentInChildren<Text>().color = new Color(UIReadyBox.GetComponentInChildren<Text>().color.r, UIReadyBox.GetComponentInChildren<Text>().color.g, UIReadyBox.GetComponentInChildren<Text>().color.b, 1);
-            UIReadyBox.GetComponent<Toggle>().interactable = false;
-            //UIReadyBox.GetComponent<Toggle>().isOn = false;
-            //}
+            UIReadyBox.GetComponentInChildren<Image>().color = new Color(UIReadyBox.GetComponentInChildren<Image>().color.r, UIReadyBox.GetComponentInChildren<Image>().color.g, UIReadyBox.GetComponentInChildren<Image>().color.b, isVisible ? 1 : 0);
+            UIReadyBox.GetComponentInChildren<Text>().color = new Color(UIReadyBox.GetComponentInChildren<Text>().color.r, UIReadyBox.GetComponentInChildren<Text>().color.g, UIReadyBox.GetComponentInChildren<Text>().color.b, isVisible ? 1 : 0);
+        }
+
+        private void ToggleReadyBoxInteractibility(bool isVisible)
+        {
+            UIReadyBox.GetComponent<Toggle>().interactable = isVisible;
+            UIReadyBox.GetComponent<Toggle>().isOn = isVisible;
         }
 
         private void Update()
@@ -161,17 +191,17 @@ namespace Mirror.Examples.NetworkRoom
                     case 1:
                         //Debug.Log("Player 2");
                         UpdateActivePlayerUILocal(m_playerTwoSelectedUIIndex);
-                        //UpdatePlayerIsReady(m_playerOneSelectedUIIndex);
+                        //UpdatePlayerIsReady(m_playerTwoSelectedUIIndex);
                         break;
                     case 2:
                         //Debug.Log("Player 3");
                         UpdateActivePlayerUILocal(m_playerThreeSelectedUIIndex);
-                        //UpdatePlayerIsReady(m_playerOneSelectedUIIndex);
+                        //UpdatePlayerIsReady(m_playerThreeSelectedUIIndex);
                         break;
                     case 3:
                         //Debug.Log("Player 4");
                         UpdateActivePlayerUILocal(m_playerFourSelectedUIIndex);
-                        //UpdatePlayerIsReady(m_playerOneSelectedUIIndex);
+                        //UpdatePlayerIsReady(m_playerFourSelectedUIIndex);
                         break;
                 }
             }
@@ -192,24 +222,28 @@ namespace Mirror.Examples.NetworkRoom
                         PlayerControlUpdateServer(m_playerOneSelectedUIIndex);
                         UpdateActivePlayerUILocal(m_playerOneSelectedUIIndex);
                         UpdatePlayerIsReady(m_playerOneSelectedUIIndex);
+                        TogglePlayerIsReadyUI(P1Ready);
                         break;
                     case 1:
                         //Debug.Log("Player 2");
                         PlayerControlUpdateServer(m_playerTwoSelectedUIIndex);
                         UpdateActivePlayerUILocal(m_playerTwoSelectedUIIndex);
                         UpdatePlayerIsReady(m_playerTwoSelectedUIIndex);
+                        TogglePlayerIsReadyUI(P2Ready);
                         break;
                     case 2:
                         //Debug.Log("Player 3");
                         PlayerControlUpdateServer(m_playerThreeSelectedUIIndex);
                         UpdateActivePlayerUILocal(m_playerThreeSelectedUIIndex);
                         UpdatePlayerIsReady(m_playerThreeSelectedUIIndex);
+                        TogglePlayerIsReadyUI(P3Ready);
                         break;
                     case 3:
                         //Debug.Log("Player 4");
                         PlayerControlUpdateServer(m_playerFourSelectedUIIndex);
                         UpdateActivePlayerUILocal(m_playerFourSelectedUIIndex);
                         UpdatePlayerIsReady(m_playerFourSelectedUIIndex);
+                        TogglePlayerIsReadyUI(P4Ready);
                         break;
                 }
             }
@@ -310,6 +344,23 @@ namespace Mirror.Examples.NetworkRoom
             }
         }
 
+        private void TogglePlayerIsReadyUI(GameObject pIsReadyUi)
+        {
+            if (readyToBegin == m_previousReadyToBegin) return;
+            m_previousReadyToBegin = readyToBegin;
+
+            Debug.Log("TogglePlayerIsReadyUI - isLocalPlayer: " + isLocalPlayer + " index: " + index);
+            if (pIsReadyUi == null) Debug.LogError("pIsReadyUi is null");
+
+            Image image = pIsReadyUi.GetComponent<Image>();
+            if (image == null) Debug.LogError("Image is null" + pIsReadyUi.name);
+            pIsReadyUi.GetComponent<Image>().color = new Color(image.color.r, image.color.g, image.color.b, readyToBegin ? 1 : 0);
+
+            TextMeshProUGUI textMeshPro = pIsReadyUi.GetComponentInChildren<TextMeshProUGUI>();
+            if (textMeshPro == null) Debug.LogError("TextMeshPro is null" + pIsReadyUi.name);
+            pIsReadyUi.GetComponentInChildren<TextMeshProUGUI>().color = new Color(textMeshPro.color.r, textMeshPro.color.g, textMeshPro.color.b, readyToBegin ? 1 : 0);
+        }
+
         private void GetCurrentPlayerGO(out GameObject uIPlayerHunter, out GameObject uIPlayerUnselected, out GameObject uIPlayerRunner)
         {
             uIPlayerHunter = null;
@@ -343,7 +394,6 @@ namespace Mirror.Examples.NetworkRoom
             }
         }
 
-        //[Command(requiresAuthority = false)]
         private void ChangePlayerUIIndexServer(int oldIndex, int newIndex)
         {
             if (index == 0)
@@ -419,19 +469,19 @@ namespace Mirror.Examples.NetworkRoom
             switch (index)
             {
                 case 0:
-                    Debug.LogError("P1");
+                    Debug.Log("OnReadyTicked() P1");
                     TogglePlayerReadyState();
                     break;
                 case 1:
-                    Debug.LogError("P2");
+                    Debug.LogError("OnReadyTicked() P2");
                     TogglePlayerReadyState();
                     break;
                 case 2:
-                    Debug.LogError("P3");
+                    Debug.LogError("OnReadyTicked() P3");
                     TogglePlayerReadyState();
                     break;
                 case 3:
-                    Debug.LogError("P4");
+                    Debug.LogError("OnReadyTicked() P4");
                     TogglePlayerReadyState();
                     break;
             }
