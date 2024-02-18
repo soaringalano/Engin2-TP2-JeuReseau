@@ -78,13 +78,6 @@ namespace Mirror.Examples.NetworkRoom
             // log player index and child index
             Debug.Log("LobbyPlayer Start player index: " + index + " child index: " + transform.GetSiblingIndex());
             base.Start();
-
-            //if (isClientOnly) return;
-            //Image paneBackGround = GetComponentInChildren<Image>();
-            //if (paneBackGround.name != "PanelBackground") Debug.LogError("PaneBackground not found in LobbyPlayer, name is: " + paneBackGround.name);
-            //else Debug.Log("PaneBackground found in LobbyPlayer, name is: " + paneBackGround.name);
-            //// set alpha to 1
-            //paneBackGround.color = new Color(paneBackGround.color.r, paneBackGround.color.g, paneBackGround.color.b, 1);
         }
 
 
@@ -92,8 +85,6 @@ namespace Mirror.Examples.NetworkRoom
         {
             if (!isLocalPlayer)
             {
-                //Debug.Log("isLocalPlayer index: " + index + " child index: " + (transform.GetSiblingIndex() - 1));
-                //Debug.Log("Index: " + index);
                 switch (index)
                 {
                     case 0:
@@ -153,8 +144,6 @@ namespace Mirror.Examples.NetworkRoom
 
         private void PlayerControlUpdateServer(int playerSelectionUIIndex)
         {
-            //int playerSelectionUIIndex;
-            //GetCurrentPlayerIndex(out playerSelectionUIIndex);
             if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
             {
                 if ((playerSelectionUIIndex - 1) < 0) return;
@@ -171,17 +160,12 @@ namespace Mirror.Examples.NetworkRoom
 
         private void UpdateActivePlayerUILocal(int playerSelectionUIIndex)
         {
-            //int playerSelectionUIIndex;
-            //GetCurrentPlayerIndex(out playerSelectionUIIndex);
             GameObject uIPlayerHunter, uIPlayerUnselected, uIPlayerRunner;
             GetCurrentPlayerGO(out uIPlayerHunter, out uIPlayerUnselected, out uIPlayerRunner);
             //Debug.Log("isLocalPlayer index: " + index + " child index: " + (transform.GetSiblingIndex() - 1) + " playerSelectionUIIndex == 1: " + (playerSelectionUIIndex == 1) + " IPlayerUnselected.GetComponent<Image>().color.a == 0: " + (uIPlayerUnselected.GetComponent<Image>().color.a == 0));
 
             if (playerSelectionUIIndex == 0 && uIPlayerHunter.GetComponent<Image>().color.a == 0)
             {
-                //UIPlayerOneHunter.SetActive(true);
-                //UIPlayerOneUnselected.SetActive(false);
-                //UIPlayerOneRunner.SetActive(false);
                 Image images = uIPlayerHunter.GetComponent<Image>();
                 images.color = new Color(images.color.r, images.color.g, images.color.b, 1);
 
@@ -196,9 +180,6 @@ namespace Mirror.Examples.NetworkRoom
             }
             else if (playerSelectionUIIndex == 1 && uIPlayerUnselected.GetComponent<Image>().color.a == 0)
             {
-                //UIPlayerOneHunter.SetActive(false);
-                //UIPlayerOneUnselected.SetActive(true);
-                //UIPlayerOneRunner.SetActive(false);
                 Image images = uIPlayerHunter.GetComponent<Image>();
                 images.color = new Color(images.color.r, images.color.g, images.color.b, 0);
 
@@ -214,9 +195,6 @@ namespace Mirror.Examples.NetworkRoom
             }
             else if (playerSelectionUIIndex == 2 && uIPlayerRunner.GetComponent<Image>().color.a == 0)
             {
-                //UIPlayerOneHunter.SetActive(false);
-                //UIPlayerOneUnselected.SetActive(false);
-                //UIPlayerOneRunner.SetActive(true);
                 Image images = uIPlayerHunter.GetComponent<Image>();
                 images.color = new Color(images.color.r, images.color.g, images.color.b, 0);
 
@@ -227,28 +205,16 @@ namespace Mirror.Examples.NetworkRoom
 
                 images = uIPlayerRunner.GetComponent<Image>();
                 images.color = new Color(images.color.r, images.color.g, images.color.b, 1);
-
-                //Debug.Log("Player Runner selected by player " + index);
             }
         }        
         
         private void UpdateActivePlayerUIServer(int playerSelectionUIIndex)
         {
-            //int playerSelectionUIIndex;
-            //GetCurrentPlayerIndex(out playerSelectionUIIndex);
             GameObject uIPlayerHunter, uIPlayerUnselected, uIPlayerRunner;
             GetCurrentPlayerGO(out uIPlayerHunter, out uIPlayerUnselected, out uIPlayerRunner);
-            //Debug.Log(" ");
-            //Debug.Log("m_playerSelectedUIIndex == 0: " + (playerSelectionUIIndex == 0));
-            //Debug.Log("uIPlayerHunter.GetComponent<Image>().color.a == 0: " + (uIPlayerHunter.GetComponent<Image>().color.a == 0));
-            //if (uIPlayerHunter.GetComponent<Image>().color.a != 0) Debug.Log("uIPlayerHunter.GetComponent<Image>().gameObject.name: " + uIPlayerHunter.GetComponent<Image>().gameObject.name);
-            //Debug.Log(" ");
 
             if (playerSelectionUIIndex == 0)
             {
-                //UIPlayerOneHunter.SetActive(true);
-                //UIPlayerOneUnselected.SetActive(false);
-                //UIPlayerOneRunner.SetActive(false);
                 if (uIPlayerHunter.GetComponent<Image>().color.a == 1) return;
                 Image images = uIPlayerHunter.GetComponent<Image>();
                 CmdSetHunterImageAlpha(images.color.a, 1f);
@@ -276,9 +242,6 @@ namespace Mirror.Examples.NetworkRoom
             }
             else if (playerSelectionUIIndex == 1 && uIPlayerUnselected.GetComponent<Image>().color.a == 0)
             {
-                //UIPlayerOneHunter.SetActive(false);
-                //UIPlayerOneUnselected.SetActive(true);
-                //UIPlayerOneRunner.SetActive(false);
                 if (uIPlayerUnselected.GetComponent<Image>().color.a == 1) return;
 
                 Image images = uIPlayerHunter.GetComponent<Image>();
