@@ -9,6 +9,9 @@ namespace Mirror
     {
         [field: SerializeField] public GameObject RunnerUI { get; private set; }
         [field: SerializeField] public NetworkAnimator NetworkAnimator { get; private set; }
+
+        [field: SerializeField] public string RunnerName { get; set; }
+
         private Transform StaminaBarSlider { get; set; }
         public Camera Camera { get; set; }
         private Rigidbody RB { get; set; }

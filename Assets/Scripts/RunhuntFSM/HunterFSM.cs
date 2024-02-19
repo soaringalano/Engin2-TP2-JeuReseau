@@ -31,8 +31,8 @@ namespace Mirror
         public Transform HunterSelectionPose { get; private set; }
 
         [field: Header("HunterLookAtFloorBody controls Settings")]
-        private float FloorBodyMinSpeed { get; set; } = 80.0f;
-        private float FloorBodyMaxSpeed { get; set; } = 150.0f;
+        private float FloorBodyMinSpeed { get; set; } = 120.0f;
+        private float FloorBodyMaxSpeed { get; set; } = 280.0f;
         private float FloorBodyCurrentMaxSpeed { get; set; } = 80f;
         private bool IsFloorBodySetToStop { get; set; } = false;
         private float FloorBodyDecelerationRate { get; set; } = 0.2f;
@@ -40,7 +40,7 @@ namespace Mirror
 
 
         [field: Header("Scrolling Settings")]
-        private float ScrollSpeed { get; set; } = 200.0f;
+        [field: SerializeField] private float ScrollSpeed { get; set; } = 25.0f;
         private float MinCamDist { get; set; } = 30.0f;
         private float MaxCamDist { get; set; } = 80.0f;
         private float MinCamFOV { get; set; } = 1.0f;
@@ -50,7 +50,7 @@ namespace Mirror
 
         [field: Header("Rotating PLatform Settings")]
         public GameObject TerrainPlane { get; set; }
-        private float RotationSpeed { get; set; } = 0.01f;
+        [field: SerializeField]  private float RotationSpeed { get; set; } = 0.01f;
         private float MaxRotationAngle { get; set; } = 5f;
         public Vector3 PreviousMousePosition { get; set; }
         private Vector3 m_currentRotation = Vector3.zero;
@@ -255,7 +255,6 @@ namespace Mirror
         public void LateUpdateStopHunterLookAtFloorBodyRBVelocity()
         {
             if (!IsFloorBodySetToStop) return;
-
             //Debug.Log("Floor Body Set To Stop");
             RB.velocity = Vector3.Lerp(RB.velocity, Vector3.zero, FloorBodyDecelerationRate);
         }
@@ -268,8 +267,20 @@ namespace Mirror
             float angleZ = mouseDelta.x * RotationSpeed;
             float angleX = mouseDelta.y * RotationSpeed;
 
-            m_currentRotation.x += angleX;
-            m_currentRotation.z += angleZ;
+            if(angleX == 0 && angleZ == 0)
+            {
+                return;
+            }
+            if(MathF.Abs(angleX) >= MathF.Abs(angleZ))
+            {
+                angleZ = 0;
+                m_currentRotation.x += angleX;
+            }
+            else
+            {
+                angleX = 0;
+                m_currentRotation.z += angleZ;
+            }
 
 
             m_currentRotation.x = Mathf.Clamp(m_currentRotation.x, -MaxRotationAngle, MaxRotationAngle);
@@ -306,7 +317,7 @@ namespace Mirror
         {
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                FloorBodyCurrentMaxSpeed = FloorBodyMaxSpeed;
+                FloorBodyCurrentMaxSpeed = FloorBodyMaxSpeed + 40;
                 return FloorBodyMaxSpeed;
             }
 

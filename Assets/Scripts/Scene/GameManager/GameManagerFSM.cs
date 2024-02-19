@@ -7,6 +7,14 @@ namespace Mirror
     public class GameManagerFSM : AbstractNetworkFSM<GameState>, IObserver
     {
 
+        public int m_winnedRunner { get; private set; } = 0;
+
+        public Dictionary<string, Player> m_runners { get; private set; }
+            = new Dictionary<string, Player>();
+
+        public Dictionary<string, Player> m_hunters { get; private set; }
+            = new Dictionary<string, Player>();
+
         public static GameManagerFSM s_instance { get; private set; }
         public bool m_gameEnded { get; private set; } = false;
 
@@ -28,9 +36,10 @@ namespace Mirror
             m_possibleStates = new List<GameState>
             {
                 new GameStartState(this),
-                new GameEndState(this)
-                //new HunterWinState(this),
-                //new RunnerWinState(this)
+                new GameEndState(this),
+                new HunterWinState(this),
+                new RunnerWinState(this),
+                new TimelineState(this)
             };
         }
 
@@ -72,21 +81,37 @@ namespace Mirror
             }*/
             if(e.GetType() == typeof(EventRunnerArrive))
             {
-                DisplayInfo(((EventRunnerArrive)e).playerName + " has arrived at the wining zone!");
+                EventRunnerArrive runnerArrive = (EventRunnerArrive)e;
+                DisplayInfo(runnerArrive.playerName + " has arrived at the wining zone!");
+
             }
             else if(e.GetType() == typeof(EventRunnerWin))
             {
-                m_gameEnded = true;
+                EventRunnerWin win = (EventRunnerWin)e;
                 DisplayInfo(((EventRunnerWin)e).playerName + " wins the game!");
                 PlayEfx();
+                Player player = m_runners[win.playerName];
+                player.SetState(PlayerState.Win);
+                m_winnedRunner++;
             }
             else if(e.GetType() == typeof(EventTimesUp))
             {
+                DisplayInfo("Times up!");
                 m_gameEnded = true;
             }
             else if(e.GetType() == typeof(EventPlayerJoined))
             {
-                DisplayInfo(((EventPlayerJoined)e).playerName + " has joined the game!");
+                EventPlayerJoined playerJoined = (EventPlayerJoined)e;
+                DisplayInfo(playerJoined.playerName + " has joined the game!");
+                Player player = new Player(playerJoined.playerName, playerJoined.playerTeam);
+                if(playerJoined.playerTeam == PlayerTeam.Runner)
+                {
+                    m_runners.Add(playerJoined.playerName, player);
+                }
+                else if(playerJoined.playerTeam == PlayerTeam.Hunter)
+                {
+                    m_hunters.Add(playerJoined.playerName, player);
+                }   
             }
         }
 

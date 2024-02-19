@@ -213,7 +213,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  playerLayer: 10
+  playerLayer: 17
   m_maxStayTime: 5
 --- !u!114 &632008577052510594
 MonoBehaviour:

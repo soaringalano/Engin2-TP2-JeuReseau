@@ -165,6 +165,8 @@ MonoBehaviour:
   <OfflineCamera>k__BackingField: {fileID: 0}
   <OfflineVirtualCamera>k__BackingField: {fileID: 0}
   <HunterLookAtFloorBody>k__BackingField: {fileID: 4955299921843428613}
+  <ScrollSpeed>k__BackingField: 150
+  <RotationSpeed>k__BackingField: 0.01
 --- !u!114 &348894751093289
 MonoBehaviour:
   m_ObjectHideFlags: 0
