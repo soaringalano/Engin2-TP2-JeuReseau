@@ -9,11 +9,11 @@ namespace Mirror
 
         public int m_winnedRunner { get; private set; } = 0;
 
-        public Dictionary<string, Player> m_runners { get; private set; }
-            = new Dictionary<string, Player>();
+        public Dictionary<string, NetworkPlayerInfo> m_runners { get; private set; }
+            = new Dictionary<string, NetworkPlayerInfo>();
 
-        public Dictionary<string, Player> m_hunters { get; private set; }
-            = new Dictionary<string, Player>();
+        public Dictionary<string, NetworkPlayerInfo> m_hunters { get; private set; }
+            = new Dictionary<string, NetworkPlayerInfo>();
 
         public static GameManagerFSM s_instance { get; private set; }
         public bool m_gameEnded { get; private set; } = false;
@@ -90,8 +90,8 @@ namespace Mirror
                 EventRunnerWin win = (EventRunnerWin)e;
                 DisplayInfo(((EventRunnerWin)e).playerName + " wins the game!");
                 PlayEfx();
-                Player player = m_runners[win.playerName];
-                player.SetState(PlayerState.Win);
+                NetworkPlayerInfo player = m_runners[win.playerName];
+                player.m_state = PlayerState.Win;
                 m_winnedRunner++;
             }
             else if(e.GetType() == typeof(EventTimesUp))
@@ -103,7 +103,9 @@ namespace Mirror
             {
                 EventPlayerJoined playerJoined = (EventPlayerJoined)e;
                 DisplayInfo(playerJoined.playerName + " has joined the game!");
-                Player player = new Player(playerJoined.playerName, playerJoined.playerTeam);
+                NetworkPlayerInfo player = new NetworkPlayerInfo();
+                player.m_name = playerJoined.playerName;
+                player.m_team = playerJoined.playerTeam;
                 if(playerJoined.playerTeam == PlayerTeam.Runner)
                 {
                     m_runners.Add(playerJoined.playerName, player);

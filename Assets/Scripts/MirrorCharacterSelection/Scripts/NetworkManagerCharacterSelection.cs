@@ -107,6 +107,16 @@ namespace Mirror
             // call this to use this gameobject as the primary controller
             NetworkServer.AddPlayerForConnection(conn, playerObject);
 
+            NetworkPlayerInfo info = playerObject.GetComponent<NetworkPlayerInfo>();
+            if (info != null)
+            {
+                info.m_name = message.playerName;
+            }
+            else
+            {
+                Debug.LogError(message.playerName + " has no NetworkPlayerInfo component");
+            }
+
             //added by mao, notify the game manager that a new player has joined
             NotifyObservers(new EventPlayerJoined(Time.timeAsDouble, message.playerName, characterData.m_characterTitles[message.characterNumber]));
         }

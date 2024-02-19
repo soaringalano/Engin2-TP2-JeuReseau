@@ -37,7 +37,7 @@ namespace Mirror
 
         public override void OnEnter()
         {
-            foreach(Player p in m_stateMachine.m_runners.Values)
+            foreach(NetworkPlayerInfo p in m_stateMachine.m_runners.Values)
             {
                 if(p.m_state == PlayerState.Win)
                 {

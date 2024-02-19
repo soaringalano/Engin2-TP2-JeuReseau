@@ -18,7 +18,6 @@ public class CountdownTimerController : AbstractObservedObject
 
     void Awake()
     {
-        //RegisterObserver(GameManagerFSM.s_instance);
     }
 
     // Start is called before the first frame update
@@ -30,14 +29,6 @@ public class CountdownTimerController : AbstractObservedObject
         RegisterObserver(GameManagerFSM.s_instance);
         //Debug.Log("setting up countdown timer text mesh");
         m_countdownTimerText = m_countdownTimerTextMesh.GetComponent<TextMeshProUGUI>();
-        /*if (m_countdownTimerText == null)
-        {
-            Debug.LogError("Countdown timer text mesh not found");
-        }
-        else
-        {
-            Debug.Log("Countdown timer text mesh found");
-        }*/
     }
 
     // Update is called once per frame
@@ -60,20 +51,10 @@ public class CountdownTimerController : AbstractObservedObject
             Debug.Log("Client is updating time display" + timetext);
         }
         m_countdownTimerText.SetText(timetext);
-        /*if (isServer)
-        {
-            timetext = GameObjectHelper.GetTimeAsString(m_serverTime);
-            Debug.Log("Server is updating time display" + timetext);
-            m_countdownTimerText.SetText(timetext);
-        }*/
     }
 
     void FixedUpdate()
     {
-        /*if (isLocalPlayer)
-        {
-        }
-        Debug.Log("is local player on fixedupdate");*/
         if (isServer)
         {
             if (m_serverTime > 0)
@@ -86,18 +67,10 @@ public class CountdownTimerController : AbstractObservedObject
                 NotifyObservers(new EventTimesUp(Time.timeSinceLevelLoadAsDouble));
             }
         }
-        else if (isClient)
-        {
-
-        }
     }
 
     public void OnTimeChanged(double oldTime, double newTime)
     {
-        /*if (isClientOnly)
-        {
-        }*/
-        //Debug.Log("OnTimeChanged is local player ?:" + isLocalPlayer + " is server ?:" + isServer + " is client ?:" + isClient + " old time :" + oldTime + " new time :" + newTime);
         m_clientTime = newTime;
         //Debug.Log("Server time : " + m_serverTime + " Client time : " + m_clientTime);
 
@@ -109,11 +82,6 @@ public class CountdownTimerController : AbstractObservedObject
     [ClientRpc]
     public void RPCSyncTime(double time)
     {
-        //Debug.Log("RPCSyncTime is local player ?:" + isLocalPlayer + " is server ?:" + isServer + " is client ?:" + isClient + " time :" + time);
-
-        /*if (isLocalPlayer && isClientOnly)
-        {
-        }*/
         m_clientTime = time;
         //Debug.Log("Server time : " + m_serverTime + " Client time : " + m_clientTime);
     }

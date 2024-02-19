@@ -44,8 +44,16 @@ public class DestinationAreaController : AbstractObservedObject
         }*/
         Debug.Log("isLocalPlayer: " + isLocalPlayer + " isServer:" + isServer + " isClientOnly: " + isClientOnly);
         m_stayTime = 0;
-        NotifyObservers(new EventRunnerArrive(Time.timeSinceLevelLoadAsDouble, other.gameObject.name));
-        Debug.Log("Notified observers " + other.gameObject.name + " enter collision");
+        NetworkPlayerInfo info = other.gameObject.GetComponentInParent<NetworkPlayerInfo>();
+        if(info != null)
+        {
+            NotifyObservers(new EventRunnerArrive(Time.timeSinceLevelLoadAsDouble, info.m_name));
+            Debug.Log("Notified observers " + info.m_name + " enter collision");
+        }
+        else
+        {
+            Debug.LogError("No NetworkPlayerInfo found in the parent of " + info.m_name);
+        }
     }
 
     // in the settings must check the area collides only with the player
@@ -64,8 +72,16 @@ public class DestinationAreaController : AbstractObservedObject
         m_stayTime += Time.deltaTime;
         if (m_stayTime >= m_maxStayTime)
         {
-            NotifyObservers(new EventRunnerWin(Time.timeSinceLevelLoadAsDouble, other.gameObject.name));
-            Debug.Log("Notified observers " + other.gameObject.name + " stay collision for " + m_stayTime + " seconds");
+            NetworkPlayerInfo info = other.gameObject.GetComponentInParent<NetworkPlayerInfo>();
+            if(info != null)
+            {
+                NotifyObservers(new EventRunnerWin(Time.timeSinceLevelLoadAsDouble, info.m_name));
+                Debug.Log("Notified observers " + info.m_name + " stay collision for " + m_stayTime + " seconds");
+            }
+            else
+            {
+                Debug.LogError("No NetworkPlayerInfo found in the parent of " + info.m_name);
+            }
         }
     }
 
