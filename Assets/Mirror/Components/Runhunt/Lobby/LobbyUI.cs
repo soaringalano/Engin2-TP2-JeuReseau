@@ -55,6 +55,18 @@ namespace Mirror
         [SerializeField]
         [SyncVar(hook = nameof(CmdSetRunnerImageAlpha))] private float m_runnerImageAlpha = 0f;
 
+        public enum EPlayerSelectedTeam
+        {
+            Hunters,
+            Runners,
+            Count
+        }
+        
+        [SerializeField] public static int m_playerOneSelectedTeam = 2;
+        [SerializeField][SyncVar(hook = nameof(CmdSetPlayerTwoSelectedTeam))] public int m_playerTwoSelectedTeam = 2;
+        [SerializeField][SyncVar(hook = nameof(CmdSetPlayerThreeSelectedTeam))] public int m_playerThreeSelectedTeam = 2;
+        [SerializeField][SyncVar(hook = nameof(CmdSetPlayerFourSelectedTeam))] public int m_playerFourSelectedTeam = 2;
+
         private int m_previousSelection = 1;
         private bool m_playerArrivedInLobby = false;
         private bool m_previousReadyToBegin = false;
@@ -105,47 +117,47 @@ namespace Mirror
                 {
                     case 0:
                         Debug.Log("ReadyStateChanged() Player 1 picked a team: " + m_playerOneSelectedUIIndex);
-                        if (m_playerOneSelectedUIIndex == 0) m_playerOneSelectedTeam = EPlayerSelectedTeam.Hunters;
-                        else if (m_playerOneSelectedUIIndex == 2) m_playerOneSelectedTeam = EPlayerSelectedTeam.Runners;
+                        if (m_playerOneSelectedUIIndex == 0) m_playerOneSelectedTeam = 0;
+                        else if (m_playerOneSelectedUIIndex == 2) m_playerOneSelectedTeam = 1;
                         break;
                     case 1:
                         Debug.Log("ReadyStateChanged() Player 2 picked a team: " + m_playerTwoSelectedUIIndex);
-                        if (m_playerTwoSelectedUIIndex == 0) CmdSetPlayerTwoSelectedTeam((int)m_playerTwoSelectedTeam, (int)EPlayerSelectedTeam.Hunters);
-                        else if (m_playerTwoSelectedUIIndex == 2) CmdSetPlayerTwoSelectedTeam((int)m_playerTwoSelectedTeam, (int)EPlayerSelectedTeam.Runners);
+                        if (m_playerTwoSelectedUIIndex == 0) CmdSetPlayerTwoSelectedTeam(m_playerTwoSelectedTeam, 0);
+                        else if (m_playerTwoSelectedUIIndex == 2) CmdSetPlayerTwoSelectedTeam(m_playerTwoSelectedTeam, 1);
                         break;
                     case 2:
                         Debug.Log("ReadyStateChanged() Player 3 picked a team: " + m_playerThreeSelectedUIIndex);
-                        if (m_playerThreeSelectedUIIndex == 0) CmdSetPlayerThreeSelectedTeam((int)m_playerThreeSelectedTeam, (int)EPlayerSelectedTeam.Hunters);
-                        else if (m_playerThreeSelectedUIIndex == 2) CmdSetPlayerThreeSelectedTeam((int)m_playerThreeSelectedTeam, (int)EPlayerSelectedTeam.Runners);
+                        if (m_playerThreeSelectedUIIndex == 0) CmdSetPlayerThreeSelectedTeam(m_playerThreeSelectedTeam, 0);
+                        else if (m_playerThreeSelectedUIIndex == 2) CmdSetPlayerThreeSelectedTeam(m_playerThreeSelectedTeam, 1);
                         break;
                     case 3:
                         Debug.Log("ReadyStateChanged() Player 4 picked a team: " + m_playerFourSelectedUIIndex);
-                        if (m_playerFourSelectedUIIndex == 0) CmdSetPlayerFourSelectedTeam((int)m_playerFourSelectedTeam, (int)EPlayerSelectedTeam.Hunters);
-                        else if (m_playerFourSelectedUIIndex == 2) CmdSetPlayerFourSelectedTeam((int)m_playerFourSelectedTeam, (int)EPlayerSelectedTeam.Runners);
+                        if (m_playerFourSelectedUIIndex == 0) CmdSetPlayerFourSelectedTeam(m_playerFourSelectedTeam, 0);
+                        else if (m_playerFourSelectedUIIndex == 2) CmdSetPlayerFourSelectedTeam(m_playerFourSelectedTeam, 1);
                         break;
                 }
 
             }
         }
 
+
         [Command(requiresAuthority = false)]
         private void CmdSetPlayerTwoSelectedTeam(int oldValuem, int newValue)
         {
-            m_playerTwoSelectedTeam = (EPlayerSelectedTeam)newValue;
+            m_playerTwoSelectedTeam = newValue;
         }
 
         [Command(requiresAuthority = false)]
         private void CmdSetPlayerThreeSelectedTeam(int oldValuem, int newValue)
         {
-            m_playerThreeSelectedTeam = (EPlayerSelectedTeam)newValue;
+            m_playerThreeSelectedTeam = newValue;
         }
 
         [Command(requiresAuthority = false)]
         private void CmdSetPlayerFourSelectedTeam(int oldValuem, int newValue)
         {
-            m_playerFourSelectedTeam = (EPlayerSelectedTeam)newValue;
+            m_playerFourSelectedTeam = newValue;
         }
-
 
         public override void Start()
         {

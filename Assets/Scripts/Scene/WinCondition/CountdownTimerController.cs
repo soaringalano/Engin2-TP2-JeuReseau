@@ -57,7 +57,7 @@ public class CountdownTimerController : AbstractObservedObject
         else
         {
             timetext = GameObjectHelper.GetTimeAsString(m_clientTime);
-            Debug.Log("Client is updating time display" + timetext);
+            //Debug.Log("Client is updating time display" + timetext);
         }
         m_countdownTimerText.SetText(timetext);
         /*if (isServer)
