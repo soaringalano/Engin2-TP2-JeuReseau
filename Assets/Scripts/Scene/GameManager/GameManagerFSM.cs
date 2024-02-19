@@ -72,6 +72,7 @@ namespace Mirror
             base.Update();
         }
 
+        [ClientRpc]
         // called on all clients when an event is observed
         public void OnNotify(IEvent e)
         {
@@ -88,7 +89,7 @@ namespace Mirror
             else if(e.GetType() == typeof(EventRunnerWin))
             {
                 EventRunnerWin win = (EventRunnerWin)e;
-                DisplayInfo(((EventRunnerWin)e).playerName + " wins the game!");
+                DisplayInfo(win.playerName + " wins the game!");
                 PlayEfx();
                 NetworkPlayerInfo player = m_runners[win.playerName];
                 player.m_state = PlayerState.Win;
