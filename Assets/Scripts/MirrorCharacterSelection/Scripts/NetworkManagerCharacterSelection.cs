@@ -108,7 +108,7 @@ namespace Mirror
             NetworkServer.AddPlayerForConnection(conn, playerObject);
 
             //added by mao, notify the game manager that a new player has joined
-            NotifyObservers(new EventPlayerJoined(Time.timeAsDouble, message.playerName));
+            NotifyObservers(new EventPlayerJoined(Time.timeAsDouble, message.playerName, characterData.m_characterTitles[message.characterNumber]));
         }
 
         void OnReplaceCharacterMessage(NetworkConnectionToClient conn, ReplaceCharacterMessage message)
@@ -132,6 +132,12 @@ namespace Mirror
             // Remove the previous player object that's now been replaced
             // Delay is required to allow replacement to complete.
             Destroy(oldPlayer, 0.1f);
+
+            NotifyObservers(new EventPlayerJoined(
+                Time.timeAsDouble,
+                message.createCharacterMessage.playerName,
+                characterData.m_characterTitles[message.createCharacterMessage.characterNumber]));
+
         }
 
         public void ReplaceCharacter(ReplaceCharacterMessage message)

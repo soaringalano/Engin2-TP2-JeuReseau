@@ -17,7 +17,7 @@ namespace Mirror
 
         public override bool CanExit()
         {
-            return true;
+            return m_stateMachine.m_timesUp || m_stateMachine.m_winnedRunner > 0;
         }
 
         public override void OnEnter()

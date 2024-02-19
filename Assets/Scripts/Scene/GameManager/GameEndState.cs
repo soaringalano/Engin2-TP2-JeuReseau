@@ -12,12 +12,13 @@ namespace Mirror
 
         public override bool CanEnter(IState currentState)
         {
-            return m_stateMachine.m_gameEnded;
+            return m_stateMachine.m_gameEnded ||
+                m_stateMachine.m_winnedRunner == m_stateMachine.m_runners.Count;
         }
 
         public override bool CanExit()
         {
-            return false;
+            return true;
         }
 
         public override void OnEnter()

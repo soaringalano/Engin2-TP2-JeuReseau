@@ -267,8 +267,20 @@ namespace Mirror
             float angleZ = mouseDelta.x * RotationSpeed;
             float angleX = mouseDelta.y * RotationSpeed;
 
-            m_currentRotation.x += angleX;
-            m_currentRotation.z += angleZ;
+            if(angleX == 0 && angleZ == 0)
+            {
+                return;
+            }
+            if(MathF.Abs(angleX) >= MathF.Abs(angleZ))
+            {
+                angleZ = 0;
+                m_currentRotation.x += angleX;
+            }
+            else
+            {
+                angleX = 0;
+                m_currentRotation.z += angleZ;
+            }
 
 
             m_currentRotation.x = Mathf.Clamp(m_currentRotation.x, -MaxRotationAngle, MaxRotationAngle);

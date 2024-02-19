@@ -15,6 +15,14 @@ namespace Mirror
 
         public override bool CanEnter(IState currentState)
         {
+            // if times up and NO runner wins, then hunter wins
+            if(currentState is GameEndState)
+            {
+                if(m_stateMachine.m_winnedRunner == 0)
+                {
+                    return true;
+                }
+            }
             return false;
         }
 
@@ -25,6 +33,7 @@ namespace Mirror
 
         public override void OnEnter()
         {
+            m_stateMachine.DisplayInfo("Hunter team Wins!");
         }
 
         public override void OnExit()
@@ -41,6 +50,7 @@ namespace Mirror
 
         public override void OnUpdate()
         {
+            m_stateMachine.DisplayInfo("Hunter Wins!");
         }
 
     }
