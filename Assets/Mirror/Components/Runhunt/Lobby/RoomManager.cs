@@ -149,7 +149,7 @@ namespace Mirror
                 return;
             }
             Debug.Log("Both teams are populated");
-            Debug.Log("Start Game button pressed");
+            //Debug.Log("Start Game button pressed");
             // set to false to hide it in the game scene
             showStartButton = false;
             ToggleStartButton(false);
@@ -169,7 +169,7 @@ namespace Mirror
             {
                 if (player == null) continue;
                 playerIndex++;
-                Debug.Log("Player " + playerIndex);
+                //Debug.Log("Player " + playerIndex);
                 if (player.GetComponent<LobbyUI>() == null) Debug.Log("LobbyPlayer is null");
                 //if (player.GetComponent<LobbyUI>().m_playerSelectedTeam == LobbyUI.EPlayerSelectedTeam.Hunters) nbHunters++;
                 //else if (player.GetComponent<LobbyUI>().m_playerSelectedTeam == LobbyUI.EPlayerSelectedTeam.Runners) nbRunners++;
@@ -186,7 +186,7 @@ namespace Mirror
                 else if (player.GetComponent<LobbyUI>().m_playerFourSelectedUIIndex == 2) nbRunners++;
             }
 
-            Debug.Log("nbHunters: " + nbHunters + " nbRunners: " + nbRunners + " nbPlayers: " + playerIndex);
+            //Debug.Log("nbHunters: " + nbHunters + " nbRunners: " + nbRunners + " nbPlayers: " + playerIndex);
             return nbHunters > 0 && nbRunners > 0;
         }
 

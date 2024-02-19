@@ -149,7 +149,7 @@ namespace Mirror
                 // get start position from base class
                 Transform startPos = GetStartPosition();
 
-                Debug.Log("NetworRoomManager - Instantiate player prefab");
+                Debug.LogWarning("NetworRoomManager - Instantiate player prefab");
                 gamePlayer = startPos != null
                     ? Instantiate(playerPrefab, startPos.position, startPos.rotation)
                     : Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
@@ -158,28 +158,31 @@ namespace Mirror
                 if (gamePlayer.GetComponent<PlayerEmpty>() == null) Debug.LogError("PlayerEmpty is null");
                 if (roomPlayer.GetComponent<LobbyUI>() == null) Debug.LogError("LobbyUI is null");
 
-                switch (roomPlayer.GetComponent<LobbyUI>().index)
-                {
-                    case 0:
-                        Debug.Log("Assigning player one team: " + NetworkRoomPlayer.m_playerOneSelectedTeam);
-                        gamePlayer.GetComponent<PlayerEmpty>().m_playerSelectedTeam = NetworkRoomPlayer.m_playerOneSelectedTeam;
-                        break;
-                    case 1:
-                        Debug.Log("Assigning player two team: " + NetworkRoomPlayer.m_playerTwoSelectedTeam);
-                        gamePlayer.GetComponent<PlayerEmpty>().m_playerSelectedTeam = NetworkRoomPlayer.m_playerTwoSelectedTeam;
-                        break;
-                    case 2:
-                        Debug.Log("Assigning player three team: " + NetworkRoomPlayer.m_playerThreeSelectedTeam);
-                        gamePlayer.GetComponent<PlayerEmpty>().m_playerSelectedTeam = NetworkRoomPlayer.m_playerThreeSelectedTeam;
-                        break;
-                    case 3:
-                        Debug.Log("Assigning player four team: " + NetworkRoomPlayer.m_playerFourSelectedTeam);
-                        gamePlayer.GetComponent<PlayerEmpty>().m_playerSelectedTeam = NetworkRoomPlayer.m_playerFourSelectedTeam;
-                        break;
-                    default:
-                        Debug.LogError("Player has no team selected");
-                        break;
-                }
+                Debug.LogWarning(/*"gamePlayer: " + gamePlayer + " roomPlayer: " + roomPlayer +*/ " conn: " + conn);
+                gamePlayer.GetComponent<PlayerEmpty>().m_playerSelectedTeam = m_playerOneSelectedTeam;
+
+                //switch (roomPlayer.GetComponent<LobbyUI>().index)
+                //{
+                //    case 0:
+                //        Debug.LogError("Assigning player one team: " + LobbyUI.m_playerOneSelectedTeam);
+                //        gamePlayer.GetComponent<PlayerEmpty>().m_playerSelectedTeam = m_playerOneSelectedTeam;
+                //        break;
+                //    case 1:
+                //        Debug.LogError("Assigning player two team: " + roomPlayer.GetComponent<LobbyUI>().m_playerTwoSelectedTeam);
+                //        gamePlayer.GetComponent<PlayerEmpty>().m_playerSelectedTeam = roomPlayer.GetComponent<LobbyUI>().m_playerTwoSelectedTeam;
+                //        break;
+                //    case 2:
+                //        Debug.LogError("Assigning player three team: " + roomPlayer.GetComponent<LobbyUI>().m_playerThreeSelectedTeam);
+                //        gamePlayer.GetComponent<PlayerEmpty>().m_playerSelectedTeam = roomPlayer.GetComponent<LobbyUI>().m_playerThreeSelectedTeam;
+                //        break;
+                //    case 3:
+                //        Debug.LogError("Assigning player four team: " + roomPlayer.GetComponent<LobbyUI>().m_playerFourSelectedTeam);
+                //        gamePlayer.GetComponent<PlayerEmpty>().m_playerSelectedTeam = roomPlayer.GetComponent<LobbyUI>().m_playerFourSelectedTeam;
+                //        break;
+                //    default:
+                //        Debug.LogError("Player has no team selected");
+                //        break;
+                //}
             }
 
             if (!OnRoomServerSceneLoadedForPlayer(conn, roomPlayer, gamePlayer))
