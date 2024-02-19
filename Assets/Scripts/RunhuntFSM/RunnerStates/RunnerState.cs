@@ -1,4 +1,5 @@
-﻿namespace Mirror
+﻿
+namespace Runhunt.FSM
 {
     public abstract class RunnerState : IState
     {

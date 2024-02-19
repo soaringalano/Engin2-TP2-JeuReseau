@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Mirror
+namespace Runhunt.FSM
 {
     public class HunterFreeState : HunterState
     {

@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Mirror;
 
-namespace Mirror
+namespace Runhunt.FSM
 {
     public class DragAndDropState : HunterState
     {

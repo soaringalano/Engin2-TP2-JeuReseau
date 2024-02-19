@@ -1,5 +1,5 @@
 ﻿
-namespace Mirror
+namespace Runhunt.FSM
 {
     public interface IState
     {

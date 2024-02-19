@@ -1,15 +1,13 @@
 {
-    "name": "Mirror",
+    "name": "Runhunt.Hunter",
     "rootNamespace": "",
     "references": [
-        "GUID:325984b52e4128546bc7558552f8b1d2",
-        "GUID:c6225cfbeb45eee44b59aa0bf90a9835",
-        "GUID:4307f53044263cf4b835bd812fc161a4",
-        "GUID:12381c0213d3ae74ba3ebbce4ee92fe1"
+        "GUID:30817c1a0e6d646d99c048fc403f5979",
+        "GUID:a18e2114293abd24298bad51cb5be76a"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
-    "allowUnsafeCode": true,
+    "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,

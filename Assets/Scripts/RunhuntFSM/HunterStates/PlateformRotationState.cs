@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Mirror;
+using UnityEngine;
 
-namespace Mirror
+namespace Runhunt.FSM
 {
     public class PlateformRotationState : HunterState
     {

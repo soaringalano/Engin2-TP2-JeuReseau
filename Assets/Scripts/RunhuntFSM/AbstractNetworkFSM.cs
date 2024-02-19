@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Mirror;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace Mirror
+namespace Runhunt.FSM
 {
     public class AbstractNetworkFSM<T> : NetworkBehaviour where T : IState
     {

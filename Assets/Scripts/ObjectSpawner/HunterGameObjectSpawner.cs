@@ -1,8 +1,8 @@
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Mirror;
 using Runhunt.Hunter;
+using Runhunt.FSM;
 
 namespace Runhunt.ObjectSpawner
 {

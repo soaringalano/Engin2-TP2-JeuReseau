@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Mirror
+namespace Runhunt.FSM
 {
     public class GettingUpState : RunnerState
     {

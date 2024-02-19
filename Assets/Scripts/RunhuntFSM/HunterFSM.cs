@@ -2,10 +2,9 @@
 using UnityEngine;
 using Cinemachine;
 using System;
-using System.Drawing;
-using Telepathy;
+using Mirror;
 
-namespace Mirror
+namespace Runhunt.FSM
 {
     public class HunterFSM : AbstractNetworkFSM<HunterState>
     {

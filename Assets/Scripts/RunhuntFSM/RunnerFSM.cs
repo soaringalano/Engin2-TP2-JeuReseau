@@ -2,8 +2,9 @@
 using UnityEngine;
 using Runhunt.Runner;
 using System.Collections;
+using Mirror;
 
-namespace Mirror
+namespace Runhunt.FSM
 {
     public class RunnerFSM : AbstractNetworkFSM<RunnerState>
     {

@@ -1,4 +1,4 @@
-﻿namespace Mirror
+﻿namespace Runhunt.FSM
 {
     public abstract class HunterState : IState
     {

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Runhunt.Runner;
 
-namespace Mirror
+namespace Runhunt.FSM
 {
     public class JumpState : RunnerState
     {
