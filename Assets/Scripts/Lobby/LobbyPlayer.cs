@@ -11,6 +11,10 @@ namespace Mirror.Examples.NetworkRoom
     [AddComponentMenu("")]
     public class LobbyPlayer : NetworkRoomPlayer
     {
+        [field: SerializeField] private GameObject EventSysPrefab { get; set; }
+        //[field: SerializeField] private GameObject UIReadyBoxPrefab { get; set; }
+        [field: SerializeField] private GameObject UIReadyBoxGO { get; set; }
+
         [field: SerializeField] private GameObject UIPlayerOneUnselected { get; set; }
         [field: SerializeField] private GameObject UIPlayerTwoUnselected { get; set; }
         [field: SerializeField] private GameObject UIPlayerThreeUnselected { get; set; }
@@ -28,7 +32,6 @@ namespace Mirror.Examples.NetworkRoom
         [field: SerializeField] private GameObject UIPlayerFourHunter { get; set; }
         [field: SerializeField] private GameObject UIPlayerFourRunner { get; set; }
 
-        [field: SerializeField] private GameObject UIReadyBox { get; set; }
         [field: SerializeField] private GameObject P1Ready { get; set; }
         [field: SerializeField] private GameObject P2Ready { get; set; }
         [field: SerializeField] private GameObject P3Ready { get; set; }
@@ -56,6 +59,7 @@ namespace Mirror.Examples.NetworkRoom
         private int m_previousSelection = 1;
         private bool m_playerArrivedInLobby = false;
         private bool m_previousReadyToBegin = false;
+        private bool m_isEventSystemInstaciated = false;
 
         public override void OnStartClient()
         {
@@ -65,6 +69,16 @@ namespace Mirror.Examples.NetworkRoom
         public override void OnClientEnterRoom()
         {
             Debug.Log($"OnClientEnterRoom {SceneManager.GetActiveScene().path}");
+
+            if (!isLocalPlayer) return;
+            if (m_isEventSystemInstaciated) return;
+
+            m_isEventSystemInstaciated = true;
+            Instantiate(EventSysPrefab, transform);
+            if (transform.GetChild(0).name != "Canvas") Debug.LogError("Canvas not found");
+            //UIReadyBoxGO = Instantiate(UIReadyBoxPrefab, transform.GetChild(0));
+            if (UIReadyBoxGO == null) Debug.LogError("UIReadyBoxGO is null");
+            UIReadyBoxGO.SetActive(true);
         }
 
         public override void OnClientExitRoom()
@@ -76,12 +90,8 @@ namespace Mirror.Examples.NetworkRoom
         {
             Debug.Log($"IndexChanged {newIndex}");
 
-
-
             if (!isLocalPlayer) return;
             m_playerArrivedInLobby = true;
-
-
         }
 
         public override void ReadyStateChanged(bool oldReadyState, bool newReadyState)
@@ -110,14 +120,14 @@ namespace Mirror.Examples.NetworkRoom
         private void ToggleReadyBoxVisibility(bool isVisible)
         {
             Debug.Log("OnClientEnterRoom - isLocalPlayer: " + isLocalPlayer + " index: " + index);
-            UIReadyBox.GetComponentInChildren<Image>().color = new Color(UIReadyBox.GetComponentInChildren<Image>().color.r, UIReadyBox.GetComponentInChildren<Image>().color.g, UIReadyBox.GetComponentInChildren<Image>().color.b, isVisible ? 1 : 0);
-            UIReadyBox.GetComponentInChildren<Text>().color = new Color(UIReadyBox.GetComponentInChildren<Text>().color.r, UIReadyBox.GetComponentInChildren<Text>().color.g, UIReadyBox.GetComponentInChildren<Text>().color.b, isVisible ? 1 : 0);
+            UIReadyBoxGO.GetComponentInChildren<Image>().color = new Color(UIReadyBoxGO.GetComponentInChildren<Image>().color.r, UIReadyBoxGO.GetComponentInChildren<Image>().color.g, UIReadyBoxGO.GetComponentInChildren<Image>().color.b, isVisible ? 1 : 0);
+            UIReadyBoxGO.GetComponentInChildren<Text>().color = new Color(UIReadyBoxGO.GetComponentInChildren<Text>().color.r, UIReadyBoxGO.GetComponentInChildren<Text>().color.g, UIReadyBoxGO.GetComponentInChildren<Text>().color.b, isVisible ? 1 : 0);
         }
 
         private void ToggleReadyBoxInteractibility(bool isVisible)
         {
-            UIReadyBox.GetComponent<Toggle>().interactable = isVisible;
-            UIReadyBox.GetComponent<Toggle>().isOn = isVisible;
+            UIReadyBoxGO.GetComponent<Toggle>().interactable = isVisible;
+            UIReadyBoxGO.GetComponent<Toggle>().isOn = isVisible;
         }
 
         private void Update()
@@ -267,23 +277,23 @@ namespace Mirror.Examples.NetworkRoom
             if (m_previousSelection == playerSelectionUIIndex) return;
             m_previousSelection = playerSelectionUIIndex;
 
-            if (playerSelectionUIIndex == 0 && UIReadyBox.GetComponent<Toggle>().interactable == false)
+            if (playerSelectionUIIndex == 0 && UIReadyBoxGO.GetComponent<Toggle>().interactable == false)
             {
-                UIReadyBox.GetComponent<Toggle>().isOn = false;
-                UIReadyBox.GetComponent<Toggle>().interactable = true;
+                UIReadyBoxGO.GetComponent<Toggle>().isOn = false;
+                UIReadyBoxGO.GetComponent<Toggle>().interactable = true;
                 Debug.Log("UpdatePlayerIsReady index: " + index + " child index: " + (transform.GetSiblingIndex() - 1));
             }
-            else if (playerSelectionUIIndex == 1 && UIReadyBox.GetComponent<Toggle>().interactable)
+            else if (playerSelectionUIIndex == 1 && UIReadyBoxGO.GetComponent<Toggle>().interactable)
             {
 
-                UIReadyBox.GetComponent<Toggle>().isOn = false;
-                UIReadyBox.GetComponent<Toggle>().interactable = false;
+                UIReadyBoxGO.GetComponent<Toggle>().isOn = false;
+                UIReadyBoxGO.GetComponent<Toggle>().interactable = false;
                 Debug.Log("UpdatePlayerIsReady index: " + index + " child index: " + (transform.GetSiblingIndex() - 1));
             }
-            else if (playerSelectionUIIndex == 2 && UIReadyBox.GetComponent<Toggle>().interactable == false)
+            else if (playerSelectionUIIndex == 2 && UIReadyBoxGO.GetComponent<Toggle>().interactable == false)
             {
-                UIReadyBox.GetComponent<Toggle>().isOn = false;
-                UIReadyBox.GetComponent<Toggle>().interactable = true;
+                UIReadyBoxGO.GetComponent<Toggle>().isOn = false;
+                UIReadyBoxGO.GetComponent<Toggle>().interactable = true;
                 Debug.Log("UpdatePlayerIsReady index: " + index + " child index: " + (transform.GetSiblingIndex() - 1));
             }
         }
@@ -433,7 +443,7 @@ namespace Mirror.Examples.NetworkRoom
 
         private void TogglePlayerReadyState()
         {
-            if (UIReadyBox.GetComponent<Toggle>().isOn)
+            if (UIReadyBoxGO.GetComponent<Toggle>().isOn)
             {
                 Debug.Log("Player " + index + " is ready");
                 CmdChangeReadyState(true);

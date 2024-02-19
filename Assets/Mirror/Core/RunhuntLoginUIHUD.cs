@@ -23,6 +23,7 @@ public class RunhuntLoginUIHUD : MonoBehaviour
             Debug.Log("Starting Host");
             SendIpAndPort();
             Manager.StartHost();
+            Destroy(transform.GetChild(0).gameObject);
         }
     }
 
@@ -33,6 +34,7 @@ public class RunhuntLoginUIHUD : MonoBehaviour
             Debug.Log("Starting Client");
             SendIpAndPort();
             Manager.StartClient();
+            Destroy(transform.GetChild(0).gameObject);
         }
     }
 
