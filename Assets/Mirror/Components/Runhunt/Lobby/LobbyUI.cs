@@ -136,7 +136,6 @@ namespace Mirror
                         else if (m_playerFourSelectedUIIndex == 2) CmdSetPlayerFourSelectedTeam(m_playerFourSelectedTeam, 1);
                         break;
                 }
-
             }
         }
 

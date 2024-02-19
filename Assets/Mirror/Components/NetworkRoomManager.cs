@@ -161,28 +161,28 @@ namespace Mirror
                 Debug.LogWarning(/*"gamePlayer: " + gamePlayer + " roomPlayer: " + roomPlayer +*/ " conn: " + conn);
                 gamePlayer.GetComponent<PlayerEmpty>().m_playerSelectedTeam = m_playerOneSelectedTeam;
 
-                //switch (roomPlayer.GetComponent<LobbyUI>().index)
-                //{
-                //    case 0:
-                //        Debug.LogError("Assigning player one team: " + LobbyUI.m_playerOneSelectedTeam);
-                //        gamePlayer.GetComponent<PlayerEmpty>().m_playerSelectedTeam = m_playerOneSelectedTeam;
-                //        break;
-                //    case 1:
-                //        Debug.LogError("Assigning player two team: " + roomPlayer.GetComponent<LobbyUI>().m_playerTwoSelectedTeam);
-                //        gamePlayer.GetComponent<PlayerEmpty>().m_playerSelectedTeam = roomPlayer.GetComponent<LobbyUI>().m_playerTwoSelectedTeam;
-                //        break;
-                //    case 2:
-                //        Debug.LogError("Assigning player three team: " + roomPlayer.GetComponent<LobbyUI>().m_playerThreeSelectedTeam);
-                //        gamePlayer.GetComponent<PlayerEmpty>().m_playerSelectedTeam = roomPlayer.GetComponent<LobbyUI>().m_playerThreeSelectedTeam;
-                //        break;
-                //    case 3:
-                //        Debug.LogError("Assigning player four team: " + roomPlayer.GetComponent<LobbyUI>().m_playerFourSelectedTeam);
-                //        gamePlayer.GetComponent<PlayerEmpty>().m_playerSelectedTeam = roomPlayer.GetComponent<LobbyUI>().m_playerFourSelectedTeam;
-                //        break;
-                //    default:
-                //        Debug.LogError("Player has no team selected");
-                //        break;
-                //}
+                switch (roomPlayer.GetComponent<LobbyUI>().index)
+                {
+                    case 0:
+                        Debug.LogError("Assigning player one team: " + LobbyUI.m_playerOneSelectedTeam);
+                        gamePlayer.GetComponent<PlayerEmpty>().m_playerSelectedTeam = m_playerOneSelectedTeam;
+                        break;
+                    case 1:
+                        Debug.LogError("Assigning player two team: " + roomPlayer.GetComponent<LobbyUI>().m_playerTwoSelectedTeam);
+                        gamePlayer.GetComponent<PlayerEmpty>().m_playerSelectedTeam = roomPlayer.GetComponent<LobbyUI>().m_playerTwoSelectedTeam;
+                        break;
+                    case 2:
+                        Debug.LogError("Assigning player three team: " + roomPlayer.GetComponent<LobbyUI>().m_playerThreeSelectedTeam);
+                        gamePlayer.GetComponent<PlayerEmpty>().m_playerSelectedTeam = roomPlayer.GetComponent<LobbyUI>().m_playerThreeSelectedTeam;
+                        break;
+                    case 3:
+                        Debug.LogError("Assigning player four team: " + roomPlayer.GetComponent<LobbyUI>().m_playerFourSelectedTeam);
+                        gamePlayer.GetComponent<PlayerEmpty>().m_playerSelectedTeam = roomPlayer.GetComponent<LobbyUI>().m_playerFourSelectedTeam;
+                        break;
+                    default:
+                        Debug.LogError("Player has no team selected");
+                        break;
+                }
             }
 
             if (!OnRoomServerSceneLoadedForPlayer(conn, roomPlayer, gamePlayer))
