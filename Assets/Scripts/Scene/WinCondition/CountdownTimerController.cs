@@ -26,10 +26,10 @@ public class CountdownTimerController : AbstractObservedObject
     {
         if (isLocalPlayer)
         {
+            RegisterObserver(GameManagerFSM.s_instance);
+            //Debug.Log("setting up countdown timer text mesh");
+            m_countdownTimerText = m_countdownTimerTextMesh.GetComponent<TextMeshProUGUI>();
         }
-        RegisterObserver(GameManagerFSM.s_instance);
-        //Debug.Log("setting up countdown timer text mesh");
-        m_countdownTimerText = m_countdownTimerTextMesh.GetComponent<TextMeshProUGUI>();
         /*if (m_countdownTimerText == null)
         {
             Debug.LogError("Countdown timer text mesh not found");
@@ -43,10 +43,10 @@ public class CountdownTimerController : AbstractObservedObject
     // Update is called once per frame
     void Update()
     {
-        /*if (!isLocalPlayer)
+        if (!isLocalPlayer)
         {
             return;
-        }*/
+        }
         //Debug.Log("is local player on update");
         string timetext;
         if (isServer)
@@ -70,10 +70,11 @@ public class CountdownTimerController : AbstractObservedObject
 
     void FixedUpdate()
     {
-        /*if (isLocalPlayer)
+        if (!isLocalPlayer)
         {
+            return;
         }
-        Debug.Log("is local player on fixedupdate");*/
+        Debug.Log("is local player on fixedupdate");
         if (isServer)
         {
             if (m_serverTime > 0)
