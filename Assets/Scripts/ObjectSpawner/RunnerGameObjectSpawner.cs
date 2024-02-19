@@ -21,6 +21,8 @@ namespace Runhunt.ObjectSpawner
                 return;
             }
 
+            Debug.LogError("RunnerGameObjectSpawner Start() called!");
+
             InstanciateAssets();
             GetPlayerGameObject();
             GetNetworkedPlayerControls();

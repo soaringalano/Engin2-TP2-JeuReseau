@@ -30,13 +30,19 @@ namespace Mirror
 
             if (m_playerSelectedTeam == EPlayerSelectedTeam.Runners)
             {
-                Debug.Log("Player is a Runner");
-                Instantiate(Runner);
+                Debug.LogError("Player is a Runner");
+                if (Runner == null) Debug.LogError("Runner is null");
+                GameObject playerCharacter = Instantiate(Runner);
+                if (playerCharacter == null) Debug.LogError("PlayerCharacter is null");
+                //NetworkServer.Spawn(playerCharacter);
             }
             else if (m_playerSelectedTeam == EPlayerSelectedTeam.Hunters)
             {
-                Debug.Log("Player is a Hunter");
-                Instantiate(Hunter);
+                Debug.LogError("Player is a Hunter");
+                if(Hunter == null) Debug.LogError("Hunter is null");
+                GameObject playerCharacter = Instantiate(Hunter);
+                if (playerCharacter == null) Debug.LogError("PlayerCharacter is null");
+                //NetworkServer.Spawn(playerCharacter);
             }
             else
             {
