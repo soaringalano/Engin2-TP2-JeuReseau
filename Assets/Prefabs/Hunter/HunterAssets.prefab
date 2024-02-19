@@ -380,6 +380,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11dd7188a0387f1469f780c7b14c102a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 1
-  RotationSpeed: 1
-  Delay: 0.5

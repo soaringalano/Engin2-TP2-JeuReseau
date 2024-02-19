@@ -1,15 +1,13 @@
-
-using System.Net.Http.Headers;
+using Mirror;
 using TMPro;
 using UnityEngine;
-using UnityEngine.ProBuilder.MeshOperations;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace Mirror.Examples.NetworkRoom
+namespace Mirror
 {
     [AddComponentMenu("")]
-    public class LobbyPlayer : NetworkRoomPlayer
+    public class LobbyUI : NetworkRoomPlayer
     {
         [field: SerializeField] private GameObject EventSysPrefab { get; set; }
         //[field: SerializeField] private GameObject UIReadyBoxPrefab { get; set; }
@@ -38,14 +36,15 @@ namespace Mirror.Examples.NetworkRoom
         [field: SerializeField] private GameObject P4Ready { get; set; }
 
 
+
         [SerializeField]
-        [SyncVar(hook = nameof(CmdChangePlayerOneUIIndex))] private int m_playerOneSelectedUIIndex = 1;
+        [SyncVar(hook = nameof(CmdChangePlayerOneUIIndex))] public int m_playerOneSelectedUIIndex = 1;
         [SerializeField]
-        [SyncVar(hook = nameof(CmdChangePlayerTwoUIIndex))] private int m_playerTwoSelectedUIIndex = 1;
+        [SyncVar(hook = nameof(CmdChangePlayerTwoUIIndex))] public int m_playerTwoSelectedUIIndex = 1;
         [SerializeField]
-        [SyncVar(hook = nameof(CmdChangePlayerThreeUIIndex))] private int m_playerThreeSelectedUIIndex = 1;
+        [SyncVar(hook = nameof(CmdChangePlayerThreeUIIndex))] public int m_playerThreeSelectedUIIndex = 1;
         [SerializeField]
-        [SyncVar(hook = nameof(CmdChangePlayerFourUIIndex))] private int m_playerFourSelectedUIIndex = 1;
+        [SyncVar(hook = nameof(CmdChangePlayerFourUIIndex))] public int m_playerFourSelectedUIIndex = 1;
 
         [SerializeField]
         [SyncVar(hook = nameof(CmdSetUnselectedImageAlpha))] private float m_unselectedImageAlpha = 0f;
@@ -97,7 +96,56 @@ namespace Mirror.Examples.NetworkRoom
         public override void ReadyStateChanged(bool oldReadyState, bool newReadyState)
         {
             Debug.Log($"ReadyStateChanged {newReadyState}");
+
+            if (!isLocalPlayer) return;
+
+            if (newReadyState)
+            {
+                switch (index)
+                {
+                    case 0:
+                        Debug.Log("ReadyStateChanged() Player 1 picked a team: " + m_playerOneSelectedUIIndex);
+                        if (m_playerOneSelectedUIIndex == 0) m_playerOneSelectedTeam = EPlayerSelectedTeam.Hunters;
+                        else if (m_playerOneSelectedUIIndex == 2) m_playerOneSelectedTeam = EPlayerSelectedTeam.Runners;
+                        break;
+                    case 1:
+                        Debug.Log("ReadyStateChanged() Player 2 picked a team: " + m_playerTwoSelectedUIIndex);
+                        if (m_playerTwoSelectedUIIndex == 0) CmdSetPlayerTwoSelectedTeam((int)m_playerTwoSelectedTeam, (int)EPlayerSelectedTeam.Hunters);
+                        else if (m_playerTwoSelectedUIIndex == 2) CmdSetPlayerTwoSelectedTeam((int)m_playerTwoSelectedTeam, (int)EPlayerSelectedTeam.Runners);
+                        break;
+                    case 2:
+                        Debug.Log("ReadyStateChanged() Player 3 picked a team: " + m_playerThreeSelectedUIIndex);
+                        if (m_playerThreeSelectedUIIndex == 0) CmdSetPlayerThreeSelectedTeam((int)m_playerThreeSelectedTeam, (int)EPlayerSelectedTeam.Hunters);
+                        else if (m_playerThreeSelectedUIIndex == 2) CmdSetPlayerThreeSelectedTeam((int)m_playerThreeSelectedTeam, (int)EPlayerSelectedTeam.Runners);
+                        break;
+                    case 3:
+                        Debug.Log("ReadyStateChanged() Player 4 picked a team: " + m_playerFourSelectedUIIndex);
+                        if (m_playerFourSelectedUIIndex == 0) CmdSetPlayerFourSelectedTeam((int)m_playerFourSelectedTeam, (int)EPlayerSelectedTeam.Hunters);
+                        else if (m_playerFourSelectedUIIndex == 2) CmdSetPlayerFourSelectedTeam((int)m_playerFourSelectedTeam, (int)EPlayerSelectedTeam.Runners);
+                        break;
+                }
+
+            }
         }
+
+        [Command(requiresAuthority = false)]
+        private void CmdSetPlayerTwoSelectedTeam(int oldValuem, int newValue)
+        {
+            m_playerTwoSelectedTeam = (EPlayerSelectedTeam)newValue;
+        }
+
+        [Command(requiresAuthority = false)]
+        private void CmdSetPlayerThreeSelectedTeam(int oldValuem, int newValue)
+        {
+            m_playerThreeSelectedTeam = (EPlayerSelectedTeam)newValue;
+        }
+
+        [Command(requiresAuthority = false)]
+        private void CmdSetPlayerFourSelectedTeam(int oldValuem, int newValue)
+        {
+            m_playerFourSelectedTeam = (EPlayerSelectedTeam)newValue;
+        }
+
 
         public override void Start()
         {
@@ -241,6 +289,7 @@ namespace Mirror.Examples.NetworkRoom
             }
             else if (playerSelectionUIIndex == 1 && uIPlayerUnselected.GetComponent<Image>().color.a == 0)
             {
+                CmdSetShowStartButton(RoomManager.singleton.showStartButton ,false);
                 Image images = uIPlayerHunter.GetComponent<Image>();
                 images.color = new Color(images.color.r, images.color.g, images.color.b, 0);
 
@@ -285,7 +334,7 @@ namespace Mirror.Examples.NetworkRoom
             }
             else if (playerSelectionUIIndex == 1 && UIReadyBoxGO.GetComponent<Toggle>().interactable)
             {
-
+                CmdSetShowStartButton(RoomManager.singleton.showStartButton, false);
                 UIReadyBoxGO.GetComponent<Toggle>().isOn = false;
                 UIReadyBoxGO.GetComponent<Toggle>().interactable = false;
                 Debug.Log("UpdatePlayerIsReady index: " + index + " child index: " + (transform.GetSiblingIndex() - 1));
@@ -427,15 +476,15 @@ namespace Mirror.Examples.NetworkRoom
                     TogglePlayerReadyState();
                     break;
                 case 1:
-                    Debug.LogError("OnReadyTicked() P2");
+                    Debug.Log("OnReadyTicked() P2");
                     TogglePlayerReadyState();
                     break;
                 case 2:
-                    Debug.LogError("OnReadyTicked() P3");
+                    Debug.Log("OnReadyTicked() P3");
                     TogglePlayerReadyState();
                     break;
                 case 3:
-                    Debug.LogError("OnReadyTicked() P4");
+                    Debug.Log("OnReadyTicked() P4");
                     TogglePlayerReadyState();
                     break;
             }
@@ -459,5 +508,113 @@ namespace Mirror.Examples.NetworkRoom
         {
             base.OnGUI();
         }
+
+        [Command(requiresAuthority = false)]
+        public void CmdSetShowStartButton(bool oldValue, bool newValue)
+        {
+            RoomManager.singleton.showStartButton = newValue;
+        }
+
+
+        //[SyncVar(hook = nameof(CmdSetShowStartButton))]
+        //public bool showStartButton;
+
+        //[Command(requiresAuthority = false)]
+        //public void CmdSetShowStartButton(bool oldValue, bool newValue)
+        //{
+        //    RoomManager.singleton.showStartButton = newValue;
+        //}
+
+        //public override void OnRoomServerPlayersReady()
+        //{
+        //    // calling the base method calls ServerChangeScene as soon as all players are in Ready state.
+        //    if (Utils.IsHeadless())
+        //    {
+        //        base.OnRoomServerPlayersReady();
+        //    }
+        //    else
+        //    {
+        //        CmdSetShowStartButton(showStartButton, true);
+        //        ToggleStartButton(true);
+        //    }
+        //}
+
+        //private void ToggleStartButton(bool isVsible)
+        //{
+        //    Button startButton = GetComponentInChildren<Button>();
+        //    GetComponentInChildren<Button>().interactable = isVsible;
+
+        //    Image image = startButton.GetComponent<Image>();
+        //    image.color = new Color(image.color.r, image.color.g, image.color.b, isVsible ? 1 : 0);
+
+        //    TextMeshProUGUI textMeshProUGUI = startButton.GetComponentInChildren<TextMeshProUGUI>();
+        //    textMeshProUGUI.color = new Color(textMeshProUGUI.color.r, textMeshProUGUI.color.g, textMeshProUGUI.color.b, isVsible ? 1 : 0);
+        //}
+
+        //public override void OnGUI()
+        //{
+        //    base.OnGUI();
+
+        //    if (allPlayersReady && showStartButton && GUI.Button(new Rect(150, 300, 120, 20), "START GAME"))
+        //    {
+        //        // set to false to hide it in the game scene
+        //        showStartButton = false;
+
+        //        ServerChangeScene(GameplayScene);
+        //    }
+        //}
+
+        //public void OnStartButtonPressed()
+        //{
+        //    if (!RoomManager.singleton.showStartButton) return;
+        //    if (!RoomManager.singleton.allPlayersReady) return;
+
+        //    if (!IsBothTeamPopulated())
+        //    {
+        //        Debug.Log("Both teams must be populated");
+        //        return;
+        //    }
+        //    Debug.Log("Both teams are populated");
+        //    Debug.Log("Start Game button pressed");
+        //    // set to false to hide it in the game scene
+        //    RoomManager.singleton.CmdSetShowStartButton(RoomManager.singleton.showStartButton, false);
+        //    RoomManager.singleton.ToggleStartButton(false);
+
+        //    //SetTeamOnNetwork();
+
+        //    RoomManager.singleton.ServerChangeScene(RoomManager.singleton.GameplayScene);
+        //}
+
+        //private bool IsBothTeamPopulated()
+        //{
+        //    int nbHunters = 0;
+        //    int nbRunners = 0;
+        //    int playerIndex = 0;
+
+        //    foreach (NetworkRoomPlayer player in RoomManager.singleton.roomSlots)
+        //    {
+        //        if (player == null) continue;
+        //        playerIndex++;
+        //        Debug.Log("Player " + playerIndex);
+        //        if (player.GetComponent<LobbyUI>() == null) Debug.Log("LobbyPlayer is null");
+        //        //if (player.GetComponent<LobbyUI>().m_playerSelectedTeam == LobbyUI.EPlayerSelectedTeam.Hunters) nbHunters++;
+        //        //else if (player.GetComponent<LobbyUI>().m_playerSelectedTeam == LobbyUI.EPlayerSelectedTeam.Runners) nbRunners++;
+        //        if (player.GetComponent<LobbyUI>().m_playerOneSelectedUIIndex == 0) nbHunters++;
+        //        else if (player.GetComponent<LobbyUI>().m_playerOneSelectedUIIndex == 2) nbRunners++;
+
+        //        if (player.GetComponent<LobbyUI>().m_playerTwoSelectedUIIndex == 0) nbHunters++;
+        //        else if (player.GetComponent<LobbyUI>().m_playerTwoSelectedUIIndex == 2) nbRunners++;
+
+        //        if (player.GetComponent<LobbyUI>().m_playerThreeSelectedUIIndex == 0) nbHunters++;
+        //        else if (player.GetComponent<LobbyUI>().m_playerThreeSelectedUIIndex == 2) nbRunners++;
+
+        //        if (player.GetComponent<LobbyUI>().m_playerFourSelectedUIIndex == 0) nbHunters++;
+        //        else if (player.GetComponent<LobbyUI>().m_playerFourSelectedUIIndex == 2) nbRunners++;
+        //    }
+
+        //    Debug.Log("nbHunters: " + nbHunters + " nbRunners: " + nbRunners + " nbPlayers: " + playerIndex);
+        //    return nbHunters > 0 && nbRunners > 0;
+        //}
+
     }
 }

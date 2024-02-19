@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Mirror
 {
-    public class NetworkManagerCharacterSelection : NetworkManager, IObservedObject //added by mao, implement the IObservedObject interface
+    public class NetworkManagerCharacterSelection : NetworkManager//, IObservedObject //added by mao, implement the IObservedObject interface
     {
         // See the scene 'SceneMapSpawnWithNoCharacter', to spawn as empty player.
         // 'SceneMap' will auto spawn as random player character.
@@ -25,7 +25,7 @@ namespace Mirror
             base.Awake();
             singleton = this;
             //added by mao, register the game manager as an observer
-            RegisterObserver(GameManagerFSM.s_instance);
+            //RegisterObserver(GameManagerFSM.s_instance);
         }
 
         public struct CreateCharacterMessage : NetworkMessage
@@ -108,7 +108,7 @@ namespace Mirror
             NetworkServer.AddPlayerForConnection(conn, playerObject);
 
             //added by mao, notify the game manager that a new player has joined
-            NotifyObservers(new EventPlayerJoined(Time.timeAsDouble, message.playerName));
+            //NotifyObservers(new EventPlayerJoined(Time.timeAsDouble, message.playerName));
         }
 
         void OnReplaceCharacterMessage(NetworkConnectionToClient conn, ReplaceCharacterMessage message)
@@ -139,20 +139,20 @@ namespace Mirror
             NetworkClient.Send(message);
         }
 
-        private List<IObserver> m_observers = new List<IObserver>();
+        //private List<IObserver> m_observers = new List<IObserver>();
 
-        public void NotifyObservers(IEvent e)
-        {
-            foreach(IObserver observer in m_observers)
-            {
-                observer.OnNotify(e);
-            }
-        }
+        //public void NotifyObservers(IEvent e)
+        //{
+        //    foreach(IObserver observer in m_observers)
+        //    {
+        //        observer.OnNotify(e);
+        //    }
+        //}
 
-        public void RegisterObserver(IObserver observer)
-        {
-            if(!m_observers.Contains(observer))
-                m_observers.Add(observer);
-        }
+        //public void RegisterObserver(IObserver observer)
+        //{
+        //    if(!m_observers.Contains(observer))
+        //        m_observers.Add(observer);
+        //}
     }
 }

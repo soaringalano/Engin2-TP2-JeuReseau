@@ -11,6 +11,19 @@ namespace Mirror
     [HelpURL("https://mirror-networking.gitbook.io/docs/components/network-room-player")]
     public class NetworkRoomPlayer : NetworkBehaviour
     {
+        public enum EPlayerSelectedTeam
+        {
+            Hunters,
+            Runners,
+            Count
+        }
+
+        [SerializeField] public static EPlayerSelectedTeam m_playerOneSelectedTeam = EPlayerSelectedTeam.Count;
+        [SerializeField] public static EPlayerSelectedTeam m_playerTwoSelectedTeam = EPlayerSelectedTeam.Count;
+        [SerializeField] public static EPlayerSelectedTeam m_playerThreeSelectedTeam = EPlayerSelectedTeam.Count;
+        [SerializeField] public static EPlayerSelectedTeam m_playerFourSelectedTeam = EPlayerSelectedTeam.Count;
+        
+
         /// <summary>
         /// This flag controls whether the default UI is shown for the room player.
         /// <para>As this UI is rendered using the old GUI system, it is only recommended for testing purposes.</para>

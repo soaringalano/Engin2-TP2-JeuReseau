@@ -26,12 +26,13 @@ namespace Mirror.Examples.Pong
             /**
              * added by Mao
              */
-            GameObject playerPrefab = null;
-            if (selectedPrefabIndex < playerPrefabs.Count())
-            {
-                playerPrefab = playerPrefabs[selectedPrefabIndex];
-            }
+            //GameObject playerPrefab = null;
+            //if (selectedPrefabIndex < base.playerPrefab.Count())
+            //{
+            //    playerPrefab = base.playerPrefab[selectedPrefabIndex];
+            //}
 
+            Debug.Log("NetworkManagerPong - Instantiate player prefab");
             GameObject player = Instantiate(playerPrefab, start.position, start.rotation);
             NetworkServer.AddPlayerForConnection(conn, player);
 

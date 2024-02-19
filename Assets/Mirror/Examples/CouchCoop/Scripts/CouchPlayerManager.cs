@@ -43,6 +43,7 @@ namespace Mirror.Examples.CouchCoop
 
             totalCouchPlayers += 1;
             Transform spawnObj = NetworkManager.startPositions[Random.Range(0, NetworkManager.startPositions.Count)];
+            Debug.Log("CouchCoop - Instantiate player prefab");
             GameObject playerObj = Instantiate(playerPrefabs[0], spawnObj.position, spawnObj.rotation);
             CouchPlayer couchPlayer = playerObj.GetComponent<CouchPlayer>();
             couchPlayer.playerNumber = totalCouchPlayers;
