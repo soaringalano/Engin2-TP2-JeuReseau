@@ -4,7 +4,7 @@ using UnityEngine;
 public class DestinationAreaController : AbstractObservedObject
 {
 
-    public int playerLayer = 8;
+    public int playerLayer = 17;
 
     private double m_stayTime = 0;
 
