@@ -1,6 +1,5 @@
 using UnityEngine;
-using static Mirror.LobbyUI;
-using static Mirror.NetworkRoomPlayer;
+
 using static Mirror.RoomManager;
 
 namespace Mirror
@@ -10,19 +9,6 @@ namespace Mirror
         public GameObject RoomPlayer { get; set;}
         [field : SerializeField] private GameObject Runner { get; set; }
         [field : SerializeField] private GameObject Hunter { get; set; }
-        //private SceneReferencer sceneReferencer;
-
-        //        public override void OnStartAuthority()
-        //        {
-        //            // enable UI located in the scene, after empty player spawns in.
-        //#if UNITY_2021_3_OR_NEWER
-        //            //sceneReferencer = GameObject.FindAnyObjectByType<SceneReferencer>();
-        //#else
-        //            // Deprecated in Unity 2023.1
-        //            //sceneReferencer = GameObject.FindObjectOfType<SceneReferencer>();
-        //#endif
-        //            //sceneReferencer.GetComponent<Canvas>().enabled = true;
-        //        }
 
         [SerializeField] public int m_playerSelectedTeam = 2;
 
@@ -36,45 +22,67 @@ namespace Mirror
         {
             m_emptyPlayerIdIterator++;
             m_emptyPlayerId = m_emptyPlayerIdIterator;
-            if (!isLocalPlayer) return;
-            Debug.LogWarning("PlayerEmpty Start() m_playerSelectedTeam: " + m_playerSelectedTeam + " m_emptyPlayerId: " + m_emptyPlayerId);
+            TryInstanciatePlayerCharacter();
+        }
 
-            //m_playerSelectedTeam = RoomManager.singleton.
-            //int playerIndex = RoomManager.singleton.currentPlayerIndex;
-            
-            Debug.Log("PlayerEmpty Start() m_playerOneConnection: " + RoomManager.s_playerOneId);
-            Debug.Log("PlayerEmpty Start() m_playerTwoConnection: " + RoomManager.s_playerTwoId);
-            Debug.Log("PlayerEmpty Start() m_playerThreeConnection: " + RoomManager.s_playerThreeId);
-            Debug.Log("PlayerEmpty Start() m_playerFourConnection: " + RoomManager.s_playerFourId);
-
+        public void TryInstanciatePlayerCharacter()
+        {
             if (RoomPlayer == null)
             {
                 Debug.LogWarning("RoomPlayer is null");
                 m_isRoomPlayerNull = true;
-                return;
+
+                RoomPlayer = RoomManager.GetSelfLobbyUI(connectionToClient);
+
+                if (RoomPlayer == null)
+                {
+                    Debug.LogError("RoomPlayer is null");
+                    return;
+                }
+                //return;
             }
+
+            Debug.LogWarning("PlayerEmpty Start() m_playerSelectedTeam: " + m_playerSelectedTeam + " m_emptyPlayerId: " + m_emptyPlayerId);
+
+            Debug.Log("PlayerEmpty Start() RoomManager.m_currentPlayerSelectedTeam: " + RoomPlayer.GetComponent<LobbyUI>().m_currentPlayerSelectedTeam);
+
+            Debug.Log("PlayerEmpty Start() m_currentPlayerId: " + RoomPlayer.GetComponent<LobbyUI>().m_currentPlayerId);
+            Debug.Log("PlayerEmpty Start() s_playerTwoId: " + RoomManager.s_playerTwoId);
+            Debug.Log("PlayerEmpty Start() (RoomManager.s_playerTwoId == RoomPlayer.GetComponent<LobbyUI>().m_currentPlayerId): " + (RoomManager.s_playerTwoId == RoomPlayer.GetComponent<LobbyUI>().m_currentPlayerId));
 
             if (RoomManager.s_playerOneId == RoomPlayer.GetComponent<LobbyUI>().m_currentPlayerId)
             {
-                InstanciateCharacter(RoomManager.m_playerOneSelectedTeam);
+                InstanciateCharacter(RoomPlayer.GetComponent<LobbyUI>().m_currentPlayerSelectedTeam);
             }
             else if (RoomManager.s_playerTwoId == RoomPlayer.GetComponent<LobbyUI>().m_currentPlayerId)
             {
-                InstanciateCharacter(RoomManager.m_playerTwoSelectedTeam);
+                // Find the othe PlayerEmpty in scene:
+                PlayerEmpty[] playerEmpties = FindObjectsOfType<PlayerEmpty>();
+                foreach (PlayerEmpty playerEmpty in playerEmpties)
+                {
+                    if (playerEmpty.m_emptyPlayerId == 2)
+                    {
+                        playerEmpty.InstanciateCharacter(RoomPlayer.GetComponent<LobbyUI>().m_currentPlayerSelectedTeam);
+                    }
+                }
+
+                //Debug.Log("PlayerEmpty Start() RoomManager.m_playerTwoSelectedTeam: " + RoomManager.m_playerTwoSelectedTeam);
+                //InstanciateCharacter(RoomPlayer.GetComponent<LobbyUI>().m_currentPlayerSelectedTeam);
             }
             else if (RoomManager.s_playerThreeId == RoomPlayer.GetComponent<LobbyUI>().m_currentPlayerId)
             {
-                InstanciateCharacter(RoomManager.m_playerThreeSelectedTeam);
+                InstanciateCharacter(RoomPlayer.GetComponent<LobbyUI>().m_currentPlayerSelectedTeam);
             }
             else if (RoomManager.s_playerFourId == RoomPlayer.GetComponent<LobbyUI>().m_currentPlayerId)
             {
-                InstanciateCharacter(RoomManager.m_playerFourSelectedTeam);
+                InstanciateCharacter(RoomPlayer.GetComponent<LobbyUI>().m_currentPlayerSelectedTeam);
             }
         }
 
-        private void InstanciateCharacter(EPlayerSelectedTeam playerOneSelectedTeam)
+        private void InstanciateCharacter(EPlayerSelectedTeam playerSelectedTeam)
         {
-            if (playerOneSelectedTeam == RoomManager.EPlayerSelectedTeam.Hunters)
+            Debug.Log("(playerOneSelectedTeam == RoomManager.EPlayerSelectedTeam.Runners)" + (playerSelectedTeam == RoomManager.EPlayerSelectedTeam.Runners));
+            if (playerSelectedTeam == RoomManager.EPlayerSelectedTeam.Hunters)
             {
                 Debug.Log("Instanciate Hunter");
                 GameObject playerCharacter = Instantiate(Hunter);
@@ -83,11 +91,27 @@ namespace Mirror
                 RoomPlayer.GetComponent<LobbyUI>().gameObject.SetActive(false);
 
             }
-            else if (playerOneSelectedTeam == RoomManager.EPlayerSelectedTeam.Runners)
+            else if (playerSelectedTeam == RoomManager.EPlayerSelectedTeam.Runners)
             {
                 Debug.Log("Instanciate Runner");
+                if (Runner == null) Debug.LogError("Runner is null m_playerSelectedTeam: " + m_playerSelectedTeam + " m_emptyPlayerId: " + m_emptyPlayerId);
                 GameObject playerCharacter = Instantiate(Runner);
-                NetworkServer.Spawn(playerCharacter);
+                if (playerCharacter == null) Debug.LogError("PlayerCharacter is null m_playerSelectedTeam: " + m_playerSelectedTeam + " m_emptyPlayerId: " + m_emptyPlayerId);
+                if (connectionToClient == null)
+                {
+                    Debug.LogError("playerCharacter does not have a NetworkIdentity component.");
+                    return;
+                }
+
+                NetworkIdentity networkIdentity = playerCharacter?.GetComponent<NetworkIdentity>();
+                if (networkIdentity == null)
+                {
+                    Debug.LogError("playerCharacter does not have a NetworkIdentity component or playerCharacter is null.");
+                    return;
+                }
+
+                NetworkServer.Spawn(playerCharacter, gameObject);
+                RoomPlayer.GetComponent<LobbyUI>().gameObject.SetActive(false);
             }
         }
 

@@ -1435,8 +1435,7 @@ namespace Mirror
                 Spawn(identity.gameObject, identity.connectionToClient);
                 //Debug.Log("Empty Player Spawn: " + identity.gameObject.name);
 
-                if (identity.gameObject.GetComponent<PlayerEmpty>() == null) return;
-                identity.gameObject.GetComponent<PlayerEmpty>().RoomPlayer = roomPlayer.GetComponent<LobbyUI>().gameObject;
+                RoomManager.AssignRoomToPlayerEmpty(identity, roomPlayer);
                 //roomPlayer.SetActive(false);
                 //Debug.LogError("Empty Player Respawn: " + identity.connectionToClient);
 
@@ -1486,6 +1485,8 @@ namespace Mirror
                 SendSpawnMessage(identity, identity.connectionToClient);
             }
         }
+
+
 
         /// <summary>Spawn the given game object on all clients which are ready.</summary>
         // This will cause a new object to be instantiated from the registered

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
@@ -139,14 +140,20 @@ namespace Mirror
                 case 1:
                     Debug.LogError("Assigning player two Id: " + roomPlayer.GetComponent<LobbyUI>().m_currentPlayerId);
                     RoomManager.s_playerTwoId = roomPlayer.GetComponent<LobbyUI>().m_currentPlayerId;
+                    //RoomManager.AssignRoomToPlayerEmpty(conn.identity, roomPlayer);
+                    //conn.identity.gameObject.GetComponent<PlayerEmpty>().TryInstanciatePlayerCharacter();
                     break;
                 case 2:
                     Debug.LogError("Assigning player three Id: " + roomPlayer.GetComponent<LobbyUI>().m_currentPlayerId);
                     RoomManager.s_playerThreeId = roomPlayer.GetComponent<LobbyUI>().m_currentPlayerId;
+                    //RoomManager.AssignRoomToPlayerEmpty(conn.identity, roomPlayer);
+                    //conn.identity.gameObject.GetComponent<PlayerEmpty>().TryInstanciatePlayerCharacter();
                     break;
                 case 3:
                     Debug.LogError("Assigning player four Id: " + roomPlayer.GetComponent<LobbyUI>().m_currentPlayerId);
                     RoomManager.s_playerFourId = roomPlayer.GetComponent<LobbyUI>().m_currentPlayerId;
+                    //RoomManager.AssignRoomToPlayerEmpty(conn.identity, roomPlayer);
+                    //conn.identity.gameObject.GetComponent<PlayerEmpty>().TryInstanciatePlayerCharacter();
                     break;
                 default:
                     Debug.LogError("Player has no RoomPlayer");
@@ -182,59 +189,6 @@ namespace Mirror
                 gamePlayer = startPos != null
                     ? Instantiate(playerPrefab, startPos.position, startPos.rotation)
                     : Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
-                //Debug.Log("Current GameObject: " + gameObject.name);
-                //Debug.Log("Current gamePlayer: " + gamePlayer.name);
-                //if (gamePlayer.GetComponent<PlayerEmpty>() == null) Debug.LogError("PlayerEmpty is null");
-                //if (roomPlayer.GetComponent<LobbyUI>() == null) Debug.LogError("LobbyUI is null");
-
-                //Debug.Log("Current lobby ui id: " + roomPlayer.GetComponent<LobbyUI>().m_lobbyUIID);
-                //Debug.Log(/*"gamePlayer: " + gamePlayer + " roomPlayer: " + roomPlayer +*/ " conn: " + conn);
-
-                //switch (roomPlayer.GetComponent<LobbyUI>().index)
-                //{
-                //    case 0:
-                //        Debug.LogError("Assigning player one RoomPlayer: " + roomPlayer.GetComponent<LobbyUI>().m_playerOneSelectedTeam);
-                //        roomPlayer.GetComponent<PlayerEmpty>().RoomPlayer = roomPlayer;
-                //        break;
-                //    case 1:
-                //        Debug.LogError("Assigning player two RoomPlayer: " + roomPlayer.GetComponent<LobbyUI>().m_playerTwoSelectedTeam);
-                //        roomPlayer.GetComponent<PlayerEmpty>().RoomPlayer = roomPlayer;
-                //        break;
-                //    case 2:
-                //        Debug.LogError("Assigning player three RoomPlayer: " + roomPlayer.GetComponent<LobbyUI>().m_playerThreeSelectedTeam);
-                //        roomPlayer.GetComponent<PlayerEmpty>().RoomPlayer = roomPlayer;
-                //        break;
-                //    case 3:
-                //        Debug.LogError("Assigning player four RoomPlayer: " + roomPlayer.GetComponent<LobbyUI>().m_playerFourSelectedTeam);
-                //        roomPlayer.GetComponent<PlayerEmpty>().RoomPlayer = roomPlayer;
-                //        break;
-                //    default:
-                //        Debug.LogError("Player has no RoomPlayer");
-                //        break;
-                //}
-
-                //switch (roomPlayer.GetComponent<LobbyUI>().index)
-                //{
-                //    case 0:
-                //        Debug.LogError("Assigning player one team: " + roomPlayer.GetComponent<LobbyUI>().m_playerOneSelectedTeam);
-                //        roomPlayer.GetComponent<LobbyUI>().CmdAssignTeamToEmptyplayerOne(roomPlayer, gamePlayer);
-                //        break;
-                //    case 1:
-                //        Debug.LogError("Assigning player two team: " + roomPlayer.GetComponent<LobbyUI>().m_playerTwoSelectedTeam);
-                //        roomPlayer.GetComponent<LobbyUI>().CmdAssignTeamToEmptyplayerTwo(roomPlayer, gamePlayer);
-                //        break;
-                //    case 2:
-                //        Debug.LogError("Assigning player three team: " + roomPlayer.GetComponent<LobbyUI>().m_playerThreeSelectedTeam);
-                //        roomPlayer.GetComponent<LobbyUI>().CmdAssignTeamToEmptyplayerThree(roomPlayer, gamePlayer);
-                //        break;
-                //    case 3:
-                //        Debug.LogError("Assigning player four team: " + roomPlayer.GetComponent<LobbyUI>().m_playerFourSelectedTeam);
-                //        roomPlayer.GetComponent<LobbyUI>().CmdAssignTeamToEmptyplayerFour(roomPlayer, gamePlayer);
-                //        break;
-                //    default:
-                //        Debug.LogError("Player has no team selected");
-                //        break;
-                //}
             }
 
             if (!OnRoomServerSceneLoadedForPlayer(conn, roomPlayer, gamePlayer))

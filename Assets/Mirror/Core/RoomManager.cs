@@ -69,6 +69,29 @@ namespace Mirror
             }
         }
 
+        public static void AssignRoomToPlayerEmpty(NetworkIdentity identity, GameObject roomPlayer)
+        {
+            if (identity.gameObject.GetComponent<PlayerEmpty>() == null) return;
+            identity.gameObject.GetComponent<PlayerEmpty>().RoomPlayer = roomPlayer.GetComponent<LobbyUI>().gameObject;
+        }
+
+        public static GameObject GetSelfLobbyUI(NetworkConnectionToClient networkIdentity)
+        {
+            Debug.Log("GetSelfLobbyUI() NetworkClient.connection.identity.gameObject: " + NetworkClient.connection.identity.gameObject.name);
+
+            foreach (PendingPlayer pendingPlayer in singleton.pendingPlayers)
+            {
+                if (pendingPlayer.conn == networkIdentity)
+                {
+                    return pendingPlayer.roomPlayer.gameObject;
+                }
+            }
+
+            return null;
+            //Debug.Log("pendingPlayer.roomPlayer.name" + pendingPlayer.roomPlayer.name);
+            //return NetworkClient.connection.identity.gameObject.GetComponent<LobbyUI>().gameObject;
+        }
+
         public override void OnServerConnect(NetworkConnectionToClient conn)
         {
             base.OnServerConnect(conn);

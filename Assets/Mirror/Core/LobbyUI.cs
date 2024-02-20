@@ -78,6 +78,10 @@ namespace Mirror
 
         public int m_currentPlayerId = 0;
 
+        public int m_currentPlayerSelectedTeamInt = 2;
+        [SyncVar] public EPlayerSelectedTeam m_currentPlayerSelectedTeam = EPlayerSelectedTeam.Count;
+
+
         public override void OnStartClient()
         {
             //Debug.Log($"OnStartClient {gameObject}");
@@ -131,72 +135,35 @@ namespace Mirror
                 switch (index)
                 {
                     case 0:
-                        Debug.Log("ReadyStateChanged() Player 1 picked a team: " + m_playerOneSelectedUIIndex + " connectionToClient: "+ connectionToClient);
-                        if (m_playerOneSelectedUIIndex == 0) m_playerOneSelectedTeam = EPlayerSelectedTeam.Hunters;
-                        else if (m_playerOneSelectedUIIndex == 2) m_playerOneSelectedTeam = EPlayerSelectedTeam.Runners;
-                        RoomManager.m_playerOneConnection = connectionToClient;
-                        //NetworkIdentity networkIdentity = gameObject.GetComponent<NetworkIdentity>();
-                        //Debug.Log("ReadyStateChanged() networkIdentity: " + networkIdentity);
+                        CmdChangeTeams(m_playerOneSelectedUIIndex, m_playerOneSelectedTeam);
                         break;
                     case 1:
-                        Debug.Log("ReadyStateChanged() Player 2 picked a team: " + m_playerTwoSelectedUIIndex + " connectionToClient: "+ connectionToClient);
-                        if (m_playerTwoSelectedUIIndex == 0) m_playerTwoSelectedTeam = EPlayerSelectedTeam.Hunters;
-                        else if (m_playerTwoSelectedUIIndex == 2) m_playerTwoSelectedTeam = EPlayerSelectedTeam.Runners;
-                        RoomManager.m_playerTwoConnection = connectionToClient;
-                        //NetworkIdentity networkIdentity2 = gameObject.GetComponent<NetworkIdentity>();
-                        //Debug.Log("ReadyStateChanged() networkIdentity: " + networkIdentity2);
+                        CmdChangeTeams(m_playerTwoSelectedUIIndex, m_playerTwoSelectedTeam);
                         break;
                     case 2:
-                        Debug.Log("ReadyStateChanged() Player 3 picked a team: " + m_playerThreeSelectedUIIndex + " connectionToClient: "+ connectionToClient);
-                        if (m_playerThreeSelectedUIIndex == 0) m_playerThreeSelectedTeam = EPlayerSelectedTeam.Hunters;
-                        else if (m_playerThreeSelectedUIIndex == 2) m_playerThreeSelectedTeam = EPlayerSelectedTeam.Runners;
-                        RoomManager.m_playerThreeConnection = connectionToClient;
-                        //NetworkIdentity networkIdentity3 = gameObject.GetComponent<NetworkIdentity>();
-                        //Debug.Log("ReadyStateChanged() networkIdentity: " + networkIdentity3);
+                        CmdChangeTeams(m_playerThreeSelectedUIIndex, m_playerThreeSelectedTeam);
                         break;
                     case 3:
-                        Debug.Log("ReadyStateChanged() Player 4 picked a team: " + m_playerFourSelectedUIIndex + " connectionToClient: "+ connectionToClient);
-                        if (m_playerFourSelectedUIIndex == 0) m_playerFourSelectedTeam = EPlayerSelectedTeam.Hunters;
-                        else if (m_playerFourSelectedUIIndex == 2) m_playerFourSelectedTeam = EPlayerSelectedTeam.Runners;
-                        RoomManager.m_playerFourConnection = connectionToClient;
-                        //NetworkIdentity networkIdentity4 = gameObject.GetComponent<NetworkIdentity>();
-                        //Debug.Log("ReadyStateChanged() networkIdentity: " + networkIdentity4);
+                        CmdChangeTeams(m_playerFourSelectedUIIndex, m_playerFourSelectedTeam);
                         break;
                 }
             }
-
-            //if (newReadyState)
-            //{
-            //    switch (index)
-            //    {
-            //        case 0:
-            //            Debug.Log("ReadyStateChanged() Player 1 picked a team: " + m_playerOneSelectedUIIndex);
-            //            if (m_playerOneSelectedUIIndex == 0) CmdSetPlayerOneSelectedTeam(m_playerOneSelectedTeam, 0);
-            //            else if (m_playerOneSelectedUIIndex == 2) CmdSetPlayerOneSelectedTeam(m_playerOneSelectedTeam, 1);
-            //            NetworkIdentity networkIdentity = gameObject.GetComponent<NetworkIdentity>();
-            //            Debug.LogError("ReadyStateChanged() networkIdentity: " + networkIdentity);
-            //            break;
-            //        case 1:
-            //            Debug.Log("ReadyStateChanged() Player 2 picked a team: " + m_playerTwoSelectedUIIndex);
-            //            if (m_playerTwoSelectedUIIndex == 0) CmdSetPlayerTwoSelectedTeam(m_playerTwoSelectedTeam, 0);
-            //            else if (m_playerTwoSelectedUIIndex == 2) CmdSetPlayerTwoSelectedTeam(m_playerTwoSelectedTeam, 1);
-            //            NetworkIdentity networkIdentity2 = gameObject.GetComponent<NetworkIdentity>();
-            //            Debug.LogError("ReadyStateChanged() networkIdentity: " + networkIdentity2);
-            //            break;
-            //        case 2:
-            //            Debug.Log("ReadyStateChanged() Player 3 picked a team: " + m_playerThreeSelectedUIIndex);
-            //            if (m_playerThreeSelectedUIIndex == 0) CmdSetPlayerThreeSelectedTeam(m_playerThreeSelectedTeam, 0);
-            //            else if (m_playerThreeSelectedUIIndex == 2) CmdSetPlayerThreeSelectedTeam(m_playerThreeSelectedTeam, 1);
-            //            break;
-            //        case 3:
-            //            Debug.Log("ReadyStateChanged() Player 4 picked a team: " + m_playerFourSelectedUIIndex);
-            //            if (m_playerFourSelectedUIIndex == 0) CmdSetPlayerFourSelectedTeam(m_playerFourSelectedTeam, 0);
-            //            else if (m_playerFourSelectedUIIndex == 2) CmdSetPlayerFourSelectedTeam(m_playerFourSelectedTeam, 1);
-            //            break;
-            //    }
-            //}
         }
 
+        [Command(requiresAuthority = false)]
+        private void CmdChangeTeams(int playerSelectedUIIndex, EPlayerSelectedTeam playerSelectedTeam)
+        {
+            Debug.Log("ReadyStateChanged() Player 1 picked a team: " + playerSelectedUIIndex + " connectionToClient: " + connectionToClient);
+            if (playerSelectedUIIndex == 0) playerSelectedTeam = EPlayerSelectedTeam.Hunters;
+            else if (playerSelectedUIIndex == 2) playerSelectedTeam = EPlayerSelectedTeam.Runners;
+            m_currentPlayerSelectedTeam = playerSelectedTeam;
+        }
+
+        [Command(requiresAuthority = false)]
+        private void CmdSetCurrentPlayerSelectedTeam(int oldValuem, int newValue)
+        {
+            m_currentPlayerSelectedTeamInt = newValue;
+        }
 
         //[Command(requiresAuthority = false)]
         //private void CmdSetPlayerOneSelectedTeam(int oldValuem, int newValue)
