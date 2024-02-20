@@ -215,7 +215,7 @@ namespace Telepathy
             // start the listener thread
             // (on low priority. if main thread is too busy then there is not
             //  much value in accepting even more clients)
-            Log.Info("Server: Start port=" + port);
+            //Log.Info("Server: Start port=" + port);
             listenerThread = new Thread(() => { Listen(port); });
             listenerThread.IsBackground = true;
             listenerThread.Priority = ThreadPriority.BelowNormal;
