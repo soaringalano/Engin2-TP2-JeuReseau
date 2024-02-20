@@ -80,6 +80,8 @@ namespace Mirror
                 GameObject playerCharacter = Instantiate(Hunter);
                 NetworkServer.Spawn(playerCharacter);
                 playerCharacter.GetComponent<HunterGameObjectSpawner>().Initialize();
+                RoomPlayer.GetComponent<LobbyUI>().gameObject.SetActive(false);
+
             }
             else if (playerOneSelectedTeam == RoomManager.EPlayerSelectedTeam.Runners)
             {
