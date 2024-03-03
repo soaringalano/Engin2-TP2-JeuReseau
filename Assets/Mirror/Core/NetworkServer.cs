@@ -1048,7 +1048,7 @@ namespace Mirror
         // safely be used while changing scenes.
         public static bool ReplacePlayerForConnection(NetworkConnectionToClient conn, GameObject player, GameObject roomPlayer, bool keepAuthority = false)
         {
-            //Debug.Log($"ReplacePlayerForConnection conn:{conn} player:{player} keepAuthority:{keepAuthority}");
+            Debug.Log($"ReplacePlayerForConnection conn:{conn} player:{player} keepAuthority:{keepAuthority}");
 
             if (!player.TryGetComponent(out NetworkIdentity identity))
             {
@@ -1101,6 +1101,9 @@ namespace Mirror
                 // This clears both isLocalPlayer and hasAuthority on client
                 previousPlayer.RemoveClientAuthority();
             }
+
+            //RoomManager.AssignRoomToPlayerEmpty(identity, roomPlayer);
+            //RoomManager.InitializePlayerEmpty(identity);
 
             return true;
         }
@@ -1155,7 +1158,7 @@ namespace Mirror
 
         static void SpawnObserversForConnection(NetworkConnectionToClient conn)
         {
-            //Debug.Log($"Spawning {spawned.Count} objects for conn {conn}");
+            Debug.Log($"Spawning {spawned.Count} objects for conn {conn}");
 
             if (!conn.isReady)
             {
@@ -1429,13 +1432,16 @@ namespace Mirror
 
         static void Respawn(NetworkIdentity identity, GameObject roomPlayer)
         {
+            Debug.Log("Respawn: " + identity.gameObject.name);
             if (identity.netId == 0)
             {
                 // If the object has not been spawned, then do a full spawn and update observers
                 Spawn(identity.gameObject, identity.connectionToClient);
                 //Debug.Log("Empty Player Spawn: " + identity.gameObject.name);
 
-                RoomManager.AssignRoomToPlayerEmpty(identity, roomPlayer);
+                //RoomManager.AssignRoomToPlayerEmpty(identity, roomPlayer);
+                //RoomManager.InitializePlayerEmpty(identity);
+
                 //roomPlayer.SetActive(false);
                 //Debug.LogError("Empty Player Respawn: " + identity.connectionToClient);
 
@@ -1493,6 +1499,7 @@ namespace Mirror
         // prefab, or from a custom spawn function.
         public static void Spawn(GameObject obj, NetworkConnection ownerConnection = null)
         {
+            Debug.Log($"Spawn {obj} {obj.name} {obj.GetInstanceID()} {ownerConnection}");
             SpawnObject(obj, ownerConnection);
         }
 
@@ -1500,6 +1507,7 @@ namespace Mirror
         // This is the same as calling NetworkIdentity.AssignClientAuthority on the spawned object.
         public static void Spawn(GameObject obj, uint assetId, NetworkConnection ownerConnection = null)
         {
+            Debug.Log($"Spawn {obj} {obj.name} {obj.GetInstanceID()} {assetId} {ownerConnection}");
             if (GetNetworkIdentity(obj, out NetworkIdentity identity))
             {
                 identity.assetId = assetId;
@@ -1509,6 +1517,7 @@ namespace Mirror
 
         static void SpawnObject(GameObject obj, NetworkConnection ownerConnection)
         {
+            //Debug.Log($"SpawnObject {obj} {obj.name} {obj.GetInstanceID()} {ownerConnection}");
             // verify if we can spawn this
             if (Utils.IsPrefab(obj))
             {

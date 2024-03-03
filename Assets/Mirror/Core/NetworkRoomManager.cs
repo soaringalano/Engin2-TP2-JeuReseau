@@ -122,7 +122,7 @@ namespace Mirror
 
         void SceneLoadedForPlayer(NetworkConnectionToClient conn, GameObject roomPlayer)
         {
-            //Debug.Log($"NetworkRoom SceneLoadedForPlayer scene: {SceneManager.GetActiveScene().path} {conn}");
+            Debug.Log($"NetworkRoom SceneLoadedForPlayer scene: {SceneManager.GetActiveScene().path} {conn}");
 
             if (roomPlayer == null) Debug.LogError("LobbyUI is null");
             //Debug.LogError("GameObject: " + conn.identity.gameObject.name);
@@ -134,23 +134,23 @@ namespace Mirror
             switch (roomPlayer.GetComponent<LobbyUI>().index)
             {
                 case 0:
-                    Debug.LogError("Assigning player one Id: " + roomPlayer.GetComponent<LobbyUI>().m_currentPlayerId);
+                    Debug.Log("Assigning player one Id: " + roomPlayer.GetComponent<LobbyUI>().m_currentPlayerId);
                     RoomManager.s_playerOneId = roomPlayer.GetComponent<LobbyUI>().m_currentPlayerId;
                     break;
                 case 1:
-                    Debug.LogError("Assigning player two Id: " + roomPlayer.GetComponent<LobbyUI>().m_currentPlayerId);
+                    Debug.Log("Assigning player two Id: " + roomPlayer.GetComponent<LobbyUI>().m_currentPlayerId);
                     RoomManager.s_playerTwoId = roomPlayer.GetComponent<LobbyUI>().m_currentPlayerId;
                     //RoomManager.AssignRoomToPlayerEmpty(conn.identity, roomPlayer);
                     //conn.identity.gameObject.GetComponent<PlayerEmpty>().TryInstanciatePlayerCharacter();
                     break;
                 case 2:
-                    Debug.LogError("Assigning player three Id: " + roomPlayer.GetComponent<LobbyUI>().m_currentPlayerId);
+                    Debug.Log("Assigning player three Id: " + roomPlayer.GetComponent<LobbyUI>().m_currentPlayerId);
                     RoomManager.s_playerThreeId = roomPlayer.GetComponent<LobbyUI>().m_currentPlayerId;
                     //RoomManager.AssignRoomToPlayerEmpty(conn.identity, roomPlayer);
                     //conn.identity.gameObject.GetComponent<PlayerEmpty>().TryInstanciatePlayerCharacter();
                     break;
                 case 3:
-                    Debug.LogError("Assigning player four Id: " + roomPlayer.GetComponent<LobbyUI>().m_currentPlayerId);
+                    Debug.Log("Assigning player four Id: " + roomPlayer.GetComponent<LobbyUI>().m_currentPlayerId);
                     RoomManager.s_playerFourId = roomPlayer.GetComponent<LobbyUI>().m_currentPlayerId;
                     //RoomManager.AssignRoomToPlayerEmpty(conn.identity, roomPlayer);
                     //conn.identity.gameObject.GetComponent<PlayerEmpty>().TryInstanciatePlayerCharacter();
@@ -173,22 +173,16 @@ namespace Mirror
             GameObject gamePlayer = OnRoomServerCreateGamePlayer(conn, roomPlayer);
             if (gamePlayer == null)
             {
-
-                ///**
-                // * added by Mao
-                // */
-                //GameObject playerPrefab = null;
-                //if (selectedPrefabIndex < base.playerPrefab.Count())
-                //{
-                //    playerPrefab = base.playerPrefab[selectedPrefabIndex];
-                //}
                 // get start position from base class
                 Transform startPos = GetStartPosition();
 
-                //Debug.Log("NetworRoomManager - Instantiate player prefab");
+                Debug.Log("NetworRoomManager - Instantiate empty player prefab");
                 gamePlayer = startPos != null
                     ? Instantiate(playerPrefab, startPos.position, startPos.rotation)
                     : Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
+
+                // Assign client authority to the instantiated playerPrefab
+                //NetworkServer.Spawn(gamePlayer, conn);
             }
 
             if (!OnRoomServerSceneLoadedForPlayer(conn, roomPlayer, gamePlayer))
@@ -196,6 +190,10 @@ namespace Mirror
 
             // replace room player with game player
             NetworkServer.ReplacePlayerForConnection(conn, gamePlayer, roomPlayer, true);
+
+            RoomManager.AssignTeamToPlayerEmpty(conn, roomPlayer);
+            //RoomManager.AssignRoomToPlayerEmpty(conn, roomPlayer);
+            //RoomManager.InitializePlayerEmpty(conn);
         }
 
 
@@ -317,7 +315,7 @@ namespace Mirror
         /// <param name="conn">Connection from client.</param>
         public override void OnServerReady(NetworkConnectionToClient conn)
         {
-            //Debug.Log($"NetworkRoomManager OnServerReady {conn}");
+            Debug.Log($"NetworkRoomManager OnServerReady {conn}");
             base.OnServerReady(conn);
 
             if (conn != null && conn.identity != null)
@@ -411,6 +409,7 @@ namespace Mirror
         /// <param name="sceneName">The name of the new scene.</param>
         public override void OnServerSceneChanged(string sceneName)
         {
+            Debug.Log($"NetworkRoomManager.OnServerSceneChanged {sceneName}");
             if (sceneName != RoomScene)
             {
                 // call SceneLoadedForPlayer on any players that become ready while we were loading the scene.

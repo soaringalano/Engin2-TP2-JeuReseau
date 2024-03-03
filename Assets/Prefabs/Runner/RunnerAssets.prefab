@@ -23,7 +23,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6749037258961928793
 Transform:
   m_ObjectHideFlags: 0
@@ -72,7 +72,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   <RunnerUI>k__BackingField: {fileID: 1374354616873605870}
-  <NetworkAnimator>k__BackingField: {fileID: 8403922479734184492}
+  <NetworkAnimator>k__BackingField: {fileID: 0}
+  <RunnerName>k__BackingField: 
   m_isInRagdoll: 0
 --- !u!114 &4443521735286620746
 MonoBehaviour:

@@ -22,7 +22,7 @@ namespace Mirror
             //    return;
             //}
 
-            Debug.LogError("HunterGameObjectSpawner Start() called!");
+            Debug.Log("HunterGameObjectSpawner Start() called!");
 
             GetPlayerGameObject();
             InstanciateAssets();

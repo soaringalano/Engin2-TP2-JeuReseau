@@ -3,6 +3,9 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Button = UnityEngine.UI.Button;
+using Image = UnityEngine.UI.Image;
 
 /*
 	Documentation: https://mirror-networking.gitbook.io/docs/components/network-manager
@@ -69,28 +72,45 @@ namespace Mirror
             }
         }
 
-        public static void AssignRoomToPlayerEmpty(NetworkIdentity identity, GameObject roomPlayer)
+        //public static void AssignRoomToPlayerEmpty(NetworkConnectionToClient conn, GameObject roomPlayer)
+        //{
+        //    Debug.LogWarning("AssignRoomToPlayerEmpty() identity: " + conn + " roomPlayer: " + roomPlayer.name);
+        //    if (conn.identity.gameObject.GetComponent<PlayerEmpty>() == null) return;
+        //    conn.identity.gameObject.GetComponent<PlayerEmpty>().RoomPlayer = roomPlayer.GetComponent<LobbyUI>().gameObject;
+        //}
+
+        //public static void InitializePlayerEmpty(NetworkConnectionToClient conn)
+        //{
+        //    if (conn.identity.gameObject.GetComponent<PlayerEmpty>() == null) return;
+        //    conn.identity.gameObject.GetComponent<PlayerEmpty>().Initialize();
+        //}
+
+        public static void AssignTeamToPlayerEmpty(NetworkConnectionToClient conn, GameObject roomPlayer)
         {
-            if (identity.gameObject.GetComponent<PlayerEmpty>() == null) return;
-            identity.gameObject.GetComponent<PlayerEmpty>().RoomPlayer = roomPlayer.GetComponent<LobbyUI>().gameObject;
+            Debug.Log("AssignTeamToPlayerEmpty() identity: " + conn + " roomPlayer: " + roomPlayer.name + " roomPlayer.GetComponent<LobbyUI>().m_currentPlayerSelectedTeam: " + roomPlayer.GetComponent<LobbyUI>().m_currentPlayerSelectedTeam);
+            //if (conn.identity.gameObject.GetComponent<PlayerEmpty>() == null) return;
+            conn.identity.gameObject.GetComponent<PlayerEmpty>().m_currentPlayerSelectedTeam = roomPlayer.GetComponent<LobbyUI>().m_currentPlayerSelectedTeam;
         }
 
-        public static GameObject GetSelfLobbyUI(NetworkConnectionToClient networkIdentity)
-        {
-            Debug.Log("GetSelfLobbyUI() NetworkClient.connection.identity.gameObject: " + NetworkClient.connection.identity.gameObject.name);
 
-            foreach (PendingPlayer pendingPlayer in singleton.pendingPlayers)
-            {
-                if (pendingPlayer.conn == networkIdentity)
-                {
-                    return pendingPlayer.roomPlayer.gameObject;
-                }
-            }
+        //public static GameObject GetSelfLobbyUI(NetworkConnectionToClient networkIdentity)
+        //{
+        //    Debug.Log("GetSelfLobbyUI() NetworkClient.connection.identity.gameObject: " + NetworkClient.connection.identity.gameObject.name);
 
-            return null;
-            //Debug.Log("pendingPlayer.roomPlayer.name" + pendingPlayer.roomPlayer.name);
-            //return NetworkClient.connection.identity.gameObject.GetComponent<LobbyUI>().gameObject;
-        }
+        //    Debug.Log("singleton.pendingPlayers.Count: " + singleton.pendingPlayers.Count);
+
+        //    foreach (PendingPlayer pendingPlayer in singleton.pendingPlayers)
+        //    {
+        //        if (pendingPlayer.conn == networkIdentity)
+        //        {
+        //            return pendingPlayer.roomPlayer.gameObject;
+        //        }
+        //    }
+
+        //    return null;
+        //    //Debug.Log("pendingPlayer.roomPlayer.name" + pendingPlayer.roomPlayer.name);
+        //    //return NetworkClient.connection.identity.gameObject.GetComponent<LobbyUI>().gameObject;
+        //}
 
         public override void OnServerConnect(NetworkConnectionToClient conn)
         {
