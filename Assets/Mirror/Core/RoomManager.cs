@@ -2,6 +2,7 @@ using Mirror;
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 using Button = UnityEngine.UI.Button;
@@ -92,6 +93,20 @@ namespace Mirror
             conn.identity.gameObject.GetComponent<PlayerEmpty>().m_currentPlayerSelectedTeam = roomPlayer.GetComponent<LobbyUI>().m_currentPlayerSelectedTeam;
         }
 
+        public GameObject GetRoomPlayer(NetworkConnectionToClient conn)
+        {
+            foreach (NetworkRoomPlayer roomPlayer in roomSlots)
+            {
+                if (roomPlayer == null) continue;
+                if (roomPlayer.connectionToClient == conn)
+                {
+                    return roomPlayer.gameObject;
+                }
+            }
+
+            return null;
+        }
+
 
         //public static GameObject GetSelfLobbyUI(NetworkConnectionToClient networkIdentity)
         //{
@@ -176,12 +191,6 @@ namespace Mirror
             }
         }
 
-        //[Command(requiresAuthority = false)]
-        //public void CmdSetShowStartButton(bool oldValue, bool newValue)
-        //{
-        //    RoomManager.singleton.showStartButton = newValue;
-        //}
-
         private void ToggleStartButton(bool isVsible)
         {
             Button startButton = GetComponentInChildren<Button>();
@@ -193,19 +202,6 @@ namespace Mirror
             TextMeshProUGUI textMeshProUGUI = startButton.GetComponentInChildren<TextMeshProUGUI>();
             textMeshProUGUI.color = new Color(textMeshProUGUI.color.r, textMeshProUGUI.color.g, textMeshProUGUI.color.b, isVsible ? 1 : 0);
         }
-
-        ////public override void OnGUI()
-        ////{
-        ////    base.OnGUI();
-
-        ////    if (allPlayersReady && showStartButton && GUI.Button(new Rect(150, 300, 120, 20), "START GAME"))
-        ////    {
-        ////        // set to false to hide it in the game scene
-        ////        showStartButton = false;
-
-        ////        ServerChangeScene(GameplayScene);
-        ////    }
-        ////}
 
         public void OnStartButtonPressed()
         {
@@ -229,10 +225,11 @@ namespace Mirror
             showStartButton = false;
             ToggleStartButton(false);
 
-            //SetTeamOnNetwork();
+            //GetComponent<UIManager>().DisableLobbyUI();
 
             ServerChangeScene(GameplayScene);
         }
+
 
         private bool IsBothTeamPopulated()
         {

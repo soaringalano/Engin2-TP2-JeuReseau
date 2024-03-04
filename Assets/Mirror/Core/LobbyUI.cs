@@ -1,6 +1,7 @@
 
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static Mirror.RoomManager;
@@ -587,5 +588,18 @@ namespace Mirror
         //{
         //    gamePlayer.GetComponent<PlayerEmpty>().m_playerSelectedTeam = roomPlayer.GetComponent<LobbyUI>().m_playerFourSelectedTeam;
         //}
+
+        [Command]
+        public void CmdDisableLobbyUI()
+        {
+            RpcDisableLobbyUI();
+        }
+
+        [ClientRpc]
+        private void RpcDisableLobbyUI()
+        {
+            GetComponentInChildren<Canvas>().gameObject.SetActive(false);
+            GetComponentInChildren<EventSystem>().gameObject.SetActive(false);
+        }
     }
 }

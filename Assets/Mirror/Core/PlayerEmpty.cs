@@ -1,5 +1,6 @@
 using Mirror;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using static Mirror.RoomManager;
 using static PlasticGui.PlasticTableColumn;
 using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
@@ -60,9 +61,24 @@ namespace Mirror
 
             if (m_currentPlayerSelectedTeam == EPlayerSelectedTeam.Count) Debug.LogError("PlayerEmpty Update() m_currentPlayerSelectedTeam: " + m_currentPlayerSelectedTeam + " m_emptyPlayerId: " + m_emptyPlayerId);
             InstanciateCharacter(m_currentPlayerSelectedTeam);
+            CmdDeactivateRoomPlayer();
             m_instanciated = true;
         }
 
+        [Command]
+        private void CmdDeactivateRoomPlayer()
+        {
+            RpcDeactivateRoomPlayers();
+        }
+
+        [ClientRpc]
+        private void RpcDeactivateRoomPlayers()
+        {
+            Debug.Log("Get RoomPlayer");
+            GameObject roomPlayer = RoomManager.singleton.GetRoomPlayer(connectionToClient);
+            Debug.Log("Deactivate RoomPlayer");
+            roomPlayer.SetActive(false);
+        }
 
         [Command]
         private void CmdRequestSpawnObject(EPlayerSelectedTeam playerSelectedTeam)
