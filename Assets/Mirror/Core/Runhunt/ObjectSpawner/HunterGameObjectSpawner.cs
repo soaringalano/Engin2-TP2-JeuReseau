@@ -19,7 +19,7 @@ namespace Mirror
 
         private void Start()
         {
-            Debug.Log("HunterGameObjectSpawner Start() called!");
+            //Debug.Log("HunterGameObjectSpawner Start() called!");
         }
 
         private void Update()

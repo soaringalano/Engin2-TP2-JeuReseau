@@ -97,7 +97,8 @@ namespace Mirror
 
             m_isEventSystemInstaciated = true;
             Instantiate(EventSysPrefab, transform);
-            if (transform.GetChild(0).name != "Canvas") Debug.LogError("Canvas not found");
+
+            if (transform.GetChild(0).name != "UIReadyCanvas") Debug.LogError("UIReadyCanvas not found, current child 0: " + transform.GetChild(0).name);
             //UIReadyBoxGO = Instantiate(UIReadyBoxPrefab, transform.GetChild(0));
             if (UIReadyBoxGO == null) Debug.LogError("UIReadyBoxGO is null");
             UIReadyBoxGO.SetActive(true);
@@ -154,7 +155,7 @@ namespace Mirror
         [Command(requiresAuthority = false)]
         private void CmdChangeTeams(int playerSelectedUIIndex, EPlayerSelectedTeam playerSelectedTeam)
         {
-            Debug.Log("ReadyStateChanged() Player 1 picked a team: " + playerSelectedUIIndex + " connectionToClient: " + connectionToClient);
+            //Debug.Log("ReadyStateChanged() Player 1 picked a team: " + playerSelectedUIIndex + " connectionToClient: " + connectionToClient);
             if (playerSelectedUIIndex == 0) playerSelectedTeam = EPlayerSelectedTeam.Hunters;
             else if (playerSelectedUIIndex == 2) playerSelectedTeam = EPlayerSelectedTeam.Runners;
             m_currentPlayerSelectedTeam = playerSelectedTeam;
@@ -198,26 +199,42 @@ namespace Mirror
             //Debug.Log("LobbyPlayer Start player index: " + index + " child index: " + (transform.GetSiblingIndex() - 1));
             base.Start();
 
+            if (!isLocalPlayer) return;
+
             if (!isOwned)
             {
-                ToggleReadyBoxVisibility(false);
-                ToggleReadyBoxInteractibility(false);
+                CmdToggleReadyBoxVisibility(false);
+                CmdToggleReadyBoxInteractibility(false);
             }
             else if (isOwned)
             {
-                ToggleReadyBoxVisibility(true);
-                ToggleReadyBoxInteractibility(false);
+                CmdToggleReadyBoxVisibility(true);
+                CmdToggleReadyBoxInteractibility(false);
             }
         }
 
-        private void ToggleReadyBoxVisibility(bool isVisible)
+        [Command]
+        private void CmdToggleReadyBoxVisibility(bool isVisible)
+        {
+            RcpToggleReadyBoxVisibility(isVisible);
+        }
+        
+        [Command]
+        private void CmdToggleReadyBoxInteractibility(bool isVisible)
+        {
+            RcpToggleReadyBoxInteractibility(isVisible);
+        }
+
+        [ClientRpc]
+        private void RcpToggleReadyBoxVisibility(bool isVisible)
         {
             //Debug.Log("OnClientEnterRoom - isLocalPlayer: " + isLocalPlayer + " index: " + index);
             UIReadyBoxGO.GetComponentInChildren<Image>().color = new Color(UIReadyBoxGO.GetComponentInChildren<Image>().color.r, UIReadyBoxGO.GetComponentInChildren<Image>().color.g, UIReadyBoxGO.GetComponentInChildren<Image>().color.b, isVisible ? 1 : 0);
             UIReadyBoxGO.GetComponentInChildren<Text>().color = new Color(UIReadyBoxGO.GetComponentInChildren<Text>().color.r, UIReadyBoxGO.GetComponentInChildren<Text>().color.g, UIReadyBoxGO.GetComponentInChildren<Text>().color.b, isVisible ? 1 : 0);
         }
 
-        private void ToggleReadyBoxInteractibility(bool isVisible)
+        [ClientRpc]
+        private void RcpToggleReadyBoxInteractibility(bool isVisible)
         {
             UIReadyBoxGO.GetComponent<Toggle>().interactable = isVisible;
             UIReadyBoxGO.GetComponent<Toggle>().isOn = isVisible;

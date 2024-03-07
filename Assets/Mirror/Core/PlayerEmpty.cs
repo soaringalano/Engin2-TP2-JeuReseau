@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using static Mirror.RoomManager;
 
 namespace Mirror
@@ -49,11 +50,10 @@ namespace Mirror
 
         private void Update()
         {
-            //if (!NetworkServer.active) return;
             if (!isLocalPlayer) return;
 
             if (m_instanciated) return;
-            Debug.Log("PlayerEmpty Update() m_playerSelectedTeam: " + m_playerSelectedTeam + " m_currentPlayerSelectedTeam: " + m_currentPlayerSelectedTeam + " m_emptyPlayerId: " + m_emptyPlayerId);
+            //Debug.Log("PlayerEmpty Update() m_playerSelectedTeam: " + m_playerSelectedTeam + " m_currentPlayerSelectedTeam: " + m_currentPlayerSelectedTeam + " m_emptyPlayerId: " + m_emptyPlayerId);
 
             if (m_currentPlayerSelectedTeam == EPlayerSelectedTeam.Count) Debug.LogError("PlayerEmpty Update() m_currentPlayerSelectedTeam: " + m_currentPlayerSelectedTeam + " m_emptyPlayerId: " + m_emptyPlayerId);
             InstanciateCharacter();
@@ -72,14 +72,22 @@ namespace Mirror
         {
             //Debug.Log("Get RoomPlayer");
             GameObject roomPlayer = RoomManager.singleton.GetRoomPlayer(connectionToClient);
-            Debug.Log("Deactivate RoomPlayer");
+            //Debug.LogError("Deactivate RoomPlayer");
             roomPlayer.SetActive(false);
+
+            //foreach (NetworkRoomPlayer roomPlayer in RoomManager.singleton.roomSlots)
+            //{
+            //    if (roomPlayer != null)
+            //    {
+            //        // Assuming each RoomPlayer has a child GameObject representing the UI
+            //        roomPlayer.gameObject.SetActive(false);
+            //    }
+            //}
         }
 
         [Command]
         private void CmdRequestSpawnObject()
         {
-            // Call the server-side method to spawn the object
             SpawnMyObject();
         }
 
@@ -101,7 +109,7 @@ namespace Mirror
 
         private GameObject SpawnRoleGO(GameObject rolePrefab)
         {
-            Debug.Log("SpawnRoleGO() Instantiate prefab: " + rolePrefab);
+            //Debug.Log("SpawnRoleGO() Instantiate prefab: " + rolePrefab);
             GameObject roleGO = Instantiate(rolePrefab);
             NetworkServer.Spawn(roleGO, connectionToClient);
             return roleGO;
@@ -111,15 +119,17 @@ namespace Mirror
         {
             base.OnStartAuthority();
 
-            Debug.Log("OnStartAuthority(): Now this is the local player.");
+            //Debug.Log("OnStartAuthority(): Now this is the local player.");
             Debug.Log("OnStartAuthority() selectedTeam: " + m_currentPlayerSelectedTeam);
             //GameObject prefab = null;
             if (m_currentPlayerSelectedTeam == EPlayerSelectedTeam.Hunters)
             {
+                Debug.LogError("OnStartAuthority() Set Hunter IsInitialable to true");
                 Hunter.GetComponent<HunterGameObjectSpawner>().IsInitialable = true;
             }
             else if (m_currentPlayerSelectedTeam == EPlayerSelectedTeam.Runners)
             {
+                Debug.LogError("OnStartAuthority() Set Runner IsInitialable to true");
                 Runner.GetComponent<RunnerGameObjectSpawner>().IsInitialable = true;
             }
         }

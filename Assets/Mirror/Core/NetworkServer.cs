@@ -1048,7 +1048,7 @@ namespace Mirror
         // safely be used while changing scenes.
         public static bool ReplacePlayerForConnection(NetworkConnectionToClient conn, GameObject player, GameObject roomPlayer, bool keepAuthority = false)
         {
-            Debug.Log($"ReplacePlayerForConnection conn:{conn} player:{player} keepAuthority:{keepAuthority}");
+            //Debug.Log($"ReplacePlayerForConnection conn:{conn} player:{player} keepAuthority:{keepAuthority}");
 
             if (!player.TryGetComponent(out NetworkIdentity identity))
             {
@@ -1158,7 +1158,7 @@ namespace Mirror
 
         static void SpawnObserversForConnection(NetworkConnectionToClient conn)
         {
-            Debug.Log($"Spawning {spawned.Count} objects for conn {conn}");
+            //Debug.Log($"Spawning {spawned.Count} objects for conn {conn}");
 
             if (!conn.isReady)
             {

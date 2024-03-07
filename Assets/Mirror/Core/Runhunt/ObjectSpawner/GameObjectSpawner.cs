@@ -8,7 +8,7 @@ namespace Mirror
     {
         private void Start()
         {
-            Debug.Log("GameObjectSpawner Start() called!");
+            //Debug.Log("GameObjectSpawner Start() called!");
         }
 
         protected virtual void InstanciatePlayer()

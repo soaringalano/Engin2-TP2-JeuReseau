@@ -219,7 +219,7 @@ namespace Mirror
                 return;
             }
 
-            Debug.Log("Both teams are populated");
+            //Debug.Log("Both teams are populated");
             //Debug.Log("Start Game button pressed");
             // set to false to hide it in the game scene
             showStartButton = false;

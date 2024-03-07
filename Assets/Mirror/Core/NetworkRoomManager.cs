@@ -122,7 +122,7 @@ namespace Mirror
 
         void SceneLoadedForPlayer(NetworkConnectionToClient conn, GameObject roomPlayer)
         {
-            Debug.Log($"NetworkRoom SceneLoadedForPlayer scene: {SceneManager.GetActiveScene().path} {conn}");
+            //Debug.Log($"NetworkRoom SceneLoadedForPlayer scene: {SceneManager.GetActiveScene().path} {conn}");
 
             if (roomPlayer == null) Debug.LogError("LobbyUI is null");
             //Debug.LogError("GameObject: " + conn.identity.gameObject.name);
@@ -315,7 +315,7 @@ namespace Mirror
         /// <param name="conn">Connection from client.</param>
         public override void OnServerReady(NetworkConnectionToClient conn)
         {
-            Debug.Log($"NetworkRoomManager OnServerReady {conn}");
+            //Debug.Log($"NetworkRoomManager OnServerReady {conn}");
             base.OnServerReady(conn);
 
             if (conn != null && conn.identity != null)
@@ -338,7 +338,7 @@ namespace Mirror
             // increment the index before adding the player, so first player starts at 1
             clientIndex++;
 
-            Debug.Log($"OnServerAddPlayer {conn} {numPlayers} {clientIndex}" );
+            //Debug.Log($"OnServerAddPlayer {conn} {numPlayers} {clientIndex}" );
 
             if (Utils.IsSceneActive(RoomScene))
             {
@@ -409,7 +409,7 @@ namespace Mirror
         /// <param name="sceneName">The name of the new scene.</param>
         public override void OnServerSceneChanged(string sceneName)
         {
-            Debug.Log($"NetworkRoomManager.OnServerSceneChanged {sceneName}");
+            //Debug.Log($"NetworkRoomManager.OnServerSceneChanged {sceneName}");
             if (sceneName != RoomScene)
             {
                 // call SceneLoadedForPlayer on any players that become ready while we were loading the scene.
