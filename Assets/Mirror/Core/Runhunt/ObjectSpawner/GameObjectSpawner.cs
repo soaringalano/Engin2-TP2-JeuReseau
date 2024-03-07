@@ -1,8 +1,16 @@
 
+
+using UnityEngine;
+
 namespace Mirror
 {
     public abstract class GameObjectSpawner : NetworkBehaviour
     {
+        private void Start()
+        {
+            Debug.Log("GameObjectSpawner Start() called!");
+        }
+
         protected virtual void InstanciatePlayer()
         {
         }

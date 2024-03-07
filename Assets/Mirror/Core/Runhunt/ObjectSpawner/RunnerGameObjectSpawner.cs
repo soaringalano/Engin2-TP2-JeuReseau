@@ -9,19 +9,38 @@ namespace Mirror
         [field: SerializeField]
         private GameObject RunnerCameraAssetsPrefab { get; set; }
 
+        public bool IsInitialable { get; set; } = false;
+
         private RunnerFSM m_networkedRunnerMovement;
         private GameObject m_runnerGameObject;
         private GameObject m_runnerCamAssetsGameObject;
         private CinemachineVirtualCamera m_virtualCamera;
 
-        void Start()
+        private void Update()
         {
-            if (!isLocalPlayer)
+            if (!IsInitialable) return;
+
+            Initialize();
+            IsInitialable = false;
+        }
+
+        public void Initialize()
+        {
+            if (this.netIdentity == null)
             {
+                Debug.LogError("NetworkIdentity is null in HunterGameObjectSpawner.");
                 return;
             }
 
-            Debug.LogError("RunnerGameObjectSpawner Start() called!");
+            Debug.Log("RunnerGameObjectSpawner Initialize() called!");
+
+            if (!isLocalPlayer)
+            {
+                Debug.LogError("Initialize called but is not local player.");
+                return;
+            }
+
+            Debug.Log("RunnerGameObjectSpawner Start() called!");
 
             InstanciateAssets();
             GetPlayerGameObject();

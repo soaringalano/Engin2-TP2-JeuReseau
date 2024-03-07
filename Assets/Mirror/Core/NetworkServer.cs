@@ -1499,7 +1499,7 @@ namespace Mirror
         // prefab, or from a custom spawn function.
         public static void Spawn(GameObject obj, NetworkConnection ownerConnection = null)
         {
-            Debug.Log($"Spawn {obj} {obj.name} {obj.GetInstanceID()} {ownerConnection}");
+            //Debug.Log($"Spawn {obj} {obj.name} {obj.GetInstanceID()} {ownerConnection}");
             SpawnObject(obj, ownerConnection);
         }
 
@@ -1507,7 +1507,7 @@ namespace Mirror
         // This is the same as calling NetworkIdentity.AssignClientAuthority on the spawned object.
         public static void Spawn(GameObject obj, uint assetId, NetworkConnection ownerConnection = null)
         {
-            Debug.Log($"Spawn {obj} {obj.name} {obj.GetInstanceID()} {assetId} {ownerConnection}");
+            //Debug.Log($"Spawn {obj} {obj.name} {obj.GetInstanceID()} {assetId} {ownerConnection}");
             if (GetNetworkIdentity(obj, out NetworkIdentity identity))
             {
                 identity.assetId = assetId;
