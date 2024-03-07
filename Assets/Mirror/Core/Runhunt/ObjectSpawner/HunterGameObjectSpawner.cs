@@ -24,6 +24,7 @@ namespace Mirror
 
         private void Update()
         {
+            //Debug.Log("HunterGameObjectSpawner Update() IsInitialable: " + IsInitialable);
             if (!IsInitialable) return;
 
             Initialize();

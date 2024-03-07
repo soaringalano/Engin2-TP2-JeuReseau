@@ -17,6 +17,8 @@ namespace Mirror
 
         //private bool m_isInitialized = false;
         private bool m_instanciated = false;
+        //private bool m_isAutorithyGiven = false;
+
         //private bool m_isRoomPlayerNull = false;
 
         private void Start()
@@ -37,11 +39,13 @@ namespace Mirror
             if (isClient)
             {
                 // If running on the client, send a command request to the server
+                Debug.LogWarning("Spawn player command - selectedTeam: " + m_currentPlayerSelectedTeam);
                 CmdRequestSpawnObject();
             }
             else
             {
                 // If running on the server, spawn the object directly
+                Debug.LogError("Spawn player NOT cmd - selectedTeam: " + m_currentPlayerSelectedTeam);
                 SpawnMyObject();
             }
             //SpawnMyObject(playerSelectedTeam);
@@ -50,10 +54,17 @@ namespace Mirror
 
         private void Update()
         {
+            //if (m_currentPlayerSelectedTeam != EPlayerSelectedTeam.Count && m_isAutorithyGiven)
+            //if(!m_isAutorithyGiven) return;
             if (!isLocalPlayer) return;
 
+            InstanciatePlayerSelectedRole();
+        }
+
+        private void InstanciatePlayerSelectedRole()
+        {
             if (m_instanciated) return;
-            //Debug.Log("PlayerEmpty Update() m_playerSelectedTeam: " + m_playerSelectedTeam + " m_currentPlayerSelectedTeam: " + m_currentPlayerSelectedTeam + " m_emptyPlayerId: " + m_emptyPlayerId);
+            Debug.LogError("PlayerEmpty InstanciatePlayerSelectedRole() m_playerSelectedTeam: " + m_playerSelectedTeam + " m_currentPlayerSelectedTeam: " + m_currentPlayerSelectedTeam + " m_emptyPlayerId: " + m_emptyPlayerId);
 
             if (m_currentPlayerSelectedTeam == EPlayerSelectedTeam.Count) Debug.LogError("PlayerEmpty Update() m_currentPlayerSelectedTeam: " + m_currentPlayerSelectedTeam + " m_emptyPlayerId: " + m_emptyPlayerId);
             InstanciateCharacter();
@@ -93,7 +104,7 @@ namespace Mirror
 
         public void SpawnMyObject()
         {
-            Debug.Log("SpawnMyObject() selectedTeam: " + m_currentPlayerSelectedTeam);
+            //Debug.Log("SpawnMyObject() selectedTeam: " + m_currentPlayerSelectedTeam);
             //GameObject prefab = null;
             if (m_currentPlayerSelectedTeam == EPlayerSelectedTeam.Hunters)
             {
@@ -110,27 +121,65 @@ namespace Mirror
         private GameObject SpawnRoleGO(GameObject rolePrefab)
         {
             //Debug.Log("SpawnRoleGO() Instantiate prefab: " + rolePrefab);
-            GameObject roleGO = Instantiate(rolePrefab);
+            GameObject roleGO = Instantiate(rolePrefab, transform);
             NetworkServer.Spawn(roleGO, connectionToClient);
+            Debug.Log("SpawnRoleGO() roleGO: " + roleGO);
+            CmdSetParent(roleGO.GetComponent<NetworkIdentity>(), transform.GetComponent<NetworkIdentity>());
+
             return roleGO;
+        }
+
+        [Command(requiresAuthority = false)]
+        private void CmdSetParent(NetworkIdentity child, NetworkIdentity parent)
+        {
+            child.transform.SetParent(parent.transform, false);
+            RpcSetParent(child.netId, parent.netId);
+        }
+
+        [ClientRpc]
+        private void RpcSetParent(uint childNetId, uint parentNetId)
+        {
+            if (NetworkServer.active) return;
+
+            // Find objects on the client
+            if (NetworkClient.spawned.TryGetValue(childNetId, out NetworkIdentity childIdentity) && NetworkClient.spawned.TryGetValue(parentNetId, out NetworkIdentity parentIdentity))
+            {
+                childIdentity.transform.SetParent(parentIdentity.transform, false);
+            }
         }
 
         public override void OnStartAuthority()
         {
             base.OnStartAuthority();
 
+            //m_isAutorithyGiven = true;
+
+            if (!isLocalPlayer) return;
+
             //Debug.Log("OnStartAuthority(): Now this is the local player.");
-            Debug.Log("OnStartAuthority() selectedTeam: " + m_currentPlayerSelectedTeam);
+            //Debug.LogError("OnStartAuthority() selectedTeam: " + m_currentPlayerSelectedTeam);
+
             //GameObject prefab = null;
             if (m_currentPlayerSelectedTeam == EPlayerSelectedTeam.Hunters)
             {
-                Debug.LogError("OnStartAuthority() Set Hunter IsInitialable to true");
+                Debug.Log("OnStartAuthority() Set Hunter IsInitialable to true");
                 Hunter.GetComponent<HunterGameObjectSpawner>().IsInitialable = true;
             }
             else if (m_currentPlayerSelectedTeam == EPlayerSelectedTeam.Runners)
             {
-                Debug.LogError("OnStartAuthority() Set Runner IsInitialable to true");
+                Debug.Log("OnStartAuthority() Set Runner IsInitialable to true");
                 Runner.GetComponent<RunnerGameObjectSpawner>().IsInitialable = true;
+            }
+            else if (m_currentPlayerSelectedTeam == EPlayerSelectedTeam.Count)
+            {
+                Debug.LogError("OnStartAuthority() selectedTeam is Count");
+                // Log the names of each children of this game object:
+                foreach (Transform child in transform)
+                {
+                    Debug.Log("OnStartAuthority() child.name: " + child.name);
+                
+                }
+
             }
         }
     }

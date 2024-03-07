@@ -18,6 +18,8 @@ namespace Mirror
 
         private void Update()
         {
+            //Debug.Log("RunnerGameObjectSpawner Update() IsInitialable: " + IsInitialable);
+
             if (!IsInitialable) return;
 
             Initialize();
