@@ -88,7 +88,7 @@ namespace Mirror
 
         public static void AssignTeamToPlayerEmpty(NetworkConnectionToClient conn, GameObject roomPlayer)
         {
-            Debug.LogError("AssignTeamToPlayerEmpty() identity: " + conn + " roomPlayer: " + roomPlayer.name + " roomPlayer.GetComponent<LobbyUI>().m_currentPlayerSelectedTeam: " + roomPlayer.GetComponent<LobbyUI>().m_currentPlayerSelectedTeam);
+            Debug.Log("AssignTeamToPlayerEmpty() identity: " + conn + " roomPlayer: " + roomPlayer.name + " roomPlayer.GetComponent<LobbyUI>().m_currentPlayerSelectedTeam: " + roomPlayer.GetComponent<LobbyUI>().m_currentPlayerSelectedTeam);
             //if (conn.identity.gameObject.GetComponent<PlayerEmpty>() == null) return;
             conn.identity.gameObject.GetComponent<PlayerEmpty>().m_currentPlayerSelectedTeam = roomPlayer.GetComponent<LobbyUI>().m_currentPlayerSelectedTeam;
         }

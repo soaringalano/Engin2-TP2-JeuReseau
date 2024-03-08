@@ -9,16 +9,22 @@ namespace Mirror
         [field: SerializeField]
         private GameObject RunnerCameraAssetsPrefab { get; set; }
 
-        public bool IsInitialable { get; set; } = false;
+        [field: SerializeField] public bool IsInitialable { get; set; } = false;
 
         private RunnerFSM m_networkedRunnerMovement;
         private GameObject m_runnerGameObject;
         private GameObject m_runnerCamAssetsGameObject;
         private CinemachineVirtualCamera m_virtualCamera;
 
+        private void Start()
+        {
+            //Debug.Log("HunterGameObjectSpawner Start() called!");
+        }
+
         private void Update()
         {
-            //Debug.Log("RunnerGameObjectSpawner Update() IsInitialable: " + IsInitialable);
+            Debug.Log("RunnerGameObjectSpawner Update() connectionToClient: " + connectionToClient);
+            //if (!isLocalPlayer) return;
 
             if (!IsInitialable) return;
 
@@ -38,8 +44,8 @@ namespace Mirror
 
             if (!isLocalPlayer)
             {
-                Debug.LogError("Initialize called but is not local player.");
-                return;
+                Debug.LogWarning("Initialize called but is not local player.");
+                //return;
             }
 
             Debug.Log("RunnerGameObjectSpawner Start() called!");

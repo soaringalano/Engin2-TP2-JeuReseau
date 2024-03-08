@@ -8,8 +8,7 @@ namespace Mirror
     {
         [field: SerializeField] private GameObject HunterCameraAssetsPrefab { get; set; }
         [field: SerializeField] private GameObject HunterUIPrefab { get; set; }
-
-        public bool IsInitialable { get; set; } = false;
+        [field: SerializeField] public bool IsInitialable { get; set; } = false;
 
         private HunterFSM m_hunterFSM;
         private HunterPowerUpButton m_hunterAbilities;
@@ -25,6 +24,8 @@ namespace Mirror
         private void Update()
         {
             //Debug.Log("HunterGameObjectSpawner Update() IsInitialable: " + IsInitialable);
+            if (!isLocalPlayer) return;
+
             if (!IsInitialable) return;
 
             Initialize();
