@@ -7,7 +7,7 @@ namespace Mirror
 {
     public class RunnerFSM : AbstractNetworkFSM<RunnerState>
     {
-        [field: SerializeField] public GameObject RunnerUI { get; private set; }
+        [field: SerializeField] public GameObject RunnerUI { get; set; }
         [field: SerializeField] public GameObject NetworkAnimator { get; private set; }
 
         [field: SerializeField] public string RunnerName { get; set; }
@@ -61,7 +61,11 @@ namespace Mirror
 
         public override void Initialize()
         {
-            Debug.Log("Runner Start()");
+            Debug.Log("Runner Initialize()");
+
+            if (RunnerUI == null) Debug.LogError("RunnerUI is null!");
+            if (RunnerUI.name != "RunnerUI(Clone)") Debug.LogError($"RunnerUI not found, GO is named: {RunnerUI.name}");
+
             Transform staminaBarTransform = RunnerUI.transform.GetChild(1);
             if (staminaBarTransform == null) Debug.LogError("Stamina Bar not found!");
             if (staminaBarTransform.gameObject.name != "StaminaBar") Debug.LogError("The GameObject is not StaminaBar! Name is: " + staminaBarTransform.gameObject.name);
@@ -84,10 +88,6 @@ namespace Mirror
             BallCollision = GetComponentInChildren<BallCollision>();
             if (BallCollision == null) Debug.LogError("BallCollision not found in children!");
 
-            RunnerUI = GetComponentInChildren<Canvas>().gameObject;
-            if (RunnerUI != null) Debug.LogError("RunnerUI not found!");
-            if (RunnerUI.name != "RunnerUI") Debug.LogError($"RunnerUI not found, GO is named: {RunnerUI.name}");
-
             foreach (RunnerState state in m_possibleStates)
             {
                 state.OnStart(this);
@@ -97,6 +97,8 @@ namespace Mirror
             base.Initialize();
             m_currentState = m_possibleStates[0];
             m_currentState.OnEnter();
+
+            IsInitialized = true;
         }
 
         protected override void Update()
@@ -107,6 +109,7 @@ namespace Mirror
             //}
 
             if (!GetComponent<NetworkIdentity>().isOwned) return;
+            if (!IsInitialized) return;
 
             base.Update();
         }
@@ -119,6 +122,7 @@ namespace Mirror
             //}
 
             if (!GetComponent<NetworkIdentity>().isOwned) return;
+            if (!IsInitialized) return;
 
             SetDirectionalInputs();
             RotatePlayerMesh();

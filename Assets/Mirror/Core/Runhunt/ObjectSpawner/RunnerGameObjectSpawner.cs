@@ -11,14 +11,15 @@ namespace Mirror
         [field: SerializeField] private GameObject RunnerUIPrefab { get; set; }
         [field: SerializeField] public bool IsInitialable { get; set; } = false;
 
-        private RunnerFSM m_networkedRunnerMovement;
-        private GameObject m_runnerGameObject;
-        private GameObject m_runnerCamAssetsGameObject;
-        private CinemachineVirtualCamera m_virtualCamera;
+        private RunnerFSM m_runnerFSM = null;
+        private GameObject m_runnerGameObject = null;
+        private GameObject m_runnerCamAssetsGameObject = null;
+        private GameObject m_runnerUIPrefab = null;
+        private CinemachineVirtualCamera m_virtualCamera = null;
 
         private void Start()
         {
-            //Debug.Log("HunterGameObjectSpawner Start() called!");
+            //Debug.Log("RunnerGameObjectSpawner Start() called!");
         }
 
         private void Update()
@@ -58,6 +59,7 @@ namespace Mirror
             SetCameraInNetworkedPlayerControls();
             SetTheCameraFollow();
             SetTheCameraLookAt();
+            InitializeSpawnedAssets();
         }
 
         protected override void InstanciateAssets()
@@ -66,7 +68,9 @@ namespace Mirror
             m_runnerCamAssetsGameObject = Instantiate(RunnerCameraAssetsPrefab, transform);
 
             Debug.Log("Instanciate Runner UI.");
-            Instantiate(RunnerUIPrefab, transform);
+            m_runnerUIPrefab = Instantiate(RunnerUIPrefab, transform);
+            if (m_runnerUIPrefab == null) Debug.LogError("Runner UI Prefab Not found!");
+            else Debug.Log("Runner UI Prefab found!");
         }
 
         protected override void GetPlayerGameObject()
@@ -81,17 +85,21 @@ namespace Mirror
 
         protected override void GetNetworkedPlayerControls()
         {
-            m_networkedRunnerMovement = GetComponent<RunnerFSM>();
-            if (m_networkedRunnerMovement == null)
+            m_runnerFSM = GetComponent<RunnerFSM>();
+            if (m_runnerFSM == null)
             {
                 Debug.LogError("NetworkedRunnerMovement Not found!");
                 return;
             }
+
+            m_runnerFSM.RunnerUI = m_runnerUIPrefab;
+            if (m_runnerFSM.RunnerUI == null) Debug.LogError("Runner UI Not found!");
+            else Debug.Log("Runner UI found in RunnerFSM!");
         }
 
         protected override void SetCameraInNetworkedPlayerControls()
         {
-            m_networkedRunnerMovement.Camera = Camera.main;
+            m_runnerFSM.Camera = Camera.main;
         }
 
         protected override void SetTheCameraFollow()
@@ -123,6 +131,12 @@ namespace Mirror
             }
 
             m_virtualCamera.m_LookAt = lookAt;
+        }
+
+        protected override void InitializeSpawnedAssets()
+        {
+            Debug.Log("RunnerGameObjectSpawner InitializeSpawnedAssets() called!");
+            m_runnerFSM.Initialize();
         }
     }
 }
