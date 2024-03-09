@@ -23,7 +23,7 @@ namespace Mirror
 
         private void Update()
         {
-            Debug.Log("RunnerGameObjectSpawner Update() connectionToClient: " + connectionToClient);
+            //Debug.Log("RunnerGameObjectSpawner Update() connectionToClient: " + connectionToClient);
             //if (!isLocalPlayer) return;
 
             if (!IsInitialable) return;
@@ -42,11 +42,11 @@ namespace Mirror
 
             Debug.Log("RunnerGameObjectSpawner Initialize() called!");
 
-            if (!isLocalPlayer)
-            {
-                Debug.LogWarning("Initialize called but is not local player.");
-                //return;
-            }
+            //if (!isLocalPlayer)
+            //{
+            //    Debug.LogWarning("Initialize called but is not local player.");
+            //    //return;
+            //}
 
             Debug.Log("RunnerGameObjectSpawner Start() called!");
 

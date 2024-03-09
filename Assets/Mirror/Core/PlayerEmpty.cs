@@ -54,12 +54,12 @@ namespace Mirror
 
         private void Update()
         {
-            //if (m_currentPlayerSelectedTeam != EPlayerSelectedTeam.Count && m_isAutorithyGiven)
-            //if(!m_isAutorithyGiven) return;
-            //Debug.LogError("PlayerEmpty Update() m_currentPlayerSelectedTeam: " + m_currentPlayerSelectedTeam + " m_emptyPlayerId: " + m_emptyPlayerId);
-            if (!isLocalPlayer) return;
-            //Debug.LogError("PlayerEmpty Update() m_currentPlayerSelectedTeam: " + m_currentPlayerSelectedTeam + " m_emptyPlayerId: " + m_emptyPlayerId);
+            //if (isServer) Debug.Log("PlayerEmpty Update() isServer: " + isServer);
+            //if (isClientOnly) Debug.Log("PlayerEmpty Update() isClientOnly: " + isClientOnly);
+
             if (m_isInstanciated) return;
+            if (!isLocalPlayer) return;
+ 
             Debug.Log("PlayerEmpty Update() m_currentPlayerSelectedTeam: " + m_currentPlayerSelectedTeam + " m_emptyPlayerId: " + m_emptyPlayerId);
 
             InstanciatePlayerSelectedRole();
@@ -151,17 +151,66 @@ namespace Mirror
 
         private GameObject SpawnRoleGO(GameObject rolePrefab)
         {
-            Debug.LogError("SpawnRoleGO() Instantiate prefab: " + rolePrefab.name + " connectionToClient: " + connectionToClient);
+            //Debug.Log("SpawnRoleGO() Instantiate prefab: " + rolePrefab.name + " connectionToClient: " + connectionToClient);
             GameObject roleGO = Instantiate(rolePrefab, transform);
-            NetworkServer.Spawn(roleGO, connectionToClient);
-            Debug.Log("PlayerEmpty SpawnRoleGO() roleGO: " + roleGO);
-            CmdSetParent(roleGO.GetComponent<NetworkIdentity>(), transform.GetComponent<NetworkIdentity>());
+            SpawnWithAuthority(roleGO);
+            //Debug.Log("PlayerEmpty SpawnRoleGO() roleGO: " + roleGO);
+            //CmdSetParent(roleGO.GetComponent<NetworkIdentity>(), transform.GetComponent<NetworkIdentity>());
 
             return roleGO;
         }
 
+        private void SpawnWithAuthority(GameObject roleGO)
+        {
+            if (isServer) // Ensure only the local player can request to spawn an object
+            {
+                Debug.Log("PlayerEmpty SpawnWithAuthority() connectionToClient: " + connectionToClient);
+                NetworkServer.Spawn(roleGO, connectionToClient);
+                AssignAutority(roleGO);
+            }
+            else if (isClientOnly)
+            {
+                Debug.Log("PlayerEmpty SpawnWithAuthority() connectionToClient: " + connectionToClient);
+                RcpSpawnWithClientAuthority(roleGO);
+                AssignAutority(roleGO);
+            }
+        }
+
+        private void AssignAutority(GameObject roleGO)
+        {
+            CmdSetParent(roleGO.GetComponent<NetworkIdentity>(), transform.GetComponent<NetworkIdentity>());
+            if (roleGO.GetComponent<NetworkIdentity>().connectionToClient == connectionToClient)
+            {
+                Debug.Log("Authority correctly assigned on server. connectionToClient: " + connectionToClient);
+            }
+            else
+            {
+                Debug.LogError("Authority assignment failed on server. connectionToClient: " + connectionToClient);
+            }
+        }
+
+        [Command]
+        private void CmdSpawnWithClientAuthority(GameObject roleGO)
+        {
+            NetworkServer.Spawn(roleGO, connectionToClient);
+        }
+
+        [ClientRpc]
+        private void RcpSpawnWithClientAuthority(GameObject roleGO)
+        {
+            NetworkServer.Spawn(roleGO, connectionToClient);
+        }
+
         [Command(requiresAuthority = false)]
         private void CmdSetParent(NetworkIdentity child, NetworkIdentity parent)
+        {
+            //Debug.Log("CmdSetParent() child: " + child + " parent: " + parent);
+            child.transform.SetParent(parent.transform, false);
+            RpcSetParent(child.netId, parent.netId);
+        }
+
+        [ClientRpc]
+        private void RcpSetParent(NetworkIdentity child, NetworkIdentity parent)
         {
             child.transform.SetParent(parent.transform, false);
             RpcSetParent(child.netId, parent.netId);

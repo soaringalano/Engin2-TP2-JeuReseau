@@ -23,8 +23,11 @@ namespace Mirror
 
         private void Update()
         {
-            //Debug.Log("HunterGameObjectSpawner Update() IsInitialable: " + IsInitialable);
-            if (!isLocalPlayer) return;
+            //Debug.Log("HunterGameObjectSpawner Update() connectionToClient: " + connectionToClient);
+            //if (!isLocalPlayer) return;
+            if (!GetComponent<NetworkIdentity>().isOwned) return;
+
+            //Debug.Log("HunterGameObjectSpawner Update() connectionToClient: " + connectionToClient + "Is owned");
 
             if (!IsInitialable) return;
 
@@ -41,14 +44,14 @@ namespace Mirror
                 return;
             }
 
-            Debug.Log("HunterGameObjectSpawner Initialize() called!");
+            Debug.LogError("HunterGameObjectSpawner Initialize() called!");
             
 
-            if (!isLocalPlayer)
-            {
-                Debug.LogError("Initialize called but is not local player.");
-                return;
-            }
+            //if (!isLocalPlayer)
+            //{
+            //    Debug.LogError("Initialize called but is not local player.");
+            //    return;
+            //}
 
             Debug.Log("HunterGameObjectSpawner Start() called!");
 
