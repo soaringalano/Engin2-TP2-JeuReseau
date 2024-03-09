@@ -55,7 +55,7 @@ namespace Mirror
         protected void TryStateTransition()
         {
             if (!IsInitialized) return;
-            Debug.Log("TryStateTransition()");
+            //Debug.Log("TryStateTransition()");
             if (!m_currentState.CanExit())
             {
                 return;

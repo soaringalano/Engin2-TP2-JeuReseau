@@ -71,10 +71,12 @@ namespace Mirror
 
         public override void Initialize()
         {
-            if (!isLocalPlayer)
-            {
-                return;
-            }
+            Debug.Log("HunterFSM Initialize()");
+            //if (!isLocalPlayer)
+            //{
+            //    Debug.LogError("HunterFSM is not local player!");
+            //    return;
+            //}
 
             MinePool = GetComponent<HunterMinePool>();
             FloorBodyCurrentMaxSpeed = FloorBodyMinSpeed;
@@ -162,10 +164,12 @@ namespace Mirror
                 return;
             }
 
-            if (!isLocalPlayer)
-            {
-                return;
-            }
+            //if (!isLocalPlayer)
+            //{
+            //    return;
+            //}
+
+            if (!GetComponent<NetworkIdentity>().isOwned) return;
 
             if (Input.GetKeyUp(KeyCode.LeftShift))
             {
@@ -181,10 +185,13 @@ namespace Mirror
                 return;
             }
 
-            if (!isLocalPlayer)
-            {
-                return;
-            }
+            //if (!isLocalPlayer)
+            //{
+            //    return;
+            //}
+
+            if (!GetComponent<NetworkIdentity>().isOwned) return;
+
             SetDirectionalInputs();
             base.FixedUpdate();
         }
@@ -196,10 +203,12 @@ namespace Mirror
                 return;
             }
 
-            if (!isLocalPlayer)
-            {
-                return;
-            }
+            //if (!isLocalPlayer)
+            //{
+            //    return;
+            //}
+
+            if (!GetComponent<NetworkIdentity>().isOwned) return;
 
             LateUpdateCameraScroll();
             LateUpdateFOV();

@@ -75,6 +75,7 @@ namespace Mirror
 
             RB = GetComponentInChildren<Rigidbody>();
             if (RB == null) Debug.LogError("Runner RigidBody not found in children!");
+            else Debug.LogWarning("RB not null!");
             if (RB.gameObject.name != "RunnerPrefab") Debug.LogError("The GameObject RigidBody might not be the Runner's RB! Name is: " + RB.gameObject.name);
 
             FloorTrigger = GetComponentInChildren<RunnerFloorTrigger>();
@@ -96,20 +97,24 @@ namespace Mirror
 
         protected override void Update()
         {
-            if (!isLocalPlayer)
-            {
-                return;
-            }
+            //if (!isLocalPlayer)
+            //{
+            //    return;
+            //}
+
+            if (!GetComponent<NetworkIdentity>().isOwned) return;
 
             base.Update();
         }
 
         protected override void FixedUpdate()
         {
-            if (!isLocalPlayer)
-            {
-                return;
-            }
+            //if (!isLocalPlayer)
+            //{
+            //    return;
+            //}
+
+            if (!GetComponent<NetworkIdentity>().isOwned) return;
 
             SetDirectionalInputs();
             RotatePlayerMesh();
@@ -213,6 +218,8 @@ namespace Mirror
             vectorOnFloor += Vector3.ProjectOnPlane(Camera.transform.right * CurrentDirectionalInputs.x, Vector3.up);
             vectorOnFloor.Normalize();
             Quaternion meshRotation = Quaternion.LookRotation(vectorOnFloor, Vector3.up);
+
+            if (RB == null) Debug.LogError("RB null");
 
             RB.rotation = Quaternion.Slerp(RB.rotation, meshRotation, MeshRotationLerpSpeed * Time.deltaTime);
         }

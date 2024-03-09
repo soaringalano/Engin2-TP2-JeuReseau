@@ -44,7 +44,7 @@ namespace Mirror
                 return;
             }
 
-            Debug.LogError("HunterGameObjectSpawner Initialize() called!");
+            Debug.Log("HunterGameObjectSpawner Initialize() called!");
             
 
             //if (!isLocalPlayer)
@@ -77,13 +77,11 @@ namespace Mirror
 
         protected override void InstanciateAssets()
         {
-
-            //TODO: instanciate later at the hunter camera position
             Debug.Log("transform child count: " + transform.childCount);
             for (int i = 0; i < transform.childCount; i++)
             {
                 GameObject child = transform.GetChild(i).gameObject;
-                Debug.Log("HunterUIPrefab child name: " + child.name);
+                //Debug.Log("HunterUIPrefab child name: " + child.name);
                 if (child.name != "HunterSelectionPose") continue;
 
                 //Transform hunterDroneControlsTransform = child.GetComponent<HunterDroneControls>().transform;

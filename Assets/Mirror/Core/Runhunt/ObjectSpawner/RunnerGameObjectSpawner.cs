@@ -26,6 +26,8 @@ namespace Mirror
             //Debug.Log("RunnerGameObjectSpawner Update() connectionToClient: " + connectionToClient);
             //if (!isLocalPlayer) return;
 
+            if (!GetComponent<NetworkIdentity>().isOwned) return;
+
             if (!IsInitialable) return;
 
             Initialize();
