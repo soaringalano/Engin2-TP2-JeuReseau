@@ -8,7 +8,7 @@ namespace Mirror
     {
         [field: SerializeField]
         private GameObject RunnerCameraAssetsPrefab { get; set; }
-
+        [field: SerializeField] private GameObject RunnerUIPrefab { get; set; }
         [field: SerializeField] public bool IsInitialable { get; set; } = false;
 
         private RunnerFSM m_networkedRunnerMovement;
@@ -62,7 +62,11 @@ namespace Mirror
 
         protected override void InstanciateAssets()
         {
+            Debug.Log("Instacieat Runner Camera.");
             m_runnerCamAssetsGameObject = Instantiate(RunnerCameraAssetsPrefab, transform);
+
+            Debug.Log("Instanciate Runner UI.");
+            Instantiate(RunnerUIPrefab, transform);
         }
 
         protected override void GetPlayerGameObject()

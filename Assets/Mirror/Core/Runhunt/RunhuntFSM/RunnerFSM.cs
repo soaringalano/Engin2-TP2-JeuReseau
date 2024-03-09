@@ -84,6 +84,10 @@ namespace Mirror
             BallCollision = GetComponentInChildren<BallCollision>();
             if (BallCollision == null) Debug.LogError("BallCollision not found in children!");
 
+            RunnerUI = GetComponentInChildren<Canvas>().gameObject;
+            if (RunnerUI != null) Debug.LogError("RunnerUI not found!");
+            if (RunnerUI.name != "RunnerUI") Debug.LogError($"RunnerUI not found, GO is named: {RunnerUI.name}");
+
             foreach (RunnerState state in m_possibleStates)
             {
                 state.OnStart(this);

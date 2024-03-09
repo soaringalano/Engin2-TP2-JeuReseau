@@ -91,6 +91,8 @@ namespace Mirror
 
             Debug.Log("Instanciate Hunter Camera Assets.");
             m_hunterCamAssetsGameObject = Instantiate(HunterCameraAssetsPrefab, transform);
+
+            Debug.Log("Instanciate Hunter UI.");
             Instantiate(HunterUIPrefab, transform);
         }
 
