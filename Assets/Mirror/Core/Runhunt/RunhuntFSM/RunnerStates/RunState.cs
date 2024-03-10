@@ -36,13 +36,13 @@ namespace Mirror
 
         public override void OnEnter()
         {
-            Debug.Log("Enter state: RunState\n");
+            //Debug.Log("Enter state: RunState\n");
             m_stateMachine.SetRunningInput();
         }
 
         public override void OnExit()
         {
-            Debug.Log("Exit state: RunState\n");
+            //Debug.Log("Exit state: RunState\n");
         }
 
         public override void OnStart()

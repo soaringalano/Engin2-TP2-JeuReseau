@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace Mirror
@@ -16,6 +17,11 @@ namespace Mirror
         {
             //Debug.Log("AbstractNetworkFSM Awake()");
             CreatePossibleStates();
+        }
+
+        public virtual void Start()
+        {
+            //Debug.LogError("AbstractNetworkFSM Start()");
         }
 
         public virtual void Initialize()

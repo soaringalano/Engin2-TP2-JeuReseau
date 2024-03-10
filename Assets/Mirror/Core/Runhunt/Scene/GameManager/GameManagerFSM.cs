@@ -44,10 +44,13 @@ namespace Mirror
             };
         }
 
-        public override void Initialize()
+        public override void Start()
         {
+            Debug.Log("GameManagerFSM Start()");
             m_gameStateInfoText = m_gameStateInfoTextMesh.GetComponent<TextMeshProUGUI>();
-            base.Initialize();
+            if (m_gameStateInfoText == null) Debug.LogError("GameManagerFSM Start() m_gameStateInfoText is null!");
+
+            base.Start();
         }
 
         protected override void Awake()
