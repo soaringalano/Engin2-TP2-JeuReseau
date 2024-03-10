@@ -186,12 +186,13 @@ namespace Mirror.Examples.AdditiveLevels
             /**
              * added by Mao
              */
-            GameObject playerPrefab = null;
-            if (selectedPrefabIndex < playerPrefabs.Count())
-            {
-                playerPrefab = playerPrefabs[selectedPrefabIndex];
-            }
+            //GameObject playerPrefab = null;
+            //if (selectedPrefabIndex < base.playerPrefab.Count())
+            //{
+            //    playerPrefab = base.playerPrefab[selectedPrefabIndex];
+            //}
 
+            Debug.Log("AdditiveLevels - Instantiate player prefab");
             GameObject player = Instantiate(playerPrefab, start);
             // now set parent null to get it out from under the Start Position object
             player.transform.SetParent(null);

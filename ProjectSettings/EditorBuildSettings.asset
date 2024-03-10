@@ -6,6 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/BothTeams/OnlineLevels/002_OnlineLevel.unity
-    guid: 71bd2c8d0df52664eb41496fd21c2617
+    path: Assets/Scenes/BuildScenes/000_MainMenuScene_Build.unity
+    guid: 6da36e12f46314bf8b39275fa590bfe7
+  - enabled: 1
+    path: Assets/Scenes/BuildScenes/001_Lobby_Build.unity
+    guid: 68525be503d2fcf409a1deb8605efd89
+  - enabled: 1
+    path: Assets/Scenes/BuildScenes/002_Lobby_room_Build.unity
+    guid: 00e73cf951ddfda47afb3bdf7f47b3b8
+  - enabled: 1
+    path: Assets/Scenes/BuildScenes/003_OnlineLevel_Build.unity
+    guid: 11645a762778f4643b7a764fc999906e
   m_configObjects: {}

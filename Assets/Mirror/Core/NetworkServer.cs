@@ -1,7 +1,7 @@
+using Mirror.RemoteCalls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Mirror.RemoteCalls;
 using UnityEngine;
 
 namespace Mirror
@@ -944,6 +944,7 @@ namespace Mirror
         // on this playerControllerId for this connection, this will fail.
         public static bool AddPlayerForConnection(NetworkConnectionToClient conn, GameObject player)
         {
+            //Debug.Log($"AddPlayerForConnection conn:{conn} player:{player}");
             if (!player.TryGetComponent(out NetworkIdentity identity))
             {
                 Debug.LogWarning($"AddPlayer: playerGameObject has no NetworkIdentity. Please add a NetworkIdentity to {player}");
@@ -985,6 +986,8 @@ namespace Mirror
         // safely be used while changing scenes.
         public static bool ReplacePlayerForConnection(NetworkConnectionToClient conn, GameObject player, bool keepAuthority = false)
         {
+            Debug.Log($"ReplacePlayerForConnection conn:{conn} player:{player} keepAuthority:{keepAuthority}");
+
             if (!player.TryGetComponent(out NetworkIdentity identity))
             {
                 Debug.LogError($"ReplacePlayer: playerGameObject has no NetworkIdentity. Please add a NetworkIdentity to {player}");
@@ -1036,6 +1039,71 @@ namespace Mirror
                 // This clears both isLocalPlayer and hasAuthority on client
                 previousPlayer.RemoveClientAuthority();
             }
+
+            return true;
+        }
+
+        /// <summary>Replaces connection's player object. The old object is not destroyed.</summary>
+        // This does NOT change the ready state of the connection, so it can
+        // safely be used while changing scenes.
+        public static bool ReplacePlayerForConnection(NetworkConnectionToClient conn, GameObject player, GameObject roomPlayer, bool keepAuthority = false)
+        {
+            //Debug.Log($"ReplacePlayerForConnection conn:{conn} player:{player} keepAuthority:{keepAuthority}");
+
+            if (!player.TryGetComponent(out NetworkIdentity identity))
+            {
+                Debug.LogError($"ReplacePlayer: playerGameObject has no NetworkIdentity. Please add a NetworkIdentity to {player}");
+                return false;
+            }
+
+            if (identity.connectionToClient != null && identity.connectionToClient != conn)
+            {
+                Debug.LogError($"Cannot replace player for connection. New player is already owned by a different connection{player}");
+                return false;
+            }
+
+            //NOTE: there can be an existing player
+            //Debug.Log("NetworkServer ReplacePlayer");
+
+            NetworkIdentity previousPlayer = conn.identity;
+
+            conn.identity = identity;
+
+            // Set the connection on the NetworkIdentity on the server, NetworkIdentity.SetLocalPlayer is not called on the server (it is on clients)
+            identity.SetClientOwner(conn);
+
+            // special case,  we are in host mode,  set hasAuthority to true so that all overrides see it
+            if (conn is LocalConnectionToClient)
+            {
+                identity.isOwned = true;
+                NetworkClient.InternalAddPlayer(identity);
+            }
+
+            // add connection to observers AFTER the playerController was set.
+            // by definition, there is nothing to observe if there is no player
+            // controller.
+            //
+            // IMPORTANT: do this in AddPlayerForConnection & ReplacePlayerForConnection!
+            SpawnObserversForConnection(conn);
+
+            //Debug.Log($"Replacing playerGameObject object netId:{player.GetComponent<NetworkIdentity>().netId} asset ID {player.GetComponent<NetworkIdentity>().assetId}");
+
+            Respawn(identity, roomPlayer);
+
+            if (keepAuthority)
+            {
+                // This needs to be sent to clear isLocalPlayer on
+                // client while keeping hasAuthority true
+                SendChangeOwnerMessage(previousPlayer, conn);
+            }
+            else
+            {
+                // This clears both isLocalPlayer and hasAuthority on client
+                previousPlayer.RemoveClientAuthority();
+            }
+
+            //RoomManager.AssignRoomToPlayerEmpty(identity, roomPlayer);
+            //RoomManager.InitializePlayerEmpty(identity);
 
             return true;
         }
@@ -1348,7 +1416,6 @@ namespace Mirror
 
             Spawn(obj, identity.connectionToClient);
         }
-
         static void Respawn(NetworkIdentity identity)
         {
             if (identity.netId == 0)
@@ -1363,11 +1430,76 @@ namespace Mirror
             }
         }
 
+        static void Respawn(NetworkIdentity identity, GameObject roomPlayer)
+        {
+            Debug.Log("Respawn: " + identity.gameObject.name);
+            if (identity.netId == 0)
+            {
+                // If the object has not been spawned, then do a full spawn and update observers
+                Spawn(identity.gameObject, identity.connectionToClient);
+                //Debug.Log("Empty Player Spawn: " + identity.gameObject.name);
+
+                //RoomManager.AssignRoomToPlayerEmpty(identity, roomPlayer);
+                //RoomManager.InitializePlayerEmpty(identity);
+
+                //roomPlayer.SetActive(false);
+                //Debug.LogError("Empty Player Respawn: " + identity.connectionToClient);
+
+
+                ////Debug.LogError("PlayerEmpty spawned: " + identity.connectionToClient);
+                //////Loop all scri[pt attached in component to identity.gameObject
+                ////for (int i = 0; i < identity.gameObject.GetComponents<MonoBehaviour>().Length; i++)
+                ////{
+                ////    Debug.LogError("Component: " + identity.gameObject.GetComponents<MonoBehaviour>()[i].ToString());
+                ////    if (identity.gameObject.GetComponents<MonoBehaviour>()[i].ToString() != "Mirror.PlayerEmpty") return;
+                ////    Debug.LogError("PlayerEmpty found: " + identity.connectionToClient);
+                ////    var gamePlayer = identity.gameObject.GetComponents<MonoBehaviour>()[i];
+                ////    gamePlayer.Initialize();
+                ////}
+                ////if (identity.gameObject.GetComponent<NetworkRoomPlayer>() == null) Debug.LogError("Cannot find NetworkRoomPlayer");
+
+                //if (roomPlayer == null) Debug.LogError("Cannot find roomPlayer");
+
+                //Debug.Log("Respawn lobby id" + identity.GetComponent<LobbyUI>().m_lobbyUIID);
+                //switch (roomPlayer.GetComponent<LobbyUI>().index)
+                //{
+                //    case 0:
+                //        Debug.LogError("Assigning player one team: " + roomPlayer.GetComponent<LobbyUI>().m_playerOneSelectedTeam);
+                //        //identity.gameObject.GetComponent<PlayerEmpty>().m_playerSelectedTeam = roomPlayer.GetComponent<LobbyUI>().m_playerOneSelectedTeam;
+                //        break;
+                //    case 1:
+                //        Debug.LogError("Assigning player two team: " + roomPlayer.GetComponent<LobbyUI>().m_playerTwoSelectedTeam);
+                //        //identity.gameObject.GetComponent<PlayerEmpty>().m_playerSelectedTeam = roomPlayer.GetComponent<LobbyUI>().m_playerTwoSelectedTeam;
+                //        break;
+                //    case 2:
+                //        Debug.LogError("Assigning player three team: " + roomPlayer.GetComponent<LobbyUI>().m_playerThreeSelectedTeam);
+                //        //identity.gameObject.GetComponent<PlayerEmpty>().m_playerSelectedTeam = roomPlayer.GetComponent<LobbyUI>().m_playerThreeSelectedTeam;
+                //        break;
+                //    case 3:
+                //        Debug.LogError("Assigning player four team: " + roomPlayer.GetComponent<LobbyUI>().m_playerFourSelectedTeam);
+                //        //identity.gameObject.GetComponent<PlayerEmpty>().m_playerSelectedTeam = roomPlayer.GetComponent<LobbyUI>().m_playerFourSelectedTeam;
+                //        break;
+                //    default:
+                //        Debug.LogError("Player has no team selected");
+                //        break;
+                //}
+
+            }
+            else
+            {
+                // otherwise just replace his data
+                SendSpawnMessage(identity, identity.connectionToClient);
+            }
+        }
+
+
+
         /// <summary>Spawn the given game object on all clients which are ready.</summary>
         // This will cause a new object to be instantiated from the registered
         // prefab, or from a custom spawn function.
         public static void Spawn(GameObject obj, NetworkConnection ownerConnection = null)
         {
+            //Debug.Log($"Spawn {obj} {obj.name} {obj.GetInstanceID()} {ownerConnection}");
             SpawnObject(obj, ownerConnection);
         }
 
@@ -1375,6 +1507,7 @@ namespace Mirror
         // This is the same as calling NetworkIdentity.AssignClientAuthority on the spawned object.
         public static void Spawn(GameObject obj, uint assetId, NetworkConnection ownerConnection = null)
         {
+            //Debug.Log($"Spawn {obj} {obj.name} {obj.GetInstanceID()} {assetId} {ownerConnection}");
             if (GetNetworkIdentity(obj, out NetworkIdentity identity))
             {
                 identity.assetId = assetId;
@@ -1384,6 +1517,7 @@ namespace Mirror
 
         static void SpawnObject(GameObject obj, NetworkConnection ownerConnection)
         {
+            //Debug.Log($"SpawnObject {obj} {obj.name} {obj.GetInstanceID()} {ownerConnection}");
             // verify if we can spawn this
             if (Utils.IsPrefab(obj))
             {

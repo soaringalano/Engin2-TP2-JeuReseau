@@ -23,6 +23,7 @@ namespace Mirror.Examples.MultipleMatch
 
             foreach (PlayerInfo playerInfo in playerInfos)
             {
+                Debug.Log("Multiple Match - Instantiate player prefab");
                 GameObject newPlayer = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
                 newPlayer.transform.SetParent(playerList.transform, false);
                 newPlayer.GetComponent<PlayerGUI>().SetPlayerInfo(playerInfo);

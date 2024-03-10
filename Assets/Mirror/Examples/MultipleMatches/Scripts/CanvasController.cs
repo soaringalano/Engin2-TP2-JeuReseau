@@ -500,13 +500,13 @@ namespace Mirror.Examples.MultipleMatch
                     /**
                      * added by Mao
                      */
-                    GameObject playerPrefab = null;
-                    if (NetworkManager.singleton.selectedPrefabIndex < NetworkManager.singleton.playerPrefabs.Count())
-                    {
-                        playerPrefab = NetworkManager.singleton.playerPrefabs[NetworkManager.singleton.selectedPrefabIndex];
-                    }
+                    //GameObject playerPrefab = null;
+                    //if (NetworkManager.singleton.selectedPrefabIndex < NetworkManager.singleton.playerPrefab.Count())
+                    //{
+                    //    playerPrefab = NetworkManager.singleton.playerPrefab[NetworkManager.singleton.selectedPrefabIndex];
+                    //}
 
-                    GameObject player = Instantiate(playerPrefab);
+                    GameObject player = Instantiate(NetworkManager.singleton.playerPrefab);
                     player.GetComponent<NetworkMatch>().matchId = matchId;
                     NetworkServer.AddPlayerForConnection(playerConn, player);
 
