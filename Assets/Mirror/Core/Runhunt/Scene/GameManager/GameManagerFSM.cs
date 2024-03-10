@@ -22,7 +22,8 @@ namespace Mirror
 
         public ParticleSystem m_winParticles;
 
-        public GameObject m_gameStateInfoTextMesh;
+        
+        [field: SerializeField] public GameObject m_gameStateInfoTextMesh { get; private set; }
 
         private TextMeshProUGUI m_gameStateInfoText;
 
@@ -136,6 +137,10 @@ namespace Mirror
             if(m_gameStateInfoTextMesh != null)
             {
                 m_gameStateInfoText.SetText(text);
+            }
+            else
+            {
+                Debug.LogError("GameManagerFSM DisplayInfo() m_gameStateInfoTextMesh is null!");
             }
         }
 

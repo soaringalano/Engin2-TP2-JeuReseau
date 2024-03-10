@@ -19216,7 +19216,7 @@ MonoBehaviour:
   syncInterval: 0
   m_winSound: {fileID: 0}
   m_winParticles: {fileID: 0}
-  m_gameStateInfoTextMesh: {fileID: 1403854534}
+  <m_gameStateInfoTextMesh>k__BackingField: {fileID: 1403854534}
 --- !u!4 &4464785574706861087
 Transform:
   m_ObjectHideFlags: 0

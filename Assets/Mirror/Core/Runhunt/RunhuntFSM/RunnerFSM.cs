@@ -79,7 +79,7 @@ namespace Mirror
 
             RB = GetComponentInChildren<Rigidbody>();
             if (RB == null) Debug.LogError("Runner RigidBody not found in children!");
-            else Debug.LogWarning("RB not null!");
+            else Debug.Log("RB not null!");
             if (RB.gameObject.name != "RunnerPrefab") Debug.LogError("The GameObject RigidBody might not be the Runner's RB! Name is: " + RB.gameObject.name);
 
             FloorTrigger = GetComponentInChildren<RunnerFloorTrigger>();
