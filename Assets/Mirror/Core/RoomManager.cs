@@ -1,6 +1,7 @@
 using Mirror;
 using System;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -46,7 +47,7 @@ namespace Mirror
         public static int s_playerThreeId = 0;
         public static int s_playerFourId = 0;
 
-
+       public readonly string minePoolFolderPath = "Assets/Prefabs/MinesPool";
         public static new RoomManager singleton { get; private set; }
 
         /// <summary>
@@ -73,19 +74,6 @@ namespace Mirror
             }
         }
 
-        //public static void AssignRoomToPlayerEmpty(NetworkConnectionToClient conn, GameObject roomPlayer)
-        //{
-        //    Debug.LogWarning("AssignRoomToPlayerEmpty() identity: " + conn + " roomPlayer: " + roomPlayer.name);
-        //    if (conn.identity.gameObject.GetComponent<PlayerEmpty>() == null) return;
-        //    conn.identity.gameObject.GetComponent<PlayerEmpty>().RoomPlayer = roomPlayer.GetComponent<LobbyUI>().gameObject;
-        //}
-
-        //public static void InitializePlayerEmpty(NetworkConnectionToClient conn)
-        //{
-        //    if (conn.identity.gameObject.GetComponent<PlayerEmpty>() == null) return;
-        //    conn.identity.gameObject.GetComponent<PlayerEmpty>().Initialize();
-        //}
-
         public static void AssignTeamToPlayerEmpty(NetworkConnectionToClient conn, GameObject roomPlayer)
         {
             Debug.Log("AssignTeamToPlayerEmpty() identity: " + conn + " roomPlayer: " + roomPlayer.name + " roomPlayer.GetComponent<LobbyUI>().m_currentPlayerSelectedTeam: " + roomPlayer.GetComponent<LobbyUI>().m_currentPlayerSelectedTeam);
@@ -106,26 +94,6 @@ namespace Mirror
 
             return null;
         }
-
-
-        //public static GameObject GetSelfLobbyUI(NetworkConnectionToClient networkIdentity)
-        //{
-        //    Debug.Log("GetSelfLobbyUI() NetworkClient.connection.identity.gameObject: " + NetworkClient.connection.identity.gameObject.name);
-
-        //    Debug.Log("singleton.pendingPlayers.Count: " + singleton.pendingPlayers.Count);
-
-        //    foreach (PendingPlayer pendingPlayer in singleton.pendingPlayers)
-        //    {
-        //        if (pendingPlayer.conn == networkIdentity)
-        //        {
-        //            return pendingPlayer.roomPlayer.gameObject;
-        //        }
-        //    }
-
-        //    return null;
-        //    //Debug.Log("pendingPlayer.roomPlayer.name" + pendingPlayer.roomPlayer.name);
-        //    //return NetworkClient.connection.identity.gameObject.GetComponent<LobbyUI>().gameObject;
-        //}
 
         public override void OnServerConnect(NetworkConnectionToClient conn)
         {
@@ -261,45 +229,5 @@ namespace Mirror
             //Debug.Log("nbHunters: " + nbHunters + " nbRunners: " + nbRunners + " nbPlayers: " + playerIndex);
             return nbHunters > 0 && nbRunners > 0;
         }
-
-        //private void SetTeamOnNetwork()
-        //{
-
-        //    int playerIndex = 0;
-
-        //    foreach (NetworkRoomPlayer player in roomSlots)
-        //    {
-        //        if (player == null) continue;
-        //        int nbHunters = 0;
-        //        int nbRunners = 0;
-        //        playerIndex++;
-        //        Debug.Log("Player " + playerIndex);
-        //        if (player.GetComponent<LobbyUI>() == null) Debug.Log("LobbyPlayer is null");
-        //        //if (player.GetComponent<LobbyUI>().m_playerSelectedTeam == LobbyUI.EPlayerSelectedTeam.Hunters) nbHunters++;
-        //        //else if (player.GetComponent<LobbyUI>().m_playerSelectedTeam == LobbyUI.EPlayerSelectedTeam.Runners) nbRunners++;
-        //        if (player.GetComponent<LobbyUI>().m_playerOneSelectedUIIndex == 0) nbHunters++;
-        //        else if (player.GetComponent<LobbyUI>().m_playerOneSelectedUIIndex == 2) nbRunners++;
-
-        //        if (player.GetComponent<LobbyUI>().m_playerTwoSelectedUIIndex == 0) nbHunters++;
-        //        else if (player.GetComponent<LobbyUI>().m_playerTwoSelectedUIIndex == 2) nbRunners++;
-
-        //        if (player.GetComponent<LobbyUI>().m_playerThreeSelectedUIIndex == 0) nbHunters++;
-        //        else if (player.GetComponent<LobbyUI>().m_playerThreeSelectedUIIndex == 2) nbRunners++;
-
-        //        if (player.GetComponent<LobbyUI>().m_playerFourSelectedUIIndex == 0) nbHunters++;
-        //        else if (player.GetComponent<LobbyUI>().m_playerFourSelectedUIIndex == 2) nbRunners++;
-
-        //        int playerSlot = 0;
-        //        if(player.index == 0) playerSlot = 1;
-        //        else if(player.index == 1) playerSlot = 10;
-        //        else if(player.index == 2) playerSlot = 100;
-        //        else if(player.index == 3) playerSlot = 1000;
-        //        if (nbHunters > 0) playerSlot *= -1;
-        //        else if(nbRunners > 0) playerSlot *= 1;
-        //        m_playesTeamSelection += playerSlot;
-        //    }
-
-        //    Debug.Log("m_playesTeamSelection: " + m_playesTeamSelection);
-        //}
     }
 }

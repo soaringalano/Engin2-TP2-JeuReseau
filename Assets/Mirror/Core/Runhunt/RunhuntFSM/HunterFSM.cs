@@ -379,17 +379,3 @@ namespace Mirror
         }
     }
 }
-//if (MinesPrefab == null)
-//    return;
-
-//Vector3 newPosition = point;
-//Debug.Log("OnDrag pos: " + point);
-//if (isServer)
-//{
-//    MinesPrefab.transform.position = newPosition;
-//    CmdUpdatePosition(newPosition);
-//}
-//else
-//{
-//    CmdUpdatePosition(newPosition);
-//}
