@@ -8,6 +8,7 @@ namespace Mirror
     {
         [field: SerializeField] private GameObject HunterCameraAssetsPrefab { get; set; }
         [field: SerializeField] private GameObject HunterUIPrefab { get; set; }
+        [field: SerializeField] private GameObject EventSystemPrefab { get; set; }
         [field: SerializeField] public bool IsInitialable { get; set; } = false;
 
         private HunterFSM m_hunterFSM;
@@ -94,6 +95,9 @@ namespace Mirror
 
             Debug.Log("Instanciate Hunter UI.");
             Instantiate(HunterUIPrefab, transform);
+
+            Debug.Log("Instanciate EventSystem.");
+            Instantiate(EventSystemPrefab, transform);
         }
 
         protected override void GetNetworkedPlayerControls()

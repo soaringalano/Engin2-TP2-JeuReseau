@@ -64,11 +64,19 @@ namespace Mirror
 
                 if (!IsMineSpawned)
                 {
+                    Debug.Log("Mine not spawned yet. Getting from pool.");
                     CurrentMineGO = m_stateMachine.GetMineFromPoolToPosition(hit.point);
                     IsMineSpawned = true;
                     return;
                 }
                 
+                Debug.Log("Mine spawned. Updating position.");
+                if (CurrentMineGO == null)
+                {
+                    Debug.LogError("CurrentMineGO is null.");
+                    return;
+                }
+
                 m_stateMachine.CmdUpdatePosition(hit.point, CurrentMineGO);
             }
         }

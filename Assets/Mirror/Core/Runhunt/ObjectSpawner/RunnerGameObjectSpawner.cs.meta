@@ -4,7 +4,9 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - <RunnerCameraPrefab>k__BackingField: {fileID: 2502197940380891415, guid: 104ad32be306cd44ca8550552d96fe85, type: 3}
+  - <RunnerCameraAssetsPrefab>k__BackingField: {fileID: 2502197940380891415, guid: 104ad32be306cd44ca8550552d96fe85, type: 3}
+  - <RunnerUIPrefab>k__BackingField: {fileID: 5272317899519764115, guid: 6dd275b996949e74ba5f39ce50b5084c, type: 3}
+  - <EventSystemPrefab>k__BackingField: {fileID: 6563438629355487294, guid: 2cc259ecf500a4d4185469e8c20ca185, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

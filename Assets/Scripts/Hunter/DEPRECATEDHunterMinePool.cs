@@ -1,10 +1,7 @@
 using Mirror;
-using Runhunt.ObjectSpawner;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class HunterMinePool : NetworkBehaviour
+public class DEPRECATEDHunterMinePool : NetworkBehaviour
 {
     [SerializeField] private GameObject m_minePrefab;
     Pool<GameObject> m_pool;
@@ -21,7 +18,7 @@ public class HunterMinePool : NetworkBehaviour
     {
         if (TerrainPlane == null)
         {
-            TerrainPlane = GetComponent<HunterGameObjectSpawner>().GetRunnerPlatform();
+            //TerrainPlane = GetComponent<HunterGameObjectSpawner>().GetRunnerPlatform();
         }
 
         GameObject next = Instantiate(m_minePrefab, TerrainPlane);

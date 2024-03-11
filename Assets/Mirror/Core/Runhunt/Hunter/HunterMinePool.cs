@@ -1,13 +1,10 @@
-
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Mirror
 {
     public class HunterMinePool : NetworkBehaviour
     {
-        [SerializeField] private GameObject m_prefab;
+        [SerializeField] private GameObject m_minePrefab;
         Pool<GameObject> m_pool;
         private int m_currentCount;
         public const int MAX_MINES = 1000;
@@ -19,8 +16,8 @@ namespace Mirror
 
         private GameObject CreateNew()
         {
-            GameObject next = Instantiate(m_prefab, transform);
-            next.name = $"{m_prefab.name}_pooled_{m_currentCount}";
+            GameObject next = Instantiate(m_minePrefab, transform);
+            next.name = $"{m_minePrefab.name}_pooled_{m_currentCount}";
             next.SetActive(false);
             m_currentCount++;
             return next;
@@ -28,14 +25,19 @@ namespace Mirror
 
         public GameObject Get(Vector3 position, Quaternion rotation)
         {
-            GameObject next = m_pool.Get();
-            // set position and rotation
+            Debug.LogError("HunterMinePool: Get() called!");
+            GameObject next = m_pool.Get(); // Makes unity editor not responding
+            if (next != null)
+            {
+                next.transform.position = position;
+                next.transform.rotation = rotation;
+                next.SetActive(true);
+            }
             return next;
         }
 
         protected void Return(GameObject spawned)
         {
-            // reset any state on the object
             spawned.SetActive(false);
             m_pool.Return(spawned);
         }

@@ -78,7 +78,8 @@ namespace Mirror
             //    return;
             //}
 
-            MinePool = GetComponent<HunterMinePool>();
+            MinePool = FindAnyObjectByType<HunterMinePool>();
+            if (MinePool == null) Debug.LogError("MinePool not found!");
             FloorBodyCurrentMaxSpeed = FloorBodyMinSpeed;
             RB = GetComponentInChildren<Rigidbody>();
             if (RB != null) Debug.Log("Hunter RigidBody found!");
@@ -362,12 +363,13 @@ namespace Mirror
             mine.transform.position = newPosition;
         }
 
-        internal GameObject GetMineFromPoolToPosition(Vector3 point)
+        public GameObject GetMineFromPoolToPosition(Vector3 point)
         {
             Debug.Log("GetMineFromPoolToPosition");
             // Get a mine from the pool and set its position
+            if (MinePool == null) Debug.LogError("MinePool not found!");
             GameObject mine = MinePool.Get(point, Quaternion.identity);
-            //if (mine == null) Debug.LogError("Mine not found!");
+            if (mine == null) Debug.LogError("Mine not found!");
 
             mine.SetActive(true);
             mine.transform.position = point;

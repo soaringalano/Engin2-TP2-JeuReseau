@@ -10,6 +10,7 @@ namespace Mirror
         private GameObject RunnerCameraAssetsPrefab { get; set; }
         [field: SerializeField] private GameObject RunnerUIPrefab { get; set; }
         [field: SerializeField] public bool IsInitialable { get; set; } = false;
+        [field: SerializeField] private GameObject EventSystemPrefab { get; set; }
 
         private RunnerFSM m_runnerFSM = null;
         private GameObject m_runnerGameObject = null;
@@ -71,6 +72,10 @@ namespace Mirror
             m_runnerUIPrefab = Instantiate(RunnerUIPrefab, transform);
             if (m_runnerUIPrefab == null) Debug.LogError("Runner UI Prefab Not found!");
             else Debug.Log("Runner UI Prefab found!");
+
+
+            Debug.Log("Instanciate EventSystem.");
+            Instantiate(EventSystemPrefab, transform);
         }
 
         protected override void GetPlayerGameObject()

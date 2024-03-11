@@ -34,12 +34,12 @@ public class MinePowerUpButton : HunterPowerUpButton, IPointerDownHandler, IPoin
 
         GameObject gameObject = eventData.pointerCurrentRaycast.gameObject;
         if (gameObject == null) return;
-        //Debug.Log("GameObject name is: " + gameObject.name);
+        Debug.Log("GameObject name is: " + gameObject.name);
         base.OnUseButton();
         Debug.Log("MinePowerUpButton: isDragging.");
         m_stateMachine.IsDragging = true;
     }
-
+    
     public void OnPointerUp(PointerEventData eventData)
     {
         Debug.Log("MinePowerUpButton: !isDragging.");

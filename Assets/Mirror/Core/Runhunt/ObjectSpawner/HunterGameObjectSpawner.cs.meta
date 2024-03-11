@@ -3,7 +3,10 @@ guid: 39694a1de5802074ea74325b44e35178
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - <HunterCameraAssetsPrefab>k__BackingField: {fileID: 1571365358454482429, guid: 0af3642d719fbc24b8809d5413e463d7, type: 3}
+  - <HunterUIPrefab>k__BackingField: {fileID: 4624475854516039623, guid: 76cfc2e007782f648a3d5bd7a2eda429, type: 3}
+  - <EventSystemPrefab>k__BackingField: {fileID: 6563438629355487294, guid: 2cc259ecf500a4d4185469e8c20ca185, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
